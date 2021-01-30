@@ -1,0 +1,25 @@
+server:
+  port: 8769
+
+spring:
+  application:
+    name: zuul-server
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        file-extension: yml
+
+zuul:
+  routes:
+    api-a:
+      path: /api-a/**
+      serviceId: order-server
+      sensitiveHeaders: "*"
+    api-b:
+      path: /api-b/**
+      serviceId: payment-server
+      sensitiveHeaders: "*"

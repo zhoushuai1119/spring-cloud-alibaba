@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.dao.CategoryMapper">
+  <resultMap id="BaseResultMap" type="com.cloud.common.entity.order.Category">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="category_level" jdbcType="INTEGER" property="categoryLevel" />
+    <result column="parent_category_id" jdbcType="VARCHAR" property="parentCategoryId" />
+    <result column="parent_category_name" jdbcType="VARCHAR" property="parentCategoryName" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, category_id, category_name, category_level, parent_category_id, parent_category_name
+  </sql>
+
+</mapper>
