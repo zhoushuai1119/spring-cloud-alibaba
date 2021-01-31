@@ -3,7 +3,6 @@
 2021-01-29 10:49:33.887  INFO 5708 --- [-localhost_8848] c.a.nacos.client.config.impl.CacheData   : [fixed-localhost_8848] [notify-listener] time cost=6534ms in ClientWorker, dataId=order-server-local.properties, group=DEFAULT_GROUP, md5=d4a5c62a8327912d47026077dcb348a0, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@4e56f8a8 
 2021-01-29 10:49:33.900 ERROR 5708 --- [-localhost_8848] c.a.n.client.config.impl.ClientWorker    : longPolling error : 
 
-
 java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask@6b8c5ae3 rejected from java.util.concurrent.ScheduledThreadPoolExecutor@691a84f4[Shutting down, pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 1]
 	at java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2063) ~[na:1.8.0_271]
 	at java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:830) [na:1.8.0_271]
