@@ -11,6 +11,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -26,6 +27,9 @@ public class TestJsonController {
     @Autowired
     private CategoryService categoryService;
 
+    @Value("${server.port}")
+    private String port;
+
     @RequestMapping("/jsonTest")
     public EnumTest test45(){
         EnumTest enumTest = new EnumTest();
@@ -39,8 +43,12 @@ public class TestJsonController {
     }
 
     @RequestMapping("/baidu/11")
-    public String test(){
-        return "baidudddjj";
+    public String test(HttpServletRequest request) throws Exception {
+        String sessionId = request.getSession().getId();
+        if (true) {
+            throw new Exception("测试异常");
+        }
+        return port+"****"+sessionId;
     }
 
     @RequestMapping("/baidu/22")

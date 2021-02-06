@@ -1,13 +1,10 @@
 package com.cloud.controller;
 
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.cloud.common.RedisBloomFilter;
 import com.cloud.common.RedissionBloomFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -27,16 +24,6 @@ public class EurekaClientController {
         System.out.println("在线人员:"+
                 session.getServletContext().getAttribute("onlinePersonNum"));
         return "hi " + name + " ,i am from port:" + port;
-    }
-
-    @SentinelResource(value = "hello", blockHandler = "blockHandlerHello")
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello Sentinel";
-    }
-
-    public String blockHandlerHello(BlockException e) {
-        return "限流了";
     }
 
     /**

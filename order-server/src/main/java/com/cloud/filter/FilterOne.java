@@ -29,7 +29,7 @@ public class FilterOne implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         System.out.println("访问路径:"+request.getRequestURI());
         filterChain.doFilter(request,response);
-        System.out.println("处理服务器返回的response");
+        //System.out.println("处理服务器返回的response");
     }
 
     @Override
