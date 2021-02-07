@@ -1,5 +1,6 @@
 package com.cloud.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -13,6 +14,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class Swagger2Config {
+
+    @Value("${server.port}")
+    private String port;
+
+    @Value("${spring.application.name}")
+    private String application;
 
     @Bean
     public Docket createRestApi() {
@@ -29,7 +36,7 @@ public class Swagger2Config {
         return new ApiInfoBuilder()
                 .title("springboot2利用swagger2构建api文档")
                 .description("简单优雅的restfun风格")
-                .termsOfServiceUrl("http://localhost:8080/swagger-ui.html")
+                .termsOfServiceUrl("http://localhost:"+port+"/"+application+"/swagger-ui/index.html")
                 .version("v1")
                 .build();
     }

@@ -54,7 +54,6 @@
         <module>order-server</module>
         <module>payment-server</module>
         <module>product-server</module>
-        <module>zuul-server</module>
         <module>gateway-server</module>
         <module>user-server</module>
         <module>xxl-job-admin</module>
@@ -128,6 +127,12 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <!--使用swagger3.0需要导入 springfox-boot-starter-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
             <version>3.0.0</version>
         </dependency>
         <dependency>

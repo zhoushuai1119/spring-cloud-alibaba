@@ -3,12 +3,12 @@ package com.cloud.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,9 +79,6 @@ public class RabbitMQConfig {
     public static final String ALTERNATE_EXCHANGE = "alternate_exchange";
     public static final String ALTERNATE_QUEUE = "alternate_queue";
 
-    @Resource
-    private RabbitTemplate rabbitTemplate;
-
     /**
      * 定制化amqp模版      可根据需要定制多个
      * 此处为模版类定义 Jackson消息转换器
@@ -95,31 +92,34 @@ public class RabbitMQConfig {
      *
      */
     @Bean
-    public AmqpTemplate amqpTemplate() {
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         Logger log = LoggerFactory.getLogger(RabbitTemplate.class);
+        RabbitTemplate rabbitTemplate = new RabbitTemplate();
+        rabbitTemplate.setConnectionFactory(connectionFactory);
         //使用jackson 消息转换器
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
         rabbitTemplate.setEncoding("UTF-8");
-        //开启returncallback  yml需要配置publisher-returns: true
+        //设置开启Mandatory,才能触发回调函数,无论消息推送结果怎么样都强制调用回调函数
         rabbitTemplate.setMandatory(true);
         //消息确认  yml需要配置publisher-confirms: true
+        // 消息推送到server，但是在server里找不到交换机,这种情况触发的是 ConfirmCallback 回调函数。
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             if (ack) {
-                log.debug("消息发送到exchange成功,id: {}", correlationData.getId());
+                log.info("消息发送到exchange成功,id: {}", correlationData.getId());
             } else {
-                log.debug("消息发送到exchange失败,原因: {}", cause);
+                log.error("消息发送到exchange失败,原因: {}", cause);
             }
         });
+        // 消息推送到server，找到交换机了，但是没找到队列,这种情况触发的是 ConfirmCallback和RetrunCallback两个回调函数。
+        // ConfirmCallback每次都会响应回调，RetrunCallback这种情况只在有交换机无队列的情况下响应！
         rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {
-            /*correlationId 的在 spring rabbitmq 2.0 以后 byte方式会被放弃，
-            目前代码中有些地方没有改过来,应该算一个BUG*/
-            /*String correlationId = message.getMessageProperties().getCorrelationId();*/
             Map<String,Object> map = message.getMessageProperties().getHeaders();
             Object messageId = map.get("spring_returned_message_correlation");
             Object idType = map.get("__TypeId__");
+            log.info("idType:"+idType);
             byte[] body = message.getBody();
             String messageBody = new String(body);
-            log.debug("消息：{} 发送失败, 应答码：{} 原因：{} 交换机: {}  路由键: {}", messageId+":"+messageBody, replyCode, replyText, exchange, routingKey);
+            log.info("消息：{} 发送失败, 应答码：{} 原因：{} 交换机: {}  路由键: {}", messageId+":"+messageBody, replyCode, replyText, exchange, routingKey);
         });
         return rabbitTemplate;
     }
@@ -189,8 +189,13 @@ public class RabbitMQConfig {
     @Bean
     public DirectExchange directExchange() {
         Map<String, Object> exchanges = new HashMap<>(2);
-        exchanges.put("alternate-exchange",ALTERNATE_EXCHANGE);
-        return new DirectExchange(DIRECT_EXCHANGE,true,false,exchanges);
+        /**备份交换器,备份交换器是为了实现没有路由到队列的消息，
+         * 声明交换机的时候添加属性alternate-exchange，
+         声明一个备用交换机，一般声明为fanout类型，
+         这样交换机收到路由不到队列的消息就会发送到备用交换机绑定的队列中。*/
+        //exchanges.put("alternate-exchange",ALTERNATE_EXCHANGE);
+        //return new DirectExchange(DIRECT_EXCHANGE,true,false,exchanges);
+        return new DirectExchange(DIRECT_EXCHANGE);
     }
 
     @Bean

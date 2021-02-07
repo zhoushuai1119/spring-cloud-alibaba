@@ -45,9 +45,9 @@ public class TestJsonController {
     @RequestMapping("/baidu/11")
     public String test(HttpServletRequest request) throws Exception {
         String sessionId = request.getSession().getId();
-        if (true) {
+        /*if (true) {
             throw new Exception("测试异常");
-        }
+        }*/
         return port+"****"+sessionId;
     }
 

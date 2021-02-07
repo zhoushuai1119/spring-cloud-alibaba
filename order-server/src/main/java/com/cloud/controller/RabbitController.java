@@ -25,7 +25,7 @@ public class RabbitController {
 
     @RequestMapping("/directSendMsg")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "msg", value = "信息", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "msg", value = "信息", required = true, dataTypeClass = String.class)
     })
     public Result<String> directSend(String msg) {
         rabbitService.directSender(msg);
@@ -34,7 +34,7 @@ public class RabbitController {
 
     @RequestMapping("/fanoutSendMsg")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "msg", value = "信息", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "msg", value = "信息", required = true, dataTypeClass = String.class)
     })
     public Result<String> fanoutSend(String msg) {
         rabbitService.fanoutSender(msg);
@@ -43,7 +43,7 @@ public class RabbitController {
 
     @RequestMapping("/topicSendMsg")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "msg", value = "信息", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "msg", value = "信息", required = true, dataTypeClass = String.class)
     })
     public Result<String> topicSend(String msg) {
         rabbitService.topicSender(msg);

@@ -1,4 +1,3 @@
-/*
 package com.cloud.config;
 
 import com.xxl.sso.core.conf.Conf;
@@ -49,10 +48,8 @@ public class XxlSsoConfig implements DisposableBean {
 
     @Override
     public void destroy() throws Exception {
-
         // xxl-sso, redis close
         JedisUtil.close();
     }
 
 }
-*/

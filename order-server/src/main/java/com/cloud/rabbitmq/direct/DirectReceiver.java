@@ -32,7 +32,7 @@ public class DirectReceiver {
          　　deliveryTag：该消息的index
          　　multiple：是否批量处理.true:将一次性ack所有小于deliveryTag的消息
          */
-        //channel.basicAck(tag,false);
+        channel.basicAck(tag,false);
 
         /*
          * 处理失败可以调用basicNack()方法，调用该方法之后，
@@ -43,7 +43,7 @@ public class DirectReceiver {
             multiple：是否批量.true:将一次性拒绝所有小于deliveryTag的消息。
             requeue：被拒绝的是否重新入队列
          */
-        channel.basicNack(tag,false,false);
+        //channel.basicNack(tag,false,false);
     }
 
 }

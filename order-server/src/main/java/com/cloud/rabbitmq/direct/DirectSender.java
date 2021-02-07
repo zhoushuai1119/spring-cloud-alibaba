@@ -30,7 +30,7 @@ public class DirectSender {
         Category category = categoryDao.selectById("1");
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
         LogUtil.logger("****DirectSender****:"+correlationData,LogUtil.INFO_LEVEL,null);
-        this.rabbitTemplate.convertAndSend(RabbitMQConfig.DIRECT_EXCHANGE, RabbitMQConfig.DIRECT_QUEUE_ROUTYKEY, category,correlationData);
+        this.rabbitTemplate.convertAndSend(RabbitMQConfig.DIRECT_EXCHANGE, "1111eeeeeee11", msg ,correlationData);
     }
 
 }

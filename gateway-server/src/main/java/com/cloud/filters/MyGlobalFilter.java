@@ -3,10 +3,13 @@ package com.cloud.filters;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
 
 /**
  * @description: 全局过滤器-作用在所有的路由上
@@ -23,14 +26,16 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
         System.out.println("filter 拦截方法，拦截到请求后，自动执行 ");
         //以后开发中，不会将 user对象存到session，只会在地址上带上token
         //根据token是否有空可以判断是否登录
-        //http://localhost:8001/users/3?token=10001&pageSize=30
-        //String token =  exchange.getRequest().getQueryParams().getFirst("token");
         String token = "token";
         if(token == null || "".equals(token)){
             //未登录 跳转到登录页
-            System.out.println("----跳到登录页面");
-            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-            return exchange.getResponse().setComplete();
+            System.out.println("token is null");
+            ServerHttpResponse response = exchange.getResponse();
+            response.setStatusCode(HttpStatus.UNAUTHORIZED);
+            String msg = "token is null";
+            DataBuffer buffer = response.bufferFactory().wrap(msg.getBytes());
+            return response.writeWith(Mono.just(buffer));
+            //return exchange.getResponse().setComplete();
         }
         return chain.filter(exchange);//2 全部放行
     }
