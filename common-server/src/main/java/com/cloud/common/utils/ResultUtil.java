@@ -2,9 +2,9 @@ package com.cloud.common.utils;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.cloud.common.commons.beans.KeyValuePair;
-import com.cloud.common.commons.beans.MultiResult;
-import com.cloud.common.commons.beans.Result;
+import com.cloud.common.beans.KeyValuePair;
+import com.cloud.common.beans.MultiResult;
+import com.cloud.common.beans.Result;
 
 import java.util.List;
 import java.util.Map;

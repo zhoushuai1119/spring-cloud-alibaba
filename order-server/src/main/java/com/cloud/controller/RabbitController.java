@@ -1,7 +1,7 @@
 package com.cloud.controller;
 
-import com.cloud.common.commons.beans.Result;
-import com.cloud.common.commons.beans.ReturnCode;
+import com.cloud.common.beans.Result;
+import com.cloud.common.beans.ReturnCode;
 import com.cloud.common.utils.ResultUtil;
 import com.cloud.service.RabbitService;
 import io.swagger.annotations.ApiImplicitParam;

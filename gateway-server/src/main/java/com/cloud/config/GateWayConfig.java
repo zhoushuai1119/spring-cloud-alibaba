@@ -103,6 +103,13 @@ public class GateWayConfig {
                         )
                         .uri("lb://order-server")
         ).build();
+        routes.route("user-server",
+                r -> r.path("/test/user-server/**")
+                        //.filters(f -> f.stripPrefix(1).filters(authGatewayFilter)
+                        .filters(f -> f.stripPrefix(1)
+                        )
+                        .uri("lb://user-server")
+        ).build();
         return routes.build();
     }
 

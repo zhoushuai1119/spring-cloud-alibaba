@@ -6,7 +6,7 @@
  * @history
  */
 
-package com.cloud.common.commons.beans;
+package com.cloud.common.beans;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

@@ -1,5 +1,6 @@
 package com.cloud.filter;
 
+import com.cloud.common.utils.LogUtil;
 import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
@@ -19,7 +20,7 @@ import java.io.IOException;
 public class FilterOne implements Filter {
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         System.out.println("拦截器FilterOne 初始化init。。。");
     }
 
@@ -27,9 +28,8 @@ public class FilterOne implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        System.out.println("访问路径:"+request.getRequestURI());
+        LogUtil.logger("访问路径:"+request.getRequestURI(),LogUtil.INFO_LEVEL,null);
         filterChain.doFilter(request,response);
-        //System.out.println("处理服务器返回的response");
     }
 
     @Override

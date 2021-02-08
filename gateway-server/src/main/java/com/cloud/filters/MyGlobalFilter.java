@@ -1,5 +1,6 @@
 package com.cloud.filters;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -22,14 +23,10 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        //拦截方法，拦截到请求后，自动执行
-        System.out.println("filter 拦截方法，拦截到请求后，自动执行 ");
-        //以后开发中，不会将 user对象存到session，只会在地址上带上token
         //根据token是否有空可以判断是否登录
-        String token = "token";
-        if(token == null || "".equals(token)){
-            //未登录 跳转到登录页
-            System.out.println("token is null");
+        //String token = exchange.getRequest().getHeaders().getFirst("token");
+        String token = exchange.getRequest().getQueryParams().getFirst("token");
+        if(StringUtils.isEmpty(token)){
             ServerHttpResponse response = exchange.getResponse();
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             String msg = "token is null";
@@ -37,7 +34,7 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
             return response.writeWith(Mono.just(buffer));
             //return exchange.getResponse().setComplete();
         }
-        return chain.filter(exchange);//2 全部放行
+        return chain.filter(exchange);
     }
 
     /**

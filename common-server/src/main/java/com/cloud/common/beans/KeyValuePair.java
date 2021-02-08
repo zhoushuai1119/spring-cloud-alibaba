@@ -1,4 +1,4 @@
-package com.cloud.common.commons.beans;
+package com.cloud.common.beans;
 
 import lombok.Data;
 

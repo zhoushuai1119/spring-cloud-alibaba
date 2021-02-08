@@ -1,4 +1,4 @@
-package com.cloud.common.commons.beans;
+package com.cloud.common.beans;
 
 import com.cloud.common.utils.CommonUtil;
 import io.swagger.annotations.ApiModelProperty;

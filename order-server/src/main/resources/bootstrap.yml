@@ -11,6 +11,12 @@ spring:
   application:
     name: order-server
 
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 150MB
+      max-request-size: 200MB
+
   #如果使用Spring Boot 2.1及更高版本时候，
   #需要增加配置spring.main.allow-bean-definition-overriding=true
   main:
@@ -173,3 +179,16 @@ management:
     web:
       exposure:
         include: "*"
+
+fdfs:
+  so-timeout: 15010
+  connect-timeout: 6010
+  tracker-list: 192.168.10.128:22122
+  urlPrefix: http://192.168.10.128/
+  ##生成缩略图参数
+  thumb-image:
+    width: 150
+    height: 150
+  pool:
+    max-wait-millis: 10200
+    max-total: 153
