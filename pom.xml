@@ -28,6 +28,10 @@
         <sharding-jdbc.version>4.1.1</sharding-jdbc.version>
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.4.RELEASE</spring-cloud-alibaba.version>
+        <!--docker配置-->
+        <docker.host.url>http://192.168.10.128:2375</docker.host.url>
+        <docker.repostory.url>192.168.10.128:5000</docker.repostory.url>
+        <docker.repostory.name>alibaba</docker.repostory.name>
     </properties>
 
     <dependencyManagement>
@@ -154,14 +158,5 @@
             <version>1.1.1</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
