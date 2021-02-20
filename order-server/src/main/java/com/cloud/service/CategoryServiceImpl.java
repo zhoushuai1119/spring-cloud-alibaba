@@ -3,13 +3,13 @@ package com.cloud.service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloud.common.entity.order.Category;
 import com.cloud.common.entity.payment.User;
+import com.cloud.common.service.order.CategoryService;
 import com.cloud.common.service.payment.UserService;
 import com.cloud.dao.CategoryMapper;
-import com.cloud.common.service.order.CategoryService;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -21,8 +21,8 @@ import java.util.List;
 @DubboService
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
 
-   @DubboReference
-   private UserService userService;
+    @DubboReference
+    private UserService userService;
 
     @Override
     public List<Category> categoryList() {

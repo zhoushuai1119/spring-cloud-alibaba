@@ -1,3 +1,4 @@
+/*
 package com.cloud.config;
 
 import com.xxl.sso.core.conf.Conf;
@@ -53,3 +54,4 @@ public class XxlSsoConfig implements DisposableBean {
     }
 
 }
+*/
