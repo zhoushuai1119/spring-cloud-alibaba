@@ -33,10 +33,13 @@ spring:
   #默认历史表不会生成，需要手动开启配置
   activiti:
     # 这条配置为true，会默认加在resources/processes包下的流程文件（.bpmn），如果流程文件没有会导致项目启动报错，可以设置为false
-    check-process-definitions: true
+    # activiti7的自动识别processes下的bpmn文件，但是只会识别第一次，如果再次新建一个bpmn文件，再执行代码数据库里不会增加记录
+    # 针对上述问题可以把数据库删除后可以部署
+    check-process-definitions: false
     # 设置为true，如果库中没有activiti对应表，就创建
     database-schema-update: true
     db-history-used: true
+    history-level: audit
 
 mybatis-plus:
   mapper-locations: classpath*:mapping/*.xml
