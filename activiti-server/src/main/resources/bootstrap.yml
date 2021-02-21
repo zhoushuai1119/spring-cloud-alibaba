@@ -1,0 +1,52 @@
+#SpringBoot读取配置文件顺序：
+# bootstrap.yml>bootstrap.yaml>bootstrap.properties>nacos的配置>
+#application.yml>application.yaml>application.properties
+
+server:
+  port: 9999
+  servlet:
+    context-path: /activiti-server
+
+spring:
+  application:
+    name: activiti-server
+
+  #如果使用Spring Boot 2.1及更高版本时候，
+  #需要增加配置spring.main.allow-bean-definition-overriding=true
+  main:
+    allow-bean-definition-overriding: true
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        file-extension: yml
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/activiti?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: Zs11195310
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  #默认历史表不会生成，需要手动开启配置
+  activiti:
+    # 这条配置为true，会默认加在resources/processes包下的流程文件（.bpmn），如果流程文件没有会导致项目启动报错，可以设置为false
+    check-process-definitions: true
+    # 设置为true，如果库中没有activiti对应表，就创建
+    database-schema-update: true
+    db-history-used: true
+
+mybatis-plus:
+  mapper-locations: classpath*:mapping/*.xml
+  type-aliases-package: com.cloud.common.entity
+  type-enums-package: com.cloud.common.enums
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    auto-mapping-behavior: partial
+  global-config:
+    db-config:
+      id-type: auto
+

@@ -7,10 +7,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ServiceFeignApplicationTests {
+public class ActivitiServerApplicationTest {
 
     @Test
     public void contextLoads() {
+        System.out.println("aa");
     }
 
 }
