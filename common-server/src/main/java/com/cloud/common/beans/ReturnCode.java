@@ -17,5 +17,8 @@ public class ReturnCode {
     public static final KeyValuePair TOKEN_ERROR = new KeyValuePair(402,"token错误或失效", "token错误或失效");
     public static final KeyValuePair PARAM_ERROR = new KeyValuePair(-404, "参数错误","参数错误");
     public static final KeyValuePair INTERNAL_ERROR = new KeyValuePair(500, "服务端内部错误","服务端内部错误");
+    public static final KeyValuePair COMPLETE_TASK_ERROR = new KeyValuePair(-2000, "完成任务操作失败,该用户没有操作该任务权限","完成任务操作失败,该用户没有操作该任务权限");
+    public static final KeyValuePair CLAIM_TASK_ERROR = new KeyValuePair(-2001, "拾取任务操作失败,该用户没有操作该任务权限","拾取任务操作失败,该用户没有操作该任务权限");
+    public static final KeyValuePair RETURN_TASK_ERROR = new KeyValuePair(-2002, "回退任务操作失败,该用户没有操作该任务权限","回退任务操作失败,该用户没有操作该任务权限");
 
 }

@@ -51,5 +51,5 @@ mybatis-plus:
     auto-mapping-behavior: partial
   global-config:
     db-config:
-      id-type: auto
+      id-type: assign_id
 
