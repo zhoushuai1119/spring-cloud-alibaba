@@ -4,6 +4,7 @@ import com.cloud.common.beans.KeyValuePair;
 import com.cloud.common.beans.Result;
 import com.cloud.common.beans.ReturnCode;
 import com.cloud.common.entity.activiti.Leave;
+import com.cloud.common.entity.activiti.ShiroUser;
 import com.cloud.common.service.activiti.LeaveService;
 import com.cloud.common.utils.CommonUtil;
 import com.cloud.common.utils.ResultUtil;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +30,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/leave")
-public class LeaveController {
+public class LeaveController extends BaseController{
 
     @Autowired
     private LeaveService leaveService;
@@ -46,11 +48,11 @@ public class LeaveController {
      * @return:
      */
     @RequestMapping("/leaveApply")
-    public Result<String> leaveApply(String processDefinitionKey, Integer leaveDays) {
-        //当前登录人ID,实际可以通过接口获取当前登录人信息
-        String currentUserId = "salaboy";
+    public Result<String> leaveApply(HttpSession session,String processDefinitionKey, Integer leaveDays) {
+        ShiroUser currentUser = getCurrentUser(session);
+        String currentUserId = currentUser.getId();
         //部门领导用户ID,可以通过页面选择下一个审批人传到后台
-        String departmentManagerUserId = "erdemedeiros";
+        String departmentManagerUserId = "tom";
         //请假申请ID
         Leave leave = new Leave();
         leave.setApplyUserId(currentUserId);
@@ -94,15 +96,15 @@ public class LeaveController {
     /**
      * 请假流程审批
      *
-     * @param userId 用户ID
      * @param taskId 任务ID
      */
     @RequestMapping("/leaveAprove")
-    public Result<String> leaveAprove(String userId, String taskId) {
+    public Result<String> leaveAprove(HttpSession session,String taskId) {
+        ShiroUser currentUser = getCurrentUser(session);
         Map<String, Object> variables = new HashMap<>(16);
-        variables.put("general_manager", "admin");
+        variables.put("general_manager", "zhoushuai");
 
-        KeyValuePair result = taskManageService.completeTask(userId, taskId, variables);
+        KeyValuePair result = taskManageService.completeTask(currentUser.getId(), taskId, variables);
         return ResultUtil.getResult(result);
     }
 

@@ -55,7 +55,7 @@ mybatis-plus:
   type-enums-package: com.cloud.common.enums
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     auto-mapping-behavior: partial
   global-config:
     db-config:

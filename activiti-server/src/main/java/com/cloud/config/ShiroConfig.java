@@ -47,11 +47,12 @@ public class ShiroConfig {
         log.info("*************shiro过滤器*****************");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager());
+        //需要登录的接口:如果访问某个接口,需要登录却没有登录,则调用此接口,如果前端后端不分离,则跳转到html页面
         //如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
         shiroFilterFactoryBean.setLoginUrl("/login");
-        //登录成功后要跳转的链接
+        //登录成功 跳转url,如果前后端分离,则没这个调用 --这里设置为首页就行了
         shiroFilterFactoryBean.setSuccessUrl("/index");
-        //未授权界面;
+        //登录成功,但是没有权限,未授权就会调用这个接口,如果不是前后端分离,则跳转到403页面
         shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized");
         //自定义拦截器.
         Map<String, Filter> filtersMap = new LinkedHashMap<>();
@@ -160,6 +161,7 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setCacheManager(shiroCacheManager());
         //删除在session过期跳转页面时自动在URL中添加JSESSIONID
         sessionManager.setSessionIdUrlRewritingEnabled(false);
         //定义的是全局的session会话超时时间，此操作会覆盖web.xml文件中的超时时间配置
@@ -168,8 +170,9 @@ public class ShiroConfig {
         sessionManager.setDeleteInvalidSessions(true);
         //需要让此session可以使用该定时调度器进行检测
         sessionManager.setSessionValidationSchedulerEnabled(true);
+        //sessionManager.setSessionValidationSchedulerEnabled(false);
         //定义要使用的无效的Session定时调度器
-        sessionManager.setSessionValidationScheduler(sessionValidationScheduler());
+        //sessionManager.setSessionValidationScheduler(sessionValidationScheduler());
         sessionManager.setSessionDAO(sessionDAO());
         sessionManager.setSessionIdCookieEnabled(true);
         sessionManager.setSessionIdCookie(sessionIdCookie());

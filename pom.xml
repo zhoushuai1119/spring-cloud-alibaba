@@ -25,7 +25,7 @@
         <java.version>1.8</java.version>
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
         <mysql.version>8.0.22</mysql.version>
-        <activiti.version>7.1.0.M4</activiti.version>
+        <activiti.version>7.1.0.M2</activiti.version>
         <shiro.version>1.7.1</shiro.version>
         <sharding-jdbc.version>4.1.1</sharding-jdbc.version>
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
