@@ -4,12 +4,13 @@ import com.cloud.common.annotation.ParamCheck;
 import com.cloud.common.beans.Result;
 import com.cloud.common.service.order.IFileService;
 import com.cloud.common.utils.CommonUtil;
-import com.cloud.common.utils.LogUtil;
 import com.cloud.common.utils.ResultUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.common.utils.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,7 @@ import java.net.URLEncoder;
  * @version: V1.0
  */
 @RestController
+@Slf4j
 public class FileUploadController {
 
     @Autowired
@@ -90,7 +92,7 @@ public class FileUploadController {
             byte[] fileBytes = fileService.downloadFile(fileUrl);
             downloadFile(request, response, fileBytes, fileName);
         } catch (IOException e) {
-            LogUtil.logger(e.getMessage(), LogUtil.ERROR_LEVEL, e);
+            log.error(e.getMessage());
         }
     }
 
@@ -106,7 +108,7 @@ public class FileUploadController {
             byte[] fileBytes = fileService.downloadFile(fileUrl);
             downloadFile(request, response, fileBytes, fileName);
         } catch (IOException e) {
-            LogUtil.logger(e.getMessage(), LogUtil.ERROR_LEVEL, e);
+            log.error(e.getMessage());
         }
     }
 

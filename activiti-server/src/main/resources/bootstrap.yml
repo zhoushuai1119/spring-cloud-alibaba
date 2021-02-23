@@ -4,8 +4,8 @@
 
 server:
   port: 9999
-  servlet:
-    context-path: /activiti-server
+#  servlet:
+#    context-path: /activiti-server
 
 spring:
   application:
@@ -15,6 +15,11 @@ spring:
   #需要增加配置spring.main.allow-bean-definition-overriding=true
   main:
     allow-bean-definition-overriding: true
+
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: LEGACYHTML5
 
   cloud:
     nacos:
@@ -40,6 +45,9 @@ spring:
     database-schema-update: true
     db-history-used: true
     history-level: audit
+    ## 在流程引擎启动就激活AsyncExecutor,异步true false关闭
+    ## 不关闭会一直打印sql，建议关闭
+    async-executor-activate: false
 
 mybatis-plus:
   mapper-locations: classpath*:mapping/*.xml

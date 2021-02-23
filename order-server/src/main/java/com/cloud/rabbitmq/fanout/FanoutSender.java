@@ -1,7 +1,8 @@
 package com.cloud.rabbitmq.fanout;
 
-import com.cloud.common.utils.LogUtil;
 import com.cloud.config.RabbitMQConfig;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.common.utils.LogUtil;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.util.UUID;
  * @Version:  01
  */
 @Component
+@Slf4j
 public class FanoutSender {
 
     @Resource
@@ -23,7 +25,7 @@ public class FanoutSender {
 
     public void send(String msg) {
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
-        LogUtil.logger("****FanoutSender****:"+correlationData,LogUtil.INFO_LEVEL,null);
+        log.info("****FanoutSender****:"+correlationData);
         rabbitTemplate.convertAndSend(RabbitMQConfig.FANOUT_EXCHANGE, "", msg,correlationData);
     }
 }

@@ -1,12 +1,13 @@
 package com.cloud.config.fastdfs;
 
-import com.cloud.common.utils.LogUtil;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.domain.fdfs.ThumbImageConfig;
 import com.github.tobato.fastdfs.domain.proto.storage.DownloadByteArray;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.common.utils.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Component
+@Slf4j
 public class FastDFSClient {
 
     @Value("${fdfs.urlPrefix}")
@@ -75,14 +77,14 @@ public class FastDFSClient {
      */
     public void deleteFile(String fileUrl) {
         if (StringUtils.isEmpty(fileUrl)) {
-            LogUtil.logger("fileUrl == >>文件路径为空...",LogUtil.INFO_LEVEL,null);
+            log.info("fileUrl == >>文件路径为空...");
             return;
         }
         try {
             StorePath storePath = StorePath.parseFromUrl(fileUrl);
             storageClient.deleteFile(storePath.getGroup(), storePath.getPath());
         } catch (Exception e) {
-            LogUtil.logger("文件删除失败:"+e.getMessage(),LogUtil.ERROR_LEVEL,e);
+            log.error("文件删除失败:"+e.getMessage());
         }
     }
 

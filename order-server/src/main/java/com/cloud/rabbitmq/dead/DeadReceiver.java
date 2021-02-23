@@ -1,8 +1,8 @@
 package com.cloud.rabbitmq.dead;
 
-import com.cloud.common.utils.LogUtil;
 import com.cloud.config.RabbitMQConfig;
 import com.rabbitmq.client.Channel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -16,6 +16,7 @@ import java.io.IOException;
  * @Date ： 2020-01-21 11:28
  */
 @Component
+@Slf4j
 public class DeadReceiver {
 
     /**
@@ -25,7 +26,7 @@ public class DeadReceiver {
     public void receiveDead(Message message, Channel channel) throws IOException {
         long tag = message.getMessageProperties().getDeliveryTag();
         String str = new String(message.getBody());
-        LogUtil.logger("【receiveDead监听到消息】" + str, LogUtil.INFO_LEVEL, null);
+        log.info("【receiveDead监听到消息】" + str);
         /*
          *接收到消息，处理业务成功则调用channel.basicAck()方法，
          *告诉mq服务器消费端处理成功，mq服务器就会删除该消息
@@ -54,7 +55,7 @@ public class DeadReceiver {
     public void receiveAlternate(Message message, Channel channel) throws IOException {
         long tag = message.getMessageProperties().getDeliveryTag();
         String str = new String(message.getBody());
-        LogUtil.logger("【receiveAlternate监听到消息】" + str, LogUtil.INFO_LEVEL, null);
+        log.info("【receiveAlternate监听到消息】" + str);
         /*
          *接收到消息，处理业务成功则调用channel.basicAck()方法，
          *告诉mq服务器消费端处理成功，mq服务器就会删除该消息

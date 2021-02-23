@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:src="@{/static/js/jquery-1.8.3.js}"></script>
+    <script>
+         $(function () {
+             $("#but").click(function (){
+                 var name = $("#name").val();
+                 var pas = $("#pas").val();
+                 if (name == "" || pas == ""){
+                     alert("用户名或密码不能为空");
+                     return;
+                 }
+                 $("#form").submit();
+             })
+         })
+
+         function changeVerifyCode() {
+             $("#kaptchaImage").attr("src", "/captcha-image?" + Math.floor(Math.random() * 100));
+         }
+
+         function kickout(){
+             var href=location.href;
+             if(href.indexOf("kickout") > 0){
+                 alert("您的账号在另一台设备上登录，您被挤下线，若不是您本人操作，请立即修改密码！");
+             }
+         }
+         window.onload = kickout();
+    </script>
+</head>
+<body>
+<form id="form" action="/login" method="post">
+    <input type="text" id="name" name="userName"><br>
+    <input type="password" id="pas" name="password"><br>
+    <input type="checkbox" name="rememberMe"/>记住我<br>
+    验证码：<input type="text" name="randomcode" id="randomcode" maxlength="4" size="4">
+    <img id="kaptchaImage" onclick="changeVerifyCode()" src="/captcha-image"><br/>
+    <input type="button" id="but" value="登录"><font color="red"><p th:text="${error}"></p></font>
+</form>
+<input type="button" onclick="window.location.href='/zhuce'" value="注册">
+</body>
+</html>

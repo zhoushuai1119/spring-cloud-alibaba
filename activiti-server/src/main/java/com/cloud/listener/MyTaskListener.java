@@ -1,7 +1,7 @@
 package com.cloud.listener;
 
 import com.alibaba.fastjson.JSON;
-import com.cloud.common.utils.LogUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
 import org.springframework.stereotype.Component;
@@ -19,13 +19,14 @@ import org.springframework.stereotype.Component;
  * @version: V1.0
  */
 @Component
+@Slf4j
 public class MyTaskListener implements TaskListener {
 
     @Override
     public void notify(DelegateTask delegateTask) {
         //也可以指定任务负责人
 //        delegateTask.setAssignee("zhangsan");
-        LogUtil.logger("监听到任务:"+delegateTask.getId(),LogUtil.INFO_LEVEL,null);
-        LogUtil.logger(JSON.toJSONString(delegateTask),LogUtil.INFO_LEVEL,null);
+        log.info("监听到任务:"+delegateTask.getId());
+        log.info(JSON.toJSONString(delegateTask));
     }
 }

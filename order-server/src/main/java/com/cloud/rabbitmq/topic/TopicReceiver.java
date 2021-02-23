@@ -2,9 +2,10 @@ package com.cloud.rabbitmq.topic;
 
 import com.cloud.common.entity.order.Category;
 import com.cloud.common.utils.CommonUtil;
-import com.cloud.common.utils.LogUtil;
 import com.cloud.config.RabbitMQConfig;
 import com.rabbitmq.client.Channel;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.common.utils.LogUtil;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ import java.io.IOException;
  * @Version: 01
  */
 @Component
+@Slf4j
 public class TopicReceiver {
     /**
      * queues是指要监听的队列的名字
@@ -28,7 +30,7 @@ public class TopicReceiver {
         long tag = message.getMessageProperties().getDeliveryTag();
         String str = new String(message.getBody());
         Category category = CommonUtil.strToBean(str, Category.class);
-        LogUtil.logger("【receiveTopic监听到消息】" + str, LogUtil.INFO_LEVEL, null);
+        log.info("【receiveTopic监听到消息】" + str);
         /*
          *接收到消息，处理业务成功则调用channel.basicAck()方法，
          *告诉mq服务器消费端处理成功，mq服务器就会删除该消息

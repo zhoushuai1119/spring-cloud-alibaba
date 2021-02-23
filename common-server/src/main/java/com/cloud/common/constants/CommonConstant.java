@@ -25,8 +25,8 @@ public class CommonConstant {
     /**
      * 当前登录用户
      */
-    public interface CurrentUser {
-        String CURRENT_USER = "user";
+    public interface ShiroCurrentUser {
+        String SHIRO_CURRENT_USER = "shiroCurrentUser";
     }
 
     /**

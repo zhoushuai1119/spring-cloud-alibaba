@@ -1,8 +1,9 @@
 package com.cloud.rabbitmq.fanout;
 
-import com.cloud.common.utils.LogUtil;
 import com.cloud.config.RabbitMQConfig;
 import com.rabbitmq.client.Channel;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.common.utils.LogUtil;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.io.IOException;
  * @Version:  01
  */
 @Component
+@Slf4j
 public class FanoutReceiver {
 
     /**
@@ -25,8 +27,7 @@ public class FanoutReceiver {
     public void receiveFanout(Message message, Channel channel) throws IOException {
         long tag = message.getMessageProperties().getDeliveryTag();
         String msg = new String(message.getBody());
-        LogUtil.logger("【receiveFanout监听到消息】" + msg,LogUtil.INFO_LEVEL,null);
-
+        log.info("【receiveFanout监听到消息】" + msg);
         /*
          *接收到消息，处理业务成功则调用channel.basicAck()方法，
          *告诉mq服务器消费端处理成功，mq服务器就会删除该消息

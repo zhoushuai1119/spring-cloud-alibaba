@@ -1,6 +1,7 @@
 package com.cloud.filter;
 
-import com.cloud.common.utils.LogUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.common.utils.LogUtil;
 import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
@@ -17,6 +18,7 @@ import java.io.IOException;
  */
 @WebFilter(filterName = "filterOne",urlPatterns = "/*")
 @Order(value = 1)
+@Slf4j
 public class FilterOne implements Filter {
 
     @Override
@@ -28,7 +30,7 @@ public class FilterOne implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        LogUtil.logger("访问路径:"+request.getRequestURI(),LogUtil.INFO_LEVEL,null);
+        log.info("访问路径:"+request.getRequestURI());
         filterChain.doFilter(request,response);
     }
 

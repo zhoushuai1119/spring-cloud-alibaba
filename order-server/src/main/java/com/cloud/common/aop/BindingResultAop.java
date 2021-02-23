@@ -2,7 +2,8 @@ package com.cloud.common.aop;
 
 import com.cloud.common.beans.KeyValuePair;
 import com.cloud.common.beans.ReturnCode;
-import com.cloud.common.utils.LogUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.common.utils.LogUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -29,6 +30,7 @@ import java.util.regex.Pattern;
  */
 @Component
 @Aspect
+@Slf4j
 public class BindingResultAop {
 
     private ParameterNameDiscoverer parameterNameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
@@ -59,7 +61,7 @@ public class BindingResultAop {
             if(bindingResult.hasErrors()){
                 Class<?> returnType = method.getReturnType();
                 String errorInfo=bindingResult.getFieldError().getDefaultMessage();
-                LogUtil.logger(errorInfo, LogUtil.ERROR_LEVEL, null);
+                log.error(errorInfo);
                 if(isContainChinese(errorInfo)){
                     Constructor<?> constructor = returnType.getConstructor(int.class, String.class);
                     return constructor.newInstance(-100, errorInfo);
@@ -86,9 +88,9 @@ public class BindingResultAop {
                 int paramIndex = pathImpl.getLeafNode().getParameterIndex();
                 // 获得校验的参数名称
                 String paramName = parameterNames[paramIndex];
-                LogUtil.logger("校验参数:"+paramName, LogUtil.INFO_LEVEL,null);
+                log.info("校验参数:"+paramName);
                 //校验信息
-                LogUtil.logger("校验信息:"+constraintViolation.getMessage(), LogUtil.INFO_LEVEL,null);
+                log.info("校验信息:"+constraintViolation.getMessage());
             }
             //返回第一条
             Constructor<?> constructor = returnType.getConstructor(int.class, String.class);
