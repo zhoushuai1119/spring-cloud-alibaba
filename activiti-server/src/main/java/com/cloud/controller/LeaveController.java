@@ -52,7 +52,7 @@ public class LeaveController extends BaseController{
         ShiroUser currentUser = getCurrentUser(session);
         String currentUserId = currentUser.getId();
         //部门领导用户ID,可以通过页面选择下一个审批人传到后台
-        String departmentManagerUserId = "tom";
+        String departmentManagerUserId = "1364183365518913537";
         //请假申请ID
         Leave leave = new Leave();
         leave.setApplyUserId(currentUserId);
@@ -102,7 +102,7 @@ public class LeaveController extends BaseController{
     public Result<String> leaveAprove(HttpSession session,String taskId) {
         ShiroUser currentUser = getCurrentUser(session);
         Map<String, Object> variables = new HashMap<>(16);
-        variables.put("general_manager", "zhoushuai");
+        variables.put("general_manager", "1364183626815664130");
 
         KeyValuePair result = taskManageService.completeTask(currentUser.getId(), taskId, variables);
         return ResultUtil.getResult(result);
