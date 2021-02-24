@@ -47,7 +47,6 @@ public class TaskController extends BaseController{
                 myTaskMap.put("taskId", myTask.getId());
                 myTaskMap.put("taskName", myTask.getName());
                 myTaskMap.put("assignee", myTask.getAssignee());
- //               myTaskMap.put("businessKey", myTask.getBusinessKey());
                 myTaskMap.put("processInstanceId", myTask.getProcessInstanceId());
                 myTaskMap.put("processDefinitionId", myTask.getProcessDefinitionId());
                 myTaskMapList.add(myTaskMap);
@@ -73,7 +72,6 @@ public class TaskController extends BaseController{
                 myGroupTaskMap.put("taskId", myGroupTask.getId());
                 myGroupTaskMap.put("taskName", myGroupTask.getName());
                 myGroupTaskMap.put("assignee", myGroupTask.getAssignee());
-//                myGroupTaskMap.put("businessKey", myGroupTask.getBusinessKey());
                 myGroupTaskMap.put("processInstanceId", myGroupTask.getProcessInstanceId());
                 myGroupTaskMap.put("processDefinitionId", myGroupTask.getProcessDefinitionId());
                 myGroupTaskMapList.add(myGroupTaskMap);
@@ -82,17 +80,6 @@ public class TaskController extends BaseController{
         return ResultUtil.getResult(myGroupTaskMapList);
     }
 
-    /**
-     * 完成指定任务
-     *
-     * @param taskId 任务ID
-     */
-    @RequestMapping("/completeTask")
-    public Result<String> completeTask(HttpSession session,String taskId) {
-        ShiroUser currentUser = getCurrentUser(session);
-        KeyValuePair result = taskManageService.completeTask(currentUser.getId(), taskId,null);
-        return ResultUtil.getResult(result);
-    }
 
     /**
      * 拾取指定任务

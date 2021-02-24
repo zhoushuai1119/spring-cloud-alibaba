@@ -27,7 +27,6 @@ public class SysUserFilter extends PathMatchingFilter {
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
         ShiroUser shiroUser = shiroUserService.findByUsername(userName);
         request.getSession().setAttribute(CommonConstant.ShiroCurrentUser.SHIRO_CURRENT_USER, shiroUser);
-        log.info("当前登录用户:"+shiroUser.getUserName());
         return true;
     }
 

@@ -45,14 +45,13 @@ public class LeaveController extends BaseController{
      * @date: 2021/2/22 10:41
      * @Param: processDefinitionKey 流程定义key
      * @Param: leaveDays 请假天数（>=3 需要经过总经理审批；<3天直接到人事审批）
+     * @Param: nextApproveUserId 下一个审批人ID
      * @return:
      */
     @RequestMapping("/leaveApply")
-    public Result<String> leaveApply(HttpSession session,String processDefinitionKey, Integer leaveDays) {
+    public Result<String> leaveApply(HttpSession session,String processDefinitionKey,Integer leaveDays,String nextApproveUserId) {
         ShiroUser currentUser = getCurrentUser(session);
         String currentUserId = currentUser.getId();
-        //部门领导用户ID,可以通过页面选择下一个审批人传到后台
-        String departmentManagerUserId = "1364183365518913537";
         //请假申请ID
         Leave leave = new Leave();
         leave.setApplyUserId(currentUserId);
@@ -70,7 +69,7 @@ public class LeaveController extends BaseController{
             //设置申请人ID
             variables.put("apply_user_id", currentUserId);
             //设置部门领导用户ID
-            variables.put("department_manager", departmentManagerUserId);
+            variables.put("department_manager", nextApproveUserId);
             //设置请假天数，用于条件判断；注意key要与bpmn配置的EL表达式的参数名一致
             variables.put("leave_days", leaveDays);
 
@@ -97,12 +96,13 @@ public class LeaveController extends BaseController{
      * 请假流程审批
      *
      * @param taskId 任务ID
+     * @Param: nextApproveUserId 下一个审批人ID
      */
     @RequestMapping("/leaveAprove")
-    public Result<String> leaveAprove(HttpSession session,String taskId) {
+    public Result<String> leaveAprove(HttpSession session,String taskId,String nextApproveUserId) {
         ShiroUser currentUser = getCurrentUser(session);
         Map<String, Object> variables = new HashMap<>(16);
-        variables.put("general_manager", "1364183626815664130");
+        variables.put("general_manager", nextApproveUserId);
 
         KeyValuePair result = taskManageService.completeTask(currentUser.getId(), taskId, variables);
         return ResultUtil.getResult(result);

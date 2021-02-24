@@ -1,18 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : localhost
- Source Server Type    : MySQL
- Source Server Version : 80020
- Source Host           : localhost:3306
- Source Schema         : activiti
-
- Target Server Type    : MySQL
- Target Server Version : 80020
- File Encoding         : 65001
-
- Date: 23/02/2021 18:47:04
-*/
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -36,7 +21,6 @@ CREATE TABLE `leave_process`  (
 -- ----------------------------
 -- Records of leave_process
 -- ----------------------------
-INSERT INTO `leave_process` VALUES ('1364079778080018434', 'salaboy', '2021-02-23', '2021-02-25', '个人原因', '1', '2021-02-23 13:08:57', 5);
 
 -- ----------------------------
 -- Table structure for permission
@@ -91,6 +75,8 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
+INSERT INTO `user` VALUES ('1364183365518913537', 'tom', 'de94535a0ff635b4b95d558c858d0292', 'bcdf35ee78be4f8240942bb4957e7541');
+INSERT INTO `user` VALUES ('1364183626815664130', 'zhoushuai', 'e7d3de2c8ea0480b31969bc04e2ea2cc', '8c0129671339f7ed205d3905e7ea8679');
 INSERT INTO `user` VALUES ('65bb927544eec419b25e0385f52c350e', 'jack', '37958e672d626756b97312501dd03fc0', '0c282045820af0c152816fb724a5f8a4');
 
 -- ----------------------------
