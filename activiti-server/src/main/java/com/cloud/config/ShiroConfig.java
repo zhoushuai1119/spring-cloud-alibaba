@@ -3,7 +3,6 @@ package com.cloud.config;
 import com.cloud.common.constants.CommonConstant;
 import com.cloud.filters.KickoutSessionControlFilter;
 import com.cloud.filters.MyFormAuthenticationFilter;
-import com.cloud.filters.SysUserFilter;
 import com.cloud.shiro.credentials.RetryLimitHashedCredentialsMatcher;
 import com.cloud.shiro.realm.MyRealm;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +57,6 @@ public class ShiroConfig {
         Map<String, Filter> filtersMap = new LinkedHashMap<>();
         filtersMap.put("authc",myFormAuthenticationFilter());
         filtersMap.put("kickout",kickoutSession());
-        filtersMap.put("sysUser",currentUser());
         shiroFilterFactoryBean.setFilters(filtersMap);
         //Shiro连接约束配置，即过滤链的定义
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
@@ -74,7 +72,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/admin","authc");
         filterChainDefinitionMap.put("/student","authc,roles[\"admin\"]");
         filterChainDefinitionMap.put("/teacher","authc,perms[\"user:query\"]");
-        filterChainDefinitionMap.put("/**", "authc, kickout, user, sysUser");
+        filterChainDefinitionMap.put("/**", "authc, kickout, user");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
@@ -170,7 +168,6 @@ public class ShiroConfig {
         sessionManager.setDeleteInvalidSessions(true);
         //需要让此session可以使用该定时调度器进行检测
         sessionManager.setSessionValidationSchedulerEnabled(true);
-        //sessionManager.setSessionValidationSchedulerEnabled(false);
         //定义要使用的无效的Session定时调度器
         //sessionManager.setSessionValidationScheduler(sessionValidationScheduler());
         sessionManager.setSessionDAO(sessionDAO());
@@ -220,15 +217,6 @@ public class ShiroConfig {
         return en;
     }
 
-    /**
-     * 获取当前系统用户
-     */
-    @Bean
-    public SysUserFilter currentUser() {
-        log.info("*************currentUserFilter*****************");
-        SysUserFilter currentUser = new SysUserFilter();
-        return currentUser;
-    }
 
     /**
      * 踢出登录拦截器
@@ -259,7 +247,7 @@ public class ShiroConfig {
         myFormAuthenticationFilter.setPasswordParam("password");
         myFormAuthenticationFilter.setRememberMeParam("rememberMe");
         myFormAuthenticationFilter.setFailureKeyAttribute(CommonConstant.ShiroError.LOGIN_ERROR);
-        myFormAuthenticationFilter.setLoginUrl("/login");
+        //myFormAuthenticationFilter.setLoginUrl("/login");
         return myFormAuthenticationFilter;
     }
 

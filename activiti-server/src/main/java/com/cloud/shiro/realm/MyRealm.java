@@ -34,7 +34,8 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String username = (String) principals.getPrimaryPrincipal();
+        ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();
+        String username = shiroUser.getUserName();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         Set<String> roles = shiroUserService.getRoles(username);
         Set<String> permiss = shiroUserService.getPermissions(username);
@@ -56,14 +57,15 @@ public class MyRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         //获取用户名
         String username = (String) token.getPrincipal();
-        ShiroUser user = shiroUserService.findByUsername(username);
-        if (user != null) {
-            /*AuthenticationInfo authcInfo =new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(),"myRealm");*/
+        ShiroUser shiroUser = shiroUserService.findByUsername(username);
+        if (shiroUser != null) {
+            log.info("***********进入MyRealm获取用户信息:"+shiroUser+"************");
             /**交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现*/
             AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(
-                    user.getUserName(),
-                    user.getPassword(),
-                    ByteSource.Util.bytes(user.getCredentialsSalt()),
+                    //SecurityUtils.getSubject().getPrincipal()获取的信息在这里配置
+                    shiroUser,
+                    shiroUser.getPassword(),
+                    ByteSource.Util.bytes(shiroUser.getCredentialsSalt()),
                     getName()
             );
             return authcInfo;

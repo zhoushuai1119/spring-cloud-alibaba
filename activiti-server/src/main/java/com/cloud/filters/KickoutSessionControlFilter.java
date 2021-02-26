@@ -1,5 +1,6 @@
 package com.cloud.filters;
 
+import com.cloud.common.entity.activiti.ShiroUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
@@ -72,7 +73,8 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
         }
 
         Session session = subject.getSession();
-        String username = (String) subject.getPrincipal();
+        ShiroUser shiroUser = (ShiroUser) subject.getPrincipal();
+        String username = shiroUser.getUserName();
         Serializable sessionId = session.getId();
 
         // TODO 同步控制

@@ -2,7 +2,6 @@ package com.cloud.config;
 
 import com.cloud.filters.KickoutSessionControlFilter;
 import com.cloud.filters.MyFormAuthenticationFilter;
-import com.cloud.filters.SysUserFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,13 +18,6 @@ public class ShiroFilterRegisterConfig {
     public FilterRegistrationBean myFormRegistration(MyFormAuthenticationFilter myFormFilter){
         FilterRegistrationBean registration = new FilterRegistrationBean(myFormFilter);
         //取消Filter自动注册,不会添加到FilterChain中
-        registration.setEnabled(false);
-        return  registration;
-    }
-
-    @Bean
-    public FilterRegistrationBean sysUserRegistration(SysUserFilter sysUserFilter){
-        FilterRegistrationBean registration = new FilterRegistrationBean(sysUserFilter);
         registration.setEnabled(false);
         return  registration;
     }

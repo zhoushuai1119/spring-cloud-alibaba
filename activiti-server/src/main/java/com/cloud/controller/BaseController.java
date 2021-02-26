@@ -1,9 +1,7 @@
 package com.cloud.controller;
 
-import com.cloud.common.constants.CommonConstant;
 import com.cloud.common.entity.activiti.ShiroUser;
-
-import javax.servlet.http.HttpSession;
+import org.apache.shiro.SecurityUtils;
 
 /**
  * @description:
@@ -13,11 +11,7 @@ import javax.servlet.http.HttpSession;
  */
 public class BaseController {
 
-    public ShiroUser getCurrentUser(HttpSession session){
-        Object currentUser = session.getAttribute(CommonConstant.ShiroCurrentUser.SHIRO_CURRENT_USER);
-        if (currentUser != null){
-            return (ShiroUser)currentUser;
-        }
-        return null;
+    public ShiroUser getCurrentUser(){
+        return (ShiroUser) SecurityUtils.getSubject().getPrincipal();
     }
 }

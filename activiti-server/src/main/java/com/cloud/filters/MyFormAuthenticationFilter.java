@@ -14,6 +14,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @Author:zhoushuai
+ * 1、用户访问任意一个接口，都先经过formAuthenticationFilter拦截
+ * 2、formAuthenticationFilter拦截到了该请求，执行AuthorizingRealm里的登录逻辑。
+ * 3、如果登录成功，将会执行redirect到配置的成功的跳转地址。如果登录失败，将会执行redirect到失败的登录地址
  * @Description:
  * @Date:2018-05-23 14:58
  */
@@ -34,10 +37,8 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
         HttpSession session = ((HttpServletRequest) request).getSession();
         //从session中取出验证码
         String validateCode = (String) session.getAttribute("validateCode");
-        log.info("session生成的验证码为:"+validateCode);
         //页面输入的验证码
         String randomcode = request.getParameter("randomcode");
-        log.info("用户输入的的验证码为:"+randomcode);
         if (randomcode != null && validateCode != null && !randomcode.equals(validateCode)) {
             // randomCodeError表示验证码错误
             request.setAttribute(CommonConstant.ShiroError.LOGIN_ERROR, CommonConstant.ShiroError.RANDOM_CODE_ERROR);

@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -49,8 +48,8 @@ public class LeaveController extends BaseController{
      * @return:
      */
     @RequestMapping("/leaveApply")
-    public Result<String> leaveApply(HttpSession session,String processDefinitionKey,Integer leaveDays,String nextApproveUserId) {
-        ShiroUser currentUser = getCurrentUser(session);
+    public Result<String> leaveApply(String processDefinitionKey,Integer leaveDays,String nextApproveUserId) {
+        ShiroUser currentUser = getCurrentUser();
         String currentUserId = currentUser.getId();
         //请假申请ID
         Leave leave = new Leave();
@@ -99,8 +98,8 @@ public class LeaveController extends BaseController{
      * @Param: nextApproveUserId 下一个审批人ID
      */
     @RequestMapping("/leaveAprove")
-    public Result<String> leaveAprove(HttpSession session,String taskId,String nextApproveUserId) {
-        ShiroUser currentUser = getCurrentUser(session);
+    public Result<String> leaveAprove(String taskId,String nextApproveUserId) {
+        ShiroUser currentUser = getCurrentUser();
         Map<String, Object> variables = new HashMap<>(16);
         variables.put("general_manager", nextApproveUserId);
 

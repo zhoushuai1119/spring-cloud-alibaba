@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache name="shirocache" updateCheck="false"><!-- updateCheck关闭网络获取缓存 -->
 
+    <sizeOfPolicy maxDepth="1000000" maxDepthExceededBehavior="abort" />
+
     <diskStore path="java.io.tmpdir"/>
 
     <defaultCache

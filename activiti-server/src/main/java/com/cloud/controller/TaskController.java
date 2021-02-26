@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,8 +35,8 @@ public class TaskController extends BaseController{
      * @return
      */
     @RequestMapping("/getMyTasks")
-    public Result<List<Map<String, Object>>> getMyTasks(HttpSession session) {
-        ShiroUser currentUser = getCurrentUser(session);
+    public Result<List<Map<String, Object>>> getMyTasks() {
+        ShiroUser currentUser = getCurrentUser();
         List<Task> myTaskList = taskManageService.getUserTasks(currentUser.getId(),null,null);
         // 直接返回myTaskList会异常
         List<Map<String, Object>> myTaskMapList = new ArrayList<>();
@@ -61,8 +60,8 @@ public class TaskController extends BaseController{
      * @return
      */
     @RequestMapping("/getMyGroupTasks")
-    public Result<List<Map<String, Object>>> getMyGroupTasks(HttpSession session) {
-        ShiroUser currentUser = getCurrentUser(session);
+    public Result<List<Map<String, Object>>> getMyGroupTasks() {
+        ShiroUser currentUser = getCurrentUser();
         List<Task> myGroupTaskList = taskManageService.getUserGroupTasks(currentUser.getId(),null);
         // 直接返回myTaskList会异常
         List<Map<String, Object>> myGroupTaskMapList = new ArrayList<>();
@@ -88,8 +87,8 @@ public class TaskController extends BaseController{
      * @param taskId 任务ID
      */
     @RequestMapping("/claimTask")
-    public Result<String> claimTask(HttpSession session, String taskId) {
-        ShiroUser currentUser = getCurrentUser(session);
+    public Result<String> claimTask(String taskId) {
+        ShiroUser currentUser = getCurrentUser();
         KeyValuePair result = taskManageService.claimTask(currentUser.getId(), taskId);
         return ResultUtil.getResult(result);
     }
