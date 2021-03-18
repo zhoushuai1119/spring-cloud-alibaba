@@ -44,12 +44,58 @@ spring:
         server-addr: localhost:8848
         file-extension: yml
 
+    #RocketMQ配置
+    stream:
+      rocketmq:
+        binder:
+          # 配置rocketmq的nameserver地址
+          name-server: 192.168.46.128:9876
+        # RocketMQ 自定义 Binding 配置项，对应 RocketMQBindingProperties Map
+        bindings:
+          erbadagang-output:
+            # RocketMQ Producer 配置项，对应 RocketMQProducerProperties 类
+            producer:
+              group: test # 生产者分组
+              sync: true # 是否同步发送消息，默认为 false 异步。
+
+          erbadagang-input:
+            # RocketMQ Consumer 配置项，对应 RocketMQConsumerProperties 类
+            consumer:
+              # 是否开启消费，默认为 true
+              enabled: true
+              # 是否使用广播消费，默认为 false 使用集群消费，如果要使用广播消费值设成true。
+              # 集群消费模式下,相同 Consumer Group 的每个 Consumer 实例平均分摊消息
+              # 广播消费模式下，相同 Consumer Group 的每个 Consumer 实例都接收全量的消息。
+              broadcasting: false
+              orderly: true
+              # 基于 Tag 订阅，多个 Tag 使用 || 分隔，默认为空
+              tags: trek || look || tag11
+
+      bindings:
+
+        erbadagang-output:
+          destination: ERBADAGANG-TOPIC-01 # 目的地。这里使用 RocketMQ Topic
+          content-type: application/json # 内容格式。这里使用 JSON
+
+        trek-output:
+          destination: TREK-TOPIC-01 # 目的地。这里使用 RocketMQ Topic
+          content-type: application/json # 内容格式。这里使用 JSON
+
+        erbadagang-input:
+          destination: ERBADAGANG-TOPIC-01 # 目的地。这里使用 RocketMQ Topic
+          content-type: application/json # 内容格式。这里使用 JSON
+          group: erbadagang-consumer-group-ERBADAGANG-TOPIC-01 # 消费者分组,命名规则：组名+topic名
+
+        trek-input:
+          destination: TREK-TOPIC-01 # 目的地。这里使用 RocketMQ Topic
+          content-type: application/json # 内容格式。这里使用 JSON
+          group: trek-consumer-group-TREK-TOPIC-01 # 消费者分组,命名规则：组名+topic名
 
   redis:
     database: 0
     host: 127.0.0.1
     port: 6379
-    password: 123456
+#    password: 123456
     timeout: 6000ms
     lettuce:
       pool:
@@ -185,8 +231,8 @@ management:
 fdfs:
   so-timeout: 15010
   connect-timeout: 6010
-  tracker-list: 192.168.10.128:22122
-  urlPrefix: http://192.168.10.128/
+  tracker-list: 192.168.46.128:22122
+  urlPrefix: http://192.168.46.128/
   ##生成缩略图参数
   thumb-image:
     width: 150

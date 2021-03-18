@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cloud.common.annotation.ParamCheck;
 import com.cloud.common.beans.Result;
+import com.cloud.common.entity.order.Category;
 import com.cloud.common.entity.order.EnumTest;
 import com.cloud.common.entity.order.dto.ParmsTestDto;
 import com.cloud.common.enums.AgeEnum;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @description:
@@ -71,8 +73,9 @@ public class TestJsonController {
     }
 
     @RequestMapping("/categosyList")
-    public void categosyList() throws Exception {
-        categoryService.updateTT();
+    public Result<List<Category>> categosyList() {
+        List<Category> categoryList = categoryService.categoryList();
+        return ResultUtil.getResult(categoryList);
     }
 
 }
