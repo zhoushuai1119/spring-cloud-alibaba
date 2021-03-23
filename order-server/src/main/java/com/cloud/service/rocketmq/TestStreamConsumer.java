@@ -16,15 +16,12 @@ public class TestStreamConsumer {
      * @param message
      */
     @StreamListener(value = MySink.ERBADAGANG_INPUT)
-    public void onMessage(@Payload Category message) {
+    public void onMessage(@Payload Category message) throws Exception {
         log.info("[onMessage][线程编号:{} 消息内容：{}]", Thread.currentThread().getId(), message.getCategoryName());
+        /*if (true){
+            throw  new Exception();
+        }*/
     }
-
-    @StreamListener(MySink.TREK_INPUT)
-    public void onTrekMessage(@Payload String message) {
-        log.info("[onMessage][线程编号:{} 消息内容：{}]", Thread.currentThread().getId(), message);
-    }
-
 
 }
 

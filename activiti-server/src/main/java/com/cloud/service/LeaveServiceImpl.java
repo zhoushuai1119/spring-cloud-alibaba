@@ -6,6 +6,8 @@ import com.cloud.common.service.activiti.LeaveService;
 import com.cloud.dao.LeaveMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @description:
  * @author: 周帅
@@ -15,4 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class LeaveServiceImpl extends ServiceImpl<LeaveMapper, Leave> implements LeaveService {
 
+    @Override
+    public List<Leave> getLeaveList() {
+        return list();
+    }
 }

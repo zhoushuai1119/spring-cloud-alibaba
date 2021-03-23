@@ -5,11 +5,13 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
+@Builder
 @TableName("leave_process")
 public class Leave extends Model<Leave> {
 
@@ -36,6 +38,6 @@ public class Leave extends Model<Leave> {
 
     @TableField("CREATE_TIME")
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
+    private LocalDateTime createTime;
 
 }

@@ -1,15 +1,6 @@
 package com.cloud.config;
 
-import com.xxl.sso.core.conf.Conf;
-import com.xxl.sso.core.filter.XxlSsoWebFilter;
-import com.xxl.sso.core.util.JedisUtil;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-@Configuration
+/*@Configuration
 public class XxlSsoConfig implements DisposableBean {
 
 
@@ -53,4 +44,4 @@ public class XxlSsoConfig implements DisposableBean {
         JedisUtil.close();
     }
 
-}
+}*/

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cloud.common.annotation.ParamCheck;
 import com.cloud.common.beans.Result;
+import com.cloud.common.beans.ReturnCode;
 import com.cloud.common.entity.order.Category;
 import com.cloud.common.entity.order.EnumTest;
 import com.cloud.common.entity.order.dto.ParmsTestDto;
@@ -76,6 +77,12 @@ public class TestJsonController {
     public Result<List<Category>> categosyList() {
         List<Category> categoryList = categoryService.categoryList();
         return ResultUtil.getResult(categoryList);
+    }
+
+    @RequestMapping("/dubboTest")
+    public Result dubboTest() throws Exception {
+        categoryService.updateTT();
+        return ResultUtil.getResult(ReturnCode.SUCCESS);
     }
 
 }

@@ -61,11 +61,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
         //2:添加fastJson的配置信息;
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         /**
-         * 第一个SerializerFeature.PrettyFormat可以省略，毕竟这会造成额外的内存消耗和流量，第二个是用来指定当属性值为null是是否输出：pro:null
+         * 第一个SerializerFeature.PrettyFormat可以省略，毕竟这会造成额外的内存消耗和流量，
+         * 第二个是用来指定当属性值为null是是否输出：pro:null
          　　　　　 * SerializerFeature.SkipTransientField
          */
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteMapNullValue);
-        //fastJsonConfig.setSerializeFilters(dictContextValueFilter);
+        fastJsonConfig.setSerializerFeatures(
+                SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteNullStringAsEmpty,
+                SerializerFeature.WriteNullListAsEmpty,
+                SerializerFeature.WriteDateUseDateFormat,
+                SerializerFeature.PrettyFormat);
         //3处理中文乱码问题
         List<MediaType> fastMediaTypes = new ArrayList<>();
         fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);

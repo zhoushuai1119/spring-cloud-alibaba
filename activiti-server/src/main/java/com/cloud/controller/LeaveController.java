@@ -10,13 +10,14 @@ import com.cloud.common.utils.CommonUtil;
 import com.cloud.common.utils.ResultUtil;
 import com.cloud.service.activiti.ProcessService;
 import com.cloud.service.activiti.TaskManageService;
+import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,8 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/leave")
-public class LeaveController extends BaseController{
+@Slf4j
+public class LeaveController extends BaseController {
 
     @Autowired
     private LeaveService leaveService;
@@ -48,18 +50,19 @@ public class LeaveController extends BaseController{
      * @return:
      */
     @RequestMapping("/leaveApply")
-    public Result<String> leaveApply(String processDefinitionKey,Integer leaveDays,String nextApproveUserId) {
+    public Result<String> leaveApply(String processDefinitionKey, Integer leaveDays, String nextApproveUserId) {
         ShiroUser currentUser = getCurrentUser();
         String currentUserId = currentUser.getId();
         //请假申请ID
-        Leave leave = new Leave();
-        leave.setApplyUserId(currentUserId);
-        leave.setStartTime("2021-02-23");
-        leave.setEndTime("2021-02-25");
-        leave.setLeaveDays(leaveDays);
-        leave.setReason("个人原因");
-        leave.setType("1");
-        leave.setCreateTime(new Date());
+        Leave leave = Leave.builder()
+                .applyUserId(currentUserId)
+                .startTime("2021-02-23")
+                .endTime("2021-02-25")
+                .leaveDays(leaveDays)
+                .reason("个人原因")
+                .type("1")
+                .createTime(LocalDateTime.now()).build();
+
         boolean leaveSave = leaveService.save(leave);
 
         if (leaveSave) {
@@ -83,7 +86,7 @@ public class LeaveController extends BaseController{
                 for (Task myTask : myTaskList) {
                     if (processInstanceId.equals(myTask.getProcessInstanceId())) {
                         String taskId = myTask.getId();
-                        taskManageService.completeTask(currentUserId, taskId,null);
+                        taskManageService.completeTask(currentUserId, taskId, null);
                     }
                 }
             }
@@ -98,13 +101,27 @@ public class LeaveController extends BaseController{
      * @Param: nextApproveUserId 下一个审批人ID
      */
     @RequestMapping("/leaveAprove")
-    public Result<String> leaveAprove(String taskId,String nextApproveUserId) {
+    public Result<String> leaveAprove(String taskId, String nextApproveUserId) {
         ShiroUser currentUser = getCurrentUser();
         Map<String, Object> variables = new HashMap<>(16);
         variables.put("general_manager", nextApproveUserId);
 
         KeyValuePair result = taskManageService.completeTask(currentUser.getId(), taskId, variables);
         return ResultUtil.getResult(result);
+    }
+
+    /**
+     * 请假流程列表
+     */
+    @RequestMapping("/leaveList")
+    public Result<List<Leave>> leaveList() {
+        List<Leave> leaveList = leaveService.getLeaveList();
+        if (CommonUtil.isNotEmpty(leaveList)) {
+            leaveList.forEach(k ->
+                    log.info("**"+ k)
+            );
+        }
+        return ResultUtil.getResult(leaveList);
     }
 
 }

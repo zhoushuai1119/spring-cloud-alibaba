@@ -8,7 +8,4 @@ public interface MySource {
     @Output("erbadagang-output")
     MessageChannel erbadagangOutput();
 
-    @Output("trek-output")
-    MessageChannel trekOutput();
-
 }

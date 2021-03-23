@@ -7,11 +7,8 @@ public interface MySink {
 
     String ERBADAGANG_INPUT = "erbadagang-input";
 
-    String TREK_INPUT = "trek-input";
 
     @Input(ERBADAGANG_INPUT)
     SubscribableChannel demo01Input();
 
-    @Input(TREK_INPUT)
-    SubscribableChannel trekInput();
 }

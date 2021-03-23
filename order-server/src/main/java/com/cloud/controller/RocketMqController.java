@@ -26,7 +26,7 @@ public class RocketMqController {
         // <3>创建 Spring Message 对象
         Message<Category> springMessage = MessageBuilder.withPayload(category)
                 .setHeader(MessageConst.PROPERTY_DELAY_TIME_LEVEL, "3") // 设置延迟级别为 3，10 秒后消费。
-                .setHeader(MessageConst.PROPERTY_TAGS, "tag11") // 设置 Tag
+                .setHeader(MessageConst.PROPERTY_TAGS, "tag") // 设置 Tag
                 .build();
         // <4>发送消息
         return mySource.erbadagangOutput().send(springMessage);

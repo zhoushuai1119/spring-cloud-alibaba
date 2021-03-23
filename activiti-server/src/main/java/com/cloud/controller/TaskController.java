@@ -41,15 +41,15 @@ public class TaskController extends BaseController{
         // 直接返回myTaskList会异常
         List<Map<String, Object>> myTaskMapList = new ArrayList<>();
         if (CommonUtil.isNotEmpty(myTaskList)) {
-            for (Task myTask : myTaskList) {
-                Map<String, Object> myTaskMap = new HashMap<>();
+            myTaskList.forEach(myTask -> {
+                Map<String, Object> myTaskMap = new HashMap<>(16);
                 myTaskMap.put("taskId", myTask.getId());
                 myTaskMap.put("taskName", myTask.getName());
                 myTaskMap.put("assignee", myTask.getAssignee());
                 myTaskMap.put("processInstanceId", myTask.getProcessInstanceId());
                 myTaskMap.put("processDefinitionId", myTask.getProcessDefinitionId());
                 myTaskMapList.add(myTaskMap);
-            }
+            });
         }
         return ResultUtil.getResult(myTaskMapList);
     }
