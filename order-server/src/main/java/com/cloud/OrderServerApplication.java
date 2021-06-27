@@ -9,6 +9,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -16,8 +17,8 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 //启用@WebServlet、@WebFilter和@WebListener注释的类的自动注册
 @ServletComponentScan
 @EnableDubbo
+@EnableAsync
 //@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1800)//设置session过期时间
-//@EnableBinding({Source.class,Sink.class})
 @EnableBinding({MySource.class, MySink.class})
 public class OrderServerApplication {
 

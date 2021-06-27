@@ -18,4 +18,6 @@ public interface CategoryService extends IService<Category> {
 
     void updateTT() throws Exception;
 
+    void testAsync();
+
 }

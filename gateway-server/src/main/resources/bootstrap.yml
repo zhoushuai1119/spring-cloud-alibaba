@@ -43,15 +43,17 @@ spring:
 
       #全局默认熔断配置
       default-filters:
+        - Session
         - name: Hystrix
           args:
             name: fetchIngredients
-            +fallbackUri: forward:/fallback
+            fallbackUri: forward:/fallback
         - name: Retry
           args:
             retries: 3
             statuses: BAD_GATEWAY,BAD_REQUEST
             methods: GET,POST
+
 
       discovery:
         locator:

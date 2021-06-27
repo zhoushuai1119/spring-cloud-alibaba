@@ -97,17 +97,15 @@ public class GateWayConfig {
     public RouteLocator customRouteLocator(RouteLocatorBuilder routeLocatorBuilder) {
         RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
         routes.route("order-server",
-                r -> r.path("/test/order-server/**")
+                r -> r.path("/order-server/**")
                         //.filters(f -> f.stripPrefix(1).filters(authGatewayFilter)
-                        .filters(f -> f.stripPrefix(1)
-                        )
+                        //.filters(f -> f.stripPrefix(1))
                         .uri("lb://order-server")
         ).build();
         routes.route("user-server",
                 r -> r.path("/test/user-server/**")
                         //.filters(f -> f.stripPrefix(1).filters(authGatewayFilter)
-                        .filters(f -> f.stripPrefix(1)
-                        )
+                        .filters(f -> f.stripPrefix(1))
                         .uri("lb://user-server")
         ).build();
         return routes.build();

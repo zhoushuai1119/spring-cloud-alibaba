@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cloud.common.annotation.ParamCheck;
 import com.cloud.common.beans.Result;
 import com.cloud.common.beans.ReturnCode;
+import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.entity.order.Category;
 import com.cloud.common.entity.order.EnumTest;
 import com.cloud.common.entity.order.dto.ParmsTestDto;
@@ -14,13 +15,11 @@ import com.cloud.common.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -53,24 +52,25 @@ public class TestJsonController {
     }
 
     @RequestMapping("/baidu/11")
-    public String test(HttpServletRequest request) throws Exception {
+    public String test(HttpServletRequest request) {
         String sessionId = request.getSession().getId();
-        /*if (true) {
-            throw new Exception("测试异常");
-        }*/
-        return port+"****"+sessionId;
+        String userId = request.getSession().getAttribute("userId").toString();
+        return port+"****"+sessionId+"*****"+userId;
     }
 
     @RequestMapping("/baidu/22")
     @ParamCheck
-    public Result<String> test22(@NotBlank(message = "aa不能为空") String aa, String bb){
+    public Result<String> test22(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.setAttribute("userId", "zhoushuaitest");
         return ResultUtil.getResult("1234667788");
     }
 
-    @RequestMapping("/baidu/55")
-    @ParamCheck
-    public Result<String> test444(@Valid ParmsTestDto test, BindingResult result){
-        return ResultUtil.getResult("1234");
+    @PostMapping("/baidu/55")
+//    @ParamCheck
+    public BaseResponse<List<Category>> test444(@RequestBody @Validated ParmsTestDto test) throws Exception {
+        List<Category> categoryList = categoryService.categoryList();
+        return BaseResponse.createSuccessResult(categoryList);
     }
 
     @RequestMapping("/categosyList")
@@ -82,6 +82,14 @@ public class TestJsonController {
     @RequestMapping("/dubboTest")
     public Result dubboTest() throws Exception {
         categoryService.updateTT();
+        return ResultUtil.getResult(ReturnCode.SUCCESS);
+    }
+
+    @RequestMapping("/testAsync")
+    public Result testAsync() {
+        System.out.println("11111111111");
+        categoryService.testAsync();
+        System.out.println("22222222222222");
         return ResultUtil.getResult(ReturnCode.SUCCESS);
     }
 

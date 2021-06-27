@@ -3,6 +3,7 @@ package com.cloud.common.entity.order.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -15,13 +16,13 @@ import java.io.Serializable;
 @Data
 public class ParmsTestDto implements Serializable {
 
-    @NotBlank(message = "aaa不能为空")
+    @NotBlank
     private String aaa;
 
-    @NotBlank(message = "aaa不能为空")
+    @NotEmpty
     private String bbb;
 
-    @NotNull(message = "aaa不能为空")
+    @NotNull
     private Integer ccc;
 
 }
