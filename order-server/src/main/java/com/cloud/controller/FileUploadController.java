@@ -1,16 +1,13 @@
 package com.cloud.controller;
 
-import com.cloud.common.annotation.ParamCheck;
-import com.cloud.common.beans.Result;
+import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.service.order.IFileService;
 import com.cloud.common.utils.CommonUtil;
-import com.cloud.common.utils.ResultUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.dubbo.common.utils.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -72,10 +69,10 @@ public class FileUploadController {
             @ApiImplicitParam(name = "file", value = "文件数据", required = true, paramType="query", dataType = "MultipartFile")
     })
     @PostMapping(value = "/upload")
-    public Result<String> uploadFileClient(@RequestPart("file") MultipartFile file) throws Exception {
+    public BaseResponse<String> uploadFileClient(@RequestPart("file") MultipartFile file) throws Exception {
         byte[] bytes = file.getBytes();
         String path = fileService.uploadFile(bytes, file.getSize(), file.getOriginalFilename());
-        return ResultUtil.getResult(path);
+        return BaseResponse.createSuccessResult(path);
     }
 
     @ApiOperation(value="下载文件", notes="下载文件")
@@ -84,7 +81,6 @@ public class FileUploadController {
             @ApiImplicitParam(name = "fileName", value = "文件名称", required = true, paramType="query", dataType = "String")
     })
     @PostMapping(value = "/download")
-    @ParamCheck
     public void downloadFile(@NotBlank(message = "文件路径地址不能为空") String fileUrl,
                              @NotBlank(message = "文件名称不能为空") String fileName,
                              HttpServletResponse response, HttpServletRequest request){
@@ -101,7 +97,6 @@ public class FileUploadController {
             @ApiImplicitParam(name = "fileUrl", value = "文件路径地址", required = true, paramType="query", dataType = "String"),
     })
     @GetMapping(value = "/downloadUrl")
-    @ParamCheck
     public void downloadUrl(@NotBlank(message = "文件路径地址不能为空") String fileUrl, HttpServletResponse response, HttpServletRequest request){
         try {
             String fileName = fileUrl.substring(fileUrl.lastIndexOf("/")+1);

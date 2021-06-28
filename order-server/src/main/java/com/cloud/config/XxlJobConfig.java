@@ -1,16 +1,14 @@
-/*
 package com.cloud.config;
 
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@Slf4j
 public class XxlJobConfig {
-    private Logger logger = LoggerFactory.getLogger(XxlJobConfig.class);
 
     @Value("${xxl.job.admin.addresses}")
     private String adminAddresses;
@@ -39,7 +37,7 @@ public class XxlJobConfig {
 
     @Bean
     public XxlJobSpringExecutor xxlJobExecutor() {
-        logger.info(">>>>>>>>>>> xxl-job config init.");
+        log.info(">>>>>>>>>>> xxl-job config init.");
         XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();
         xxlJobSpringExecutor.setAdminAddresses(adminAddresses);
         xxlJobSpringExecutor.setAppname(appname);
@@ -53,7 +51,7 @@ public class XxlJobConfig {
         return xxlJobSpringExecutor;
     }
 
-    */
+
 /**
      * 针对多网卡、容器内部署等情况，可借助 "spring-cloud-commons" 提供的 "InetUtils" 组件灵活定制注册IP；
      *
@@ -69,8 +67,8 @@ public class XxlJobConfig {
      *
      *      3、获取IP
      *          String ip_ = inetUtils.findFirstNonLoopbackHostInfo().getIpAddress();
-     *//*
+     */
 
 
 
-}*/
+}

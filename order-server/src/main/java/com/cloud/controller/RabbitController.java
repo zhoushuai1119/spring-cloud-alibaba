@@ -1,8 +1,6 @@
 package com.cloud.controller;
 
-import com.cloud.common.beans.Result;
-import com.cloud.common.beans.ReturnCode;
-import com.cloud.common.utils.ResultUtil;
+import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.service.RabbitService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -27,27 +25,27 @@ public class RabbitController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "msg", value = "信息", required = true, dataTypeClass = String.class)
     })
-    public Result<String> directSend(String msg) {
+    public BaseResponse<String> directSend(String msg) {
         rabbitService.directSender(msg);
-        return ResultUtil.getResult(ReturnCode.SUCCESS);
+        return BaseResponse.createSuccessResult(null);
     }
 
     @RequestMapping("/fanoutSendMsg")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "msg", value = "信息", required = true, dataTypeClass = String.class)
     })
-    public Result<String> fanoutSend(String msg) {
+    public BaseResponse<String> fanoutSend(String msg) {
         rabbitService.fanoutSender(msg);
-        return ResultUtil.getResult(ReturnCode.SUCCESS);
+        return BaseResponse.createSuccessResult(null);
     }
 
     @RequestMapping("/topicSendMsg")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "msg", value = "信息", required = true, dataTypeClass = String.class)
     })
-    public Result<String> topicSend(String msg) {
+    public BaseResponse<String> topicSend(String msg) {
         rabbitService.topicSender(msg);
-        return ResultUtil.getResult(ReturnCode.SUCCESS);
+        return BaseResponse.createSuccessResult(null);
     }
 
 }

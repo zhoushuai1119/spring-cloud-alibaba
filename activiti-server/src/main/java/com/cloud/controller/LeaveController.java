@@ -1,13 +1,10 @@
 package com.cloud.controller;
 
-import com.cloud.common.beans.KeyValuePair;
-import com.cloud.common.beans.Result;
-import com.cloud.common.beans.ReturnCode;
+import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.entity.activiti.Leave;
 import com.cloud.common.entity.activiti.ShiroUser;
 import com.cloud.common.service.activiti.LeaveService;
 import com.cloud.common.utils.CommonUtil;
-import com.cloud.common.utils.ResultUtil;
 import com.cloud.service.activiti.ProcessService;
 import com.cloud.service.activiti.TaskManageService;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +47,7 @@ public class LeaveController extends BaseController {
      * @return:
      */
     @RequestMapping("/leaveApply")
-    public Result<String> leaveApply(String processDefinitionKey, Integer leaveDays, String nextApproveUserId) {
+    public BaseResponse<String> leaveApply(String processDefinitionKey, Integer leaveDays, String nextApproveUserId) {
         ShiroUser currentUser = getCurrentUser();
         String currentUserId = currentUser.getId();
         //请假申请ID
@@ -91,7 +88,7 @@ public class LeaveController extends BaseController {
                 }
             }
         }
-        return ResultUtil.getResult(ReturnCode.SUCCESS);
+        return BaseResponse.createSuccessResult(null);
     }
 
     /**
@@ -101,27 +98,27 @@ public class LeaveController extends BaseController {
      * @Param: nextApproveUserId 下一个审批人ID
      */
     @RequestMapping("/leaveAprove")
-    public Result<String> leaveAprove(String taskId, String nextApproveUserId) {
+    public BaseResponse<String> leaveAprove(String taskId, String nextApproveUserId) {
         ShiroUser currentUser = getCurrentUser();
         Map<String, Object> variables = new HashMap<>(16);
         variables.put("general_manager", nextApproveUserId);
 
-        KeyValuePair result = taskManageService.completeTask(currentUser.getId(), taskId, variables);
-        return ResultUtil.getResult(result);
+        BaseResponse result = taskManageService.completeTask(currentUser.getId(), taskId, variables);
+        return result;
     }
 
     /**
      * 请假流程列表
      */
     @RequestMapping("/leaveList")
-    public Result<List<Leave>> leaveList() {
+    public BaseResponse<List<Leave>> leaveList() {
         List<Leave> leaveList = leaveService.getLeaveList();
         if (CommonUtil.isNotEmpty(leaveList)) {
             leaveList.forEach(k ->
                     log.info("**"+ k)
             );
         }
-        return ResultUtil.getResult(leaveList);
+        return BaseResponse.createSuccessResult(leaveList);
     }
 
 }

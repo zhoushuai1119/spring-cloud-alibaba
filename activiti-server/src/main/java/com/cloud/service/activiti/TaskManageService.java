@@ -1,7 +1,7 @@
 package com.cloud.service.activiti;
 
-import com.cloud.common.beans.KeyValuePair;
-import com.cloud.common.beans.ReturnCode;
+import com.cloud.common.beans.response.BaseResponse;
+import com.cloud.common.enums.ErrorCodeEnum;
 import com.cloud.common.utils.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.TaskService;
@@ -80,7 +80,7 @@ public class TaskManageService {
      * @param taskId 任务ID
      * @param variables 流程变量
      */
-    public KeyValuePair completeTask(String userId, String taskId, Map<String, Object> variables) {
+    public BaseResponse<String> completeTask(String userId, String taskId, Map<String, Object> variables) {
         //完成任务前需要查询一下该用户是否具有操作该任务的权限；
         //因为如果只传一个任务ID，任何人都可以完成该任务
         Task task = taskService.createTaskQuery().taskId(taskId)
@@ -89,9 +89,9 @@ public class TaskManageService {
             taskService.complete(taskId,variables);
             log.info("用户:" + userId + "成功完成任务ID:" + taskId);
         } else {
-            return ReturnCode.COMPLETE_TASK_ERROR;
+            return BaseResponse.createFailResult(ErrorCodeEnum.PARAM_ERROR);
         }
-        return ReturnCode.SUCCESS;
+        return BaseResponse.createSuccessResult(null);
     }
 
     /**
@@ -101,7 +101,7 @@ public class TaskManageService {
      * @param userId 用户ID
      * @param taskId 任务ID
      */
-    public KeyValuePair claimTask(String userId, String taskId) {
+    public BaseResponse claimTask(String userId, String taskId) {
         //完成任务前需要查询一下该用户是否具有操作该任务的权限；
         //因为如果只传一个任务ID，任何人都可以完成该任务
         Task task = taskService.createTaskQuery().taskId(taskId)
@@ -110,9 +110,9 @@ public class TaskManageService {
             taskService.claim(taskId, userId);
             log.info("用户:" + userId + "成功拾取任务ID:" + taskId);
         } else {
-            return ReturnCode.CLAIM_TASK_ERROR;
+            return BaseResponse.createFailResult(ErrorCodeEnum.PARAM_ERROR);
         }
-        return ReturnCode.SUCCESS;
+        return BaseResponse.createSuccessResult(null);
     }
 
     /**
@@ -122,7 +122,7 @@ public class TaskManageService {
      * @param taskId 任务ID
      * @param returnUserId 交接给谁，如果为空代表将任务回退到组任务，需要后续再次拾取任务
      */
-    public KeyValuePair returnTask(String userId, String taskId, String returnUserId) {
+    public BaseResponse returnTask(String userId, String taskId, String returnUserId) {
         //完成任务前需要查询一下该用户是否具有操作该任务的权限；
         //因为如果只传一个任务ID，任何人都可以完成该任务
         Task task = taskService.createTaskQuery().taskId(taskId)
@@ -133,9 +133,9 @@ public class TaskManageService {
             taskService.setAssignee(task.getId(),returnUserId);
             log.info("用户:"+userId+"成功退回/交接任务给"+ returnUserId);
         }else {
-            return ReturnCode.RETURN_TASK_ERROR;
+            return BaseResponse.createFailResult(ErrorCodeEnum.PARAM_ERROR);
         }
-        return ReturnCode.SUCCESS;
+        return BaseResponse.createSuccessResult(null);
     }
 
 }

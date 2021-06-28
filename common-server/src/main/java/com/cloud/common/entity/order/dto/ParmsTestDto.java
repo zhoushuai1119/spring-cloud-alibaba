@@ -16,6 +16,8 @@ import java.io.Serializable;
 @Data
 public class ParmsTestDto implements Serializable {
 
+    private static final long serialVersionUID = 467804102089578526L;
+
     @NotBlank
     private String aaa;
 

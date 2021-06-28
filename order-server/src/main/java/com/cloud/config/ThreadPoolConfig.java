@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * 线程池配置
  *
- * @Author qiankaixia
+ * @Author zhoushuai
  * @Date 2020/05/11
  */
 @Configuration
@@ -28,7 +28,6 @@ public class ThreadPoolConfig {
     }
 
     /**
-     * 单宝运营任务线程池
      *
      * @return
      */
@@ -48,7 +47,6 @@ public class ThreadPoolConfig {
 
 
     /**
-     * 渠道商异步查询组织信息 线程池
      *
      * @return
      */

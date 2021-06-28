@@ -4,10 +4,9 @@ import com.cloud.common.beans.exception.BaseException;
 import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.enums.ErrorCodeEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -24,9 +23,8 @@ import java.util.Set;
  * @Author: ZhouShuai
  * @Date: 2021-06-27 19:28
  */
+@Slf4j
 public class ExceptionUtils {
-
-    private static final Logger log = LoggerFactory.getLogger(ExceptionUtils.class);
 
     public ExceptionUtils() {
 

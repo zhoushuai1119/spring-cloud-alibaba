@@ -1,10 +1,7 @@
 package com.cloud.controller;
 
-import com.cloud.common.beans.KeyValuePair;
-import com.cloud.common.beans.Result;
 import com.cloud.common.entity.activiti.ShiroUser;
 import com.cloud.common.utils.CommonUtil;
-import com.cloud.common.utils.ResultUtil;
 import com.cloud.service.activiti.TaskManageService;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;

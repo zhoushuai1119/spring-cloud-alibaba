@@ -1,4 +1,4 @@
-package com.cloud.common;
+package com.cloud.common.exception;
 
 
 import com.cloud.common.beans.exception.BaseException;

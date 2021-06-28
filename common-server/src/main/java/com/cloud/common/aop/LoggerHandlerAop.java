@@ -1,14 +1,15 @@
 package com.cloud.common.aop;
 
-import com.cloud.common.annotation.MethodLogger;
+import com.cloud.common.aop.annotation.MethodLogger;
 import com.cloud.common.enums.LogTypeEnum;
 import com.cloud.common.utils.JsonUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,12 +19,17 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
+@Slf4j
 public class LoggerHandlerAop {
 
-    @Around("@annotation(methodLogger)")
-    public Object logAround(ProceedingJoinPoint joinPoint, MethodLogger methodLogger) throws Throwable {
+    @Pointcut("@annotation(com.cloud.common.aop.annotation.MethodLogger)")
+    public void loggerHandler(){}
+
+    @Around("loggerHandler()")
+    public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long start = System.currentTimeMillis();
-        Logger log = LoggerFactory.getLogger(joinPoint.getSignature().getDeclaringType());
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        MethodLogger methodLogger = methodSignature.getMethod().getAnnotation(MethodLogger.class);
         String methodName = joinPoint.getSignature().getName();
 
         String args;

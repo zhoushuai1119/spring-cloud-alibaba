@@ -1,4 +1,4 @@
-package com.cloud.common;
+package com.cloud.common.beans.exception;
 
 import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.utils.ExceptionUtils;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @Description:
+ * @Description: 全局异常处理
  * @Author: ZhouShuai
  * @Date: 2021-06-27 20:04
  */

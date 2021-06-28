@@ -1,5 +1,6 @@
 package com.cloud.common.beans.response;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cloud.common.beans.exception.BaseExceptionCode;
 
 import java.util.List;
@@ -11,14 +12,14 @@ import java.util.List;
  */
 public class PageQueryResponse<T> extends BaseResponse<List<T>> {
     private static final long serialVersionUID = -8937008601803151631L;
-    private int pageIndex;
-    private int totalCount;
-    private int pageSize;
+    private long pageIndex;
+    private long totalCount;
+    private long pageSize;
 
     public PageQueryResponse() {
     }
 
-    public PageQueryResponse<T> successPage(List<T> model, int pageIndex, int totalCount, int pageSize) {
+    public PageQueryResponse<T> successPage(List<T> model, long pageIndex, long totalCount, long pageSize) {
         this.setSuccess(true);
         this.setModel(model);
         this.setPageIndex(pageIndex);
@@ -27,9 +28,23 @@ public class PageQueryResponse<T> extends BaseResponse<List<T>> {
         return this;
     }
 
+    public PageQueryResponse<T> successPage(Page<T> page) {
+        this.setSuccess(true);
+        this.setModel(page.getRecords());
+        this.setPageIndex(page.getCurrent());
+        this.setTotalCount(page.getTotal());
+        this.setPageSize(page.getSize());
+        return this;
+    }
+
     public static <T> PageQueryResponse<T> createSuccessResult(List<T> model) {
         PageQueryResponse<T> rt = new PageQueryResponse();
         return (PageQueryResponse)rt.success(model);
+    }
+
+    public static <T> PageQueryResponse<T> createSuccessPageResult(Page<T> page) {
+        PageQueryResponse<T> rt = new PageQueryResponse();
+        return rt.successPage(page);
     }
 
     public static <T> PageQueryResponse<T> createSuccessResult(List<T> model, int pageIndex, int totalCount, int pageSize) {
@@ -55,44 +70,44 @@ public class PageQueryResponse<T> extends BaseResponse<List<T>> {
         return (PageQueryResponse)rt.fail(errorCode, errorMsg);
     }
 
-    public int getPageIndex() {
+    public long getPageIndex() {
         return this.pageIndex;
     }
 
-    public void setPageIndex(int pageIndex) {
+    public void setPageIndex(long pageIndex) {
         this.pageIndex = pageIndex;
     }
 
-    public int getTotalCount() {
+    public long getTotalCount() {
         return this.totalCount;
     }
 
-    public void setTotalCount(int totalCount) {
+    public void setTotalCount(long totalCount) {
         this.totalCount = totalCount;
     }
 
-    public int getPageSize() {
+    public long getPageSize() {
         return this.pageSize;
     }
 
-    public void setPageSize(int pageSize) {
+    public void setPageSize(long pageSize) {
         this.pageSize = pageSize;
     }
 
-    public int getCurrentPage() {
+    public long getCurrentPage() {
         return this.pageIndex < 1 ? 1 : this.pageIndex;
     }
 
     public boolean hasNext() {
-        int useCount = (this.getCurrentPage() - 1) * this.getPageSize() + this.getSize();
+        long useCount = (this.getCurrentPage() - 1) * this.getPageSize() + this.getSize();
         return this.totalCount > useCount;
     }
 
-    public int getTotalPage() {
+    public long getTotalPage() {
         return this.pageSize == 0 ? 0 : (this.totalCount - 1) / this.pageSize + 1;
     }
 
-    private int getSize() {
+    private long getSize() {
         List<T> page = (List)this.getModel();
         return page == null ? 0 : page.size();
     }

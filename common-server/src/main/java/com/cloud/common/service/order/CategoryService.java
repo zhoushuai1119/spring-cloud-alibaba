@@ -1,7 +1,9 @@
 package com.cloud.common.service.order;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cloud.common.beans.request.PageQueryRequest;
 import com.cloud.common.entity.order.Category;
 
 import java.util.List;
@@ -16,8 +18,10 @@ public interface CategoryService extends IService<Category> {
 
     List<Category> categoryList();
 
-    void updateTT() throws Exception;
+    Page<Category> categoryPageList(PageQueryRequest pageQueryRequest);
 
-    void testAsync();
+    void dubboTest() throws Exception;
+
+    void asyncSendMq(Integer categoryId);
 
 }

@@ -1,10 +1,11 @@
 package com.cloud.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cloud.common.BusinessException;
+import com.cloud.common.beans.request.PageQueryRequest;
 import com.cloud.common.entity.order.Category;
 import com.cloud.common.entity.payment.User;
-import com.cloud.common.enums.ErrorCodeEnum;
 import com.cloud.common.service.order.CategoryService;
 import com.cloud.common.service.payment.UserService;
 import com.cloud.dao.CategoryMapper;
@@ -31,34 +32,36 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     private UserService userService;
 
     @Resource
-    private PublishService publishService;
-
-    @Resource
     private ApplicationEventPublisher publisher;
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public List<Category> categoryList() {
-        publishService.test();
-        if (true) {
-            throw new BusinessException(ErrorCodeEnum.CANNOT_SEND_TO_BD);
-        }
         return list();
+    }
+
+    @Override
+    public Page<Category> categoryPageList(PageQueryRequest pageQueryRequest) {
+        Page page = new Page(pageQueryRequest.getPageIndex(),pageQueryRequest.getPageSize());
+        Page<Category> pageList = baseMapper.selectPage(page,new QueryWrapper<>());
+        return pageList;
     }
 
     @GlobalTransactional
     @Override
-    public void updateTT() throws Exception {
+    public void dubboTest() throws Exception {
         Category category = baseMapper.selectById("16");
         category.setParentCategoryId("1111");
         updateById(category);
-        System.out.println("****开始调用远程服务接口****");
+        System.out.println("****开始Dubbbo调用远程服务接口****");
         userService.saveUser(new User());
     }
 
     @Override
-    @Async
-    public void testAsync() {
-        System.out.println("Async>>>>>>>>>>>>>>>>>>>");
+    @Async("batteryOperationExecutor")
+    @Transactional(rollbackFor = Exception.class)
+    public void asyncSendMq(Integer categoryId) {
+        Category category = baseMapper.selectById(categoryId);
+        publisher.publishEvent(category);
     }
+
 }
