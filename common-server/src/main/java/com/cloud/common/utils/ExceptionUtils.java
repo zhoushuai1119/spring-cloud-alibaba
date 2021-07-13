@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.rpc.RpcException;
 import org.slf4j.MDC;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -35,7 +36,7 @@ public class ExceptionUtils {
         String errorCode = null;
         String message = null;
         if (ex instanceof BaseException) {
-            BaseException bex = (BaseException)ex;
+            BaseException bex = (BaseException) ex;
             errorCode = bex.getErrorCode();
             message = StringUtils.isEmpty(bex.getErrorTips()) ? bex.getMessage() : bex.getErrorTips();
             log.error("{} method error , code: {}, message: {}", new Object[]{methodName, errorCode, message});
@@ -44,7 +45,7 @@ public class ExceptionUtils {
             BindingResult result;
             if (ex instanceof BindException) {
                 errorCode = ErrorCodeEnum.PARAM_ERROR.getCode();
-                result = ((BindException)ex).getBindingResult();
+                result = ((BindException) ex).getBindingResult();
                 stringBuilder = new StringBuilder();
                 List<FieldError> fieldErrors = result.getFieldErrors();
                 if (CollectionUtils.isNotEmpty(fieldErrors)) {
@@ -56,7 +57,7 @@ public class ExceptionUtils {
                 log.error("{} method error , {}", methodName, message);
             } else if (ex instanceof MethodArgumentNotValidException) {
                 errorCode = ErrorCodeEnum.PARAM_ERROR.getCode();
-                result = ((MethodArgumentNotValidException)ex).getBindingResult();
+                result = ((MethodArgumentNotValidException) ex).getBindingResult();
                 stringBuilder = new StringBuilder();
                 List<FieldError> fieldErrors = result.getFieldErrors();
                 if (CollectionUtils.isNotEmpty(fieldErrors)) {
@@ -66,9 +67,13 @@ public class ExceptionUtils {
                 }
                 message = stringBuilder.toString();
                 log.error("{} method error , {}", methodName, message);
+            } else if (ex instanceof RpcException) {
+                errorCode = ErrorCodeEnum.RPC_ERROR.getCode();
+                message = ErrorCodeEnum.RPC_ERROR.getMessage();
+                log.error("{} method error , {}", methodName, ex.getMessage());
             } else if (ex instanceof ConstraintViolationException) {
                 errorCode = ErrorCodeEnum.PARAM_ERROR.getCode();
-                ConstraintViolationException cex = (ConstraintViolationException)ex;
+                ConstraintViolationException cex = (ConstraintViolationException) ex;
                 stringBuilder = new StringBuilder();
                 Set<ConstraintViolation<?>> fieldErrors = cex.getConstraintViolations();
                 if (CollectionUtils.isNotEmpty(fieldErrors)) {
@@ -81,7 +86,7 @@ public class ExceptionUtils {
                 log.error("{} method error , {}", methodName, message);
             } else if (ex.getCause() instanceof JsonProcessingException) {
                 errorCode = ErrorCodeEnum.JSON_PARSER_ERROR.getCode();
-                JsonProcessingException cex = (JsonProcessingException)ex.getCause();
+                JsonProcessingException cex = (JsonProcessingException) ex.getCause();
                 message = "Json格式错误";
                 log.error("{} method error , {}", methodName, org.apache.commons.lang3.exception.ExceptionUtils.getMessage(cex));
             } else {

@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Consumer;
 
 
 public class CommonUtil {
@@ -202,6 +203,33 @@ public class CommonUtil {
      */
     public static String objectTojsonStr(Object object){
         return JSONObject.toJSONString(object);
+    }
+
+
+    /**
+     * [手机号码] 前三位，后四位，其他隐藏<例子:138******1234>
+     */
+    public static String mobilePhone(final String num) {
+        if (StringUtils.isBlank(num)) {
+            return "";
+        }
+        return StringUtils.left(num, 3).concat(StringUtils
+                .removeStart(StringUtils.leftPad(StringUtils.right(num, 4), StringUtils.length(num), "*"),
+                        "***"));
+
+    }
+
+    /**
+     * 功能描述: 当表达式为true时执行，否则不执行
+     *
+     * @param arg      参数
+     * @param consumer 执行函数
+     */
+    public static <T> void doWhenTrue(Boolean expression, T arg, Consumer<T> consumer) {
+        Objects.requireNonNull(consumer);
+        if (expression) {
+            consumer.accept(arg);
+        }
     }
 
 }

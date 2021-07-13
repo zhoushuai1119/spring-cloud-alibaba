@@ -1,5 +1,6 @@
 package com.cloud.controller;
 
+import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.utils.CommonUtil;
 import com.cloud.service.activiti.ProcessService;
 import org.activiti.engine.repository.ProcessDefinition;
@@ -36,9 +37,9 @@ public class ProcessController {
      * @param isDeployPng 是否部署流程图片
      */
     @RequestMapping("/deploy")
-    public Result<String> processdeploy(String bpmnName, String deployName, boolean isDeployPng) {
+    public BaseResponse<String> processdeploy(String bpmnName, String deployName, boolean isDeployPng) {
         processService.processdeploy(bpmnName, deployName, isDeployPng);
-        return ResultUtil.getResult(ReturnCode.SUCCESS);
+        return BaseResponse.createSuccessResult(null);
     }
 
     /**
@@ -47,7 +48,7 @@ public class ProcessController {
      * @param processDefinitionKey 流程定义key
      */
     @RequestMapping("/queryProcessDefinitionList")
-    public Result<List<Map<String, Object>>> queryProcessDefinitionList(String processDefinitionKey) {
+    public BaseResponse<List<Map<String, Object>>> queryProcessDefinitionList(String processDefinitionKey) {
         List<ProcessDefinition> processDefinitionList = processService.queryProcessDefinitionList(processDefinitionKey);
         List<Map<String, Object>> processDefinitionMapList = new ArrayList<>();
         if (CommonUtil.isNotEmpty(processDefinitionList)) {
@@ -59,7 +60,7 @@ public class ProcessController {
                 processDefinitionMapList.add(processDefinitionMap);
             }
         }
-        return ResultUtil.getResult(processDefinitionMapList);
+        return BaseResponse.createSuccessResult(processDefinitionMapList);
     }
 
 }

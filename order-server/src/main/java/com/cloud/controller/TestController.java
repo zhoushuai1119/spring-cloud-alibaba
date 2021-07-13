@@ -8,12 +8,15 @@ import com.cloud.common.beans.response.PageQueryResponse;
 import com.cloud.common.entity.order.Category;
 import com.cloud.common.entity.order.dto.ParmsTestDto;
 import com.cloud.common.service.order.CategoryService;
+import com.cloud.common.service.order.SqlService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -25,10 +28,14 @@ import java.util.List;
 @RestController
 @RefreshScope
 @RequestMapping("test")
+@Api(value = "test接口", tags = "test接口")
 public class TestController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private SqlService sqlService;
 
     @Value("${server.port}")
     private String port;
@@ -67,6 +74,18 @@ public class TestController {
     @PostMapping("/asyncSendMq/{categoryId}")
     public BaseResponse asyncSendMq(@PathVariable("categoryId") Integer categoryId) {
         categoryService.asyncSendMq(categoryId);
+        return BaseResponse.createSuccessResult(null);
+    }
+
+    @PostMapping("/sql/reNameTable")
+    public BaseResponse reNameTable() throws SQLException {
+        sqlService.reNameTable(null,null);
+        return BaseResponse.createSuccessResult(null);
+    }
+
+    @PostMapping("/sql/copyNameTable")
+    public BaseResponse copyNameTable() throws SQLException {
+        sqlService.copyNameTable(null,null);
         return BaseResponse.createSuccessResult(null);
     }
 

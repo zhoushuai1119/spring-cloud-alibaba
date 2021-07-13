@@ -1,6 +1,5 @@
 package com.cloud.listener;
 
-import org.springframework.stereotype.Component;
 
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
