@@ -1,11 +1,12 @@
 package com.cloud.netty.client;
 
+import com.cloud.common.netty.protocol.SmartCarProtocol;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDate;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -19,11 +20,12 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
     /**
      * 计算有多少客户端接入，第一个string为客户端ip
      */
-    private static final ConcurrentHashMap<ChannelId, ChannelHandlerContext> CLIENT_MAP = new ConcurrentHashMap<>();
+    public static final ConcurrentHashMap<ChannelId, ChannelHandlerContext> CLIENT_MAP = new ConcurrentHashMap<>();
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
 
+        log.info("客户端开始连接。。。。。。");
         CLIENT_MAP.put(ctx.channel().id(), ctx);
 
         log.info("ClientHandler Active");
@@ -37,22 +39,30 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
-
         ctx.close();
         log.info("服务端终止了服务");
     }
 
+    /**
+     * 只是读数据，没有写数据的话
+     * 需要自己手动的释放的消息
+     * @param ctx
+     * @param msg
+     */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-
-        log.info("回写数据:" + msg);
+        try {
+            // 用于获取客户端发来的数据信息
+            SmartCarProtocol body = (SmartCarProtocol) msg;
+            log.info("服务器返回客户端数据:" + body.getContent());
+        } finally {
+            ReferenceCountUtil.release(msg);
+        }
     }
 
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-
-        //cause.printStackTrace();
         log.info("服务端发生异常【" + cause.getMessage() + "】");
         ctx.close();
     }
@@ -64,7 +74,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
      * @DESCRIPTION: 客户端给服务端发送消息
      * @return: void
      */
-    public void channelWrite(ChannelId channelId, String msg) {
+    public void channelWrite(ChannelId channelId, SmartCarProtocol msg) {
 
         ChannelHandlerContext ctx = CLIENT_MAP.get(channelId);
 
@@ -74,9 +84,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
         }
 
         //将客户端的信息直接返回写入ctx
-        ctx.write(msg + " 时间：" + LocalDate.now());
-        //刷新缓存区
-        ctx.flush();
+        ctx.writeAndFlush(msg);
     }
 
 }

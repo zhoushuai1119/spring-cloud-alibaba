@@ -87,4 +87,11 @@ public class CommonConstant {
         String RANDOM_CODE_ERROR = "randomCodeError";
     }
 
+    /**
+     * 消息头
+     */
+    public interface netty{
+        int HEAD_DATA = 0X76;
+    }
+
 }

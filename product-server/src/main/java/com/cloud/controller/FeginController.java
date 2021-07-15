@@ -3,9 +3,11 @@ package com.cloud.controller;
 import com.cloud.common.entity.product.Product;
 import com.cloud.common.service.product.DictService;
 import com.cloud.common.service.product.ProductService;
+import com.cloud.service.NettySendServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +31,9 @@ public class FeginController {
     @Autowired
     private DictService dictService;
 
+    @Autowired
+    private NettySendServiceImpl sendService;
+
 
     @GetMapping("/getSession")
     public String getUser(HttpServletRequest request) {
@@ -50,6 +55,11 @@ public class FeginController {
     @GetMapping("/saveDict")
     public void saveDict() {
         dictService.saveDict();
+    }
+
+    @PostMapping("/send")
+    public void sendMessage(String content) {
+        dictService.sendMessage(content);
     }
 
 }

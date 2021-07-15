@@ -4,10 +4,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloud.common.entity.product.Product;
 import com.cloud.common.service.product.ProductService;
 import com.cloud.dao.ProductMapper;
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
+import org.springframework.stereotype.Service;
 
 /**
  * @description:
@@ -25,7 +24,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             product.setProductName("产品"+i);
             product.setPrice(new BigDecimal(10.00));
             product.setProductType(i+1);
-            product.setCreateTime(new Date());
+            product.setCreateTime(LocalDateTime.now());
             save(product);
         }
     }

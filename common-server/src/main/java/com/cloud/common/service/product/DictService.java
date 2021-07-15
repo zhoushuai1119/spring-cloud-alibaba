@@ -13,4 +13,6 @@ public interface DictService extends IService<Dict> {
 
     void saveDict();
 
+    void sendMessage(String content);
+
 }

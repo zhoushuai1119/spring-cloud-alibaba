@@ -1,9 +1,12 @@
 package com.cloud.controller;
 
+import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.entity.payment.User;
 import com.cloud.common.service.payment.UserService;
+import com.cloud.netty.client.NettyClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -26,9 +29,9 @@ public class HiController {
         return restTemplate.getForObject("http://localhost:8989/miya", String.class);
     }
 
-    @RequestMapping("/info")
-    public String info(){
-        return "i'm service-hi";
+    @PostMapping("/send")
+    public BaseResponse sendMessage(String content){
+        return BaseResponse.createSuccessResult(null);
     }
 
     @RequestMapping("/saveUser")

@@ -1,5 +1,6 @@
 package com.cloud.netty.server;
 
+import com.cloud.common.netty.protocol.SmartCarProtocol;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -88,27 +89,33 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
-        System.out.println();
+        // 用于获取客户端发来的数据信息
+        SmartCarProtocol body = (SmartCarProtocol) msg;
         log.info("加载客户端报文......");
-        log.info("【" + ctx.channel().id() + "】" + " :" + msg);
+        log.info("【" + ctx.channel().id() + "】" + " :" + body.toString());
 
-        /**
-         *  下面可以解析数据，保存数据，生成返回报文，将需要返回报文写入write函数
-         *
-         */
+        // 会写数据给客户端
+        String str = "Hi I am Server ..." + body.getContent();
+        SmartCarProtocol response = new SmartCarProtocol(str.getBytes().length,
+                str.getBytes());
+        // 当服务端完成写操作后，关闭与客户端的连接
+        ctx.writeAndFlush(response);
+
+        // 当有写操作时，不需要手动释放msg的引用
+        // 当只有读操作时，才需要手动释放msg的引用
 
         //响应客户端
-        this.channelWrite(ctx.channel().id(), msg);
+//        this.channelWrite(ctx.channel().id(), response);
     }
 
     /**
-     * @param msg        需要发送的消息内容
+     * @param msg       需要发送的消息内容
      * @param channelId 连接通道唯一id
      * @author xiongchuan on 2019/4/28 16:10
      * @DESCRIPTION: 服务端给客户端发送消息
      * @return: void
      */
-    public void channelWrite(ChannelId channelId, Object msg) throws Exception {
+    public void channelWrite(ChannelId channelId, SmartCarProtocol msg) throws Exception {
 
         ChannelHandlerContext ctx = CHANNEL_MAP.get(channelId);
 
@@ -117,15 +124,8 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
             return;
         }
 
-        if (msg == null || msg == "") {
-            log.info("服务端响应空的消息");
-            return;
-        }
-
         //将客户端的信息直接返回写入ctx
-        ctx.write(msg);
-        //刷新缓存区
-        ctx.flush();
+        ctx.writeAndFlush(msg);
     }
 
     @Override
@@ -160,7 +160,6 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
         System.out.println();
         ctx.close();
         log.info(ctx.channel().id() + " 发生了错误,此连接被关闭" + "此时连通数量: " + CHANNEL_MAP.size());
-        //cause.printStackTrace();
     }
 
 }
