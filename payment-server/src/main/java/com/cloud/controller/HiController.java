@@ -16,6 +16,7 @@ public class HiController {
 
     @Autowired
     private RestTemplate restTemplate;
+
     @Autowired
     private UserService userService;
 
