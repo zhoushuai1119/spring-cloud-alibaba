@@ -91,10 +91,10 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
         <!-- RocketMQ -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
-        </dependency>
+        </dependency>-->
         <!-- fastdfs -->
         <dependency>
             <groupId>com.github.tobato</groupId>

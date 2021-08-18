@@ -1,14 +1,11 @@
 package com.cloud;
 
-import com.cloud.service.rocketmq.MySink;
-import com.cloud.service.rocketmq.MySource;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
@@ -19,7 +16,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableDubbo
 @EnableAsync
 //@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1800)//设置session过期时间
-@EnableBinding({MySource.class, MySink.class})
+//@EnableBinding({MySource.class, MySink.class})
 public class OrderServerApplication {
 
     public static void main(String[] args) {

@@ -3,7 +3,6 @@ package com.cloud.controller;
 import com.cloud.common.entity.order.Category;
 import com.cloud.common.service.order.CategoryService;
 import com.cloud.service.rocketmq.MySource;
-import org.apache.rocketmq.common.message.MessageConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/rocketmq")
 public class RocketMqController {
 
-    @Autowired
+    /*@Autowired
     private MySource mySource;
     @Autowired
     private CategoryService categoryService;
@@ -30,6 +29,6 @@ public class RocketMqController {
                 .build();
         // <4>发送消息
         return mySource.erbadagangOutput().send(springMessage);
-    }
+    }*/
 
 }

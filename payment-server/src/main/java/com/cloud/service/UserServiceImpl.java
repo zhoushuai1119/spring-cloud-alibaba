@@ -16,13 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 @DubboService
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+    
+    
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveUser(User user) throws Exception {
         user.setPassword("12345678");
+        user.setPassword("12345678");
         user.setUsername("zssss");
-        user.setSalt("idjdjdjjd");
         save(user);
+
+        System.out.println("jdjdj");
+        user.setSalt("idjdjdjjd");
        /* if (true) {
             throw new Exception();
         }*/

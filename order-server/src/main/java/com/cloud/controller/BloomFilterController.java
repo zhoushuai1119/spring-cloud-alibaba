@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
-public class EurekaClientController {
+public class BloomFilterController {
 
     @Value("${server.port}")
     private String port;

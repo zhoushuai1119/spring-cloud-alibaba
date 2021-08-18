@@ -35,7 +35,7 @@ public class JsonUtil {
     private static final DateTimeFormatter MY_DATE_TIME;
     private static final DateTimeFormatter MY_DATE;
 
-    public JsonUtil() {
+    private JsonUtil() {
     }
 
     private static String writeValue(Object object) {

@@ -1,9 +1,6 @@
 package com.cloud.service.rocketmq;
 
-import com.cloud.common.entity.order.Category;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,13 +12,13 @@ public class TestStreamConsumer {
      * 声明需要进行反序列化成 POJO 对象
      * @param message
      */
-    @StreamListener(value = MySink.ERBADAGANG_INPUT)
+    /*@StreamListener(value = MySink.ERBADAGANG_INPUT)
     public void onMessage(@Payload Category message) throws Exception {
         log.info("[onMessage][线程编号:{} 消息内容：{}]", Thread.currentThread().getId(), message.getCategoryName());
-        /*if (true){
+        *//*if (true){
             throw  new Exception();
-        }*/
-    }
+        }*//*
+    }*/
 
 }
 

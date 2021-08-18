@@ -3,8 +3,10 @@ package com.cloud.common.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.cloud.common.constants.CommonConstant;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
@@ -16,11 +18,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Consumer;
 
-
+@Slf4j
 public class CommonUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CommonUtil.class);
+    private CommonUtil() {
 
+    }
 
     /**
      * 判断字符串不为空
@@ -30,16 +33,6 @@ public class CommonUtil {
      */
     public static boolean isNotEmpty(String text) {
         return StringUtils.isNotBlank(text);
-    }
-
-    /**
-     * 判断集合不为空
-     *
-     * @param collection
-     * @return
-     */
-    public static boolean isNotEmpty(Collection collection) {
-        return CollectionUtils.isNotEmpty(collection);
     }
 
     /**
@@ -53,6 +46,16 @@ public class CommonUtil {
     }
 
     /**
+     * 判断集合不为空
+     *
+     * @param collection
+     * @return
+     */
+    public static boolean isNotEmpty(Collection collection) {
+        return CollectionUtils.isNotEmpty(collection);
+    }
+
+    /**
      * 判断集合为空
      *
      * @param collection
@@ -63,43 +66,25 @@ public class CommonUtil {
     }
 
     /**
-     * 获取当前日期
+     * 判断Map不为空
      *
+     * @param map
      * @return
      */
-    public static String getCurrentDate() {
-        return DateFormatUtils.format(System.currentTimeMillis(), CommonConstant.dateFormat.DATE_FORMAT);
+    public static boolean isNotEmpty(Map map) {
+        return MapUtils.isNotEmpty(map);
     }
 
     /**
-     * 时间转日期字符串
+     * 判断Map为空
      *
-     * @param date
+     * @param map
      * @return
      */
-    public static String dateToStr(Date date) {
-        if (null == date) {
-            return null;
-        }
-        return DateFormatUtils.format(date, CommonConstant.dateFormat.DATE_FORMAT);
+    public static boolean isEmpty(Map map) {
+        return MapUtils.isEmpty(map);
     }
 
-    /**
-     * 字符串转日期
-     *
-     * @param str
-     * @return
-     */
-    public static Date strToDate(String str) {
-        DateFormat format = new SimpleDateFormat(CommonConstant.dateFormat.DATE_FORMAT);
-        Date date = null;
-        try {
-            date = format.parse(str);
-        } catch (ParseException e) {
-            LOGGER.error("CommonUtil.str2Date parseException", "error", e);
-        }
-        return date;
-    }
 
     /**
      * 将url参数转换成map
