@@ -1,8 +1,11 @@
 package com.cloud.controller;
 
+import com.cloud.common.constants.CommonConstant;
 import com.cloud.common.entity.order.Category;
 import com.cloud.common.service.order.CategoryService;
 import com.cloud.service.rocketmq.MySource;
+import com.cloud.service.rocketmq.core.MonsterMQTemplate;
+import org.apache.rocketmq.common.message.MessageConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
@@ -10,14 +13,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 @RestController
 @RequestMapping(value = "/rocketmq")
 public class RocketMqController {
 
-    /*@Autowired
+    @Autowired
     private MySource mySource;
     @Autowired
     private CategoryService categoryService;
+    @Resource
+    private MonsterMQTemplate monsterMQTemplate;
 
     @GetMapping("test-stream")
     public boolean testStream(){
@@ -29,6 +36,13 @@ public class RocketMqController {
                 .build();
         // <4>发送消息
         return mySource.erbadagangOutput().send(springMessage);
-    }*/
+    }
+
+    @GetMapping("test-rocketmq")
+    public boolean test(){
+        Category category = categoryService.getById("1");
+        monsterMQTemplate.send(CommonConstant.RocketMQTopic.SCORE_TOPIC, CommonConstant.RocketMQTag.SCORE_EVENT, category);
+        return true;
+    }
 
 }

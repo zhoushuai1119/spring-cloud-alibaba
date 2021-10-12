@@ -39,52 +39,14 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.190.129:8848
+        server-addr: 192.168.29.128:8848
       config:
-        server-addr: 192.168.190.129:8848
+        server-addr: 192.168.29.128:8848
         file-extension: yml
-
-    #RocketMQ配置
-    stream:
-      rocketmq:
-        binder:
-          # 配置rocketmq的nameserver地址
-          name-server: 192.168.190.129:9876
-        # RocketMQ 自定义 Binding 配置项，对应 RocketMQBindingProperties Map
-        bindings:
-          erbadagang-output:
-            # RocketMQ Producer 配置项，对应 RocketMQProducerProperties 类
-            producer:
-              group: test # 生产者分组
-              sync: false # 是否同步发送消息，默认为 false 异步。
-
-          erbadagang-input:
-            # RocketMQ Consumer 配置项，对应 RocketMQConsumerProperties 类
-            consumer:
-              # 是否使用广播消费，默认为 false 使用集群消费，如果要使用广播消费值设成true。
-              # 集群消费模式下,相同 Consumer Group 的每个 Consumer 实例平均分摊消息
-              # 广播消费模式下，相同 Consumer Group 的每个 Consumer 实例都接收全量的消息。
-              broadcasting: false
-              orderly: true
-              # 基于 Tag 订阅，多个 Tag 使用 || 分隔，默认为空
-              tags: trek || look || tag
-              #异步消费消息模式下消费失败重试策略：-1,不重复，直接放入死信队列0,broker 控制重试策略>0,client 控制重试策略默认值: 0
-              delayLevelWhenNextConsume: 0
-
-      bindings:
-
-        erbadagang-output:
-          destination: ERBADAGANG-TOPIC-01 # 目的地。这里使用 RocketMQ Topic
-          content-type: application/json # 内容格式。这里使用 JSON
-
-        erbadagang-input:
-          destination: ERBADAGANG-TOPIC-01 # 目的地。这里使用 RocketMQ Topic
-          content-type: application/json # 内容格式。这里使用 JSON
-          group: erbadagang-consumer-group-ERBADAGANG-TOPIC-01 # 消费者分组,命名规则：组名+topic名
 
   redis:
     database: 0
-    host: 192.168.190.129
+    host: 192.168.29.128
     port: 6379
     password: 123456
     timeout: 6000ms
@@ -103,7 +65,7 @@ spring:
 
 
   rabbitmq:
-    host: 192.168.190.129
+    host: 192.168.29.128
     port: 5672
     username: guest
     password: guest
@@ -152,7 +114,7 @@ xxl:
     admin:
       #调度中心部署跟地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。
       #执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
-      addresses: http://192.168.190.129:19090/xxl-job-admin
+      addresses: http://192.168.29.128:19090/xxl-job-admin
     #### 执行器通讯TOKEN [选填]：非空时启用；
     accessToken:
     executor:
@@ -192,7 +154,7 @@ seata:
   service:
     grouplist:
       #指定seata服务器地址
-      seata-server: 192.168.190.129:8091
+      seata-server: 192.168.29.128:8091
 
 dubbo:
   application:
@@ -208,7 +170,7 @@ dubbo:
     port: -1
   registry:
     #服务注册中心配置
-    address: nacos://192.168.190.129:8848
+    address: nacos://192.168.29.128:8848
     check: false
   consumer:
     check: false
@@ -226,8 +188,8 @@ management:
 fdfs:
   so-timeout: 15010
   connect-timeout: 6010
-  tracker-list: 192.168.190.129:22122
-  urlPrefix: http://192.168.190.129/
+  tracker-list: 192.168.29.128:22122
+  urlPrefix: http://192.168.29.128/
   ##生成缩略图参数
   thumb-image:
     width: 150
