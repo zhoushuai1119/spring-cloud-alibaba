@@ -137,7 +137,7 @@ xxl:
   ### xxl-sso #############################################################
   sso:
     #SSO Server认证中心地址（推荐以域名方式配置认证中心，本机可参考章节"2.5"修改host文件配置域名指向）
-    server: http://127.0.0.1:18080/xxl-sso-server
+    server: http://192.168.29.128:18888/xxl-sso-server
     ###### 注销登陆path，值为Client端应用的相对路径
     logout:
       path: /logout
@@ -147,7 +147,7 @@ xxl:
     ### redis   // redis address, like "{ip}"、"{ip}:{port}"、
     ### "{redis/rediss}://xxl-sso:{password}@{ip}:{port:6379}/{db}"；Multiple "," separated
     redis:
-      address: redis://xxl-sso:123456@127.0.0.1:6379
+      address: redis://xxl-sso:123456@192.168.29.128:6379
 
 seata:
   tx-service-group: my_test_tx_group

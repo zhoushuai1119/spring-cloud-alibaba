@@ -24,9 +24,9 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848
+        server-addr: 192.168.29.128:8848
       config:
-        server-addr: localhost:8848
+        server-addr: 192.168.29.128:8848
         file-extension: yml
 
   datasource:

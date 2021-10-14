@@ -1,6 +1,17 @@
 package com.cloud.config;
 
-/*@Configuration
+import com.xxl.sso.core.conf.Conf;
+import com.xxl.sso.core.filter.XxlSsoWebFilter;
+import com.xxl.sso.core.util.JedisUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@Slf4j
 public class XxlSsoConfig implements DisposableBean {
 
 
@@ -44,4 +55,4 @@ public class XxlSsoConfig implements DisposableBean {
         JedisUtil.close();
     }
 
-}*/
+}
