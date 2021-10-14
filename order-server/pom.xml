@@ -97,11 +97,11 @@
             <version>1.27.2</version>
         </dependency>
         <!-- netty -->
-        <dependency>
+        <!--<dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>4.1.65.Final</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
     <build>
         <finalName>order-server</finalName>

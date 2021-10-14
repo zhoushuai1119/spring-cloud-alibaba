@@ -1,14 +1,16 @@
 package com.cloud.rabbitmq.direct;
 
+import com.cloud.common.entity.order.Category;
+import com.cloud.common.utils.JsonUtil;
 import com.cloud.config.RabbitMQConfig;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.common.utils.LogUtil;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author： Zhou Shuai
@@ -18,7 +20,7 @@ import java.io.IOException;
  */
 @Component
 @Slf4j
-public class DirectReceiver {
+public class DirectReceiver{
     /**
      * queues是指要监听的队列的名字
      * */
@@ -26,7 +28,8 @@ public class DirectReceiver {
     public void receiveDirect(Message message, Channel channel) throws IOException {
         long tag = message.getMessageProperties().getDeliveryTag();
         String msg = new String(message.getBody());
-        log.info("【receiveDirect监听到消息】" + msg);
+        List<Category> category = JsonUtil.toList(msg);
+        log.info("【receiveDirect监听到消息】" + category);
         /*
          *接收到消息，处理业务成功则调用channel.basicAck()方法，
          *告诉mq服务器消费端处理成功，mq服务器就会删除该消息

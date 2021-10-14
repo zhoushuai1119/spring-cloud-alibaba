@@ -23,7 +23,6 @@ public class CategorySendListener {
     @TransactionalEventListener
 //    @EventListener
     public void sendMq(Category category) {
-        System.out.println(category);
         directSender.send(category);
     }
 

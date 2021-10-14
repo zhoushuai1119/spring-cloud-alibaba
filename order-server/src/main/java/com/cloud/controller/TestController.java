@@ -12,7 +12,6 @@ import com.cloud.common.service.order.SqlService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +25,6 @@ import java.util.List;
  * @version: V1.0
  */
 @RestController
-@RefreshScope
 @RequestMapping("test")
 @Api(value = "test接口", tags = "test接口")
 public class TestController {

@@ -3,7 +3,6 @@ package com.cloud.rabbitmq.fanout;
 import com.cloud.config.RabbitMQConfig;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.common.utils.LogUtil;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;

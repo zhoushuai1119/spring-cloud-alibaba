@@ -2,9 +2,9 @@ package com.cloud.controller;
 
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -26,16 +26,15 @@ import java.util.concurrent.TimeUnit;
  * @author xuxueli 2019-12-11 21:52:51
  */
 @Component
+@Slf4j
 public class SampleXxlJob {
-
-    private static Logger logger = LoggerFactory.getLogger(SampleXxlJob.class);
-
 
     /**
      * 1、简单任务示例（Bean模式）
      */
     @XxlJob("demoJobHandler")
     public void demoJobHandler() throws Exception {
+        log.info("开启定时任务");
         XxlJobHelper.log("XXL-JOB, Hello World.");
 
         for (int i = 0; i < 5; i++) {
@@ -243,10 +242,10 @@ public class SampleXxlJob {
         XxlJobHelper.log("XXL-JOB, Hello World.");
     }
     public void init(){
-        logger.info("init");
+        log.info("init");
     }
     public void destroy(){
-        logger.info("destory");
+        log.info("destory");
     }
 
 }

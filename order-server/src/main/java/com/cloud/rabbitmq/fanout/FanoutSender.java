@@ -1,10 +1,9 @@
 package com.cloud.rabbitmq.fanout;
 
 import com.cloud.config.RabbitMQConfig;
+import com.cloud.rabbitmq.core.MonsterMQTemplate;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.common.utils.LogUtil;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -21,11 +20,11 @@ import java.util.UUID;
 public class FanoutSender {
 
     @Resource
-    private RabbitTemplate rabbitTemplate;
+    private MonsterMQTemplate monsterMQTemplate;
 
-    public void send(String msg) {
+    public void send(Object msg) {
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
         log.info("****FanoutSender****:"+correlationData);
-        rabbitTemplate.convertAndSend(RabbitMQConfig.FANOUT_EXCHANGE, "", msg,correlationData);
+        monsterMQTemplate.send(RabbitMQConfig.FANOUT_EXCHANGE, msg,correlationData);
     }
 }

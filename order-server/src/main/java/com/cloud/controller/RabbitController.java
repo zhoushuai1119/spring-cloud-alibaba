@@ -5,6 +5,7 @@ import com.cloud.service.RabbitService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,7 @@ public class RabbitController {
     @Autowired
     private RabbitService rabbitService;
 
-    @RequestMapping("/directSendMsg")
+    @PostMapping("/directSendMsg")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "msg", value = "信息", required = true, dataTypeClass = String.class)
     })
@@ -30,7 +31,7 @@ public class RabbitController {
         return BaseResponse.createSuccessResult(null);
     }
 
-    @RequestMapping("/fanoutSendMsg")
+    @PostMapping("/fanoutSendMsg")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "msg", value = "信息", required = true, dataTypeClass = String.class)
     })
@@ -39,7 +40,7 @@ public class RabbitController {
         return BaseResponse.createSuccessResult(null);
     }
 
-    @RequestMapping("/topicSendMsg")
+    @PostMapping("/topicSendMsg")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "msg", value = "信息", required = true, dataTypeClass = String.class)
     })

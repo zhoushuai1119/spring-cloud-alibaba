@@ -119,7 +119,7 @@ public class RabbitMQConfig {
             log.info("idType:"+idType);
             byte[] body = message.getBody();
             String messageBody = new String(body);
-            log.info("消息：{} 发送失败, 应答码：{} 原因：{} 交换机: {}  路由键: {}", messageId+":"+messageBody, replyCode, replyText, exchange, routingKey);
+            log.error("消息：{} 发送失败, 应答码：{} 原因：{} 交换机: {}  路由键: {}", messageId+":"+messageBody, replyCode, replyText, exchange, routingKey);
         });
         return rabbitTemplate;
     }

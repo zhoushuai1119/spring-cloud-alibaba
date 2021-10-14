@@ -1,12 +1,17 @@
 package com.cloud.rabbitmq.direct;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.cloud.common.entity.order.Category;
 import com.cloud.config.RabbitMQConfig;
+import com.cloud.dao.CategoryMapper;
+import com.cloud.rabbitmq.core.MonsterMQTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -20,12 +25,15 @@ import java.util.UUID;
 public class DirectSender {
 
     @Resource
-    private RabbitTemplate rabbitTemplate;
+    private MonsterMQTemplate monsterMQTemplate;
+    @Autowired
+    private CategoryMapper categoryDao;
 
     public void send(Object msg) {
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
         log.info("****DirectSender****:"+correlationData);
-        this.rabbitTemplate.convertAndSend(RabbitMQConfig.DIRECT_EXCHANGE, RabbitMQConfig.DIRECT_QUEUE_ROUTYKEY, msg ,correlationData);
+        List<Category> categoryList = categoryDao.selectList(new QueryWrapper<>());
+        this.monsterMQTemplate.send(RabbitMQConfig.DIRECT_EXCHANGE, RabbitMQConfig.DIRECT_QUEUE_ROUTYKEY, categoryList ,correlationData);
     }
 
 }

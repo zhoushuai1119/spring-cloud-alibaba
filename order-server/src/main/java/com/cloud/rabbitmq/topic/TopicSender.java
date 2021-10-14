@@ -4,10 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cloud.common.entity.order.Category;
 import com.cloud.config.RabbitMQConfig;
 import com.cloud.dao.CategoryMapper;
+import com.cloud.rabbitmq.core.MonsterMQTemplate;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.common.utils.LogUtil;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,11 +25,11 @@ import java.util.UUID;
 public class TopicSender{
 
     @Resource
-    private RabbitTemplate rabbitTemplate;
+    private MonsterMQTemplate monsterMQTemplate;
     @Autowired
     private CategoryMapper categoryDao;
 
-    public void send(String msg) {
+    public void send(Object msg) {
         List<Category> categoryList = categoryDao.selectList(new QueryWrapper<>());
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
         log.info("****TopicSender****:"+correlationData);
@@ -46,7 +45,7 @@ public class TopicSender{
             messageProperties.setExpiration("30000");
             return message;
         };*/
-        rabbitTemplate.convertAndSend(RabbitMQConfig.TOPIC_EXCHANGE,"lzc.zhou.test",categoryList,correlationData);
+        monsterMQTemplate.send(RabbitMQConfig.TOPIC_EXCHANGE,"lzc.zhou.test",categoryList,correlationData);
     }
 
 }
