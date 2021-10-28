@@ -32,7 +32,7 @@ public class LoggerHandlerAop {
         MethodLogger methodLogger = methodSignature.getMethod().getAnnotation(MethodLogger.class);
         String methodName = joinPoint.getSignature().getName();
 
-        String args;
+        String args = null;
         try {
             if (LogTypeEnum.FULL == methodLogger.logType() || LogTypeEnum.PARAM == methodLogger.logType()) {
                 args = JsonUtil.toString(joinPoint.getArgs());
@@ -41,8 +41,6 @@ public class LoggerHandlerAop {
         } catch (Exception var12) {
             log.warn("method: {}, args log error {}", methodName, var12.getLocalizedMessage());
         }
-
-        args = null;
 
         Object result;
         try {
