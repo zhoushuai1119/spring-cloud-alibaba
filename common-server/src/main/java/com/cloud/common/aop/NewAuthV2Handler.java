@@ -2,6 +2,7 @@ package com.cloud.common.aop;
 
 import com.cloud.common.aop.annotation.NewAuthV2;
 import com.cloud.common.beans.request.PageQueryRequest;
+import com.cloud.common.service.product.DictService;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
@@ -24,7 +28,14 @@ import java.util.Objects;
 @Aspect
 @Slf4j
 @Component
-public class NewAuthV2Handler {
+public class NewAuthV2Handler implements ApplicationContextAware {
+
+    private ApplicationContext applicationContext;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 
     @Pointcut("@annotation(com.cloud.common.aop.annotation.NewAuthV2)")
     public void additional() {
@@ -33,6 +44,8 @@ public class NewAuthV2Handler {
 
     @Around("additional()")
     public Object before(ProceedingJoinPoint joinPoint) throws Throwable {
+        DictService dictService = (DictService) applicationContext.getBean("dictServiceImpl");
+        dictService.saveDict();
         NewAuthV2 newAuth = ((MethodSignature) joinPoint.getSignature()).getMethod().getAnnotation(NewAuthV2.class);
         Object[] args = joinPoint.getArgs();
         List<Object> objects = Lists.newArrayList();

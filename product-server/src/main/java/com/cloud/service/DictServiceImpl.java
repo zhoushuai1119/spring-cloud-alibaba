@@ -13,10 +13,11 @@ import org.springframework.stereotype.Service;
  * @date: 2021/2/20 9:23
  * @version: V1.0
  */
-@Service
+@Service("dictServiceImpl")
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
 
-  @Autowired private NettySendServiceImpl sendService;
+  @Autowired
+  private NettySendServiceImpl sendService;
 
   @Override
   public void saveDict() {
