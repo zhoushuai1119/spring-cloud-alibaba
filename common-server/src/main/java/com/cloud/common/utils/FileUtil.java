@@ -1,8 +1,11 @@
 package com.cloud.common.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Objects;
@@ -141,4 +144,25 @@ public class FileUtil {
             log.info("目录{}下有{}个目录，{}个文件",directoryPath,dirCount,fileCount);
         }
     }
+
+
+    /**
+     * @description: 根据文件链接获取File
+     * @author: zhou shuai
+     * @date: 2021/11/24 15:03
+     * @param fileUrl
+     * @return java.io.File
+     */
+    private static File getFile(String fileUrl) {
+        try {
+            File tempFile = File.createTempFile("temp" + System.currentTimeMillis(), ".xlsx");
+            URL httpUrl = new URL(fileUrl);
+            FileUtils.copyURLToFile(httpUrl, tempFile);
+            return tempFile;
+        } catch (Exception e) {
+            log.error("", e);
+        }
+        return null;
+    }
+
 }
