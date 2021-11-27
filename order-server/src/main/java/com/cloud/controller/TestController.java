@@ -2,6 +2,7 @@ package com.cloud.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cloud.common.aop.annotation.MethodLogger;
+import com.cloud.common.aop.annotation.NewAuthV2;
 import com.cloud.common.beans.request.PageQueryRequest;
 import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.beans.response.PageQueryResponse;
@@ -52,6 +53,7 @@ public class TestController {
     }
 
     @PostMapping("/category/list")
+    @NewAuthV2
     public BaseResponse<List<Category>> categosyList() {
         List<Category> categoryList = categoryService.categoryList();
         return BaseResponse.createSuccessResult(categoryList);

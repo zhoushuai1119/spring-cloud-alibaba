@@ -1,4 +1,4 @@
-package com.cloud.config;
+package com.cloud.common.config;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.binder.jvm.ExecutorServiceMetrics;

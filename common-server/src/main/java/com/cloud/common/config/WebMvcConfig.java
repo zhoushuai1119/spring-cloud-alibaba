@@ -1,23 +1,16 @@
-package com.cloud.config;
+package com.cloud.common.config;
 
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.support.config.FastJsonConfig;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.cloud.common.StringToEnumConverterFactory;
-import com.cloud.interceptor.LoginInterceptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import com.cloud.common.beans.Factory.StringToEnumConverterFactory;
+import com.cloud.common.interceptor.LoginInterceptor;
+import com.cloud.common.utils.JsonUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Author： Zhou Shuai
@@ -26,16 +19,15 @@ import java.util.List;
  * @Version:  01
  */
 @Configuration
+@Slf4j
 public class WebMvcConfig implements WebMvcConfigurer {
-
-    private static final Logger logger = LoggerFactory.getLogger(WebMvcConfig.class);
 
     @Resource
     private LoginInterceptor loginInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        logger.debug("进入LoginHandlerFilter拦截器");
+        log.debug("进入LoginHandlerFilter拦截器");
         InterceptorRegistration ir = registry.addInterceptor(loginInterceptor);
         //配置拦截的url
         ir.addPathPatterns("/**");
@@ -77,16 +69,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addConverterFactory(new StringToEnumConverterFactory());
     }
 
-    @Bean
+    /*@Bean
     public HttpMessageConverters fastJsonHttpMessageConverters(){
         //1.需要定义一个convert转换消息的对象;
         FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
         //2:添加fastJson的配置信息;
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        /**
-         * 第一个SerializerFeature.PrettyFormat可以省略，毕竟这会造成额外的内存消耗和流量，第二个是用来指定当属性值为null是是否输出：pro:null
-         　　　　　 * SerializerFeature.SkipTransientField
-         */
         fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteMapNullValue);
         //fastJsonConfig.setSerializeFilters(dictContextValueFilter);
         //3处理中文乱码问题
@@ -97,6 +85,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
         fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
         HttpMessageConverter<?> converter = fastJsonHttpMessageConverter;
         return new HttpMessageConverters(converter);
+    }*/
+
+    @Bean
+    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter(){
+        MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+        jsonConverter.setObjectMapper(JsonUtil.OBJECT_MAPPER);
+        return jsonConverter;
     }
 
 }

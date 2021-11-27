@@ -9,6 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Data
 @TableName("category")
 @AllArgsConstructor
@@ -32,5 +35,11 @@ public class Category extends Model<Category> {
 
     @TableField("parent_category_name")
     private String parentCategoryName;
+
+    @TableField("create_time")
+    private LocalDateTime createTime;
+
+    @TableField("update_time")
+    private LocalDate updateTime;
 
 }

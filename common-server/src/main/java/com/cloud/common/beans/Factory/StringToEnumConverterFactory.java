@@ -1,4 +1,4 @@
-package com.cloud.common;
+package com.cloud.common.beans.Factory;
 
 import com.cloud.common.enums.BaseEnum;
 import org.springframework.core.convert.converter.Converter;

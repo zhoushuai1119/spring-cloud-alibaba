@@ -1,4 +1,4 @@
-package com.cloud.config;
+package com.cloud.common.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -30,7 +30,7 @@ public class RedissonConfig {
     public RedissonClient getRedisson() {
         Config config = new Config();
         config.useSingleServer()
-                .setAddress("redis://192.168.29.128:6379")
+                .setAddress("redis://192.168.190.129:6379")
                 .setPassword("123456");
         //添加主从配置
         //config.useMasterSlaveServers().setMasterAddress("").setPassword("").addSlaveAddress(new String[]{"", ""});

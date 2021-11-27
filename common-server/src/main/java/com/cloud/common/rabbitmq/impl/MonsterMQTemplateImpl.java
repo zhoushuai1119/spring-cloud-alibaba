@@ -1,6 +1,6 @@
-package com.cloud.rabbitmq.core.impl;
+package com.cloud.common.rabbitmq.impl;
 
-import com.cloud.rabbitmq.core.MonsterMQTemplate;
+import com.cloud.common.rabbitmq.MonsterMQTemplate;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

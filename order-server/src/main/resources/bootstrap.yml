@@ -39,14 +39,14 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.29.128:8848
+        server-addr: 192.168.190.129:8848
       config:
-        server-addr: 192.168.29.128:8848
+        server-addr: 192.168.190.129:8848
         file-extension: yml
 
   redis:
     database: 0
-    host: 192.168.29.128
+    host: 192.168.190.129
     port: 6379
     password: 123456
     timeout: 6000ms
@@ -65,7 +65,7 @@ spring:
 
 
   rabbitmq:
-    host: 192.168.29.128
+    host: 192.168.190.129
     port: 5672
     username: guest
     password: guest
@@ -114,7 +114,7 @@ xxl:
     admin:
       #调度中心部署跟地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。
       #执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
-      addresses: http://192.168.29.128:19090/xxl-job-admin
+      addresses: http://192.168.190.129:19090/xxl-job-admin
     #### 执行器通讯TOKEN [选填]：非空时启用；
     accessToken:
     executor:
@@ -128,16 +128,16 @@ xxl:
       ip:
       #### 执行器端口号 [选填]：小于等于0则自动获取；默认端口为9999，
       #### 单机部署多个执行器时，注意要配置不同执行器端口；
-      port: 9999
+      port: 0
       #### 执行器运行日志文件存储磁盘路径 [选填] ：需要对该路径拥有读写权限；为空则使用默认路径；
-      logpath: /data/applogs/xxl-job/jobhandler
+      logpath: /idea_logs/springcloud_logs/xxl-job/jobhandler
       #### 执行器日志文件保存天数 [选填] ： 过期日志自动清理, 限制值大于等于3时生效; 否则, 如-1, 关闭自动清理功能；
       logretentiondays: 30
 
   ### xxl-sso #############################################################
   sso:
     #SSO Server认证中心地址（推荐以域名方式配置认证中心，本机可参考章节"2.5"修改host文件配置域名指向）
-    server: http://192.168.29.128:18888/xxl-sso-server
+    server: http://192.168.190.129:18888/xxl-sso-server
     ###### 注销登陆path，值为Client端应用的相对路径
     logout:
       path: /logout
@@ -147,14 +147,14 @@ xxl:
     ### redis   // redis address, like "{ip}"、"{ip}:{port}"、
     ### "{redis/rediss}://xxl-sso:{password}@{ip}:{port:6379}/{db}"；Multiple "," separated
     redis:
-      address: redis://xxl-sso:123456@192.168.29.128:6379
+      address: redis://xxl-sso:123456@192.168.190.129:6379
 
 seata:
   tx-service-group: my_test_tx_group
   service:
     grouplist:
       #指定seata服务器地址
-      seata-server: 192.168.29.128:8091
+      seata-server: 192.168.190.129:8091
 
 dubbo:
   application:
@@ -170,7 +170,7 @@ dubbo:
     port: -1
   registry:
     #服务注册中心配置
-    address: nacos://192.168.29.128:8848
+    address: nacos://192.168.190.129:8848
     check: false
   consumer:
     check: false
@@ -188,8 +188,8 @@ management:
 fdfs:
   so-timeout: 15010
   connect-timeout: 6010
-  tracker-list: 192.168.29.128:22122
-  urlPrefix: http://192.168.29.128/
+  tracker-list: 192.168.190.129:22122
+  urlPrefix: http://192.168.190.129/
   ##生成缩略图参数
   thumb-image:
     width: 150

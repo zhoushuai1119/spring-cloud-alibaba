@@ -1,5 +1,6 @@
-package com.cloud.interceptor;
+package com.cloud.common.interceptor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  * @version: V1.0
  */
 @Component
+@Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 
     /**
@@ -22,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest res, HttpServletResponse rep, Object object) throws Exception {
-        System.out.println("进入LoginInterceptor拦截器");
+        log.info("进入LoginInterceptor拦截器");
         return true;
     }
 
@@ -32,7 +34,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        //System.out.println("postHandle....");
+        log.info("postHandle....");
     }
 
     /**
@@ -41,6 +43,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-        //System.out.println("afterCompletion....");
+        log.info("afterCompletion....");
     }
 }

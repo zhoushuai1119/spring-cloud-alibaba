@@ -1,8 +1,8 @@
 package com.cloud.rabbitmq.direct;
 
+import com.cloud.common.config.RabbitMQConfig;
 import com.cloud.common.entity.order.Category;
 import com.cloud.common.utils.JsonUtil;
-import com.cloud.config.RabbitMQConfig;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;

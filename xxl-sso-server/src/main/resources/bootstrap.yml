@@ -11,9 +11,9 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.29.128:8848
+        server-addr: 192.168.190.129:8848
       config:
-        server-addr: 192.168.29.128:8848
+        server-addr: 192.168.190.129:8848
         file-extension: yml
 
   mvc:
@@ -34,7 +34,7 @@ spring:
 xxl:
   sso:
     redis:
-      address: redis://xxl-sso:123456@192.168.29.128:6379
+      address: redis://xxl-sso:123456@192.168.190.129:6379
       expire:
         minute: 1440
 

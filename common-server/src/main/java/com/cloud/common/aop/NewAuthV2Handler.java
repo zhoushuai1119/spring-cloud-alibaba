@@ -2,7 +2,6 @@ package com.cloud.common.aop;
 
 import com.cloud.common.aop.annotation.NewAuthV2;
 import com.cloud.common.beans.request.PageQueryRequest;
-import com.cloud.common.service.product.DictService;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -44,8 +43,6 @@ public class NewAuthV2Handler implements ApplicationContextAware {
 
     @Around("additional()")
     public Object before(ProceedingJoinPoint joinPoint) throws Throwable {
-        DictService dictService = (DictService) applicationContext.getBean("dictServiceImpl");
-        dictService.saveDict();
         NewAuthV2 newAuth = ((MethodSignature) joinPoint.getSignature()).getMethod().getAnnotation(NewAuthV2.class);
         Object[] args = joinPoint.getArgs();
         List<Object> objects = Lists.newArrayList();

@@ -1,11 +1,10 @@
 package com.cloud.rabbitmq.topic;
 
+import com.cloud.common.config.RabbitMQConfig;
 import com.cloud.common.entity.order.Category;
 import com.cloud.common.utils.CommonUtil;
-import com.cloud.config.RabbitMQConfig;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.common.utils.LogUtil;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;

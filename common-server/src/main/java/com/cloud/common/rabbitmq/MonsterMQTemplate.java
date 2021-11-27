@@ -1,4 +1,4 @@
-package com.cloud.rabbitmq.core;
+package com.cloud.common.rabbitmq;
 
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 
