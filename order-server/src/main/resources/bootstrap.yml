@@ -58,11 +58,23 @@ spring:
         min-idle: 0
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/test_zs?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
-    username: root
-    password: Zs11195310
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    dynamic:
+      #设置默认的数据源或者数据源组,默认值即为master
+      primary: master
+      #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      strict: false
+      datasource:
+        master:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/test_zs?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+          username: root
+          password: Zs11195310
 
+        slave:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/shiro?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+          username: root
+          password: Zs11195310
 
   rabbitmq:
     host: 192.168.190.129
@@ -133,21 +145,6 @@ xxl:
       logpath: /idea_logs/springcloud_logs/xxl-job/jobhandler
       #### 执行器日志文件保存天数 [选填] ： 过期日志自动清理, 限制值大于等于3时生效; 否则, 如-1, 关闭自动清理功能；
       logretentiondays: 30
-
-  ### xxl-sso #############################################################
-  sso:
-    #SSO Server认证中心地址（推荐以域名方式配置认证中心，本机可参考章节"2.5"修改host文件配置域名指向）
-    server: http://192.168.190.129:18888/xxl-sso-server
-    ###### 注销登陆path，值为Client端应用的相对路径
-    logout:
-      path: /logout
-    ###### 路径排除Path，允许设置多个，且支持Ant表达式。用于排除SSO客户端不需要过滤的路径
-    excluded:
-      paths:
-    ### redis   // redis address, like "{ip}"、"{ip}:{port}"、
-    ### "{redis/rediss}://xxl-sso:{password}@{ip}:{port:6379}/{db}"；Multiple "," separated
-    redis:
-      address: redis://xxl-sso:123456@192.168.190.129:6379
 
 seata:
   tx-service-group: my_test_tx_group
