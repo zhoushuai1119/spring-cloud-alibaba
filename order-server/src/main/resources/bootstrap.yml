@@ -195,6 +195,10 @@ fdfs:
     max-wait-millis: 10200
     max-total: 153
 
+elasticsearch:
+  host: 192.168.190.129
+  port: 9200
+
 logging:
   level:
     com:

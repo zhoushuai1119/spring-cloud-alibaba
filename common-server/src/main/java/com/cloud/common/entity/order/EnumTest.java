@@ -5,8 +5,9 @@ import com.cloud.common.enums.AgeEnum;
 import com.cloud.common.serializer.EnumDeserializer;
 import com.cloud.common.serializer.EnumSerializer;
 import lombok.Data;
+
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @description:
@@ -25,6 +26,6 @@ public class EnumTest implements Serializable {
     private AgeEnum age;
 
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
+    private LocalDateTime createTime;
 
 }

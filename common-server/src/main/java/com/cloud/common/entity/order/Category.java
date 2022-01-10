@@ -5,20 +5,23 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.cloud.common.aop.annotation.EsDocPrivateKey;
+import com.cloud.common.aop.annotation.EsIndex;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @TableName("category")
 @AllArgsConstructor
 @NoArgsConstructor
+@EsIndex("idx_category")
 public class Category extends Model<Category> {
 
     @TableId(type = IdType.AUTO)
+    @EsDocPrivateKey
     private Integer id;
 
     @TableField("category_id")
@@ -40,6 +43,6 @@ public class Category extends Model<Category> {
     private LocalDateTime createTime;
 
     @TableField("update_time")
-    private LocalDate updateTime;
+    private LocalDateTime updateTime;
 
 }
