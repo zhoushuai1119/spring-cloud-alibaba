@@ -162,21 +162,6 @@ xxl:
       #### 执行器日志文件保存天数 [选填] ： 过期日志自动清理, 限制值大于等于3时生效; 否则, 如-1, 关闭自动清理功能；
       logretentiondays: 30
 
-  ### xxl-sso #############################################################
-  sso:
-    #SSO Server认证中心地址（推荐以域名方式配置认证中心，本机可参考章节"2.5"修改host文件配置域名指向）
-    server: http://192.168.190.129:18888/xxl-sso-server
-    ###### 注销登陆path，值为Client端应用的相对路径
-    logout:
-      path: /logout
-    ###### 路径排除Path，允许设置多个，且支持Ant表达式。用于排除SSO客户端不需要过滤的路径
-    excluded:
-      paths:
-    ### redis   // redis address, like "{ip}"、"{ip}:{port}"、
-    ### "{redis/rediss}://xxl-sso:{password}@{ip}:{port:6379}/{db}"；Multiple "," separated
-    redis:
-      address: redis://xxl-sso:123456@192.168.190.129:6379
-
 dubbo:
   application:
     id: ${spring.application.name}
