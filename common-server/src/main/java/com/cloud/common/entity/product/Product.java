@@ -1,6 +1,6 @@
 package com.cloud.common.entity.product;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -26,8 +26,7 @@ public class Product extends Model<Product> {
     @TableField("PRODUCT_TYPE")
     private Integer productType;
 
-    @TableField("CREATE_TIME")
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @TableField(value = "CREATE_TIME",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
 }

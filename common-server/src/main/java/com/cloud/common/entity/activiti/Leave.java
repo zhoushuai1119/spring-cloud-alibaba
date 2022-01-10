@@ -37,7 +37,6 @@ public class Leave extends Model<Leave> {
     private String type;
 
     @TableField("CREATE_TIME")
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
 }
