@@ -30,6 +30,7 @@
         <shiro.version>1.7.1</shiro.version>
         <elasticsearch.version>7.6.2</elasticsearch.version>
         <sharding-jdbc.version>4.1.1</sharding-jdbc.version>
+        <rocketmq-version>4.9.1</rocketmq-version>
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
         <!--docker配置-->
@@ -64,6 +65,7 @@
         <module>payment-server</module>
         <module>product-server</module>
         <module>gateway-server</module>
+        <module>rocketmq-server</module>
         <module>user-server</module>
         <module>activiti-server</module>
         <module>xxl-job-admin</module>

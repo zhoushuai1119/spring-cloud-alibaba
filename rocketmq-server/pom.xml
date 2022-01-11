@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cloud.springcloud</groupId>
-    <artifactId>user-server</artifactId>
+    <artifactId>rocketmq-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>user-server</name>
-    <description>Demo project for user-server</description>
+    <name>rocketmq-server</name>
+    <description>Demo project for rocketmq-server</description>
 
     <!--父工程的依赖-->
     <parent>
@@ -24,65 +24,15 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.cloud.springcloud</groupId>
-            <artifactId>common-server</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <!-- dubbo -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-dubbo</artifactId>
-        </dependency>
-        <!--jwt-token-->
-        <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-            <version>3.12.1</version>
-        </dependency>
-        <!--Mybatis-plus-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus.version}</version>
-        </dependency>
-        <!--多数据源配置-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <version>${mybatis-plus.version}</version>
-        </dependency>
-        <!--Mysql5.8-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-client</artifactId>
+            <version>${rocketmq-version}</version>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>user-server</finalName>
+        <finalName>rocketmq-server</finalName>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.4.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>${mysql.version}</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <configurationFile>src/main/resources/generator/generatorConfig.xml</configurationFile>
-                    <verbose>true</verbose>
-                    <overwrite>true</overwrite>
-                </configuration>
-            </plugin>
             <!-- Docker maven plugin -->
             <plugin>
                 <groupId>com.spotify</groupId>
