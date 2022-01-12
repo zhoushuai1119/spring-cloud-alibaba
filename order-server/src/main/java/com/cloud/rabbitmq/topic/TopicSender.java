@@ -1,10 +1,10 @@
 package com.cloud.rabbitmq.topic;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.cloud.common.config.RabbitMQConfig;
 import com.cloud.common.entity.order.Category;
-import com.cloud.common.rabbitmq.MonsterMQTemplate;
+import com.cloud.config.RabbitMQConfig;
 import com.cloud.dao.CategoryMapper;
+import com.cloud.rabbitmq.template.MonsterMQTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;

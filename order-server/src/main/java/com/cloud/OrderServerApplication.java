@@ -17,7 +17,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableDubbo
 @EnableAsync
 @RefreshScope
-//@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1800)//设置session过期时间
 public class OrderServerApplication {
 
     public static void main(String[] args) {

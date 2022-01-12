@@ -1,8 +1,8 @@
 package com.cloud.elasticsearch.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.BeanUtils;
-import com.cloud.common.aop.annotation.EsDocPrivateKey;
-import com.cloud.common.aop.annotation.EsIndex;
+import com.cloud.common.aop.annotation.elasticsearch.EsDocPrivateKey;
+import com.cloud.common.aop.annotation.elasticsearch.EsIndex;
 import com.cloud.common.utils.JsonUtil;
 import com.cloud.common.utils.ReflectionUtil;
 import com.cloud.elasticsearch.IEsDocService;

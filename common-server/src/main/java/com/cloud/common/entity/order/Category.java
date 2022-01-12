@@ -2,8 +2,8 @@ package com.cloud.common.entity.order;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.cloud.common.aop.annotation.EsDocPrivateKey;
-import com.cloud.common.aop.annotation.EsIndex;
+import com.cloud.common.aop.annotation.elasticsearch.EsDocPrivateKey;
+import com.cloud.common.aop.annotation.elasticsearch.EsIndex;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

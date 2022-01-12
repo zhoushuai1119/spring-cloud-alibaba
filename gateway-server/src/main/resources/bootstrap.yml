@@ -16,19 +16,6 @@ spring:
         server-addr: 192.168.190.129:8848
         file-extension: yml
 
-  redis:
-    database: 0
-    host: 192.168.190.129
-    port: 6379
-    password: 123456
-    timeout: 6000ms
-    lettuce:
-      pool:
-        max-active: 8
-        max-wait: -1ms
-        max-idle: 8
-        min-idle: 0
-
 
     sentinel:
       #取消Sentinel控制台懒加载

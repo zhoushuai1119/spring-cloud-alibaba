@@ -16,20 +16,6 @@ spring:
   #需要增加配置spring.main.allow-bean-definition-overriding=true
   main:
     allow-bean-definition-overriding: true
-  mvc:
-    servlet:
-      load-on-startup: 0
-    static-path-pattern: /static/**
-  resources:
-    static-locations: classpath:/static/
-
-  freemarker:
-    template-loader-path: classpath:/templates/
-    suffix: .ftl
-    charset: UTF-8
-    request-context-attribute: request
-    settings:
-      number_format: 0.##########
 
   cloud:
     nacos:
@@ -143,6 +129,10 @@ xxl:
 
 seata:
   tx-service-group: my_test_tx_group
+  service:
+    grouplist:
+      #指定seata服务器地址
+      seata-server: 192.168.190.129:8091
 
 dubbo:
   application:

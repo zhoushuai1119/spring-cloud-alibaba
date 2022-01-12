@@ -21,20 +21,6 @@ spring:
   #需要增加配置spring.main.allow-bean-definition-overriding=true
   main:
     allow-bean-definition-overriding: true
-  mvc:
-    servlet:
-      load-on-startup: 0
-    static-path-pattern: /static/**
-  resources:
-    static-locations: classpath:/static/
-
-  freemarker:
-    template-loader-path: classpath:/templates/
-    suffix: .ftl
-    charset: UTF-8
-    request-context-attribute: request
-    settings:
-      number_format: 0.##########
 
   cloud:
     nacos:
@@ -199,10 +185,3 @@ elasticsearch:
   host: 192.168.190.129
   port: 9200
 
-logging:
-  level:
-    com:
-      alibaba:
-        nacos:
-          client:
-            naming: warn
