@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="true" scanPeriod="60 seconds">
+    <!--取消打印rocketmq info级别日志-->
+    <logger name="RocketmqClient" level="WARN" additivity="false"/>
     <timestamp key="date" datePattern="yyyyMMdd" />
     <property name="defaultPattern"
               value="%blue(%d{MM-dd HH:mm:ss}) [%boldYellow(%thread)] | %highlight(%-5level) | %boldGreen(%logger) %X{clientIp} %X{operateId} - %highlight(%msg) %n"/>

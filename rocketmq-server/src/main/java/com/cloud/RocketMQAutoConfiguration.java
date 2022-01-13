@@ -4,9 +4,13 @@ import com.cloud.annotation.ConsumeTopic;
 import com.cloud.core.*;
 import com.cloud.enums.ConsumeMode;
 import com.cloud.enums.SelectorType;
+import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.rocketmq.acl.common.AclClientRPCHook;
 import org.apache.rocketmq.acl.common.SessionCredentials;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
@@ -36,8 +40,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.lang.annotation.Annotation;
@@ -78,7 +80,7 @@ public class RocketMQAutoConfiguration {
     @ConditionalOnClass(DefaultMQProducer.class)
     @ConditionalOnMissingBean(DefaultMQProducer.class)
     @ConditionalOnProperty(prefix = "enmonster.rocketmq", value = {"nameServer", "producer.group"})
-    public DefaultMQProducer mqProducer(RocketMQProperties rocketMQProperties,AclClientRPCHook aclRPCHook) {
+    public DefaultMQProducer mqProducer(RocketMQProperties rocketMQProperties, AclClientRPCHook aclRPCHook) {
 
         RocketMQProperties.Producer producerConfig = rocketMQProperties.getProducer();
         String groupName = producerConfig.getGroup();
@@ -106,7 +108,7 @@ public class RocketMQAutoConfiguration {
     @Bean
     @ConditionalOnClass(value = {TransactionMQProducer.class})
     @ConditionalOnMissingBean(value = {TransactionMQProducer.class})
-    public TransactionMQProducer mqTransactionProducer(RocketMQProperties rocketMQProperties,AclClientRPCHook aclRPCHook) throws Exception {
+    public TransactionMQProducer mqTransactionProducer(RocketMQProperties rocketMQProperties, AclClientRPCHook aclRPCHook) throws Exception {
         RocketMQProperties.TransactionProducerCustom tranProCustomModel = rocketMQProperties.getTransactionProducerCustom();//事务消息model
         RocketMQProperties.Producer producerConfigModel = rocketMQProperties.getProducer();//普通消息model
         //生成事务消息生产groupName
@@ -214,110 +216,108 @@ public class RocketMQAutoConfiguration {
 
         @Override
         public void afterPropertiesSet() throws Exception {
-            if (CollectionUtils.isEmpty(rocketMQProperties.getConsumer())) {
-                return;
-            }
-            //获取带有 @Component 的实现listener
-            Map<String, MonsterMQListener> beans = this.applicationContext.getBeansOfType(MonsterMQListener.class);
+            if (MapUtils.isNotEmpty(rocketMQProperties.getConsumer())) {
+                //获取带有 @Component 的实现listener
+                Map<String, MonsterMQListener> beans = this.applicationContext.getBeansOfType(MonsterMQListener.class);
 
-            //如果MonsterMQListener是空的，注册空的MonsterMQListener，找TopicListener bean，分topic消费消息
-            if (CollectionUtils.isEmpty(beans)) {
-                Map<String/*beanName*/, TopicListener> beanMap = applicationContext.getBeansOfType(TopicListener.class);
-                if (CollectionUtils.isEmpty(beanMap)) {
-                    throw new Exception("fail to find rocketMQ message listener");
-                }
+                //如果MonsterMQListener是空的，注册空的MonsterMQListener，找TopicListener bean，分topic消费消息
+                if (MapUtils.isEmpty(beans)) {
+                    Map<String/*beanName*/, TopicListener> beanMap = this.applicationContext.getBeansOfType(TopicListener.class);
+                    if (MapUtils.isEmpty(beanMap)) {
+                        throw new Exception("fail to find rocketMQ message listener");
+                    }
 
-                //设置 topicAndEventCode  和 listener 关系
-                Map<String/*topic:eventCode*/, DefaultMessageListener.ConsumeTopicInfo> topicMap = new HashMap<>();
-                Map<String, List<String>> topicAndEventCodes = new HashMap<>();
-                for (TopicListener topicListener : beanMap.values()) {
-                    //listener 注解中的 topicAndEventCode 得到 topicInfo
-                    DefaultMessageListener.ConsumeTopicInfo topicInfo = getConsumeTopicAndEventCode(topicListener);
-                    if (topicInfo != null) {
-                        String topicAndEventCode = topicInfo.getTopic() + ":" + topicInfo.getEventCode();
+                    //设置 topicAndEventCode  和 listener 关系
+                    Map<String/*topic:eventCode*/, DefaultMessageListener.ConsumeTopicInfo> topicMap = new HashMap<>();
+                    Map<String, List<String>> topicAndEventCodes = new HashMap<>();
+                    Iterator<TopicListener> topicListenerIterator = beanMap.values().iterator();
+                    while (topicListenerIterator.hasNext()) {
+                        TopicListener topicListener = topicListenerIterator.next();
+                        //listener 注解中的 topicAndEventCode 得到 topicInfo
+                        DefaultMessageListener.ConsumeTopicInfo topicInfo = getConsumeTopicAndEventCode(topicListener);
+                        if (Objects.nonNull(topicInfo)) {
+                            String topicAndEventCode = topicInfo.getTopic() + ":" + topicInfo.getEventCode();
 
-                        DefaultMessageListener.ConsumeTopicInfo existed = topicMap.get(topicAndEventCode);
-                        if (existed != null) {
-                            throw new Exception("duplicated topic eventCode listener: " + existed.getTopicListener().getClass().getName() + " and " + topicListener.getClass().getName());
-                        } else {
-                            topicInfo.setTopicListener(topicListener);
-                            topicMap.put(topicAndEventCode, topicInfo);
+                            DefaultMessageListener.ConsumeTopicInfo existed = topicMap.get(topicAndEventCode);
+                            if (Objects.nonNull(existed)) {
+                                throw new Exception("duplicated topic eventCode listener: " + existed.getTopicListener().getClass().getName() + " and " + topicListener.getClass().getName());
+                            } else {
+                                topicInfo.setTopicListener(topicListener);
+                                topicMap.put(topicAndEventCode, topicInfo);
 
-                            //设置listener 中 topic 和eventCode 关系
-                            List<String> eventCodes = topicAndEventCodes.get(topicInfo.getTopic());
-                            if (CollectionUtils.isEmpty(eventCodes)) {
-                                eventCodes = Lists.newArrayList();
+                                //设置listener 中 topic 和eventCode 关系
+                                List<String> eventCodes = topicAndEventCodes.get(topicInfo.getTopic());
+                                if (CollectionUtils.isEmpty(eventCodes)) {
+                                    eventCodes = Lists.newArrayList();
+                                }
+                                eventCodes.add(topicInfo.getEventCode());
+                                topicAndEventCodes.put(topicInfo.getTopic(), eventCodes);
                             }
-                            eventCodes.add(topicInfo.getEventCode());
-                            topicAndEventCodes.put(topicInfo.getTopic(), eventCodes);
-                        }
-                    }
-                }
-
-                //校验topic eventCode 是否正确配置
-                if (rocketMQProperties.getTopicRelationCheck()) {
-                    //代码文件里的topic eventCode
-                    for (Map.Entry<String, List<String>> entry : topicAndEventCodes.entrySet()) {
-                        List<String> eventCodes = entry.getValue();
-                        if (eventCodes.size() > 1 && eventCodes.contains("*")) {
-                            throw new Exception("fail in listener code ! configured eventCode * ,cannot exist at the same time many EventCode " + eventCodes.toString());
                         }
                     }
 
-                    //配置文件里的topic eventCode
-                    Set<String> topicEventCodesInConfigs = new HashSet<>();
-                    for (RocketMQProperties.Consumer consumer : rocketMQProperties.getConsumer().values()) {
-                        Map<String, String> subscription = consumer.getSubscription();
-                        if (subscription != null) {
-                            for (Map.Entry<String, String> topicEntry : subscription.entrySet()) {
-                                if (topicEntry.getValue() != null) {
-                                    String topic = topicEntry.getKey();
-                                    String[] eventCodeArr = topicEntry.getValue().split(",");
-                                    if (eventCodeArr != null) {
-                                        List<String> eventCodes = Lists.newArrayList(eventCodeArr);
-                                        if (eventCodes.size() > 1 && eventCodes.contains("*")) {
-                                            throw new Exception("fail in config ! configured eventCode * ,cannot exist at the same time many EventCode " + eventCodes.toString());
-                                        }
-                                        for (String eventCode : eventCodes) {
-                                            if (!StringUtils.isEmpty(eventCode)) {
-                                                topicEventCodesInConfigs.add(topic + ":" + eventCode);
+                    //校验topic eventCode 是否正确配置
+                    if (rocketMQProperties.getTopicRelationCheck()) {
+                        //代码文件里的topic eventCode
+                        for (Map.Entry<String, List<String>> entry : topicAndEventCodes.entrySet()) {
+                            List<String> eventCodes = entry.getValue();
+                            if (eventCodes.size() > 1 && eventCodes.contains("*")) {
+                                throw new Exception("fail in listener code ! configured eventCode * ,cannot exist at the same time many EventCode " + eventCodes.toString());
+                            }
+                        }
+
+                        //配置文件里的topic eventCode
+                        Set<String> topicEventCodesInConfigs = new HashSet<>();
+                        for (RocketMQProperties.Consumer consumer : rocketMQProperties.getConsumer().values()) {
+                            Map<String, String> subscription = consumer.getSubscription();
+                            if (MapUtils.isNotEmpty(subscription)) {
+                                for (Map.Entry<String, String> topicEntry : subscription.entrySet()) {
+                                    if (StringUtils.isNotBlank(topicEntry.getValue())) {
+                                        String topic = topicEntry.getKey();
+                                        List<String> eventCodeList = Splitter.on(",").trimResults().omitEmptyStrings().splitToList(topicEntry.getValue());
+                                        if (CollectionUtils.isNotEmpty(eventCodeList)) {
+                                            if (eventCodeList.size() > 1 && eventCodeList.contains("*")) {
+                                                throw new Exception("fail in config ! configured eventCode * ,cannot exist at the same time many EventCode " + eventCodeList);
                                             }
+                                            eventCodeList.forEach(eventCode -> {
+                                                topicEventCodesInConfigs.add(topic + ":" + eventCode);
+                                            });
                                         }
                                     }
                                 }
                             }
                         }
-                    }
 
-                    for (String topicEventCodesInConfig : topicEventCodesInConfigs) {
-                        //校验配置文件里的topic是否都有listener
-                        if (!topicMap.containsKey(topicEventCodesInConfig)) {
-                            throw new Exception("fail to find topic listener for " + topicEventCodesInConfig);
+                        for (String topicEventCodesInConfig : topicEventCodesInConfigs) {
+                            //校验配置文件里的topic是否都有listener
+                            if (!topicMap.containsKey(topicEventCodesInConfig)) {
+                                throw new Exception("fail to find topic listener for " + topicEventCodesInConfig);
+                            }
+                        }
+                        for (String topicEventCodesInCode : topicMap.keySet()) {
+                            //校验代码里的topic是否在配置文件里
+                            if (!topicEventCodesInConfigs.contains(topicEventCodesInCode)) {
+                                throw new Exception("fail to find topic eventCode config for " + topicEventCodesInCode);
+                            }
                         }
                     }
-                    for (String topicEventCodesInCode : topicMap.keySet()) {
-                        //校验代码里的topic是否在配置文件里
-                        if (!topicEventCodesInConfigs.contains(topicEventCodesInCode)) {
-                            throw new Exception("fail to find topic eventCode config for " + topicEventCodesInCode);
-                        }
+
+                    //为消费者,设置对应的监听Listener （包括topic 和 evencode关系）
+                    for (Map.Entry<String, RocketMQProperties.Consumer> consumer : rocketMQProperties.getConsumer().entrySet()) {
+                        DefaultMessageListener messageListener = new DefaultMessageListener(topicMap);
+                        ///注册单例bean
+                        applicationContext.getBeanFactory().registerSingleton(consumer.getKey(), messageListener);
                     }
+                    //执行完成后，bean 就有MonsterMQListener 对象了（DefaultMessageListener --extends --> 就有MonsterMQListener）
+                    beans = this.applicationContext.getBeansOfType(MonsterMQListener.class);
                 }
 
-                //为消费者,设置对应的监听Listener （包括topic 和 evencode关系）
-                for (Map.Entry<String, RocketMQProperties.Consumer> consumer : rocketMQProperties.getConsumer().entrySet()) {
-                    DefaultMessageListener messageListener = new DefaultMessageListener(topicMap);
-                    ///注册单例bean
-                    applicationContext.getBeanFactory().registerSingleton(consumer.getKey(), messageListener);
+                if (MapUtils.isNotEmpty(beans)) {
+                    //根据上下文得到 beanName rocketMQListener 等信息  实例化启动，消费者
+                    beans.forEach((beanName, rocketMQListener) -> registerContainer(beanName, rocketMQListener, rocketMQTemplate, instanceId));
+                } else {
+                    throw new Exception("fail to find rocketMQ message listener");
                 }
-                //执行完成后，bean 就有MonsterMQListener 对象了（DefaultMessageListener --extends --> 就有MonsterMQListener）
-                beans = this.applicationContext.getBeansOfType(MonsterMQListener.class);
-            }
-
-            if (!CollectionUtils.isEmpty(beans)) {
-                //根据上下文得到 beanName rocketMQListener 等信息  实例化启动，消费者
-                beans.forEach((beanName, rocketMQListener) -> registerContainer(beanName, rocketMQListener, rocketMQTemplate, instanceId));
-            } else {
-                throw new Exception("fail to find rocketMQ message listener");
             }
         }
 
@@ -336,12 +336,12 @@ public class RocketMQAutoConfiguration {
             }
             annotation = clazz.getAnnotation(ConsumeTopic.class);
 
-            if (annotation == null) {
+            if (Objects.isNull(annotation)) {
                 log.error("topic listener {} has no cnsumetopic annotation", consumeTopic.getClass().getName());
             } else {
                 DefaultMessageListener.ConsumeTopicInfo topicInfo = null;
                 Map<String, Object> attrs = AnnotationUtils.getAnnotationAttributes(annotation);
-                if (attrs != null && attrs.containsKey("topic") && attrs.containsKey("eventCode")) {
+                if (MapUtils.isNotEmpty(attrs) && attrs.containsKey("topic") && attrs.containsKey("eventCode")) {
                     topicInfo = new DefaultMessageListener.ConsumeTopicInfo();
                     topicInfo.setTopic(attrs.get("topic").toString());
                     topicInfo.setEventCode(attrs.get("eventCode").toString());

@@ -30,4 +30,10 @@ public @interface ConsumeTopic {
      */
     String eventCode();
 
+    /**
+     * 是否打印日志
+     * @return
+     */
+    boolean log() default false;
+
 }

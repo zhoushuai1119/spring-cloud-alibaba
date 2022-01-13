@@ -114,13 +114,13 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
         if (Objects.nonNull(consumer)) {
             consumer.shutdown();
         }
-        log.info("container destroyed, {}", this.toString());
+        log.info("container destroyed, {}", this);
     }
 
     public synchronized void start() throws MQClientException {
 
         if (this.isStarted()) {
-            throw new IllegalStateException("container already started. " + this.toString());
+            throw new IllegalStateException("container already started. " + this);
         }
 
         initRocketMQPushConsumer();
@@ -132,7 +132,7 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
         consumer.start();
         this.setStarted(true);
 
-        log.info("started container: {}", this.toString());
+        log.info("started container: {}", this);
     }
 
     public class DefaultMessageListenerConcurrently implements MessageListenerConcurrently {
@@ -251,11 +251,6 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
                 break;
             default:
                 throw new IllegalArgumentException("Property 'consumeMode' was wrong.");
-        }
-
-        // provide an entryway to custom setting RocketMQ consumer
-        if (rocketMQListener instanceof RocketMQPushConsumerLifecycleListener) {
-            ((RocketMQPushConsumerLifecycleListener) rocketMQListener).prepareStart(consumer);
         }
 
     }
