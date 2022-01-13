@@ -89,6 +89,17 @@ spring:
           #重试间隔时间(单位毫秒）
           initial-interval: 5000
 
+#rocketmq配置
+enmonster:
+  rocketmq:
+    nameServer: 192.168.190.129:9876
+    producer:
+      group: user-server
+    consumer:
+      c_aod:
+        subscription:
+          TP_EMS: EM_MSN
+
 mybatis-plus:
   mapper-locations: classpath*:mapping/*.xml
   type-aliases-package: com.cloud.common.entity
