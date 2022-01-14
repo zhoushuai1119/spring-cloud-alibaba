@@ -40,7 +40,7 @@ public class MonsterMessage<T> {
     int reconsumeTimes;
 
     /**
-     * 消息id
+     * 事务id
      */
     String transactionId;
 

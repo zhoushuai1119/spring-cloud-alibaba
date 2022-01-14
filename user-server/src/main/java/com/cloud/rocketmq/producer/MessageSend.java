@@ -37,7 +37,9 @@ public class MessageSend {
     }
 
     public void sendTransactionMessage(){
-        consumerTransactionExecutor.send("transaction test","test arg");
+        for (int i = 0; i < 10; i++) {
+            consumerTransactionExecutor.send("transaction test" + i,i);
+        }
     }
 
 }

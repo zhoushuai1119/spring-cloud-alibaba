@@ -15,9 +15,8 @@ import org.apache.rocketmq.client.producer.LocalTransactionState;
  * @version: v1
  */
 @Slf4j
-@TansactionTopic(topic = CommonConstant.topic.USER_SERVER_TOPIC, eventCode = "EC_USER_SERVER_TRANSACTION",log = true)
+@TansactionTopic(topic = CommonConstant.topic.USER_SERVER_TOPIC, eventCode = "EC_USER_SERVER_TRANSACTION")
 public class ConsumerTransactionExecutor extends BaseTransactionExecutor<String,Object> {
-
 
     public ConsumerTransactionExecutor(RocketMQTransactionTemplate rocketMQTransactionTemplate) {
         super(rocketMQTransactionTemplate);
@@ -25,13 +24,19 @@ public class ConsumerTransactionExecutor extends BaseTransactionExecutor<String,
 
     @Override
     public LocalTransactionState executeTransaction(MonsterMessage<String> message, Object arg) {
-        log.info("事务消息执行本地事务*********");
-        log.info("收到消息{},参数:{}",message.getPayload(),arg);
-        return LocalTransactionState.COMMIT_MESSAGE;
+        Integer i = (Integer) arg;
+        if (i <= 5) {
+            log.info("事务消息执行本地事务*********");
+            log.info("事务ID:{},消息内容{},参数:{}", message.getTransactionId(), message.getPayload(), arg);
+            return LocalTransactionState.COMMIT_MESSAGE;
+        }
+        return LocalTransactionState.UNKNOW;
     }
 
     @Override
     public LocalTransactionState checkLocalTransaction(MonsterMessage<String> message) {
+        log.info("事务消息回来查本地事务*********");
+        log.info("事务ID:{},消息内容{}", message.getTransactionId(), message.getPayload());
         return LocalTransactionState.ROLLBACK_MESSAGE;
     }
 

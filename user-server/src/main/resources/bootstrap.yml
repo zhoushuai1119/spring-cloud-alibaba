@@ -94,8 +94,15 @@ enmonster:
   rocketmq:
     #不能使用name-server
     name-server: 192.168.190.129:9876
+    #普通消息配置
     producer:
       group: ${spring.application.name}
+
+    #事务消息配置
+    transactionProducerCustom:
+      group: ${spring.application.name}-transaction
+
+    #消费者配置
     consumer:
       #消费者组名称
       c_user_server:

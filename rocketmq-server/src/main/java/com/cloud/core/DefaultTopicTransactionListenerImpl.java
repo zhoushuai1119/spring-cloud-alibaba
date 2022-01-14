@@ -138,9 +138,6 @@ public class DefaultTopicTransactionListenerImpl implements TransactionListener 
                 topicInfo = new TransactionTopicMsgInfo();
                 topicInfo.setTopic(attrs.get("topic").toString());
                 topicInfo.setEventCode(attrs.get("eventCode").toString());
-                if (attrs.containsKey("log")) {
-                    topicInfo.setLog(Boolean.valueOf(attrs.get("log").toString()));
-                }
             }
             return topicInfo;
         }
@@ -161,11 +158,6 @@ public class DefaultTopicTransactionListenerImpl implements TransactionListener 
          * eventCode
          */
         private String eventCode;
-
-        /**
-         * 是否打印日志
-         */
-        private boolean log;
 
         /**
          * listener
