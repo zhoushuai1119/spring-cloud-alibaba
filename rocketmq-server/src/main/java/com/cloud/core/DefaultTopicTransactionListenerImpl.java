@@ -3,7 +3,6 @@ package com.cloud.core;
 
 import com.cloud.annotation.TansactionTopic;
 import com.cloud.dto.MonsterMessage;
-import com.cloud.enums.TransactionStateEnum;
 import com.cloud.util.MqMessageUtils;
 import com.fasterxml.jackson.databind.JavaType;
 import lombok.Data;
@@ -59,18 +58,12 @@ public class DefaultTopicTransactionListenerImpl implements TransactionListener 
                 return LocalTransactionState.UNKNOW;
             }
 
-            TransactionStateEnum transactionStateEnum = transTopicInfo.getTopicTransactionListener()
+            LocalTransactionState transactionStateEnum = transTopicInfo.getTopicTransactionListener()
                     .executeTransaction(messageConvert, arg);
-            if (TransactionStateEnum.COMMIT_MESSAGE.equals(transactionStateEnum)) {
-                return LocalTransactionState.COMMIT_MESSAGE;
-            }
-            if (TransactionStateEnum.ROLLBACK_MESSAGE.equals(transactionStateEnum)) {
-                return LocalTransactionState.ROLLBACK_MESSAGE;
-            }
+            return transactionStateEnum;
         } else {
             log.warn("cant find local transaction listener key = {}", key);
         }
-
         return LocalTransactionState.UNKNOW;
     }
 
@@ -88,18 +81,11 @@ public class DefaultTopicTransactionListenerImpl implements TransactionListener 
             } catch (Exception e) {
                 return LocalTransactionState.UNKNOW;
             }
-            TransactionStateEnum transactionStateEnum = transTopicInfo.getTopicTransactionListener()
+            LocalTransactionState transactionStateEnum = transTopicInfo.getTopicTransactionListener()
                     .checkLocalTransaction(messageConvert);
-            switch (transactionStateEnum) {
-                case COMMIT_MESSAGE:
-                    return LocalTransactionState.COMMIT_MESSAGE;
-                case ROLLBACK_MESSAGE:
-                    return LocalTransactionState.ROLLBACK_MESSAGE;
-                default:
-                    return LocalTransactionState.UNKNOW;
-            }
+            return transactionStateEnum;
         } else {
-            log.warn("cant find check listener key = {}", key);
+            log.warn("cant find check transaction listener key = {}", key);
         }
         return LocalTransactionState.UNKNOW;
     }

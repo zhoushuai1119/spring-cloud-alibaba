@@ -1,7 +1,7 @@
 package com.cloud.controller;
 
 import com.cloud.common.beans.response.BaseResponse;
-import com.cloud.rocketmq.MessageSend;
+import com.cloud.rocketmq.producer.MessageSend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +18,23 @@ public class RocketMQController {
     @Autowired
     private MessageSend messageSend;
 
+    /**
+     * 发送普通消息
+     * @return
+     */
     @PostMapping("/send")
-    public BaseResponse rocketMqTest(){
-        messageSend.sendMessageTest();
+    public BaseResponse sendMessage(){
+        messageSend.sendMessage();
+        return BaseResponse.createSuccessResult(null);
+    }
+
+    /**
+     * 发送事务消息
+     * @return
+     */
+    @PostMapping("/send/transaction")
+    public BaseResponse sendTransactionMessage(){
+        messageSend.sendTransactionMessage();
         return BaseResponse.createSuccessResult(null);
     }
 

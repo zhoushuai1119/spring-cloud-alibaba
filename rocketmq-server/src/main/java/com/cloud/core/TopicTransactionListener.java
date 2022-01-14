@@ -2,7 +2,7 @@ package com.cloud.core;
 
 
 import com.cloud.dto.MonsterMessage;
-import com.cloud.enums.TransactionStateEnum;
+import org.apache.rocketmq.client.producer.LocalTransactionState;
 
 /**
  * 分topic 事务逻辑
@@ -21,7 +21,7 @@ public interface TopicTransactionListener<T,R> {
      *  失败： TransactionStateEnum.ROLLBACK_MESSAGE  消息将被丢弃
      *
      */
-    TransactionStateEnum executeTransaction(MonsterMessage<T> message, R arg);
+    LocalTransactionState executeTransaction(MonsterMessage<T> message, R arg);
 
     /**
      * 回查事务方法
@@ -32,6 +32,6 @@ public interface TopicTransactionListener<T,R> {
      *  TransactionStateEnum.ROLLBACK_MESSAGE   消息将被丢弃。
      *  TransactionStateEnum.UNKNOW | Exception：继续执行回查逻辑（最多15次后丢弃消息）
      */
-    TransactionStateEnum checkLocalTransaction(MonsterMessage<T> message);
+    LocalTransactionState checkLocalTransaction(MonsterMessage<T> message);
 
 }

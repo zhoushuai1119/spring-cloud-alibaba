@@ -1,6 +1,5 @@
-package com.cloud.rocketmq;
+package com.cloud.rocketmq.consumer;
 
-import com.cloud.annotation.ConsumeTopic;
 import com.cloud.common.entity.user.TokenUser;
 import com.cloud.common.utils.JsonUtil;
 import com.cloud.core.TopicListener;
@@ -16,8 +15,8 @@ import java.util.List;
  * @version: v1
  */
 @Slf4j
-@ConsumeTopic(topic = "TP_EMS", eventCode = "EM_MSN", log = true)
-public class ListenerTest implements TopicListener<List<TokenUser>> {
+//@ConsumeTopic(topic = CommonConstant.topic.USER_SERVER_TOPIC, eventCode = "EC_PAYMENT_SERVER", log = true)
+public class PaymentServerListener implements TopicListener<List<TokenUser>> {
 
     @Override
     public void onMessage(MonsterMessage<List<TokenUser>> message) {

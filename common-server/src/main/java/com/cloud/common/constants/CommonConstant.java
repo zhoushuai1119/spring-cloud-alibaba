@@ -94,4 +94,31 @@ public class CommonConstant {
         int HEAD_DATA = 0X76;
     }
 
+    /**
+     * RocketMQ--Topic头
+     */
+    public interface topic{
+        /**
+         * activiti-server TOPIC
+         */
+        String ACTIVITI_SERVER_TOPIC = "TP_ACTIVITI_SERVER_TOPIC";
+        /**
+         * order-server TOPIC
+         */
+        String ORDER_SERVER_TOPIC = "TP_ORDER_SERVER_TOPIC";
+        /**
+         * payment-server TOPIC
+         */
+        String PAYMENT_SERVER_TOPIC = "TP_PAYMENT_SERVER";
+        /**
+         * product-server TOPIC
+         */
+        String PRODUCT_SERVER_TOPIC = "TP_PRODUCT_SERVER_TOPIC";
+        /**
+         * user-server TOPIC
+         */
+        String USER_SERVER_TOPIC = "TP_USER_SERVER_TOPIC";
+
+    }
+
 }

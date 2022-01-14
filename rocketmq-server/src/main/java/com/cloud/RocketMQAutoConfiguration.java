@@ -79,7 +79,7 @@ public class RocketMQAutoConfiguration {
     @Bean
     @ConditionalOnClass(DefaultMQProducer.class)
     @ConditionalOnMissingBean(DefaultMQProducer.class)
-    @ConditionalOnProperty(prefix = "enmonster.rocketmq", value = {"nameServer", "producer.group"})
+    @ConditionalOnProperty(prefix = "enmonster.rocketmq", value = {"name-server", "producer.group"})
     public DefaultMQProducer mqProducer(RocketMQProperties rocketMQProperties, AclClientRPCHook aclRPCHook) {
 
         RocketMQProperties.Producer producerConfig = rocketMQProperties.getProducer();
@@ -180,7 +180,7 @@ public class RocketMQAutoConfiguration {
     @Configuration
     @ConditionalOnClass(DefaultMQPushConsumer.class)
     @EnableConfigurationProperties(RocketMQProperties.class)
-    @ConditionalOnProperty(prefix = "enmonster.rocketmq", value = "nameServer")
+    @ConditionalOnProperty(prefix = "enmonster.rocketmq", value = "name-server")
     @Order
     public static class ListenerContainerConfiguration implements ApplicationContextAware, InitializingBean {
         private ConfigurableApplicationContext applicationContext;
