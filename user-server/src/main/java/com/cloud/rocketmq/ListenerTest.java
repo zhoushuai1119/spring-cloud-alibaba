@@ -22,8 +22,7 @@ public class ListenerTest implements TopicListener<List<TokenUser>> {
     @Override
     public void onMessage(MonsterMessage<List<TokenUser>> message) {
         List<TokenUser> userList = message.getPayload();
-        log.info("接收到消息:{}",
-                JsonUtil.toString(userList));
+        log.info("接收到消息:{}", JsonUtil.toString(userList));
     }
 
 }

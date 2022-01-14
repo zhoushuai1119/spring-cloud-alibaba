@@ -126,12 +126,13 @@ public class RocketMQProperties {
          * 重试间隔分别为 第一次：1s 第二次：5s 第三次：10s 第四次：30s 第五/六/...次：1m
          */
         private int retryTimesWhenConsumeFailed = 3;
+
         /**
          * 过滤消息  支持 SQL92 TAG
          * consumer.subscribe("TOPIC", "TAGA || TAGB || TAGC");
          * consumer.subscribe("TopicTest", MessageSelector.bySql("a between 0 and 3");
          */
-        private String SelectorType;
+        private String SelectorType = "TAG";
 
         /**
          * 消费顺序,默认为false,采用并发消费

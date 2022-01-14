@@ -91,6 +91,20 @@ spring:
           #重试间隔时间(单位毫秒）
           initial-interval: 5000
 
+#rocketmq配置
+enmonster:
+  rocketmq:
+    #不能使用name-server
+    nameServer: 192.168.190.129:9876
+    producer:
+      group: ${spring.application.name}
+    consumer:
+      #消费者组名称
+      c_activiti_server:
+        subscription:
+          # topic : eventCode
+          TP_EMS: EM_MSN
+
   #默认历史表不会生成，需要手动开启配置
   activiti:
     # 这条配置为true，会默认加在resources/processes包下的流程文件（.bpmn），如果流程文件没有会导致项目启动报错，可以设置为false
@@ -172,5 +186,10 @@ dubbo:
   cloud:
     ##要消费的服务名，强烈建议配置，多个，分开
     subscribed-services: payment-server
+
+logging:
+  level:
+    RocketmqClient: error
+    RocketmqRemoting: warn
 
 

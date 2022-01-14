@@ -156,16 +156,14 @@ public class RocketMQAutoConfiguration {
      * mq 事务消息模板类
      *
      * @param mqProducer
-     * @param properties
      * @return
      */
     @Bean(destroyMethod = "destroy")//销毁的时候调用对象的 destroy 方法
     @ConditionalOnBean(value = {TransactionMQProducer.class})
     @ConditionalOnMissingBean(name = "rocketMQTransactionTemplate")
-    public RocketMQTransactionTemplate rocketMQTransactionTemplate(TransactionMQProducer mqProducer, RocketMQProperties properties) {
+    public RocketMQTransactionTemplate rocketMQTransactionTemplate(TransactionMQProducer mqProducer) {
         RocketMQTransactionTemplate rocketMQTransactionTemplate = new RocketMQTransactionTemplate();
         rocketMQTransactionTemplate.setProducer(mqProducer);
-
         return rocketMQTransactionTemplate;
     }
 
@@ -173,10 +171,9 @@ public class RocketMQAutoConfiguration {
     @Bean(destroyMethod = "destroy")
     @ConditionalOnBean(DefaultMQProducer.class)
     @ConditionalOnMissingBean(name = "rocketMQTemplate")
-    public RocketMQTemplate rocketMQTemplate(DefaultMQProducer mqProducer, RocketMQProperties properties) {
+    public RocketMQTemplate rocketMQTemplate(DefaultMQProducer mqProducer) {
         RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
         rocketMQTemplate.setProducer(mqProducer);
-
         return rocketMQTemplate;
     }
 
