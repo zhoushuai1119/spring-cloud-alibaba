@@ -159,15 +159,21 @@ spring:
 enmonster:
   rocketmq:
     #不能使用name-server
-    nameServer: 192.168.190.129:9876
+    name-server: 192.168.190.129:9876
+    #普通消息配置
     producer:
-      group: ${spring.application.name}
+      group: p-${spring.application.name}
+
+    #消费者配置
     consumer:
       #消费者组名称
-      c_product_server:
+      c-product-server:
         subscription:
-          # topic : eventCode
-          TP_EMS: EM_MSN
+          # topic : eventCode  最好都大写
+          TP_ORDER_SERVER_TOPIC: EC_ORDER_SERVER
+          TP_ORDER_SERVER_TOPIC_TRANSACTION: EC_ORDER_SERVER_TRANSACTION
+          TP_USER_SERVER_TOPIC: EC_USER_SERVER
+          TP_USER_SERVER_TOPIC_TRANSACTION: EC_USER_SERVER_TRANSACTION
 
 
 mybatis-plus:

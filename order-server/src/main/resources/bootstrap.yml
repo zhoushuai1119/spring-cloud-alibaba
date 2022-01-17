@@ -52,13 +52,13 @@ spring:
       datasource:
         master:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/test_zs?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+          url: jdbc:mysql://127.0.0.1:3306/test_zs?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
           username: root
           password: Zs11195310
 
         slave:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/shiro?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+          url: jdbc:mysql://127.0.0.1:3306/shiro?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
           username: root
           password: Zs11195310
 
@@ -100,13 +100,15 @@ enmonster:
     #不能使用name-server
     nameServer: 192.168.190.129:9876
     producer:
-      group: ${spring.application.name}
+      group: p-${spring.application.name}
     consumer:
       #消费者组名称
-      c_order_server:
+      c-order-server:
         subscription:
-          # topic : eventCode
-          TP_EMS: EM_MSN
+          # topic : eventCode  最好都大写
+          TP_USER_SERVER_TOPIC_TRANSACTION: EC_USER_SERVER_TRANSACTION
+          TP_USER_SERVER_TOPIC: EC_USER_SERVER
+          TP_PAYMENT_SERVER_TOPIC: EC_PAYMENT_SERVER
 
 mybatis-plus:
   mapper-locations: classpath*:mapping/*.xml

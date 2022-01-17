@@ -96,21 +96,17 @@ enmonster:
     name-server: 192.168.190.129:9876
     #普通消息配置
     producer:
-      group: ${spring.application.name}
-
-    #事务消息配置
-    transactionProducerCustom:
-      group: ${spring.application.name}-transaction
+      group: p-${spring.application.name}
 
     #消费者配置
     consumer:
       #消费者组名称
-      c_user_server:
+      c-user-server:
         subscription:
           # topic : eventCode  最好都大写
-          TP_USER_SERVER_TOPIC: EC_USER_SERVER,EC_USER_SERVER_TRANSACTION
-#          TP_PAYMENT_SERVER: EC_PAYMENT_SERVER
-#          TP_PRODUCT_SERVER_TOPIC: EC_PRODUCT_SERVER
+          TP_ORDER_SERVER_TOPIC: EC_ORDER_SERVER
+          TP_ORDER_SERVER_TOPIC_TRANSACTION: EC_ORDER_SERVER_TRANSACTION
+          TP_PAYMENT_SERVER_TOPIC: EC_PAYMENT_SERVER
 
 mybatis-plus:
   mapper-locations: classpath*:mapping/*.xml

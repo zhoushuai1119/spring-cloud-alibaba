@@ -2,10 +2,10 @@ package com.cloud.rocketmq.producer;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cloud.common.constants.CommonConstant;
-import com.cloud.common.entity.user.TokenUser;
+import com.cloud.common.entity.payment.User;
 import com.cloud.core.MonsterMQTemplate;
-import com.cloud.dao.TokenUserMapper;
-import com.cloud.rocketmq.producer.transaction.TokenUserTransactionExecutor;
+import com.cloud.dao.UserMapper;
+import com.cloud.rocketmq.producer.transaction.UserTransactionExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,25 +24,25 @@ import java.util.List;
 public class MessageSend {
 
     @Autowired
-    private TokenUserMapper tokenUserMapper;
+    private UserMapper userMapper;
 
     @Autowired
     private MonsterMQTemplate monsterMQTemplate;
 
     @Autowired
-    private TokenUserTransactionExecutor tokenUserTransactionExecutor;
+    private UserTransactionExecutor tokenUserTransactionExecutor;
 
 
     public void sendMessage(){
-        List<TokenUser> tokenUserList = tokenUserMapper.selectList(new QueryWrapper<>());
-        monsterMQTemplate.send(CommonConstant.topic.USER_SERVER_TOPIC,"EC_USER_SERVER",tokenUserList);
+        List<User> userList = userMapper.selectList(new QueryWrapper<>());
+        monsterMQTemplate.send(CommonConstant.topic.PAYMENT_SERVER_TOPIC,"EC_PAYMENT_SERVER",userList);
     }
 
     public void sendTransactionMessage(){
-        List<TokenUser> tokenUserList = tokenUserMapper.selectList(new QueryWrapper<>());
-        if (CollectionUtils.isNotEmpty(tokenUserList)) {
-            tokenUserList.forEach(tokenUser -> {
-                tokenUserTransactionExecutor.send(tokenUser,tokenUser.getId());
+        List<User> userList = userMapper.selectList(new QueryWrapper<>());
+        if (CollectionUtils.isNotEmpty(userList)) {
+            userList.forEach(user -> {
+                tokenUserTransactionExecutor.send(user,user.getId());
             });
         }
     }

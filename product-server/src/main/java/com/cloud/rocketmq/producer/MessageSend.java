@@ -2,10 +2,10 @@ package com.cloud.rocketmq.producer;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cloud.common.constants.CommonConstant;
-import com.cloud.common.entity.user.TokenUser;
+import com.cloud.common.entity.product.Product;
 import com.cloud.core.MonsterMQTemplate;
-import com.cloud.dao.TokenUserMapper;
-import com.cloud.rocketmq.producer.transaction.TokenUserTransactionExecutor;
+import com.cloud.dao.ProductMapper;
+import com.cloud.rocketmq.producer.transaction.ProductTransactionExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,25 +24,25 @@ import java.util.List;
 public class MessageSend {
 
     @Autowired
-    private TokenUserMapper tokenUserMapper;
+    private ProductMapper productMapper;
 
     @Autowired
     private MonsterMQTemplate monsterMQTemplate;
 
     @Autowired
-    private TokenUserTransactionExecutor tokenUserTransactionExecutor;
+    private ProductTransactionExecutor tokenUserTransactionExecutor;
 
 
     public void sendMessage(){
-        List<TokenUser> tokenUserList = tokenUserMapper.selectList(new QueryWrapper<>());
-        monsterMQTemplate.send(CommonConstant.topic.USER_SERVER_TOPIC,"EC_USER_SERVER",tokenUserList);
+        List<Product> productList = productMapper.selectList(new QueryWrapper<>());
+        monsterMQTemplate.send(CommonConstant.topic.PRODUCT_SERVER_TOPIC,"EC_PRODUCT_SERVER",productList);
     }
 
     public void sendTransactionMessage(){
-        List<TokenUser> tokenUserList = tokenUserMapper.selectList(new QueryWrapper<>());
-        if (CollectionUtils.isNotEmpty(tokenUserList)) {
-            tokenUserList.forEach(tokenUser -> {
-                tokenUserTransactionExecutor.send(tokenUser,tokenUser.getId());
+        List<Product> productList = productMapper.selectList(new QueryWrapper<>());
+        if (CollectionUtils.isNotEmpty(productList)) {
+            productList.forEach(product -> {
+                tokenUserTransactionExecutor.send(product,product.getId());
             });
         }
     }

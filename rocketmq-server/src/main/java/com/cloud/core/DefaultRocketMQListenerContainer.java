@@ -150,7 +150,6 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
                     return ConsumeConcurrentlyStatus.RECONSUME_LATER;
                 }
             }
-
             return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
         }
     }

@@ -103,21 +103,41 @@ public class CommonConstant {
          */
         String ACTIVITI_SERVER_TOPIC = "TP_ACTIVITI_SERVER_TOPIC";
         /**
+         * activiti-server TRANSACTION TOPIC
+         */
+        String ACTIVITI_SERVER_TOPIC_TRANSACTION = "TP_ACTIVITI_SERVER_TOPIC_TRANSACTION";
+        /**
          * order-server TOPIC
          */
         String ORDER_SERVER_TOPIC = "TP_ORDER_SERVER_TOPIC";
         /**
+         * order-server TRANSACTION TOPIC
+         */
+        String ORDER_SERVER_TOPIC_TRANSACTION = "TP_ORDER_SERVER_TOPIC_TRANSACTION";
+        /**
          * payment-server TOPIC
          */
-        String PAYMENT_SERVER_TOPIC = "TP_PAYMENT_SERVER";
+        String PAYMENT_SERVER_TOPIC = "TP_PAYMENT_SERVER_TOPIC";
+        /**
+         * payment-server TRANSACTION TOPIC
+         */
+        String PAYMENT_SERVER_TOPIC_TRANSACTION = "TP_PAYMENT_SERVER_TOPIC_TRANSACTION";
         /**
          * product-server TOPIC
          */
         String PRODUCT_SERVER_TOPIC = "TP_PRODUCT_SERVER_TOPIC";
         /**
+         * product-server TRANSACTION TOPIC
+         */
+        String PRODUCT_SERVER_TOPIC_TRANSACTION = "TP_PRODUCT_SERVER_TOPIC_TRANSACTION";
+        /**
          * user-server TOPIC
          */
         String USER_SERVER_TOPIC = "TP_USER_SERVER_TOPIC";
+        /**
+         * user-server TRANSACTION TOPIC
+         */
+        String USER_SERVER_TOPIC_TRANSACTION = "TP_USER_SERVER_TOPIC_TRANSACTION";
 
     }
 

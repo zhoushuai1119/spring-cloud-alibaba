@@ -2,7 +2,7 @@ package com.cloud.rocketmq.consumer;
 
 import com.cloud.annotation.ConsumeTopic;
 import com.cloud.common.constants.CommonConstant;
-import com.cloud.common.entity.order.Category;
+import com.cloud.common.entity.user.TokenUser;
 import com.cloud.common.utils.JsonUtil;
 import com.cloud.core.TopicListener;
 import com.cloud.dto.MonsterMessage;
@@ -17,8 +17,8 @@ import java.util.List;
  * @version: v1
  */
 @Slf4j
-@ConsumeTopic(topic = CommonConstant.topic.ORDER_SERVER_TOPIC, eventCode = "EC_ORDER_SERVER", log = true)
-public class OrderServerListener implements TopicListener<List<Category>> {
+@ConsumeTopic(topic = CommonConstant.topic.USER_SERVER_TOPIC, eventCode = "EC_USER_SERVER", log = true)
+public class UserServerListener implements TopicListener<List<TokenUser>> {
 
     /**
      * 细心的读者应该能看到,这里的onMessage方法是void类型的,没有返回状态,与我们平时用的不一样,
@@ -30,10 +30,10 @@ public class OrderServerListener implements TopicListener<List<Category>> {
      * @param message
      */
     @Override
-    public void onMessage(MonsterMessage<List<Category>> message) {
-        List<Category> categoryList = message.getPayload();
-        log.info("接收到{}服务:消息:{}",CommonConstant.topic.ORDER_SERVER_TOPIC,
-                JsonUtil.toString(categoryList));
+    public void onMessage(MonsterMessage<List<TokenUser>> message) {
+        List<TokenUser> tokenUserList = message.getPayload();
+        log.info("接收到{}服务:消息:{}",CommonConstant.topic.USER_SERVER_TOPIC,
+                JsonUtil.toString(tokenUserList));
     }
 
 }

@@ -2,10 +2,10 @@ package com.cloud.rocketmq.producer;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cloud.common.constants.CommonConstant;
-import com.cloud.common.entity.user.TokenUser;
+import com.cloud.common.entity.activiti.ShiroUser;
 import com.cloud.core.MonsterMQTemplate;
-import com.cloud.dao.TokenUserMapper;
-import com.cloud.rocketmq.producer.transaction.TokenUserTransactionExecutor;
+import com.cloud.dao.ShiroUserMapper;
+import com.cloud.rocketmq.producer.transaction.ShiroUserTransactionExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,25 +24,25 @@ import java.util.List;
 public class MessageSend {
 
     @Autowired
-    private TokenUserMapper tokenUserMapper;
+    private ShiroUserMapper shiroUserMapper;
 
     @Autowired
     private MonsterMQTemplate monsterMQTemplate;
 
     @Autowired
-    private TokenUserTransactionExecutor tokenUserTransactionExecutor;
+    private ShiroUserTransactionExecutor tokenUserTransactionExecutor;
 
 
     public void sendMessage(){
-        List<TokenUser> tokenUserList = tokenUserMapper.selectList(new QueryWrapper<>());
-        monsterMQTemplate.send(CommonConstant.topic.USER_SERVER_TOPIC,"EC_USER_SERVER",tokenUserList);
+        List<ShiroUser> shiroUserList = shiroUserMapper.selectList(new QueryWrapper<>());
+        monsterMQTemplate.send(CommonConstant.topic.ACTIVITI_SERVER_TOPIC,"EC_ACTIVITI_SERVER",shiroUserList);
     }
 
     public void sendTransactionMessage(){
-        List<TokenUser> tokenUserList = tokenUserMapper.selectList(new QueryWrapper<>());
-        if (CollectionUtils.isNotEmpty(tokenUserList)) {
-            tokenUserList.forEach(tokenUser -> {
-                tokenUserTransactionExecutor.send(tokenUser,tokenUser.getId());
+        List<ShiroUser> shiroUserList = shiroUserMapper.selectList(new QueryWrapper<>());
+        if (CollectionUtils.isNotEmpty(shiroUserList)) {
+            shiroUserList.forEach(shiroUser -> {
+                tokenUserTransactionExecutor.send(shiroUser,shiroUser.getId());
             });
         }
     }

@@ -117,7 +117,7 @@ public class RocketMQAutoConfiguration {
             tranProCustomModel = new RocketMQProperties.TransactionProducerCustom();
             BeanUtils.copyProperties(producerConfigModel, tranProCustomModel);
         }
-        String groupName = tranProCustomModel.getGroup() + "_transaction";
+        String groupName = tranProCustomModel.getGroup() + "-transaction";
         Assert.hasText(groupName, "[enmonster.rocketmq.producer.group] must not be null");
 
         //设置属性--事务消息生产
