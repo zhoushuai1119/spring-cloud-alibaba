@@ -5,6 +5,7 @@ import com.cloud.common.constants.CommonConstant;
 import com.cloud.common.entity.user.TokenUser;
 import com.cloud.core.MonsterMQTemplate;
 import com.cloud.dao.TokenUserMapper;
+import com.cloud.rocketmq.producer.async.TokenUserAsyncSendExecutor;
 import com.cloud.rocketmq.producer.transaction.TokenUserTransactionExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
@@ -32,17 +33,25 @@ public class MessageSend {
     @Autowired
     private TokenUserTransactionExecutor tokenUserTransactionExecutor;
 
+    @Autowired
+    private TokenUserAsyncSendExecutor tokenUserAsyncSendExecutor;
 
-    public void sendMessage(){
+
+    public void sendMessage() {
         List<TokenUser> tokenUserList = tokenUserMapper.selectList(new QueryWrapper<>());
-        monsterMQTemplate.send(CommonConstant.topic.USER_SERVER_TOPIC,"EC_USER_SERVER",tokenUserList);
+        monsterMQTemplate.send(CommonConstant.topic.USER_SERVER_TOPIC, "EC_USER_SERVER", tokenUserList);
     }
 
-    public void sendTransactionMessage(){
+    public void asyncSendMessage() {
+        List<TokenUser> tokenUserList = tokenUserMapper.selectList(new QueryWrapper<>());
+        tokenUserAsyncSendExecutor.asyncSend(tokenUserList);
+    }
+
+    public void sendTransactionMessage() {
         List<TokenUser> tokenUserList = tokenUserMapper.selectList(new QueryWrapper<>());
         if (CollectionUtils.isNotEmpty(tokenUserList)) {
             tokenUserList.forEach(tokenUser -> {
-                tokenUserTransactionExecutor.send(tokenUser,tokenUser.getId());
+                tokenUserTransactionExecutor.send(tokenUser, tokenUser.getId());
             });
         }
     }

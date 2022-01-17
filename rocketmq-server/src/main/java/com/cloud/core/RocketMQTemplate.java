@@ -10,10 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.exception.MQClientException;
-import org.apache.rocketmq.client.producer.DefaultMQProducer;
-import org.apache.rocketmq.client.producer.MessageQueueSelector;
-import org.apache.rocketmq.client.producer.SendResult;
-import org.apache.rocketmq.client.producer.SendStatus;
+import org.apache.rocketmq.client.producer.*;
 import org.apache.rocketmq.client.producer.selector.SelectMessageQueueByHash;
 import org.apache.rocketmq.client.producer.selector.SelectMessageQueueByRandom;
 import org.apache.rocketmq.common.message.Message;
@@ -79,6 +76,12 @@ public class RocketMQTemplate implements MonsterMQTemplate, InitializingBean, Di
     @Override
     public BaseResponse<Object> send(String topic, String eventCode, Object payload, DelayLevelEnum delayTimeLevel) {
         return send(topic, eventCode, null, payload, null, producer.getSendMsgTimeout(), delayTimeLevel.getCode());
+    }
+
+
+    @Override
+    public void asyncSend(String topic, String eventCode, Object payload, SendCallback sendCallback) {
+         asyncSend(topic, eventCode, payload, producer.getSendMsgTimeout(),sendCallback);
     }
 
     /**
@@ -253,8 +256,7 @@ public class RocketMQTemplate implements MonsterMQTemplate, InitializingBean, Di
         ValuesUtil.checkTopicAndEventCode(topic, eventCode);
         try {
             long now = System.currentTimeMillis();
-            Message rocketMsg = convertToRocketMsg(topic, eventCode,
-                    key, payload);
+            Message rocketMsg = convertToRocketMsg(topic, eventCode, key, payload);
             SendResult sendResult;
             if (Objects.nonNull(delayTimeLevel)) {
                 rocketMsg.setDelayTimeLevel(delayTimeLevel);
@@ -270,6 +272,30 @@ public class RocketMQTemplate implements MonsterMQTemplate, InitializingBean, Di
             return handleSendResult(sendResult);
         } catch (Exception e) {
             log.info("syncSend failed. topic:{}, eventCode:{}, message:{} ,exception:{}",
+                    topic, eventCode, payload, e.getMessage());
+            throw new MessagingException(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 发送
+     *
+     * @param topic          topic
+     * @param eventCode      eventCode
+     * @param payload        消息体
+     * @param timeoutMs      超时毫秒数
+     * @return 发送结果
+     */
+    private void asyncSend(String topic, String eventCode, Object payload, long timeoutMs,SendCallback sendCallback) {
+        ValuesUtil.checkTopicAndEventCode(topic, eventCode);
+        try {
+            long now = System.currentTimeMillis();
+            Message rocketMsg = convertToRocketMsg(topic, eventCode,null, payload);
+            producer.send(rocketMsg, sendCallback, timeoutMs);
+            long costTime = System.currentTimeMillis() - now;
+            log.debug("asyncSend message cost: {} ms", costTime);
+        } catch (Exception e) {
+            log.info("asyncSend failed. topic:{}, eventCode:{}, message:{} ,exception:{}",
                     topic, eventCode, payload, e.getMessage());
             throw new MessagingException(e.getMessage(), e);
         }

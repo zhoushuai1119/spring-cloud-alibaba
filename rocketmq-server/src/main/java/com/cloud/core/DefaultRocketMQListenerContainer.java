@@ -145,7 +145,7 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
                 try {
                     consumeInner(messageExt);
                 } catch (Exception e) {
-                    log.warn("consume message failed. messageExt:{}", messageExt, e);
+                    log.error("consume message failed. messageExt:{}", messageExt, e);
                     context.setDelayLevelWhenNextConsume(delayLevelWhenNextConsume);
                     return ConsumeConcurrentlyStatus.RECONSUME_LATER;
                 }
@@ -164,12 +164,11 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
                 try {
                     consumeInner(messageExt);
                 } catch (Exception e) {
-                    log.warn("consume message failed. messageExt:{}", messageExt, e);
+                    log.error("consume message failed. messageExt:{}", messageExt, e);
                     context.setSuspendCurrentQueueTimeMillis(suspendCurrentQueueTimeMillis);
                     return ConsumeOrderlyStatus.SUSPEND_CURRENT_QUEUE_A_MOMENT;
                 }
             }
-
             return ConsumeOrderlyStatus.SUCCESS;
         }
     }
@@ -250,6 +249,10 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
                 break;
             default:
                 throw new IllegalArgumentException("Property 'consumeMode' was wrong.");
+        }
+
+        if (rocketMQListener instanceof RocketMQPushConsumerLifecycleListener) {
+            ((RocketMQPushConsumerLifecycleListener) rocketMQListener).prepareStart(consumer);
         }
 
     }

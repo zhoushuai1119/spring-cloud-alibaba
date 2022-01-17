@@ -6,6 +6,7 @@ import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.dto.BatchMessage;
 import com.cloud.dto.PushMessage;
 import com.cloud.enums.DelayLevelEnum;
+import org.apache.rocketmq.client.producer.SendCallback;
 
 /**
  * 消息发送模板接口
@@ -15,6 +16,7 @@ import com.cloud.enums.DelayLevelEnum;
  * @Time 上午11:41
  */
 public interface MonsterMQTemplate {
+
     /**
      * 同步发送
      *
@@ -46,6 +48,16 @@ public interface MonsterMQTemplate {
      * @return 发送结果
      */
     BaseResponse<Object> send(String topic, String eventCode, Object payload, DelayLevelEnum delayTimeLevel);
+
+    /**
+     * 同步发送延时消息
+     *
+     * @param topic     topic
+     * @param eventCode eventCode
+     * @param payload   消息体
+     * @return 发送结果
+     */
+    void asyncSend(String topic, String eventCode, Object payload, SendCallback sendCallback);
 
 
     /**

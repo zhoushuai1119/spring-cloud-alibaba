@@ -29,6 +29,16 @@ public class RocketMQController {
     }
 
     /**
+     * 发送异步消息
+     * @return
+     */
+    @PostMapping("/async/send")
+    public BaseResponse asyncSendMessage(){
+        messageSend.asyncSendMessage();
+        return BaseResponse.createSuccessResult(null);
+    }
+
+    /**
      * 发送事务消息
      * @return
      */
