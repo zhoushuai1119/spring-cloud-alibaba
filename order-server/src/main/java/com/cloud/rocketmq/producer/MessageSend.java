@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.constants.CommonConstant;
 import com.cloud.common.entity.order.Category;
-import com.cloud.core.MonsterMQTemplate;
+import com.cloud.core.CloudMQTemplate;
 import com.cloud.dao.CategoryMapper;
 import com.cloud.rocketmq.producer.transaction.CategoryTransactionExecutor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class MessageSend {
     private CategoryMapper categoryMapper;
 
     @Autowired
-    private MonsterMQTemplate monsterMQTemplate;
+    private CloudMQTemplate cloudMQTemplate;
 
     @Autowired
     private CategoryTransactionExecutor categoryTransactionExecutor;
@@ -39,7 +39,7 @@ public class MessageSend {
      */
     public BaseResponse sendMessage(){
         List<Category> categoryList = categoryMapper.selectList(new QueryWrapper<>());
-        return monsterMQTemplate.send(CommonConstant.topic.ORDER_SERVER_TOPIC,"EC_ORDER_SERVER",categoryList);
+        return cloudMQTemplate.send(CommonConstant.topic.ORDER_SERVER_TOPIC,"EC_ORDER_SERVER",categoryList);
     }
 
 

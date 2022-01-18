@@ -11,11 +11,8 @@ import org.apache.rocketmq.client.producer.SendCallback;
 /**
  * 消息发送模板接口
  *
- * @Author Wang Lin(王霖)
- * @Date 2018/2/24
- * @Time 上午11:41
  */
-public interface MonsterMQTemplate {
+public interface CloudMQTemplate {
 
     /**
      * 同步发送

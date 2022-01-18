@@ -6,7 +6,6 @@ import org.apache.rocketmq.client.producer.LocalTransactionState;
 
 /**
  * 分topic 事务逻辑
- * 相关文档请查阅wiki：http://wiki.enmonster.com/pages/viewpage.action?pageId=70222976
  *
  */
 public interface TopicTransactionListener<T,R> {

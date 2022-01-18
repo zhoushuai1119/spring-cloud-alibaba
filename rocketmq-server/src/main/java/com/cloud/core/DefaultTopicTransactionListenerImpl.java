@@ -23,12 +23,7 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 实现类用于接收 mq原始 封装
- *
- * @Author 马腾飞
- * @Date 2019/9/6
- * @Time 17:39
- * @Description
+ * 现类用于接收 mq原始 封装
  */
 @Slf4j
 public class DefaultTopicTransactionListenerImpl implements TransactionListener {

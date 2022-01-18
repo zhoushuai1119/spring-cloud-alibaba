@@ -7,11 +7,8 @@ import com.cloud.common.beans.response.BaseResponse;
 /**
  * 消息发送模板接口
  *
- * @Author Wang Lin(王霖)
- * @Date 2018/2/24
- * @Time 上午11:41
  */
-public interface MonsterTransactionMQTemplate {
+public interface CloudTransactionMQTemplate {
     /**
      * 同步发送
      *

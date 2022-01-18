@@ -30,12 +30,9 @@ import static com.cloud.util.MqMessageUtils.convertToRocketMsg;
 /**
  * rocketMQ发送模板
  *
- * @Author Wang Lin(王霖)
- * @Date 2018/2/24
- * @Time 下午1:56
  */
 @Slf4j
-public class RocketMQTemplate implements MonsterMQTemplate, InitializingBean, DisposableBean {
+public class RocketMQTemplate implements CloudMQTemplate, InitializingBean, DisposableBean {
 
     @Getter
     @Setter

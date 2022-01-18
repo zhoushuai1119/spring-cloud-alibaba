@@ -7,13 +7,9 @@ import java.util.Map;
 
 /**
  * rocketMQ配置
- *
- * @Author Wang Lin(王霖)
- * @Date 2018/2/26
- * @Time 下午6:06
  */
 @Data
-@ConfigurationProperties(prefix = "enmonster.rocketmq")
+@ConfigurationProperties(prefix = "cloud.rocketmq")
 public class RocketMQProperties {
 
     /**

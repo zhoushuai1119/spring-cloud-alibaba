@@ -4,5 +4,5 @@ import org.springframework.beans.factory.DisposableBean;
 
 public interface RocketMQListenerContainer extends DisposableBean {
 
-    void setupMessageListener(MonsterMQListener<?> messageListener);
+    void setupMessageListener(CloudMQListener<?> messageListener);
 }

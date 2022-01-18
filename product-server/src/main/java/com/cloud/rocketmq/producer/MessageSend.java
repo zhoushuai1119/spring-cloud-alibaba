@@ -3,7 +3,7 @@ package com.cloud.rocketmq.producer;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cloud.common.constants.CommonConstant;
 import com.cloud.common.entity.product.Product;
-import com.cloud.core.MonsterMQTemplate;
+import com.cloud.core.CloudMQTemplate;
 import com.cloud.dao.ProductMapper;
 import com.cloud.rocketmq.producer.transaction.ProductTransactionExecutor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class MessageSend {
     private ProductMapper productMapper;
 
     @Autowired
-    private MonsterMQTemplate monsterMQTemplate;
+    private CloudMQTemplate cloudMQTemplate;
 
     @Autowired
     private ProductTransactionExecutor tokenUserTransactionExecutor;
@@ -35,7 +35,7 @@ public class MessageSend {
 
     public void sendMessage(){
         List<Product> productList = productMapper.selectList(new QueryWrapper<>());
-        monsterMQTemplate.send(CommonConstant.topic.PRODUCT_SERVER_TOPIC,"EC_PRODUCT_SERVER",productList);
+        cloudMQTemplate.send(CommonConstant.topic.PRODUCT_SERVER_TOPIC,"EC_PRODUCT_SERVER",productList);
     }
 
     public void sendTransactionMessage(){

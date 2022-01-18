@@ -3,7 +3,7 @@ package com.cloud.rocketmq.producer;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cloud.common.constants.CommonConstant;
 import com.cloud.common.entity.user.TokenUser;
-import com.cloud.core.MonsterMQTemplate;
+import com.cloud.core.CloudMQTemplate;
 import com.cloud.dao.TokenUserMapper;
 import com.cloud.rocketmq.producer.async.TokenUserAsyncSendExecutor;
 import com.cloud.rocketmq.producer.transaction.TokenUserTransactionExecutor;
@@ -28,7 +28,7 @@ public class MessageSend {
     private TokenUserMapper tokenUserMapper;
 
     @Autowired
-    private MonsterMQTemplate monsterMQTemplate;
+    private CloudMQTemplate cloudMQTemplate;
 
     @Autowired
     private TokenUserTransactionExecutor tokenUserTransactionExecutor;
@@ -39,7 +39,7 @@ public class MessageSend {
 
     public void sendMessage() {
         List<TokenUser> tokenUserList = tokenUserMapper.selectList(new QueryWrapper<>());
-        monsterMQTemplate.send(CommonConstant.topic.USER_SERVER_TOPIC, "EC_USER_SERVER", tokenUserList);
+        cloudMQTemplate.send(CommonConstant.topic.USER_SERVER_TOPIC, "EC_USER_SERVER", tokenUserList);
     }
 
     public void asyncSendMessage() {

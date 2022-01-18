@@ -10,13 +10,9 @@ import java.util.Map;
 
 /**
  * 默认的listener.
- *
- * @Author Wang Lin(王霖)
- * @Date 2018/5/25
- * @Time 下午2:45
  */
 @Slf4j
-public class DefaultMessageListener implements MonsterMQListener<String> {
+public class DefaultMessageListener implements CloudMQListener<String> {
     /**
      * key 为 topicAndEventCode
      * ConsumeTopicInfo 有对应的消费逻辑 listener

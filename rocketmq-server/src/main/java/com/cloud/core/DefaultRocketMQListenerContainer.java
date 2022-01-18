@@ -15,7 +15,6 @@ import org.apache.rocketmq.client.consumer.rebalance.AllocateMessageQueueAverage
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
-import org.apache.rocketmq.remoting.RPCHook;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
@@ -81,16 +80,7 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
     private boolean started;
 
     @Setter
-    private MonsterMQListener rocketMQListener;
-
-    @Setter
-    private RocketMQTemplate rocketMQTemplate;
-
-    @Setter
-    private String instanceId;
-
-    @Setter
-    private RPCHook rpcHook;
+    private CloudMQListener rocketMQListener;
 
     private DefaultMQPushConsumer consumer;
 
@@ -104,7 +94,7 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
     @Getter
     private MeterRegistry threadPoolMeterRegistry;
 
-    public void setupMessageListener(MonsterMQListener rocketMQListener) {
+    public void setupMessageListener(CloudMQListener rocketMQListener) {
         this.rocketMQListener = rocketMQListener;
     }
 
@@ -211,7 +201,7 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
         Assert.notNull(nameServer, "Property 'nameServer' is required");
         Assert.notNull(subscription, "Property 'subscription' is required");
 
-        consumer = new DefaultMQPushConsumer(null, consumerGroup, rpcHook);
+        consumer = new DefaultMQPushConsumer(null, consumerGroup);
         consumer.setNamesrvAddr(nameServer);
         consumer.setConsumeThreadMax(consumeThreadMax);
         consumeThreadMin = Math.min(consumeThreadMin, consumeThreadMax);

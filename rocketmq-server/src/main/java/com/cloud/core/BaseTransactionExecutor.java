@@ -8,10 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import javax.annotation.PostConstruct;
 
 /**
- * @Author 马腾飞
- * @Date 2019/12/11
- * @Time 14:46
- * @Description
+ * 事务消息Executor
+ * @param <T>
+ * @param <R>
  */
 @Data
 @Slf4j

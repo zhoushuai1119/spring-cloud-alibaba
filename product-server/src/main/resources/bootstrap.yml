@@ -156,7 +156,7 @@ spring:
           initial-interval: 5000
 
 #rocketmq配置
-enmonster:
+cloud:
   rocketmq:
     #不能使用name-server
     name-server: 192.168.190.129:9876

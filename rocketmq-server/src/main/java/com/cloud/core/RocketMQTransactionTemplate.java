@@ -21,11 +21,9 @@ import java.util.Objects;
 /**
  * rocketMQ发送事务消息模板
  *
- * @Author 马腾飞
- * @Date 2019/8/20 20:57
  */
 @Slf4j
-public class RocketMQTransactionTemplate implements MonsterTransactionMQTemplate, InitializingBean, DisposableBean {
+public class RocketMQTransactionTemplate implements CloudTransactionMQTemplate, InitializingBean, DisposableBean {
 
     @Getter
     @Setter

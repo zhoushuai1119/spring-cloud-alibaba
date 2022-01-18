@@ -11,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.rocketmq.acl.common.AclClientRPCHook;
-import org.apache.rocketmq.acl.common.SessionCredentials;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.impl.MQClientAPIImpl;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
@@ -49,10 +47,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * RocketMQ自动配置
- *
- * @Author Wang Lin(王霖)
- * @Date 2018/2/24
- * @Time 下午2:10
  */
 @Configuration
 @EnableConfigurationProperties({RocketMQProperties.class})
@@ -66,27 +60,17 @@ public class RocketMQAutoConfiguration {
         System.setProperty("rocketmq.client.logUseSlf4j", "true");
     }
 
-    @Value("${enmonster.rocketmq.acl.accessKey:-}")    //配置中心 acl账号
-    private String accesskey;
-    @Value("${enmonster.rocketmq.acl.secretKey:-}")    //配置中心 acl密码
-    private String secretkey;
-
-    @Bean
-    public AclClientRPCHook aclRPCHook() {
-        return new AclClientRPCHook(new SessionCredentials(accesskey, secretkey));
-    }
-
     @Bean
     @ConditionalOnClass(DefaultMQProducer.class)
     @ConditionalOnMissingBean(DefaultMQProducer.class)
-    @ConditionalOnProperty(prefix = "enmonster.rocketmq", value = {"name-server", "producer.group"})
-    public DefaultMQProducer mqProducer(RocketMQProperties rocketMQProperties, AclClientRPCHook aclRPCHook) {
+    @ConditionalOnProperty(prefix = "cloud.rocketmq", value = {"name-server", "producer.group"})
+    public DefaultMQProducer mqProducer(RocketMQProperties rocketMQProperties) {
 
         RocketMQProperties.Producer producerConfig = rocketMQProperties.getProducer();
         String groupName = producerConfig.getGroup();
-        Assert.hasText(groupName, "[enmonster.rocketmq.producer.group] must not be null");
+        Assert.hasText(groupName, "[cloud.rocketmq.producer.group] must not be null");
 
-        DefaultMQProducer producer = new DefaultMQProducer(producerConfig.getGroup(), aclRPCHook);
+        DefaultMQProducer producer = new DefaultMQProducer(producerConfig.getGroup());
         producer.setNamesrvAddr(rocketMQProperties.getNameServer());
         producer.setSendMsgTimeout(producerConfig.getSendMsgTimeout());
         producer.setRetryTimesWhenSendFailed(producerConfig.getRetryTimesWhenSendFailed());
@@ -108,7 +92,7 @@ public class RocketMQAutoConfiguration {
     @Bean
     @ConditionalOnClass(value = {TransactionMQProducer.class})
     @ConditionalOnMissingBean(value = {TransactionMQProducer.class})
-    public TransactionMQProducer mqTransactionProducer(RocketMQProperties rocketMQProperties, AclClientRPCHook aclRPCHook) throws Exception {
+    public TransactionMQProducer mqTransactionProducer(RocketMQProperties rocketMQProperties) throws Exception {
         RocketMQProperties.TransactionProducerCustom tranProCustomModel = rocketMQProperties.getTransactionProducerCustom();//事务消息model
         RocketMQProperties.Producer producerConfigModel = rocketMQProperties.getProducer();//普通消息model
         //生成事务消息生产groupName
@@ -118,10 +102,10 @@ public class RocketMQAutoConfiguration {
             BeanUtils.copyProperties(producerConfigModel, tranProCustomModel);
         }
         String groupName = tranProCustomModel.getGroup() + "-transaction";
-        Assert.hasText(groupName, "[enmonster.rocketmq.producer.group] must not be null");
+        Assert.hasText(groupName, "[cloud.rocketmq.producer.group] must not be null");
 
         //设置属性--事务消息生产
-        TransactionMQProducer producer = new TransactionMQProducer(groupName, aclRPCHook);
+        TransactionMQProducer producer = new TransactionMQProducer(groupName);
         producer.setNamesrvAddr(rocketMQProperties.getNameServer());
         producer.setSendMsgTimeout(tranProCustomModel.getSendMsgTimeout());
         producer.setRetryTimesWhenSendFailed(tranProCustomModel.getRetryTimesWhenSendFailed());
@@ -180,15 +164,12 @@ public class RocketMQAutoConfiguration {
     @Configuration
     @ConditionalOnClass(DefaultMQPushConsumer.class)
     @EnableConfigurationProperties(RocketMQProperties.class)
-    @ConditionalOnProperty(prefix = "enmonster.rocketmq", value = "name-server")
+    @ConditionalOnProperty(prefix = "cloud.rocketmq", value = "name-server")
     @Order
     public static class ListenerContainerConfiguration implements ApplicationContextAware, InitializingBean {
         private ConfigurableApplicationContext applicationContext;
 
         private AtomicLong counter = new AtomicLong(0);
-
-        @Resource
-        private AclClientRPCHook aclRPCHook;
 
         @Resource
         private RocketMQProperties rocketMQProperties;
@@ -215,7 +196,7 @@ public class RocketMQAutoConfiguration {
         public void afterPropertiesSet() throws Exception {
             if (MapUtils.isNotEmpty(rocketMQProperties.getConsumer())) {
                 //获取带有 @Component 的实现listener
-                Map<String, MonsterMQListener> beans = this.applicationContext.getBeansOfType(MonsterMQListener.class);
+                Map<String, CloudMQListener> beans = this.applicationContext.getBeansOfType(CloudMQListener.class);
 
                 //如果MonsterMQListener是空的，注册空的MonsterMQListener，找TopicListener bean，分topic消费消息
                 if (MapUtils.isEmpty(beans)) {
@@ -306,7 +287,7 @@ public class RocketMQAutoConfiguration {
                         applicationContext.getBeanFactory().registerSingleton(consumer.getKey(), messageListener);
                     }
                     //执行完成后，bean 就有MonsterMQListener 对象了（DefaultMessageListener --extends --> 就有MonsterMQListener）
-                    beans = this.applicationContext.getBeansOfType(MonsterMQListener.class);
+                    beans = this.applicationContext.getBeansOfType(CloudMQListener.class);
                 }
 
                 if (MapUtils.isNotEmpty(beans)) {
@@ -351,11 +332,11 @@ public class RocketMQAutoConfiguration {
             return null;
         }
 
-        private void registerContainer(String beanName, MonsterMQListener rocketMQListener, RocketMQTemplate rocketMQTemplate, String instanceId) {
+        private void registerContainer(String beanName, CloudMQListener rocketMQListener, RocketMQTemplate rocketMQTemplate, String instanceId) {
 
-            Assert.notNull(rocketMQProperties.getConsumer(), "[enmonster.rocketmq.consumer] must not be null");
+            Assert.notNull(rocketMQProperties.getConsumer(), "[cloud.rocketmq.consumer] must not be null");
             RocketMQProperties.Consumer consumerProperties = rocketMQProperties.getConsumer().get(beanName);
-            Assert.notNull(consumerProperties, "[enmonster.rocketmq.consumer." + beanName + "] must not be null");
+            Assert.notNull(consumerProperties, "[cloud.rocketmq.consumer." + beanName + "] must not be null");
             ConsumeMode consumeMode = consumerProperties.isOrderly() ? ConsumeMode.ORDERLY : ConsumeMode.CONCURRENTLY;
             int customConsumeMessageBatchMaxSize = Math.max(1, consumerProperties.getConsumeMessageBatchMaxSize());
             MessageModel messageModel = consumerProperties.isBroadcasting() ? MessageModel.BROADCASTING : MessageModel.CLUSTERING;
@@ -363,7 +344,7 @@ public class RocketMQAutoConfiguration {
             //普通topic key: topic, value: tags 格式{ec_0||ec_1}
             Map<String, String> topicTagsMap = new HashMap<>();
             for (Map.Entry<String, String> topicEventCodes : consumerProperties.getSubscription().entrySet()) {
-                Assert.hasText(topicEventCodes.getValue(), "[enmonster.rocketmq.consumer." + beanName + "." + topicEventCodes.getKey() + "] must not be null");
+                Assert.hasText(topicEventCodes.getValue(), "[cloud.rocketmq.consumer." + beanName + "." + topicEventCodes.getKey() + "] must not be null");
                 if ("*".equals(topicEventCodes.getValue().trim())) {
                     //支持在同一topic下，不同event_code支持通配符（如*）的方式
                     topicTagsMap.put(topicEventCodes.getKey(), "*");
@@ -384,11 +365,11 @@ public class RocketMQAutoConfiguration {
             beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_MESSAGE_MODEL, messageModel);
             beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_SELECTOR_TYPE, selectorType);
             beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_ROCKETMQ_LISTENER, rocketMQListener);
-            beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_ROCKETMQ_TEMPLATE, rocketMQTemplate);
-            beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_INSTANCE_ID, instanceId);
+//            beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_ROCKETMQ_TEMPLATE, rocketMQTemplate);
+//            beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_INSTANCE_ID, instanceId);
             beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_CONSUME_MESSAGE_BATCH_MAX_SIZE, customConsumeMessageBatchMaxSize);
             beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.THREAD_POOL_METER_REGISTRY, meterRegistry);
-            beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.RPC_HOOK, aclRPCHook);
+//            beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.RPC_HOOK, aclRPCHook);
             beanBuilder.setDestroyMethodName(DefaultRocketMQListenerContainerConstants.METHOD_DESTROY);
 
             String containerBeanName = String.format("%s_%s", DefaultRocketMQListenerContainer.class.getName(), counter.incrementAndGet());

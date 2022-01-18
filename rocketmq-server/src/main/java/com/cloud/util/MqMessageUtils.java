@@ -1,7 +1,7 @@
 package com.cloud.util;
 
 import com.cloud.common.utils.JsonUtil;
-import com.cloud.core.MonsterMQListener;
+import com.cloud.core.CloudMQListener;
 import com.cloud.core.TopicListener;
 import com.cloud.core.TopicTransactionListener;
 import com.cloud.dto.MonsterMessage;
@@ -185,12 +185,12 @@ public class MqMessageUtils {
      * 获取MonsterMQListener 的Class
      * 启动时候调用 this.messageType = MqMessageUtils.getMessageTypeByMonsterMQListener(rocketMQListener);
      */
-    public static Class getMessageTypeByMonsterMQListener(MonsterMQListener monsterMQListener) {
+    public static Class getMessageTypeByMonsterMQListener(CloudMQListener cloudMQListener) {
         Type[] interfaces = null;
-        Class clazz = monsterMQListener.getClass();
-        if (AopUtils.isAopProxy(monsterMQListener)) {
+        Class clazz = cloudMQListener.getClass();
+        if (AopUtils.isAopProxy(cloudMQListener)) {
             //@Transactional会增加AOP代理，查找真实的类对象
-            clazz = ((Advised) monsterMQListener).getTargetSource().getTargetClass();
+            clazz = ((Advised) cloudMQListener).getTargetSource().getTargetClass();
         }
         interfaces = clazz.getGenericInterfaces();
 
@@ -199,7 +199,7 @@ public class MqMessageUtils {
             for (Type type : interfaces) {
                 if (type instanceof ParameterizedType) {
                     ParameterizedType parameterizedType = (ParameterizedType) type;
-                    if (Objects.equals(parameterizedType.getRawType(), MonsterMQListener.class)) {
+                    if (Objects.equals(parameterizedType.getRawType(), CloudMQListener.class)) {
                         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
                         if (Objects.nonNull(actualTypeArguments) && actualTypeArguments.length > 0) {
                             return (Class) actualTypeArguments[0];

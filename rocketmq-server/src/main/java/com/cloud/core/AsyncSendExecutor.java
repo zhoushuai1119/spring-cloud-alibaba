@@ -8,10 +8,8 @@ import org.apache.rocketmq.client.producer.SendCallback;
 import javax.annotation.PostConstruct;
 
 /**
- * @Author 马腾飞
- * @Date 2019/12/11
- * @Time 14:46
- * @Description
+ * 异步发送Executor
+ * @param <T>
  */
 @Data
 @Slf4j

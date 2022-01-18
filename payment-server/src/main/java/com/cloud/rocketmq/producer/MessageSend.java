@@ -3,7 +3,7 @@ package com.cloud.rocketmq.producer;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cloud.common.constants.CommonConstant;
 import com.cloud.common.entity.payment.User;
-import com.cloud.core.MonsterMQTemplate;
+import com.cloud.core.CloudMQTemplate;
 import com.cloud.dao.UserMapper;
 import com.cloud.rocketmq.producer.transaction.UserTransactionExecutor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class MessageSend {
     private UserMapper userMapper;
 
     @Autowired
-    private MonsterMQTemplate monsterMQTemplate;
+    private CloudMQTemplate cloudMQTemplate;
 
     @Autowired
     private UserTransactionExecutor tokenUserTransactionExecutor;
@@ -35,7 +35,7 @@ public class MessageSend {
 
     public void sendMessage(){
         List<User> userList = userMapper.selectList(new QueryWrapper<>());
-        monsterMQTemplate.send(CommonConstant.topic.PAYMENT_SERVER_TOPIC,"EC_PAYMENT_SERVER",userList);
+        cloudMQTemplate.send(CommonConstant.topic.PAYMENT_SERVER_TOPIC,"EC_PAYMENT_SERVER",userList);
     }
 
     public void sendTransactionMessage(){
