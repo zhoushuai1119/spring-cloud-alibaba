@@ -3,14 +3,11 @@ package com.cloud.dto;
 import lombok.Data;
 
 /**
- * 消息
+ * 消息模板
  *
- * @Author Wang Lin(王霖)
- * @Date 2018/2/26
- * @Time 上午10:38
  */
 @Data
-public class MonsterMessage<T> {
+public class CloudMessage<T> {
     /**
      * 消息id
      */

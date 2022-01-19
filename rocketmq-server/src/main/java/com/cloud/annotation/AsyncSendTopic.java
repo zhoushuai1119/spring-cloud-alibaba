@@ -7,8 +7,6 @@ import java.lang.annotation.*;
 /**
  * 事务消息 topic eventcode
  *
- * @Author 马腾飞
- * @Date 2019/9/6 16:49
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

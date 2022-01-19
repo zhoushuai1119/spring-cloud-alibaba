@@ -4,7 +4,7 @@ import com.cloud.annotation.ConsumeTopic;
 import com.cloud.common.constants.CommonConstant;
 import com.cloud.common.entity.order.Category;
 import com.cloud.core.TopicListener;
-import com.cloud.dto.MonsterMessage;
+import com.cloud.dto.CloudMessage;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -19,7 +19,7 @@ public class OrderServerTransactionListener implements TopicListener<Category> {
 
 
     @Override
-    public void onMessage(MonsterMessage<Category> message) {
+    public void onMessage(CloudMessage<Category> message) {
         Category category = message.getPayload();
         log.info("监听到{}服务事务消息:{}",CommonConstant.topic.ORDER_SERVER_TOPIC,
                 category);

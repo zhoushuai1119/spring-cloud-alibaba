@@ -4,7 +4,7 @@ import com.cloud.common.utils.JsonUtil;
 import com.cloud.core.CloudMQListener;
 import com.cloud.core.TopicListener;
 import com.cloud.core.TopicTransactionListener;
-import com.cloud.dto.MonsterMessage;
+import com.cloud.dto.CloudMessage;
 import com.fasterxml.jackson.databind.JavaType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -35,9 +35,9 @@ public class MqMessageUtils {
      * 消息体转化为String 在转化为对象
      */
     @SuppressWarnings("unchecked")
-    public static MonsterMessage<Object> doConvertMessageByClass(Message message, JavaType type) throws IOException {
+    public static CloudMessage<Object> doConvertMessageByClass(Message message, JavaType type) throws IOException {
         try {
-            MonsterMessage<Object> monMessage = new MonsterMessage<>();
+            CloudMessage<Object> monMessage = new CloudMessage<>();
             monMessage.setTopic(message.getTopic());
             monMessage.setEventCode(message.getTags());
             monMessage.setTransactionId(message.getTransactionId());
@@ -61,8 +61,8 @@ public class MqMessageUtils {
      * [接收消息] 根据 MessageExt 类型转化消息
      */
     @SuppressWarnings("unchecked")
-    public static MonsterMessage<Object> doConvertMessageExtByClass(MessageExt messageExt, Class messageType, boolean handlePayload) {
-        MonsterMessage<Object> monMessage = new MonsterMessage<>();
+    public static CloudMessage<Object> doConvertMessageExtByClass(MessageExt messageExt, Class messageType, boolean handlePayload) {
+        CloudMessage<Object> monMessage = new CloudMessage<>();
         monMessage.setTopic(messageExt.getTopic());
         monMessage.setEventCode(messageExt.getTags());
         monMessage.setKey(messageExt.getKeys());
@@ -103,9 +103,9 @@ public class MqMessageUtils {
      * @param type
      * @return
      */
-    public static MonsterMessage<Object> convertMessage(MonsterMessage<String> originalMessage, JavaType type) throws IOException {
+    public static CloudMessage<Object> convertMessage(CloudMessage<String> originalMessage, JavaType type) throws IOException {
         try {
-            MonsterMessage<Object> message = new MonsterMessage<>();
+            CloudMessage<Object> message = new CloudMessage<>();
             message.setMessageId(originalMessage.getMessageId());
             message.setTopic(originalMessage.getTopic());
             message.setEventCode(originalMessage.getEventCode());

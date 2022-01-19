@@ -2,7 +2,7 @@ package com.cloud.core;
 
 
 import com.cloud.annotation.TansactionTopic;
-import com.cloud.dto.MonsterMessage;
+import com.cloud.dto.CloudMessage;
 import com.cloud.util.MqMessageUtils;
 import com.fasterxml.jackson.databind.JavaType;
 import lombok.Data;
@@ -46,7 +46,7 @@ public class DefaultTopicTransactionListenerImpl implements TransactionListener 
         String key = message.getTopic() + ":" + message.getTags();
         TransactionTopicMsgInfo transTopicInfo = topicConsumerMap.get(key);
         if (Objects.nonNull(transTopicInfo)) {
-            MonsterMessage<Object> messageConvert = null;
+            CloudMessage<Object> messageConvert = null;
             try {
                 messageConvert = MqMessageUtils.doConvertMessageByClass(message, transTopicInfo.getMessageType());
             } catch (Exception e) {
@@ -70,7 +70,7 @@ public class DefaultTopicTransactionListenerImpl implements TransactionListener 
         String key = message.getTopic() + ":" + message.getTags();
         TransactionTopicMsgInfo transTopicInfo = topicConsumerMap.get(key);
         if (Objects.nonNull(transTopicInfo)) {
-            MonsterMessage<Object> messageConvert = null;
+            CloudMessage<Object> messageConvert = null;
             try {
                 messageConvert = MqMessageUtils.doConvertMessageByClass(message, transTopicInfo.getMessageType());
             } catch (Exception e) {

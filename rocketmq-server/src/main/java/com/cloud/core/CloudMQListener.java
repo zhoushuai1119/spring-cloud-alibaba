@@ -1,7 +1,7 @@
 package com.cloud.core;
 
 
-import com.cloud.dto.MonsterMessage;
+import com.cloud.dto.CloudMessage;
 
 /**
  * MQ消息监听
@@ -13,5 +13,5 @@ public interface CloudMQListener<T> {
      *
      * @param message
      */
-    void onMessage(MonsterMessage<T> message) throws Exception;
+    void onMessage(CloudMessage<T> message) throws Exception;
 }

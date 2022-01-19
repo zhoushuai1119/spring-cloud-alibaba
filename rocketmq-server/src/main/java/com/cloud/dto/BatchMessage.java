@@ -10,7 +10,6 @@ import java.util.Collection;
  * 批量消息
  *
  * @Author 李文举
- * @Date 2020/10/17 10:28
  */
 @Data
 @NoArgsConstructor

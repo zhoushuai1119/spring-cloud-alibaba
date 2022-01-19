@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 /**
  * 推送消息
  *
- * @Author 马腾飞
- * @Date 2019/8/29 10:28
  */
 @Data
 @NoArgsConstructor
@@ -20,6 +18,7 @@ public class PushMessage {
      * topic
      */
     String topic;
+
     /**
      * eventCode
      */

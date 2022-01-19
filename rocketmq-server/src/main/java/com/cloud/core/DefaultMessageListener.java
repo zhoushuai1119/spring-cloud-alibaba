@@ -1,6 +1,6 @@
 package com.cloud.core;
 
-import com.cloud.dto.MonsterMessage;
+import com.cloud.dto.CloudMessage;
 import com.cloud.util.MqMessageUtils;
 import com.fasterxml.jackson.databind.JavaType;
 import lombok.Data;
@@ -30,7 +30,7 @@ public class DefaultMessageListener implements CloudMQListener<String> {
     }
 
     @Override
-    public void onMessage(MonsterMessage<String> message) throws Exception {
+    public void onMessage(CloudMessage<String> message) throws Exception {
         //查询是否有 *,避免多个eventCode配置干扰
         ConsumeTopicInfo consume = topicConsumerMap.get(message.getTopic() + ":*");
         if (null == consume) {

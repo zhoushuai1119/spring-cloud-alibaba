@@ -4,7 +4,7 @@ import com.cloud.annotation.ConsumeTopic;
 import com.cloud.common.constants.CommonConstant;
 import com.cloud.common.entity.user.TokenUser;
 import com.cloud.core.TopicListener;
-import com.cloud.dto.MonsterMessage;
+import com.cloud.dto.CloudMessage;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -19,7 +19,7 @@ public class UserServerTransactionListener implements TopicListener<TokenUser> {
 
 
     @Override
-    public void onMessage(MonsterMessage<TokenUser> message) {
+    public void onMessage(CloudMessage<TokenUser> message) {
         TokenUser tokenUser = message.getPayload();
         log.info("监听到{}服务事务消息:{}",CommonConstant.topic.USER_SERVER_TOPIC,
                 tokenUser);

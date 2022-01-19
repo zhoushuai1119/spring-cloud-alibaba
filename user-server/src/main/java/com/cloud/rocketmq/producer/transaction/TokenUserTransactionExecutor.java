@@ -5,7 +5,7 @@ import com.cloud.common.constants.CommonConstant;
 import com.cloud.common.entity.user.TokenUser;
 import com.cloud.core.BaseTransactionExecutor;
 import com.cloud.core.RocketMQTransactionTemplate;
-import com.cloud.dto.MonsterMessage;
+import com.cloud.dto.CloudMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.LocalTransactionState;
 
@@ -24,14 +24,14 @@ public class TokenUserTransactionExecutor extends BaseTransactionExecutor<TokenU
     }
 
     @Override
-    public LocalTransactionState executeTransaction(MonsterMessage<TokenUser> message, Object arg) {
+    public LocalTransactionState executeTransaction(CloudMessage<TokenUser> message, Object arg) {
         log.info("事务消息执行本地事务*********");
         log.info("事务ID:{},消息内容{},参数:{}", message.getTransactionId(), message.getPayload(), arg);
         return LocalTransactionState.COMMIT_MESSAGE;
     }
 
     @Override
-    public LocalTransactionState checkLocalTransaction(MonsterMessage<TokenUser> message) {
+    public LocalTransactionState checkLocalTransaction(CloudMessage<TokenUser> message) {
         log.info("事务消息回来查本地事务*********");
         log.info("事务ID:{},消息内容{}", message.getTransactionId(), message.getPayload());
         return LocalTransactionState.ROLLBACK_MESSAGE;

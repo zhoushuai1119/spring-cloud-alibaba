@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 /**
  * 批量消息-消息内容
  *
- * @Author 李文举
- * @Date 2020/10/17 10:28
  */
 @Data
 @NoArgsConstructor

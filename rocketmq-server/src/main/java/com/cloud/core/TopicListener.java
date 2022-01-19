@@ -1,7 +1,7 @@
 package com.cloud.core;
 
 
-import com.cloud.dto.MonsterMessage;
+import com.cloud.dto.CloudMessage;
 
 /**
  * 分topic消费的接口
@@ -14,5 +14,5 @@ public interface TopicListener<T> {
      *
      * @param message
      */
-    void onMessage(MonsterMessage<T> message) throws Exception;
+    void onMessage(CloudMessage<T> message) throws Exception;
 }

@@ -5,7 +5,7 @@ import com.cloud.common.constants.CommonConstant;
 import com.cloud.common.entity.order.Category;
 import com.cloud.common.utils.JsonUtil;
 import com.cloud.core.TopicListener;
-import com.cloud.dto.MonsterMessage;
+import com.cloud.dto.CloudMessage;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class OrderServerListener implements TopicListener<List<Category>> {
      * @param message
      */
     @Override
-    public void onMessage(MonsterMessage<List<Category>> message) {
+    public void onMessage(CloudMessage<List<Category>> message) {
         List<Category> categoryList = message.getPayload();
         log.info("接收到{}服务:消息:{}",CommonConstant.topic.ORDER_SERVER_TOPIC,
                 JsonUtil.toString(categoryList));
