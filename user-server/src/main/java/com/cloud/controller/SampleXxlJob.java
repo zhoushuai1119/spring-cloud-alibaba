@@ -34,7 +34,7 @@ public class SampleXxlJob {
      */
     @XxlJob("demoJobHandler")
     public void demoJobHandler() {
-        log.info("开启定时任务");
+        log.info("开启定时任务,任务参数:{}",XxlJobHelper.getJobParam());
         XxlJobHelper.log("XXL-JOB, Hello World.");
 
         try {
@@ -247,7 +247,6 @@ public class SampleXxlJob {
     public void demoJobHandler2() throws Exception {
         XxlJobHelper.log("XXL-JOB, Hello World.");
     }
-
     public void init(){
         log.info("init");
     }
