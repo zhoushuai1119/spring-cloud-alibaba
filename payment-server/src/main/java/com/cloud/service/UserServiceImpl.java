@@ -28,8 +28,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         System.out.println("jdjdj");
         user.setSalt("idjdjdjjd");
-       /* if (true) {
+        if (true) {
             throw new Exception();
-        }*/
+        }
     }
 }

@@ -150,12 +150,30 @@ xxl:
       #### 执行器日志文件保存天数 [选填] ： 过期日志自动清理, 限制值大于等于3时生效; 否则, 如-1, 关闭自动清理功能；
       logretentiondays: 30
 
+#seata分布式事务配置
 seata:
-  tx-service-group: my_test_tx_group
-  service:
-    grouplist:
-      #指定seata服务器地址
-      seata-server: 192.168.190.129:8091
+  enabled: true
+  application-id: ${spring.application.name}
+  ##此处配置自定义的seata事务分组名称
+  tx-service-group: ${spring.application.name}-tx-group
+  ##开启数据库代理
+  enable-auto-data-source-proxy: true
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 192.168.190.129:8848
+      username: nacos
+      password: nacos
+
+  config:
+    type: nacos
+    nacos:
+      namespace: fc88974f-ab9e-4adc-b89c-b1a654f3d744
+      server-addr: 192.168.190.129:8848
+      username: nacos
+      password: nacos
+      group: SEATA_GROUP
 
 dubbo:
   application:
@@ -176,9 +194,9 @@ dubbo:
   consumer:
     check: false
     timeout: 6000
-  cloud:
-    ##要消费的服务名，强烈建议配置，多个，分开
-    subscribed-services: payment-server
+#  cloud:
+#    ##要消费的服务名，强烈建议配置，多个，分开
+#    subscribed-services: payment-server
 
 
 logging:

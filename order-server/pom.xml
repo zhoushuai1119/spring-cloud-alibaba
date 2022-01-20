@@ -64,11 +64,6 @@
         </dependency>
         <!--seata 分布式事务框架-->
         <dependency>
-            <groupId>io.seata</groupId>
-            <artifactId>seata-spring-boot-starter</artifactId>
-            <version>1.4.1</version>
-        </dependency>
-        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
             <exclusions>
@@ -77,6 +72,11 @@
                     <artifactId>seata-spring-boot-starter</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-spring-boot-starter</artifactId>
+            <version>${seata-version}</version>
         </dependency>
         <!--分布式定时任务调度器-->
         <dependency>

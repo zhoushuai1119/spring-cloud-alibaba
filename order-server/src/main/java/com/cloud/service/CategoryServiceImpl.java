@@ -10,6 +10,7 @@ import com.cloud.common.service.order.CategoryService;
 import com.cloud.common.service.payment.UserService;
 import com.cloud.dao.CategoryMapper;
 import io.seata.spring.annotation.GlobalTransactional;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.context.ApplicationEventPublisher;
@@ -25,6 +26,7 @@ import java.util.List;
  * @date: 2021/1/26 19:15
  * @version: V1.0
  */
+@Slf4j
 @DubboService
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
 
@@ -46,13 +48,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         return pageList;
     }
 
-    @GlobalTransactional
+    @GlobalTransactional(rollbackFor = Exception.class)
+    @Transactional
     @Override
     public void dubboTest() throws Exception {
         Category category = baseMapper.selectById("16");
-        category.setParentCategoryId("1111");
+        category.setParentCategoryId("2222");
         updateById(category);
-        System.out.println("****开始Dubbbo调用远程服务接口****");
+        log.info("****开始Dubbbo调用远程服务接口****");
         userService.saveUser(new User());
     }
 

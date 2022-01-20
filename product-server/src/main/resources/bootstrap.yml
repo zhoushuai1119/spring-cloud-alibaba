@@ -176,6 +176,32 @@ cloud:
           TP_USER_SERVER_TOPIC_TRANSACTION: EC_USER_SERVER_TRANSACTION
 
 
+#seata分布式事务配置
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  ##此处配置自定义的seata事务分组名称
+  tx-service-group: ${spring.application.name}-tx-group
+  ##开启数据库代理
+  enable-auto-data-source-proxy: true
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 192.168.190.129:8848
+      username: nacos
+      password: nacos
+
+  config:
+    type: nacos
+    nacos:
+      namespace: fc88974f-ab9e-4adc-b89c-b1a654f3d744
+      server-addr: 192.168.190.129:8848
+      username: nacos
+      password: nacos
+      group: SEATA_GROUP
+
+
 mybatis-plus:
   mapper-locations: classpath*:mapping/*.xml
   type-aliases-package: com.cloud.common.entity

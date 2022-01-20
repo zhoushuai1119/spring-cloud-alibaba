@@ -31,6 +31,7 @@
         <elasticsearch.version>7.6.2</elasticsearch.version>
         <sharding-jdbc.version>4.1.1</sharding-jdbc.version>
         <rocketmq-version>4.9.1</rocketmq-version>
+        <seata-version>1.4.2</seata-version>
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
         <!--docker配置-->
