@@ -3,6 +3,7 @@ package com.cloud.controller;
 import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.entity.payment.User;
 import com.cloud.common.service.payment.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
+@Slf4j
 public class HiController {
 
     @Autowired
@@ -35,9 +37,9 @@ public class HiController {
     }
 
     @PostMapping("/saveUser")
-    public String saveUser() throws Exception {
+    public BaseResponse<String> saveUser() throws Exception {
         userService.saveUser(new User());
-        return "i'm zhoushuai";
+        return BaseResponse.createSuccessResult(null);
     }
 
     @RequestMapping("/categosyList")
