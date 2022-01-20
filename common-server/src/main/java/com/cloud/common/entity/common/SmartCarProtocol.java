@@ -1,4 +1,4 @@
-package com.cloud.common.netty.protocol;
+package com.cloud.common.entity.common;
 
 import com.cloud.common.constants.CommonConstant;
 import lombok.AllArgsConstructor;

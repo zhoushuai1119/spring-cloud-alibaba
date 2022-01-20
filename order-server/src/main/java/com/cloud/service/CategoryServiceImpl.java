@@ -3,18 +3,19 @@ package com.cloud.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cloud.client.PaymentServerClient;
 import com.cloud.common.beans.request.PageQueryRequest;
+import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.entity.order.Category;
-import com.cloud.common.entity.payment.User;
 import com.cloud.common.service.order.CategoryService;
-import com.cloud.common.service.payment.UserService;
+import com.cloud.common.utils.BusinessUtils;
 import com.cloud.dao.CategoryMapper;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -27,14 +28,14 @@ import java.util.List;
  * @version: V1.0
  */
 @Slf4j
-@DubboService
+@Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
-
-    @DubboReference
-    private UserService userService;
 
     @Resource
     private ApplicationEventPublisher publisher;
+
+    @Autowired
+    private PaymentServerClient paymentServerClient;
 
     @Override
     public List<Category> categoryList() {
@@ -56,7 +57,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         category.setParentCategoryId("2222");
         updateById(category);
         log.info("****开始Dubbbo调用远程服务接口****");
-        userService.saveUser(new User());
+        BaseResponse response = paymentServerClient.saveUser();
+        BusinessUtils.checkBaseRespose(response);
     }
 
     @Override

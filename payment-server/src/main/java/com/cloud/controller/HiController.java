@@ -3,7 +3,6 @@ package com.cloud.controller;
 import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.entity.payment.User;
 import com.cloud.common.service.payment.UserService;
-import com.cloud.netty.client.NettyClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +34,7 @@ public class HiController {
         return BaseResponse.createSuccessResult(null);
     }
 
-    @RequestMapping("/saveUser")
+    @PostMapping("/saveUser")
     public String saveUser() throws Exception {
         userService.saveUser(new User());
         return "i'm zhoushuai";

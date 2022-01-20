@@ -1,7 +1,6 @@
 package com.cloud.filter;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.common.utils.LogUtil;
 import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;

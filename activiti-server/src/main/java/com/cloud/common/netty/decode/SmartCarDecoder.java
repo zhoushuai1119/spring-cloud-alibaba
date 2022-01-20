@@ -1,7 +1,7 @@
 package com.cloud.common.netty.decode;
 
 import com.cloud.common.constants.CommonConstant;
-import com.cloud.common.netty.protocol.SmartCarProtocol;
+import com.cloud.common.entity.common.SmartCarProtocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;

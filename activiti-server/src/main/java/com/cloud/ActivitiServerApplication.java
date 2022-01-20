@@ -5,6 +5,9 @@ import org.springframework.boot.actuate.autoconfigure.security.servlet.Managemen
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * 去掉Spring-Security安全验证，整合Shiro实现权限认证
@@ -21,6 +24,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
         }
 )
 @EnableDiscoveryClient
+@EnableFeignClients
+@EnableAsync
+@RefreshScope
 public class ActivitiServerApplication {
 
     public static void main(String[] args) {

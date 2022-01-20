@@ -29,16 +29,14 @@ public enum ErrorCodeEnum implements BaseExceptionCode {
     PARAM_ERROR("100001", "参数错误"),
 
     /**
-     * Dubbo远程调用失败
-     */
-    RPC_ERROR("100002","Dubbo远程调用失败"),
-
-    /**
      * Json解析错误
      */
-    JSON_PARSER_ERROR("100003", "json parse error")
+    JSON_PARSER_ERROR("100002", "json parse error"),
 
-    ;
+    /**
+     * feign 调用失败
+     */
+    FEIGN_CLIENT_ERROR("100003", "feign调用失败");
 
     private String code;
     private String message;

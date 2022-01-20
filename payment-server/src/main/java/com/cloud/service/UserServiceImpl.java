@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloud.common.entity.payment.User;
 import com.cloud.common.service.payment.UserService;
 import com.cloud.dao.UserMapper;
-import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @date: 2021/1/27 13:57
  * @version: V1.0
  */
-@DubboService
+@Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     

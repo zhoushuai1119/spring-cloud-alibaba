@@ -1,6 +1,5 @@
 package com.cloud;
 
-import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -14,7 +13,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableFeignClients
 //启用@WebServlet、@WebFilter和@WebListener注释的类的自动注册
 @ServletComponentScan
-@EnableDubbo
 @EnableAsync
 @RefreshScope
 public class OrderServerApplication {

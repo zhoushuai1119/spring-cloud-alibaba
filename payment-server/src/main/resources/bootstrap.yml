@@ -175,31 +175,12 @@ seata:
       password: nacos
       group: SEATA_GROUP
 
-dubbo:
-  application:
-    id: ${spring.application.name}
-    name: ${spring.application.name}
-  scan:
-    ##指定 Dubbo 服务实现类的扫描基准包
-    base-packages: com.cloud.service
-  protocol:
-    ##服务暴露的协议配置，其中子属性 name 为协议名称
-    name: dubbo
-    ## port 为协议端口（ -1 表示自增端口，从 20880 开始）
-    port: -1
-  registry:
-    #服务注册中心配置
-    address: nacos://192.168.190.129:8848
-    check: false
-  consumer:
-    check: false
-    timeout: 6000
-#  cloud:
-#    ##要消费的服务名，强烈建议配置，多个，分开
-#    subscribed-services: payment-server
-
 
 logging:
   level:
     RocketmqClient: error
     RocketmqRemoting: warn
+
+feign:
+  hystrix:
+    enabled: true

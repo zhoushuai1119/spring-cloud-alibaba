@@ -4,10 +4,10 @@ import com.cloud.common.beans.exception.BaseException;
 import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.enums.ErrorCodeEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.netflix.client.ClientException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.dubbo.rpc.RpcException;
 import org.slf4j.MDC;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -67,9 +67,9 @@ public class ExceptionUtils {
                 }
                 message = stringBuilder.toString();
                 log.error("{} method error , {}", methodName, message);
-            } else if (ex instanceof RpcException) {
-                errorCode = ErrorCodeEnum.RPC_ERROR.getCode();
-                message = ErrorCodeEnum.RPC_ERROR.getMessage();
+            } else if (ex instanceof ClientException) {
+                errorCode = ErrorCodeEnum.FEIGN_CLIENT_ERROR.getCode();
+                message = ErrorCodeEnum.FEIGN_CLIENT_ERROR.getMessage();
                 log.error("{} method error , {}", methodName, ex.getMessage());
             } else if (ex instanceof ConstraintViolationException) {
                 errorCode = ErrorCodeEnum.PARAM_ERROR.getCode();
