@@ -6,7 +6,7 @@ import com.cloud.common.entity.user.TokenUser;
 import com.cloud.common.service.user.TokenUserService;
 import com.cloud.dao.TokenUserMapper;
 import com.cloud.utils.JwtUtil;
-import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -16,7 +16,7 @@ import java.util.Map;
  * @date: 2021/2/7 17:24
  * @version: V1.0
  */
-@DubboService
+@Service
 public class TokenUserServiceImpl extends ServiceImpl<TokenUserMapper, TokenUser> implements TokenUserService {
 
     @Override

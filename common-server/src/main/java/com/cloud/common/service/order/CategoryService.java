@@ -20,7 +20,7 @@ public interface CategoryService extends IService<Category> {
 
     Page<Category> categoryPageList(PageQueryRequest pageQueryRequest);
 
-    void dubboTest() throws Exception;
+    void updateCategory();
 
     void asyncSendMq(Integer categoryId);
 

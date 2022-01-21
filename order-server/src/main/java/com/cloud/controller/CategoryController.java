@@ -26,9 +26,9 @@ import java.util.List;
  * @version: V1.0
  */
 @RestController
-@RequestMapping("test")
+@RequestMapping("/category")
 @Api(value = "test接口", tags = "test接口")
-public class TestController {
+public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
@@ -65,9 +65,9 @@ public class TestController {
         return PageQueryResponse.createSuccessPageResult(pageList);
     }
 
-    @PostMapping("/dubboTest")
-    public BaseResponse<String> dubboTest() throws Exception {
-        categoryService.dubboTest();
+    @PostMapping("/updateCategory")
+    public BaseResponse<String> updateCategory() {
+        categoryService.updateCategory();
         return BaseResponse.createSuccessResult(null);
     }
 

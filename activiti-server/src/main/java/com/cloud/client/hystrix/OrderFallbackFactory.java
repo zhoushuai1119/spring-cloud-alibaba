@@ -1,6 +1,6 @@
 package com.cloud.client.hystrix;
 
-import com.cloud.client.PaymentClient;
+import com.cloud.client.OrderClient;
 import com.cloud.common.beans.exception.BusinessException;
 import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.utils.FeignUtils;
@@ -16,12 +16,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class PaymentFallbackFactory implements FallbackFactory<PaymentClient> {
+public class OrderFallbackFactory implements FallbackFactory<OrderClient> {
 
     @Override
-    public PaymentClient create(Throwable throwable) {
+    public OrderClient create(Throwable throwable) {
         log.error("fallback, cause:{}",throwable.getMessage());
-        return new PaymentClient() {
+        return new OrderClient() {
 
             @Override
             public BaseResponse saveUser() {

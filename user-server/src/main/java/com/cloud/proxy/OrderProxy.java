@@ -9,21 +9,21 @@ import org.springframework.stereotype.Component;
 /**
  * @description:
  * @author: zhou shuai
- * @date: 2022/1/20 19:17
+ * @date: 2022/1/21 11:18
  * @version: v1
  */
 @Component
 @Slf4j
-public class PaymentProxy {
+public class OrderProxy {
 
     @Autowired
     private OrderClient orderClient;
 
     /**
-     * 保存用户
+     * 更新categiry
      */
-    public void saveUser() {
-        BusinessUtils.checkBaseRespose(orderClient.saveUser());
+    public void updateCategory() {
+        BusinessUtils.checkBaseRespose(orderClient.updateCategory());
     }
 
 }

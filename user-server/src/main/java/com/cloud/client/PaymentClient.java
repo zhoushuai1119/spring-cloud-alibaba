@@ -19,7 +19,7 @@ public interface PaymentClient {
 
     String SERVER_NAME = "payment-server";
 
-    @PostMapping(value = "saveUser",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/user/saveUser",consumes = MediaType.APPLICATION_JSON_VALUE)
     BaseResponse saveUser();
 
 }

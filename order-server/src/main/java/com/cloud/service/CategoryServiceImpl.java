@@ -8,7 +8,6 @@ import com.cloud.common.entity.order.Category;
 import com.cloud.common.service.order.CategoryService;
 import com.cloud.dao.CategoryMapper;
 import com.cloud.proxy.PaymentProxy;
-import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -47,15 +46,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         return pageList;
     }
 
-    @GlobalTransactional(rollbackFor = Exception.class)
-    @Transactional
     @Override
-    public void dubboTest() throws Exception {
+    public void updateCategory() {
         Category category = baseMapper.selectById("16");
         category.setParentCategoryId("2222");
         updateById(category);
-        log.info("****开始Dubbbo调用远程服务接口****");
-        paymentProxy.saveUser();
     }
 
     @Override
