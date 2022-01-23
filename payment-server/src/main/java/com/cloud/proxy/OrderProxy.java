@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class PaymentProxy {
+public class OrderProxy {
 
     @Autowired
     private OrderClient orderClient;
