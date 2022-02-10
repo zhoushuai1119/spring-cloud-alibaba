@@ -25,14 +25,14 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.190.129:8848
+        server-addr: 139.196.208.53:8848
       config:
-        server-addr: 192.168.190.129:8848
+        server-addr: 139.196.208.53:8848
         file-extension: yml
 
   redis:
     database: 0
-    host: 192.168.190.129
+    host: 139.196.208.53
     port: 6379
     password: 123456
     timeout: 6000ms
@@ -63,7 +63,7 @@ spring:
           password: Zs11195310
 
   rabbitmq:
-    host: 192.168.190.129
+    host: 139.196.208.53
     port: 5672
     username: guest
     password: guest
@@ -98,7 +98,7 @@ spring:
 cloud:
   rocketmq:
     #不能使用name-server
-    nameServer: 192.168.190.129:9876
+    nameServer: 139.196.208.53:9876
     producer:
       group: p-${spring.application.name}
     consumer:
@@ -128,7 +128,7 @@ xxl:
     admin:
       #调度中心部署跟地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。
       #执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
-      addresses: http://192.168.190.129:19090/xxl-job-admin
+      addresses: http://139.196.208.53:19090/xxl-job-admin
     #### 执行器通讯TOKEN [选填]：非空时启用；
     accessToken:
     executor:
@@ -161,14 +161,14 @@ seata:
     type: nacos
     nacos:
       application: seata-server
-      server-addr: 192.168.190.129:8848
+      server-addr: 139.196.208.53:8848
       username: nacos
       password: nacos
 
   config:
     type: nacos
     nacos:
-      server-addr: 192.168.190.129:8848
+      server-addr: 139.196.208.53:8848
       username: nacos
       password: nacos
       group: SEATA_GROUP
@@ -184,8 +184,8 @@ management:
 fdfs:
   so-timeout: 15010
   connect-timeout: 6010
-  tracker-list: 192.168.190.129:22122
-  urlPrefix: http://192.168.190.129/
+  tracker-list: 139.196.208.53:22122
+  urlPrefix: http://139.196.208.53/
   ##生成缩略图参数
   thumb-image:
     width: 150
@@ -195,7 +195,7 @@ fdfs:
     max-total: 153
 
 elasticsearch:
-  host: 192.168.190.129
+  host: 139.196.208.53
   port: 9200
 
 

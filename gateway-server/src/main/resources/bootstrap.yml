@@ -11,9 +11,9 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.190.129:8848
+        server-addr: 139.196.208.53:8848
       config:
-        server-addr: 192.168.190.129:8848
+        server-addr: 139.196.208.53:8848
         file-extension: yml
 
 
@@ -23,7 +23,7 @@ spring:
       filter:
         enabled: false
       transport:
-        dashboard: 192.168.190.129:8080
+        dashboard: 139.196.208.53:8080
         port: 8890
 
     gateway:
