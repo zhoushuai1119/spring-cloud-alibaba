@@ -1,6 +1,6 @@
 package com.cloud.service;
 
-import com.cloud.common.netty.protocol.SmartCarProtocol;
+import com.cloud.common.entity.common.SmartCarProtocol;
 import com.cloud.common.service.common.NettySendService;
 import com.cloud.netty.client.NettyClientHandler;
 import io.netty.channel.ChannelHandlerContext;
