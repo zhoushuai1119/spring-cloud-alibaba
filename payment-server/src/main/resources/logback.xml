@@ -7,7 +7,7 @@
     <property name="log.level.debug" value="DEBUG" /> <!-- DEBUG日志级别 -->
     <property name="log.level.info" value="INFO" /> <!-- INFO日志级别 -->
     <property name="log.other.level" value="WARN" /> <!-- 其他日志级别 -->
-    <property name="log.base" value="F:/idea_logs/springcloud_logs/payment-server" /> <!-- 日志路径，这里是相对路径，web项目eclipse下会输出到eclipse的安装目录下，如果部署到linux上的tomcat下，会输出到tomcat/bin目录 下 -->
+    <property name="log.base" value="D:/idea_logs/springcloud_logs/payment-server" /> <!-- 日志路径，这里是相对路径，web项目eclipse下会输出到eclipse的安装目录下，如果部署到linux上的tomcat下，会输出到tomcat/bin目录 下 -->
     <property name="log.moduleName" value="payment-server_logs" />  <!-- 模块名称， 影响日志配置名，日志文件名 -->
     <property name="log.max.size" value="100MB" /> <!-- 日志文件大小,超过这个大小将被压缩 -->
 
