@@ -12,9 +12,13 @@ spring:
     nacos:
       discovery:
         server-addr: 139.196.208.53:8848
+        username: nacos
+        password: nacos
       config:
         server-addr: 139.196.208.53:8848
         file-extension: yml
+        username: nacos
+        password: nacos
 
   redis:
     database: 0
