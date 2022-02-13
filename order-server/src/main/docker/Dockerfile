@@ -6,6 +6,6 @@ VOLUME /temp
 
 ADD order-server.jar /zhoushuai/order-server.jar
 
-EXPOSE 8080
+EXPOSE 8763
 
 ENTRYPOINT ["java", "-jar", "/zhoushuai/order-server.jar"]

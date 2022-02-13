@@ -29,7 +29,7 @@ public class ElasticsearchService {
     }
 
     public BaseResponse<Category> getCategory() {
-        Category category  = categoryDao.selectDoc("category","1");
+        Category category  = categoryDao.selectDoc("idx_category","1");
         return BaseResponse.createSuccessResult(category);
     }
 

@@ -6,6 +6,6 @@ VOLUME /temp
 
 ADD user-server.jar /zhoushuai/user-server.jar
 
-EXPOSE 8080
+EXPOSE 8764
 
 ENTRYPOINT ["java", "-jar", "/zhoushuai/user-server.jar"]

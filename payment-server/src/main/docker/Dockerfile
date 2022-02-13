@@ -6,6 +6,6 @@ VOLUME /temp
 
 ADD payment-server.jar /zhoushuai/payment-server.jar
 
-EXPOSE 8080
+EXPOSE 8988
 
 ENTRYPOINT ["java", "-jar", "/zhoushuai/payment-server.jar"]
