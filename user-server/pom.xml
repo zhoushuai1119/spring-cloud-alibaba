@@ -137,7 +137,7 @@
                     <serverId>docker-harbor</serverId>
                     <registryUrl>${docker.repostory.url}</registryUrl>
                     <forceTags>true</forceTags>
-                    <pushImage>true</pushImage>
+                    <pushImage>false</pushImage>
                 </configuration>
             </plugin>
         </plugins>
