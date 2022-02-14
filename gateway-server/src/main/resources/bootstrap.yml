@@ -1,5 +1,5 @@
 server:
-  port: 9997
+  port: 8762
 
 spring:
   application:
@@ -12,9 +12,13 @@ spring:
     nacos:
       discovery:
         server-addr: 139.196.208.53:8848
+        username: nacos
+        password: nacos
       config:
         server-addr: 139.196.208.53:8848
         file-extension: yml
+        username: nacos
+        password: nacos
 
 
     sentinel:
@@ -23,7 +27,7 @@ spring:
       filter:
         enabled: false
       transport:
-        dashboard: 139.196.208.53:8080
+        dashboard: 139.196.208.53:9999
         port: 8890
 
     gateway:

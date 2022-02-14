@@ -22,7 +22,7 @@ public class NettyStart implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        InetSocketAddress inetSocketAddress = new InetSocketAddress("127.0.0.1",7777);
+        InetSocketAddress inetSocketAddress = new InetSocketAddress(7777);
         log.info("netty启动地址:{}",inetSocketAddress.getAddress());
         nettyServer.start(inetSocketAddress);
     }

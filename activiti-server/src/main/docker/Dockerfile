@@ -6,6 +6,6 @@ VOLUME /temp
 
 ADD activiti-server.jar /zhoushuai/activiti-server.jar
 
-EXPOSE 9998
+EXPOSE 8761
 
 ENTRYPOINT ["java", "-jar", "/zhoushuai/activiti-server.jar"]

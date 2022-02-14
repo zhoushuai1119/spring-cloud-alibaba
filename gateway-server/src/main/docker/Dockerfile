@@ -6,6 +6,6 @@ VOLUME /temp
 
 ADD gateway-server.jar /zhoushuai/gateway-server.jar
 
-EXPOSE 8080
+EXPOSE 8762
 
 ENTRYPOINT ["java", "-jar", "/zhoushuai/gateway-server.jar"]

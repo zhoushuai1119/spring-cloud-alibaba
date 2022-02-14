@@ -6,6 +6,6 @@ VOLUME /temp
 
 ADD product-server.jar /zhoushuai/product-server.jar
 
-EXPOSE 8766
+EXPOSE 8765
 
 ENTRYPOINT ["java", "-jar", "/zhoushuai/product-server.jar"]
