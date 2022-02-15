@@ -6,6 +6,7 @@ import com.cloud.common.utils.CommonUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,37 +37,41 @@ public class FileUploadController {
     /**
      * 文件上传
      */
-    @ApiOperation(value="上传文件", notes="测试FastDFS文件上传")
-    @RequestMapping(value = "/uploadFile",headers="content-type=multipart/form-data", method = RequestMethod.POST)
-    public ResponseEntity<String> uploadFile (@RequestParam("file") MultipartFile file){
-        String result ;
-        try{
-            String path = fileService.uploadFile(file) ;
-            if (!StringUtils.isEmpty(path)){
-                result = path ;
+    @ApiOperation(value = "上传文件", notes = "测试FastDFS文件上传")
+    @PostMapping(value = "/uploadFile",consumes = "multipart/form-data", headers = "content-type=multipart/from-data")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "file", value = "文件", paramType = "form", dataType = "file")
+    })
+    public BaseResponse<String> uploadFile(@ApiParam(value = "文件", required = true)
+                                           @RequestPart("file") MultipartFile file) {
+        String result;
+        try {
+            String path = fileService.uploadFile(file);
+            if (!StringUtils.isEmpty(path)) {
+                result = path;
             } else {
-                result = "上传失败" ;
+                result = "上传失败";
             }
-        } catch (Exception e){
-            e.printStackTrace() ;
-            result = "服务异常" ;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = "服务异常";
         }
-        return ResponseEntity.ok(result);
+        return BaseResponse.createSuccessResult(result);
     }
 
     /**
      * 文件删除
      */
     @RequestMapping(value = "/deleteByPath", method = RequestMethod.GET)
-    public ResponseEntity<String> deleteByPath (){
-        String filePathName = "group1/M00/00/00/wKhIgl0n4AKABxQEABhlMYw_3Lo825.png" ;
+    public ResponseEntity<String> deleteByPath() {
+        String filePathName = "group1/M00/00/00/wKhIgl0n4AKABxQEABhlMYw_3Lo825.png";
         fileService.deleteFile(filePathName);
-        return ResponseEntity.ok("SUCCESS") ;
+        return ResponseEntity.ok("SUCCESS");
     }
 
-    @ApiOperation(value="上传文件", notes="上传文件")
+    @ApiOperation(value = "上传文件", notes = "上传文件")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "file", value = "文件数据", required = true, paramType="query", dataType = "MultipartFile")
+            @ApiImplicitParam(name = "file", value = "文件数据", required = true, paramType = "query", dataType = "MultipartFile")
     })
     @PostMapping(value = "/upload")
     public BaseResponse<String> uploadFileClient(@RequestPart("file") MultipartFile file) throws Exception {
@@ -75,15 +80,15 @@ public class FileUploadController {
         return BaseResponse.createSuccessResult(path);
     }
 
-    @ApiOperation(value="下载文件", notes="下载文件")
+    @ApiOperation(value = "下载文件", notes = "下载文件")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "fileUrl", value = "文件路径地址", required = true, paramType="query", dataType = "String"),
-            @ApiImplicitParam(name = "fileName", value = "文件名称", required = true, paramType="query", dataType = "String")
+            @ApiImplicitParam(name = "fileUrl", value = "文件路径地址", required = true, paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "fileName", value = "文件名称", required = true, paramType = "query", dataType = "String")
     })
     @PostMapping(value = "/download")
     public void downloadFile(@NotBlank(message = "文件路径地址不能为空") String fileUrl,
                              @NotBlank(message = "文件名称不能为空") String fileName,
-                             HttpServletResponse response, HttpServletRequest request){
+                             HttpServletResponse response, HttpServletRequest request) {
         try {
             byte[] fileBytes = fileService.downloadFile(fileUrl);
             downloadFile(request, response, fileBytes, fileName);
@@ -92,14 +97,14 @@ public class FileUploadController {
         }
     }
 
-    @ApiOperation(value="将url转为文件流", notes="将url转为文件流")
+    @ApiOperation(value = "将url转为文件流", notes = "将url转为文件流")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "fileUrl", value = "文件路径地址", required = true, paramType="query", dataType = "String"),
+            @ApiImplicitParam(name = "fileUrl", value = "文件路径地址", required = true, paramType = "query", dataType = "String"),
     })
     @GetMapping(value = "/downloadUrl")
-    public void downloadUrl(@NotBlank(message = "文件路径地址不能为空") String fileUrl, HttpServletResponse response, HttpServletRequest request){
+    public void downloadUrl(@NotBlank(message = "文件路径地址不能为空") String fileUrl, HttpServletResponse response, HttpServletRequest request) {
         try {
-            String fileName = fileUrl.substring(fileUrl.lastIndexOf("/")+1);
+            String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
             byte[] fileBytes = fileService.downloadFile(fileUrl);
             downloadFile(request, response, fileBytes, fileName);
         } catch (IOException e) {
@@ -110,6 +115,7 @@ public class FileUploadController {
 
     /**
      * 下载文件
+     *
      * @param response
      * @param fileData
      * @param fileName
@@ -124,7 +130,7 @@ public class FileUploadController {
             fileName = new String(fileName.getBytes("UTF-8"), "UTF-8");
         }
         response.reset();
-        response.setHeader("Content-Disposition", "attachment;filename=\""+fileName+"\"");
+        response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
         response.addHeader("Content-Length", "" + fileData.length);
         response.setContentType("application/octet-stream;charset=UTF-8");
         OutputStream outputStream = response.getOutputStream();

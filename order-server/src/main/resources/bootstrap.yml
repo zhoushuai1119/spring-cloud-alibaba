@@ -178,18 +178,12 @@ seata:
       group: SEATA_GROUP
       data-id: seataServer.properties
 
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-
+#fastdfs 配置
 fdfs:
   so-timeout: 15010
   connect-timeout: 6010
   tracker-list: 139.196.208.53:22122
-  urlPrefix: http://139.196.208.53/
+  urlPrefix: http://139.196.208.53:8888/
   ##生成缩略图参数
   thumb-image:
     width: 150
@@ -198,9 +192,18 @@ fdfs:
     max-wait-millis: 10200
     max-total: 153
 
+
+#elasticsearch 配置
 elasticsearch:
   host: 139.196.208.53
   port: 9200
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 
 logging:
