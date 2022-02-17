@@ -1,9 +1,7 @@
 package com.cloud.listener;
 
 import com.cloud.common.entity.order.Category;
-import com.cloud.rabbitmq.direct.DirectSender;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionalEventListener;
 
@@ -16,14 +14,10 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @Component
 public class CategorySendListener {
 
-    @Autowired
-    private DirectSender directSender;
-
-
     @TransactionalEventListener
 //    @EventListener
     public void sendMq(Category category) {
-        directSender.send(category);
+        log.info("TransactionalEventListener******");
     }
 
 }

@@ -61,37 +61,6 @@ spring:
           username: root
           password: Zs11195310
 
-  rabbitmq:
-    host: 139.196.208.53
-    port: 5672
-    username: guest
-    password: guest
-    virtual-host: /
-    ##确认消息已发送到队列(Queue)
-    publisher-returns: true
-    ###确认消息已发送到交换机(Exchange)
-    publisher-confirm-type: correlated
-    ##exchange到queue失败,则回调return(需设置mandatory=true,否则不回回调,消息就丢了)
-    template:
-      mandatory: true
-    listener:
-      type: simple
-      simple:
-        #采用手动应答
-        acknowledge-mode: manual
-        #最小消费者数量
-        concurrency: 1
-        #最大消费者数量
-        max-concurrency: 10
-        #重试次数超过上面的设置之后是否丢弃（false不丢弃时需要写相应代码将该消息加入死信队列）
-        default-requeue-rejected: false
-        #是否支持重试
-        retry:
-          enabled: true
-          #最大重试次数
-          max-attempts: 3
-          #重试间隔时间(单位毫秒）
-          initial-interval: 5000
 
 #rocketmq配置
 cloud:
