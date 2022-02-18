@@ -94,6 +94,7 @@ xxl:
         max: 200
       slow:
         max: 100
+    logretentiondays: 30
 
     executor:
       #### 执行器AppName [选填]：执行器心跳注册分组依据；为空则关闭自动注册
