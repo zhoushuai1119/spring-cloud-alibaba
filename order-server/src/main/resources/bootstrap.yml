@@ -81,6 +81,7 @@ cloud:
           TP_USER_SERVER_TOPIC_TRANSACTION: EC_USER_SERVER_TRANSACTION
           TP_USER_SERVER_TOPIC: EC_USER_SERVER
           TP_PAYMENT_SERVER_TOPIC: EC_PAYMENT_SERVER
+          TP_F_SC: TIME_TASK_TEST
 
 mybatis-plus:
   mapper-locations: classpath*:mapping/*.xml
