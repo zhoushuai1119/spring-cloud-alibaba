@@ -26,7 +26,7 @@ public class MqJobHandler {
     /**
      * 定时任务发送MQ
      */
-    @XxlJob("mqJobHandler")
+    @XxlJob(RocketmqTopic.executorHandler.EXECUTOR_HANDLER)
     public void mqJobHandler() {
 
         String eventCode = XxlJobHelper.getJobParam();

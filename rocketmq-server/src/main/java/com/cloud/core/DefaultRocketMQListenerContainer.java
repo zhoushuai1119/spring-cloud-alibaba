@@ -1,8 +1,14 @@
 package com.cloud.core;
 
 
+import com.cloud.TimeBasedJobProperties;
+import com.cloud.common.utils.JsonUtil;
+import com.cloud.dto.PushMessage;
 import com.cloud.enums.ConsumeMode;
 import com.cloud.enums.SelectorType;
+import com.cloud.exception.DiscardOldJobException;
+import com.cloud.timedjob.TimeBasedJobFeedback;
+import com.cloud.timedjob.TimeBasedJobMessage;
 import com.cloud.util.MqMessageUtils;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.Getter;
@@ -18,9 +24,12 @@ import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Slf4j
 public class DefaultRocketMQListenerContainer implements InitializingBean, RocketMQListenerContainer {
@@ -81,6 +90,21 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
 
     @Setter
     private CloudMQListener rocketMQListener;
+
+    @Setter
+    private ExecutorService timeBaseJobExecutor;
+
+    @Setter
+    @Getter
+    private int discardTaskSeconds;
+
+    private AtomicLong discardedTaskCount = new AtomicLong();
+
+    @Setter
+    private RocketMQTemplate rocketMQTemplate;
+
+    @Setter
+    private String instanceId;
 
     private DefaultMQPushConsumer consumer;
 
@@ -165,11 +189,17 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
 
     private void consumeInner(MessageExt messageExt) throws Exception {
         long now = System.currentTimeMillis();
-        try {
-            rocketMQListener.onMessage(MqMessageUtils.doConvertMessageExtByClass(messageExt, messageType, true));
-        } catch (Exception e) {
-            throw e;
+
+        if (TimeBasedJobProperties.JOB_TOPIC.equals(messageExt.getTopic())) {
+            handleTimeBasedJob(messageExt);
+        } else {
+            try {
+                rocketMQListener.onMessage(MqMessageUtils.doConvertMessageExtByClass(messageExt, messageType, true));
+            } catch (Exception e) {
+                throw e;
+            }
         }
+
         long costTime = System.currentTimeMillis() - now;
         log.debug("consume {} cost: {} ms", messageExt.getMsgId(), costTime);
     }
@@ -191,6 +221,83 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
                 ", consumeTreadMax=" + consumeThreadMax +
                 ", consumeTreadMin=" + consumeThreadMin +
                 '}';
+    }
+
+
+    /**
+     * 处理定时任务
+     */
+    private void handleTimeBasedJob(MessageExt messageExt) {
+        String str = new String(messageExt.getBody(), Charset.forName(charset));
+        TimeBasedJobMessage timeBasedJobMessage = null;
+        try {
+            timeBasedJobMessage = JsonUtil.toBean(str, TimeBasedJobMessage.class);
+            TimeBasedJobMessage finalTimeBasedJob = timeBasedJobMessage;
+            timeBaseJobExecutor.execute(() -> {
+                try {
+                    long now = System.currentTimeMillis();
+                    //发送历史久远的定时任务 丢弃
+                    if (now - messageExt.getBornTimestamp() > discardTaskSeconds * 1000) {
+                        long discardedCount = discardedTaskCount.incrementAndGet();
+                        if (discardedCount % 100 == 0) {
+                            log.warn("execute job discard history job {} timestamp {}", messageExt.getTags(), now);
+                        }
+                        throw new DiscardOldJobException(messageExt.getBornTimestamp());
+                    }
+
+                    log.info("received job {}: {}", messageExt.getTags(), str);
+
+                    rocketMQListener.onMessage(MqMessageUtils.doConvertMessageExtByClass(messageExt, messageType, false));
+
+                    try {
+                        TimeBasedJobFeedback feedback = new TimeBasedJobFeedback();
+                        feedback.setLogId(finalTimeBasedJob.getLogId());
+                        feedback.setInstanceId(instanceId);
+                        feedback.setTimestamp(System.currentTimeMillis());
+                        feedback.setSuccess(true);
+                        feedback.setMsg(null);
+                        rocketMQTemplate.send(packageFeedbackPushMessage(finalTimeBasedJob, feedback));
+
+                        log.info("finish job {}: {}", messageExt.getTags(), str);
+                    } catch (Exception e) {
+                        log.error("send job execute feedback error", e);
+                    }
+                } catch (Throwable throwable) {
+                    handleTimeBasedJobException(str, finalTimeBasedJob, throwable);
+                }
+            });
+        } catch (Exception e) {
+            handleTimeBasedJobException(str, timeBasedJobMessage, e);
+        }
+    }
+
+
+    private void handleTimeBasedJobException(String str, TimeBasedJobMessage timeBasedJobMessage, Throwable throwable) {
+        if (!(throwable instanceof DiscardOldJobException)) {
+            log.error("execute job error " + str, throwable);
+        }
+        if (timeBasedJobMessage != null) {
+            try {
+                TimeBasedJobFeedback feedback = new TimeBasedJobFeedback();
+                feedback.setLogId(timeBasedJobMessage.getLogId());
+                feedback.setInstanceId(instanceId);
+                feedback.setTimestamp(System.currentTimeMillis());
+                feedback.setSuccess(false);
+                feedback.setMsg(throwable.getClass().getName() + ", cause: " + throwable.getMessage());
+                rocketMQTemplate.send(packageFeedbackPushMessage(timeBasedJobMessage, feedback));
+            } catch (Exception e1) {
+                log.error("send job execute feedback error", e1);
+            }
+        }
+    }
+
+    private PushMessage packageFeedbackPushMessage(TimeBasedJobMessage message, TimeBasedJobFeedback feedback){
+        PushMessage pushMessage = new PushMessage();
+        pushMessage.setTopic(TimeBasedJobProperties.JOB_TOPIC_FEEDBACK);
+        pushMessage.setEventCode(TimeBasedJobProperties.JOB_EVENTCODE_FEEDBACK);
+        pushMessage.setKey(String.valueOf(message.getLogId()));
+        pushMessage.setPayload(feedback);
+        return pushMessage;
     }
 
 

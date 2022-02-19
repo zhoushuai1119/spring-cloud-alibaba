@@ -81,6 +81,15 @@ cloud:
           TP_ORDER_SERVER_TOPIC_TRANSACTION: EC_ORDER_SERVER_TRANSACTION
           TP_USER_SERVER_TOPIC: EC_USER_SERVER
           TP_USER_SERVER_TOPIC_TRANSACTION: EC_USER_SERVER_TRANSACTION
+          #定时任务
+          TP_F_SC: EC_TASK_PAYMENT_JOB_TEST
+
+
+  #定时任务配置
+  time-based-job:
+    enabled: true
+    thread-pool-size: 20
+    discardTaskSeconds: 300
 
 
 mybatis-plus:

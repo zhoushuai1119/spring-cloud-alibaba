@@ -64,7 +64,7 @@ mybatis-plus:
   type-aliases-package: com.xxl.job.admin.core.model
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     auto-mapping-behavior: partial
   global-config:
     db-config:

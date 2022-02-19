@@ -13,6 +13,8 @@ public final class DefaultRocketMQListenerContainerConstants {
     public static final String PROP_MESSAGE_MODEL = "messageModel";
     public static final String PROP_SELECTOR_TYPE = "selectorType";
     public static final String PROP_ROCKETMQ_LISTENER = "rocketMQListener";
+    public static final String PROP_TIME_BASED_JOB_EXECUTOR = "timeBaseJobExecutor";
+    public static final String PROD_DISCARD_TASK_SECONDS = "discardTaskSeconds";
     public static final String PROP_ROCKETMQ_TEMPLATE = "rocketMQTemplate";
     public static final String PROP_INSTANCE_ID = "instanceId";
     public static final String PROP_CONSUME_MESSAGE_BATCH_MAX_SIZE = "consumeMessageBatchMaxSize";

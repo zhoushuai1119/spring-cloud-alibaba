@@ -226,7 +226,7 @@ $(function () {
 
         layer.confirm(I18n.system_ok + typeName + '?', {
             //3-确定?; 1-成功;  2-失败
-            icon: 3,
+            icon: '3',
             title: I18n.system_tips,
             btn: [I18n.system_ok, I18n.system_cancel]
         }, function (index) {
@@ -244,7 +244,7 @@ $(function () {
                         // layer.msg(typeName + I18n.system_success);
                         layer.open({
                             title: I18n.system_tips,
-                            icon: 1,
+                            icon: '1',
                             content: I18n.system_success,
                             btn: [I18n.system_ok],
                         });
@@ -256,7 +256,7 @@ $(function () {
                         // layer.msg(data.msg || typeName + I18n.system_fail);
                         layer.open({
                             title: I18n.system_tips,
-                            icon: 2,
+                            icon: '2',
                             content: I18n.system_fail,
                             btn: [I18n.system_ok],
                         });
@@ -567,7 +567,8 @@ $(function () {
         // fill job
         $('#updateModal .form select[name=glueType] option[value=' + row.glueType + ']').prop('selected', true);
         $("#updateModal .form input[name='executorHandler']").val(row.executorHandler);
-        $("#updateModal .form textarea[name='executorParam']").val(row.executorParam);
+        $("#updateModal .form input[name='executorParam']").val(row.executorParam);
+        $("#updateModal .form input[name='systemCode']").val(row.systemCode);
 
         // 》init glueType
         $("#updateModal .form select[name=glueType]").change();

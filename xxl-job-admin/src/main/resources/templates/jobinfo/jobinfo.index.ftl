@@ -93,7 +93,7 @@
                             <table id="job_list" class="table table-bordered table-striped" width="100%">
                                 <thead>
                                 <tr>
-                                    <th name="id">${I18n.jobinfo_field_job_key}</th>
+                                    <th name="id">${I18n.jobinfo_field_id}</th>
                                     <th name="systemCode">${I18n.jobinfo_system_code}</th>
                                     <th name="jobDesc">${I18n.jobinfo_field_jobdesc}</th>
                                     <th name="executorParam">${I18n.jobinfo_field_executorparam}</th>
@@ -222,11 +222,11 @@
                         </div>
 
                         <label for="firstname" class="col-sm-2 control-label">JobHandler<font
-                                    color="red">*</font></label>
+                                    color="black">*</font></label>
                         <div class="col-sm-4">
                             <input type="text" readonly class="form-control" name="executorHandler"
-                                   placeholder="${I18n.system_please_input}JobHandler" maxlength="100"
-                                   value="mqJobHandler" aria-invalid="false">
+                                   placeholder="${I18n.system_please_input}JobHandler"
+                                   maxlength="100" value="mqJobHandler" disabled>
                         </div>
                     </div>
 
@@ -522,20 +522,28 @@ exit 0
                                 </#list>
                             </select>
                         </div>
+
                         <label for="firstname" class="col-sm-2 control-label">JobHandler<font
-                                    color="red">*</font></label>
-                        <div class="col-sm-4"><input type="text" class="form-control" name="executorHandler"
-                                                     placeholder="${I18n.system_please_input}JobHandler"
-                                                     maxlength="100"></div>
+                                    color="black">*</font></label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" readonly name="executorHandler"
+                                   placeholder="${I18n.system_please_input}JobHandler" maxlength="100" value="mqJobHandler" disabled>
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="firstname" class="col-sm-2 control-label">${I18n.jobinfo_field_executorparam}<font
-                                    color="black">*</font></label>
-                        <div class="col-sm-10">
-                            <textarea class="textarea form-control" name="executorParam"
-                                      placeholder="${I18n.system_please_input}${I18n.jobinfo_field_executorparam}"
-                                      maxlength="512" style="height: 63px; line-height: 1.2;"></textarea>
+                                    color="red">*</font></label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="executorParam"
+                                   placeholder="EC_TASK_系统编码_任务名"
+                                   maxlength="100" aria-required="true">
+                        </div>
+
+                        <label for="lastname" class="col-sm-2 control-label">${I18n.jobinfo_system_code}<font
+                                    color="red">*</font></label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="systemCode" autocomplete="on">
                         </div>
                     </div>
 

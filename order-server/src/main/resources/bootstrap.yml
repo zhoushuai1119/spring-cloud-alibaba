@@ -81,7 +81,14 @@ cloud:
           TP_USER_SERVER_TOPIC_TRANSACTION: EC_USER_SERVER_TRANSACTION
           TP_USER_SERVER_TOPIC: EC_USER_SERVER
           TP_PAYMENT_SERVER_TOPIC: EC_PAYMENT_SERVER
-          TP_F_SC: TIME_TASK_TEST
+          #定时任务
+          TP_F_SC: EC_TASK_ORDER_JOB_TEST
+
+  #定时任务配置
+  time-based-job:
+    enabled: true
+    thread-pool-size: 20
+    discardTaskSeconds: 300
 
 mybatis-plus:
   mapper-locations: classpath*:mapping/*.xml

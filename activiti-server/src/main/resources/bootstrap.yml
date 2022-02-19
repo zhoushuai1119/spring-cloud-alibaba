@@ -64,25 +64,6 @@ spring:
           password: Zs11195310
 
 
-#rocketmq配置
-cloud:
-  rocketmq:
-    #不能使用name-server
-    name-server: 139.196.208.53:9876
-    #普通消息配置
-    producer:
-      group: p-${spring.application.name}
-
-    #消费者配置
-    consumer:
-      #消费者组名称
-      c-activiti-server:
-        subscription:
-          # topic : eventCode  最好都大写
-          TP_ORDER_SERVER_TOPIC: EC_ORDER_SERVER
-          TP_ORDER_SERVER_TOPIC_TRANSACTION: EC_ORDER_SERVER_TRANSACTION
-          TP_PAYMENT_SERVER_TOPIC: EC_PAYMENT_SERVER
-
   #默认历史表不会生成，需要手动开启配置
   activiti:
     # 这条配置为true，会默认加在resources/processes包下的流程文件（.bpmn），如果流程文件没有会导致项目启动报错，可以设置为false
@@ -96,6 +77,7 @@ cloud:
     ## 在流程引擎启动就激活AsyncExecutor,异步true false关闭
     ## 不关闭会一直打印sql，建议关闭
     async-executor-activate: false
+
 
 mybatis-plus:
   mapper-locations: classpath*:mapping/*.xml
@@ -134,6 +116,34 @@ seata:
       password: nacos
       group: SEATA_GROUP
       data-id: seataServer.properties
+
+
+#rocketmq配置
+cloud:
+  rocketmq:
+    #不能使用name-server
+    name-server: 139.196.208.53:9876
+    #普通消息配置
+    producer:
+      group: p-${spring.application.name}
+
+    #消费者配置
+    consumer:
+      #消费者组名称
+      c-activiti-server:
+        subscription:
+          # topic : eventCode  最好都大写
+          TP_ORDER_SERVER_TOPIC: EC_ORDER_SERVER
+          TP_ORDER_SERVER_TOPIC_TRANSACTION: EC_ORDER_SERVER_TRANSACTION
+          TP_PAYMENT_SERVER_TOPIC: EC_PAYMENT_SERVER
+          #定时任务
+          TP_F_SC: EC_TASK_ACTIVITI_JOB_TEST
+
+  #定时任务配置
+  time-based-job:
+    enabled: true
+    thread-pool-size: 20
+    discardTaskSeconds: 300
 
 
 logging:

@@ -15,4 +15,11 @@ public class RocketmqTopic {
         String TIME_TASK_TOPIC = "TP_F_SC";
     }
 
+    /**
+     * 执行器
+     */
+    public interface executorHandler {
+        String EXECUTOR_HANDLER = "mqJobHandler";
+    }
+
 }

@@ -49,7 +49,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * RocketMQ自动配置
  */
 @Configuration
-@EnableConfigurationProperties({RocketMQProperties.class})
+@EnableConfigurationProperties({RocketMQProperties.class,TimeBasedJobProperties.class})
 @ConditionalOnClass(MQClientAPIImpl.class)
 @Order
 @Slf4j
@@ -179,6 +179,9 @@ public class RocketMQAutoConfiguration {
 
         @Value("${eureka.instance.instanceId:unknown}")
         private String instanceId;
+
+        @Autowired(required = false)
+        private TimeBasedJobProperties timeBasedJobProperties;
 
         @Autowired(required = false)
         private MeterRegistry meterRegistry;
@@ -343,6 +346,8 @@ public class RocketMQAutoConfiguration {
             SelectorType selectorType = getSelectorType(consumerProperties);
             //普通topic key: topic, value: tags 格式{ec_0||ec_1}
             Map<String, String> topicTagsMap = new HashMap<>();
+            //包含定时任务
+            boolean isContainsTimedTask = false;
             for (Map.Entry<String, String> topicEventCodes : consumerProperties.getSubscription().entrySet()) {
                 Assert.hasText(topicEventCodes.getValue(), "[cloud.rocketmq.consumer." + beanName + "." + topicEventCodes.getKey() + "] must not be null");
                 if ("*".equals(topicEventCodes.getValue().trim())) {
@@ -352,7 +357,21 @@ public class RocketMQAutoConfiguration {
                     String tags = topicEventCodes.getValue().replace(",", "||");
                     topicTagsMap.put(topicEventCodes.getKey(), tags);
                 }
+                if (TimeBasedJobProperties.JOB_TOPIC.equals(topicEventCodes.getKey())) {
+                    isContainsTimedTask = true;
+                }
             }
+
+            ExecutorService timedJobExecutor = null;
+            if (isContainsTimedTask) {
+                Assert.isTrue(timeBasedJobProperties != null && timeBasedJobProperties.isEnabled(), "[cloud.time-based-job.enabled] must be true");
+                Assert.notNull(rocketMQProperties.getProducer(), "[cloud.rocketmq.producer] must not be null");
+                Assert.hasText(rocketMQProperties.getProducer().getGroup(), "[cloud.rocketmq.producer.group] must not be null");
+                //定时任务异步处理
+                timedJobExecutor = new ThreadPoolExecutor(timeBasedJobProperties.getThreadPoolSize(), timeBasedJobProperties.getThreadPoolSize(),
+                        0, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100), new MQThreadFactory("timed-job"));
+            }
+
 
             BeanDefinitionBuilder beanBuilder = BeanDefinitionBuilder.rootBeanDefinition(DefaultRocketMQListenerContainer.class);
             beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_NAMESERVER, rocketMQProperties.getNameServer());
@@ -365,8 +384,10 @@ public class RocketMQAutoConfiguration {
             beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_MESSAGE_MODEL, messageModel);
             beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_SELECTOR_TYPE, selectorType);
             beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_ROCKETMQ_LISTENER, rocketMQListener);
-//            beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_ROCKETMQ_TEMPLATE, rocketMQTemplate);
-//            beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_INSTANCE_ID, instanceId);
+            beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_TIME_BASED_JOB_EXECUTOR, timedJobExecutor);
+            beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROD_DISCARD_TASK_SECONDS, timeBasedJobProperties.getDiscardTaskSeconds());
+            beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_ROCKETMQ_TEMPLATE, rocketMQTemplate);
+            beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_INSTANCE_ID, instanceId);
             beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.PROP_CONSUME_MESSAGE_BATCH_MAX_SIZE, customConsumeMessageBatchMaxSize);
             beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.THREAD_POOL_METER_REGISTRY, meterRegistry);
 //            beanBuilder.addPropertyValue(DefaultRocketMQListenerContainerConstants.RPC_HOOK, aclRPCHook);
