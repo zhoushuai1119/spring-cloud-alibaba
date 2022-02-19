@@ -10,6 +10,7 @@ import com.xxl.job.core.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.*;
@@ -84,7 +85,7 @@ public class JobCompleteHelper {
 								XxlJobLog jobLog = new XxlJobLog();
 								jobLog.setId(logId);
 
-								jobLog.setHandleTime(new Date());
+								jobLog.setHandleTime(LocalDateTime.now());
 								jobLog.setHandleCode(ReturnT.FAIL_CODE);
 								jobLog.setHandleMsg( I18nUtil.getString("joblog_lost_fail") );
 
@@ -171,7 +172,7 @@ public class JobCompleteHelper {
 		}
 
 		// success, save log
-		log.setHandleTime(new Date());
+		log.setHandleTime(LocalDateTime.now());
 		log.setHandleCode(handleCallbackParam.getHandleCode());
 		log.setHandleMsg(handleMsg.toString());
 		XxlJobCompleter.updateHandleInfoAndFinish(log);

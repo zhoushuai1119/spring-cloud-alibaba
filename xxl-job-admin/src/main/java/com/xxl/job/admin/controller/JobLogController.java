@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -130,7 +131,7 @@ public class JobLogController {
         model.addAttribute("triggerCode", jobLog.getTriggerCode());
         model.addAttribute("handleCode", jobLog.getHandleCode());
         model.addAttribute("executorAddress", jobLog.getExecutorAddress());
-        model.addAttribute("triggerTime", jobLog.getTriggerTime().getTime());
+        model.addAttribute("triggerTime", jobLog.getTriggerTime());
         model.addAttribute("logId", jobLog.getId());
 		return "joblog/joblog.detail";
 	}
@@ -183,7 +184,7 @@ public class JobLogController {
 		if (ReturnT.SUCCESS_CODE == runResult.getCode()) {
 			log.setHandleCode(ReturnT.FAIL_CODE);
 			log.setHandleMsg( I18nUtil.getString("joblog_kill_log_byman")+":" + (runResult.getMsg()!=null?runResult.getMsg():""));
-			log.setHandleTime(new Date());
+			log.setHandleTime(LocalDateTime.now());
 			XxlJobCompleter.updateHandleInfoAndFinish(log);
 			return new ReturnT<String>(runResult.getMsg());
 		} else {

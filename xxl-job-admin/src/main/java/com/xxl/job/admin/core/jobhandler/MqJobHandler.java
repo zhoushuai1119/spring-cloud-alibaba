@@ -1,4 +1,4 @@
-package com.xxl.job.admin.controller;
+package com.xxl.job.admin.core.jobhandler;
 
 import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.core.CloudMQTemplate;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class MqJobHandlerController {
+public class MqJobHandler {
 
     @Autowired
     private CloudMQTemplate cloudMQTemplate;
@@ -36,7 +36,9 @@ public class MqJobHandlerController {
 
         XxlJobHelper.log("XXL-JOB发送MQ,Topic:{},eventCode:{}", RocketmqTopic.Topic.TIME_TASK_TOPIC, eventCode);
 
-        BaseResponse<Object> sendResult = cloudMQTemplate.send(RocketmqTopic.Topic.TIME_TASK_TOPIC,eventCode,null);
+        log.info("XXL-JOB发送MQ,Topic:{},eventCode:{},messageBody:{}", RocketmqTopic.Topic.TIME_TASK_TOPIC, eventCode);
+
+        BaseResponse<Object> sendResult = cloudMQTemplate.send(RocketmqTopic.Topic.TIME_TASK_TOPIC,eventCode,eventCode);
 
         if (!sendResult.isSuccess()) {
             XxlJobHelper.handleFail();

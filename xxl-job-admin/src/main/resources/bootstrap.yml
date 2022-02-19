@@ -41,17 +41,6 @@ spring:
     password: Zs11195310
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-    type: com.zaxxer.hikari.HikariDataSource
-    hikari:
-      minimum-idle: 10
-      maximum-pool-size: 30
-      auto-commit: true
-      idle-timeout: 30000
-      pool-name: HikariCP
-      max-lifetime: 900000
-      connection-timeout: 10000
-      connection-test-query: SELECT 1
-      validation-timeout: 1000
 
   mail:
     host: smtp.qq.com
@@ -69,8 +58,18 @@ spring:
           socketFactory:
             class: javax.net.ssl.SSLSocketFactory
 
+
 mybatis-plus:
   mapper-locations: classpath:/mybatis-mapper/*Mapper.xml
+  type-aliases-package: com.xxl.job.admin.core.model
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    auto-mapping-behavior: partial
+  global-config:
+    db-config:
+      id-type: auto
+
 
 ### actuator
 management:
@@ -86,16 +85,8 @@ xxl:
     admin:
       #调度中心部署跟地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。
       #执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
-      addresses: http://139.196.208.53:${server.port}${server.servlet.context-path}
+      addresses: http://139.196.208.53:19090/xxl-job-admin
     accessToken:
-    i18n: zh_CN
-    triggerpool:
-      fast:
-        max: 200
-      slow:
-        max: 100
-    logretentiondays: 30
-
     executor:
       #### 执行器AppName [选填]：执行器心跳注册分组依据；为空则关闭自动注册
       appname: mq-executor
@@ -112,6 +103,13 @@ xxl:
       logpath: /${user.home}/xxl-job/${spring.application.name}/jobhandler
       #### 执行器日志文件保存天数 [选填] ： 过期日志自动清理, 限制值大于等于3时生效; 否则, 如-1, 关闭自动清理功能；
       logretentiondays: 30
+    i18n: zh_CN
+    triggerpool:
+      fast:
+        max: 200
+      slow:
+        max: 100
+    logretentiondays: 30
 
 
 #rocketmq配置

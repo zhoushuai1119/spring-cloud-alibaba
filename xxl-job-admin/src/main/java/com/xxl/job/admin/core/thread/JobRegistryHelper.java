@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -102,7 +103,7 @@ public class JobRegistryHelper {
 									addressListStr = addressListStr.substring(0, addressListStr.length()-1);
 								}
 								group.setAddressList(addressListStr);
-								group.setUpdateTime(new Date());
+								group.setUpdateTime(LocalDateTime.now());
 
 								XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().update(group);
 							}

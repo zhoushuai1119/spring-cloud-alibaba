@@ -1,15 +1,16 @@
 package com.xxl.job.admin.service;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xxl.job.admin.core.model.XxlJobUser;
 import com.xxl.job.admin.core.util.CookieUtil;
 import com.xxl.job.admin.core.util.I18nUtil;
 import com.xxl.job.admin.core.util.JacksonUtil;
 import com.xxl.job.admin.dao.XxlJobUserDao;
 import com.xxl.job.core.biz.model.ReturnT;
-import org.springframework.context.annotation.Configuration;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigInteger;
@@ -17,13 +18,11 @@ import java.math.BigInteger;
 /**
  * @author xuxueli 2019-05-04 22:13:264
  */
-@Configuration
-public class LoginService {
+@Slf4j
+@Service
+public class LoginService extends ServiceImpl<XxlJobUserDao, XxlJobUser> {
 
     public static final String LOGIN_IDENTITY_KEY = "XXL_JOB_LOGIN_IDENTITY";
-
-    @Resource
-    private XxlJobUserDao xxlJobUserDao;
 
 
     private String makeToken(XxlJobUser xxlJobUser){
@@ -31,6 +30,7 @@ public class LoginService {
         String tokenHex = new BigInteger(tokenJson.getBytes()).toString(16);
         return tokenHex;
     }
+
     private XxlJobUser parseToken(String tokenHex){
         XxlJobUser xxlJobUser = null;
         if (tokenHex != null) {
@@ -49,7 +49,7 @@ public class LoginService {
         }
 
         // valid passowrd
-        XxlJobUser xxlJobUser = xxlJobUserDao.loadByUserName(username);
+        XxlJobUser xxlJobUser = baseMapper.loadByUserName(username);
         if (xxlJobUser == null) {
             return new ReturnT<String>(500, I18nUtil.getString("login_param_unvalid"));
         }
@@ -92,7 +92,7 @@ public class LoginService {
                 logout(request, response);
             }
             if (cookieUser != null) {
-                XxlJobUser dbUser = xxlJobUserDao.loadByUserName(cookieUser.getUsername());
+                XxlJobUser dbUser = baseMapper.loadByUserName(cookieUser.getUsername());
                 if (dbUser != null) {
                     if (cookieUser.getPassword().equals(dbUser.getPassword())) {
                         return dbUser;

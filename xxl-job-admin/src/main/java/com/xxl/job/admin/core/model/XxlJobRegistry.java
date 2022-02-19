@@ -1,55 +1,45 @@
 package com.xxl.job.admin.core.model;
 
-import java.util.Date;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Data;
+
+import java.time.LocalDateTime;
 
 /**
  * Created by xuxueli on 16/9/30.
  */
-public class XxlJobRegistry {
+@Data
+@TableName("xxl_job_registry")
+public class XxlJobRegistry extends Model<XxlJobRegistry> {
 
+    /**
+     * 主键ID
+     */
+    @TableId(type = IdType.AUTO)
     private int id;
+    /**
+     * registryGroup
+     */
+    @TableField("registry_group")
     private String registryGroup;
+    /**
+     * registryKey
+     */
+    @TableField("registry_key")
     private String registryKey;
+    /**
+     * registryValue
+     */
+    @TableField("registry_value")
     private String registryValue;
-    private Date updateTime;
+    /**
+     * 更新时间
+     */
+    @TableField("update_time")
+    private LocalDateTime updateTime;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getRegistryGroup() {
-        return registryGroup;
-    }
-
-    public void setRegistryGroup(String registryGroup) {
-        this.registryGroup = registryGroup;
-    }
-
-    public String getRegistryKey() {
-        return registryKey;
-    }
-
-    public void setRegistryKey(String registryKey) {
-        this.registryKey = registryKey;
-    }
-
-    public String getRegistryValue() {
-        return registryValue;
-    }
-
-    public void setRegistryValue(String registryValue) {
-        this.registryValue = registryValue;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 }
