@@ -17,13 +17,13 @@ public class TimeBasedJobProperties {
     public static final String JOB_TOPIC = "TP_F_SC";
 
     /**
-     * 定时任务反馈topic.
+     * 定时任务反馈 topic
      * 客户端完成任务后发送topic给定时任务服务器，反馈执行结果.
      */
     public static final String JOB_TOPIC_FEEDBACK = "TP_F_FB";
 
     /**
-     * 定时任务反馈topic.
+     * 定时任务反馈 eventCode
      * 客户端完成任务后发送topic给定时任务服务器，反馈执行结果.
      */
     public static final String JOB_EVENTCODE_FEEDBACK = "EC_RESULT";

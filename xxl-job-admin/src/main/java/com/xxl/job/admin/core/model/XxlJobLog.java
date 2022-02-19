@@ -22,7 +22,7 @@ public class XxlJobLog extends Model<XxlJobLog> {
 	 * 主键ID
 	 */
 	@TableId(type = IdType.AUTO)
-	private long id;
+	private Long id;
 	/**
 	 * 执行器主键ID
 	 */

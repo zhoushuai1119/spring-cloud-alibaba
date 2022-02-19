@@ -1,8 +1,10 @@
 package com.cloud.rocketmq.job;
 
 import com.cloud.annotation.ConsumeTopic;
+import com.cloud.common.utils.JsonUtil;
 import com.cloud.core.TopicListener;
 import com.cloud.dto.CloudMessage;
+import com.cloud.timedjob.TimeBasedJobMessage;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -13,10 +15,11 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @ConsumeTopic(topic = "TP_F_SC", eventCode = "EC_TASK_ORDER_JOB_TEST", log = true)
-public class OrderTimeTaskTestListener implements TopicListener<String> {
+public class OrderTimeTaskTestListener implements TopicListener<TimeBasedJobMessage> {
 
     @Override
-    public void onMessage(CloudMessage<String> message) {
+    public void onMessage(CloudMessage<TimeBasedJobMessage> message) {
+        log.info("message:{}", JsonUtil.toString(message));
         log.info("order server time task mq test");
     }
 

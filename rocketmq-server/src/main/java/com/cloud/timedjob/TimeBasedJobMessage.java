@@ -1,6 +1,8 @@
 package com.cloud.timedjob;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 定时任务消息
@@ -10,6 +12,8 @@ import lombok.Data;
  * @Time 上午10:38
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TimeBasedJobMessage {
     /**
      * logId
