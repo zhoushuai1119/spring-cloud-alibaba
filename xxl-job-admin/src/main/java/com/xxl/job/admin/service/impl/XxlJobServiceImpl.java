@@ -294,7 +294,7 @@ public class XxlJobServiceImpl extends ServiceImpl<XxlJobInfoDao, XxlJobInfo> im
 		exists_jobInfo.setTriggerNextTime(nextTriggerTime);
 
 		exists_jobInfo.setUpdateTime(LocalDateTime.now());
-        baseMapper.update(exists_jobInfo);
+        baseMapper.updateJobInfo(exists_jobInfo);
 
 		return ReturnT.SUCCESS;
 	}
@@ -306,8 +306,8 @@ public class XxlJobServiceImpl extends ServiceImpl<XxlJobInfoDao, XxlJobInfo> im
 			return ReturnT.SUCCESS;
 		}
 
-		baseMapper.delete(id);
-		xxlJobLogDao.delete(id);
+		baseMapper.deleteJobInfo(id);
+		xxlJobLogDao.deleteJobLog(id);
 		xxlJobLogGlueDao.deleteByJobId(id);
 		return ReturnT.SUCCESS;
 	}
@@ -340,7 +340,7 @@ public class XxlJobServiceImpl extends ServiceImpl<XxlJobInfoDao, XxlJobInfo> im
 		xxlJobInfo.setTriggerNextTime(nextTriggerTime);
 
 		xxlJobInfo.setUpdateTime(LocalDateTime.now());
-		baseMapper.update(xxlJobInfo);
+		baseMapper.updateJobInfo(xxlJobInfo);
 		return ReturnT.SUCCESS;
 	}
 
@@ -353,7 +353,7 @@ public class XxlJobServiceImpl extends ServiceImpl<XxlJobInfoDao, XxlJobInfo> im
 		xxlJobInfo.setTriggerNextTime(0);
 
 		xxlJobInfo.setUpdateTime(LocalDateTime.now());
-		baseMapper.update(xxlJobInfo);
+		baseMapper.updateJobInfo(xxlJobInfo);
 		return ReturnT.SUCCESS;
 	}
 

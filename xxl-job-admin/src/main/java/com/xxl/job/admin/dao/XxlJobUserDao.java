@@ -25,8 +25,8 @@ public interface XxlJobUserDao extends BaseMapper<XxlJobUser> {
 
     int save(XxlJobUser xxlJobUser);
 
-    int update(XxlJobUser xxlJobUser);
+    int updateUser(XxlJobUser xxlJobUser);
 
-    int delete(@Param("id") int id);
+    int deleteUser(@Param("id") int id);
 
 }

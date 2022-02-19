@@ -159,7 +159,7 @@
 		WHERE `id`= #{id}
 	</update>
 	
-	<delete id="delete" >
+	<delete id="deleteJobLog" >
 		delete from xxl_job_log
 		WHERE job_id = #{jobId}
 	</delete>

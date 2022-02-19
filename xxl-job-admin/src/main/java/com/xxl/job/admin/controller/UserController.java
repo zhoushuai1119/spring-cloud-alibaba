@@ -130,7 +130,7 @@ public class UserController {
         }
 
         // write
-        xxlJobUserDao.update(xxlJobUser);
+        xxlJobUserDao.updateUser(xxlJobUser);
         return ReturnT.SUCCESS;
     }
 
@@ -145,7 +145,7 @@ public class UserController {
             return new ReturnT<String>(ReturnT.FAIL.getCode(), I18nUtil.getString("user_update_loginuser_limit"));
         }
 
-        xxlJobUserDao.delete(id);
+        xxlJobUserDao.deleteUser(id);
         return ReturnT.SUCCESS;
     }
 
@@ -171,7 +171,7 @@ public class UserController {
         // do write
         XxlJobUser existUser = xxlJobUserDao.loadByUserName(loginUser.getUsername());
         existUser.setPassword(md5Password);
-        xxlJobUserDao.update(existUser);
+        xxlJobUserDao.updateUser(existUser);
 
         return ReturnT.SUCCESS;
     }

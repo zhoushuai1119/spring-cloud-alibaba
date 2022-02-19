@@ -23,7 +23,7 @@ public class XxlJobInfo extends Model<XxlJobInfo> {
 	 * 主键ID
 	 */
 	@TableId(type = IdType.AUTO)
-	private int id;
+	private Integer id;
 	/**
 	 * 执行器主键ID
 	 */

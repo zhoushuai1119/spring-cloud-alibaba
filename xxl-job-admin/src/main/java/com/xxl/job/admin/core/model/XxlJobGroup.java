@@ -20,7 +20,7 @@ import java.util.List;
 public class XxlJobGroup extends Model<XxlJobGroup>  {
 
     @TableId(type = IdType.AUTO)
-    private int id;
+    private Integer id;
     /**
      * 执行器AppName
      */

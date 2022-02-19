@@ -34,9 +34,9 @@ public interface XxlJobInfoDao extends BaseMapper<XxlJobInfo> {
 
     XxlJobInfo loadById(@Param("id") int id);
 
-    int update(XxlJobInfo xxlJobInfo);
+    int updateJobInfo(XxlJobInfo xxlJobInfo);
 
-    int delete(@Param("id") long id);
+    int deleteJobInfo(@Param("id") long id);
 
     List<XxlJobInfo> getJobsByGroup(@Param("jobGroup") int jobGroup);
 

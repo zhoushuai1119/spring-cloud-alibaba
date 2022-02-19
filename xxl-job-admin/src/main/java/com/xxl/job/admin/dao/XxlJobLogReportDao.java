@@ -16,7 +16,7 @@ public interface XxlJobLogReportDao extends BaseMapper<XxlJobLogReport> {
 
     int save(XxlJobLogReport xxlJobLogReport);
 
-    int update(XxlJobLogReport xxlJobLogReport);
+    int updateLogReport(XxlJobLogReport xxlJobLogReport);
 
     List<XxlJobLogReport> queryLogReport(@Param("triggerDayFrom") Date triggerDayFrom,
                                          @Param("triggerDayTo") Date triggerDayTo);

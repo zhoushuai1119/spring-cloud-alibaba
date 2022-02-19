@@ -21,7 +21,7 @@ public class XxlJobLogGlue extends Model<XxlJobLogGlue> {
 	 * 主键ID
 	 */
 	@TableId(type = IdType.AUTO)
-	private int id;
+	private Integer id;
 	/**
 	 * 任务，主键ID
 	 */

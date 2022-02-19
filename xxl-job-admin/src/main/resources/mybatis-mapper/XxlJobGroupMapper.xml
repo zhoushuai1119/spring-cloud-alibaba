@@ -39,7 +39,7 @@
 		values ( #{appname}, #{title}, #{addressType}, #{addressList}, #{updateTime} );
 	</insert>
 
-	<update id="update" parameterType="com.xxl.job.admin.core.model.XxlJobGroup" >
+	<update id="updateJobGroup" parameterType="com.xxl.job.admin.core.model.XxlJobGroup" >
 		UPDATE xxl_job_group
 		SET `app_name` = #{appname},
 			`title` = #{title},

@@ -18,7 +18,7 @@ public class XxlJobLogReport extends Model<XxlJobLogReport> {
      * 主键ID
      */
     @TableId(type = IdType.AUTO)
-    private int id;
+    private Integer id;
     /**
      * 调度-时间
      */

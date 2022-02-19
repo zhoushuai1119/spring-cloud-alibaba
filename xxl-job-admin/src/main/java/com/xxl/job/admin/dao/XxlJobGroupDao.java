@@ -17,7 +17,7 @@ public interface XxlJobGroupDao extends BaseMapper<XxlJobGroup> {
 
     int save(XxlJobGroup xxlJobGroup);
 
-    int update(XxlJobGroup xxlJobGroup);
+    int updateJobGroup(XxlJobGroup xxlJobGroup);
 
     int remove(@Param("id") int id);
 

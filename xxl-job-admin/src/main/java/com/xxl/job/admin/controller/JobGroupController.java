@@ -143,7 +143,7 @@ public class JobGroupController {
 		// process
 		xxlJobGroup.setUpdateTime(LocalDateTime.now());
 
-		int ret = xxlJobGroupDao.update(xxlJobGroup);
+		int ret = xxlJobGroupDao.updateJobGroup(xxlJobGroup);
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
 	}
 

@@ -105,7 +105,7 @@ public class JobRegistryHelper {
 								group.setAddressList(addressListStr);
 								group.setUpdateTime(LocalDateTime.now());
 
-								XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().update(group);
+								XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().updateJobGroup(group);
 							}
 						}
 					} catch (Exception e) {

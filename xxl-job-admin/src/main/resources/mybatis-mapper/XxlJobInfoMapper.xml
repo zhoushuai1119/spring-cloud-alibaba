@@ -175,7 +175,7 @@
         WHERE t.id = #{id}
     </select>
 
-    <update id="update" parameterType="com.xxl.job.admin.core.model.XxlJobInfo">
+    <update id="updateJobInfo" parameterType="com.xxl.job.admin.core.model.XxlJobInfo">
         UPDATE xxl_job_info
         SET job_group                 = #{jobGroup},
             job_desc                  = #{jobDesc},
@@ -202,7 +202,7 @@
         WHERE id = #{id}
     </update>
 
-    <delete id="delete" parameterType="java.util.HashMap">
+    <delete id="deleteJobInfo" parameterType="java.util.HashMap">
         DELETE
         FROM xxl_job_info
         WHERE id = #{id}
