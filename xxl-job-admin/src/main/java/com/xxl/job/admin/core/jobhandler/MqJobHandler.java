@@ -37,15 +37,15 @@ public class MqJobHandler {
     @PostConstruct
     public void init() {
         mqJobHandlerPool = new ThreadPoolExecutor(
+                5,
                 10,
-                20,
                 60L,
                 TimeUnit.SECONDS,
-                new LinkedBlockingQueue<Runnable>(1000),
+                new LinkedBlockingQueue<Runnable>(50),
                 new ThreadFactory() {
                     @Override
                     public Thread newThread(Runnable r) {
-                        return new Thread(r, "xxl-job, admin mqJobHandlerPool-" + r.hashCode());
+                        return new Thread(r, "xxl-job-admin, mqJobHandlerPool-" + r.hashCode());
                     }
                 });
     }
