@@ -16,6 +16,16 @@ public class RocketmqTopic {
     }
 
     /**
+     * 定时任务回调的 TOPIC
+     */
+    public interface FeedBackTopic {
+
+        String FEEDBACK_TASK_TOPIC = "TP_F_FB";
+
+        String FEEDBACK_TASK_EVENTCODE = "EC_RESULT";
+    }
+
+    /**
      * 执行器
      */
     public interface executorHandler {

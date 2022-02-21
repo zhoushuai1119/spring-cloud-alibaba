@@ -250,13 +250,13 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
                     rocketMQListener.onMessage(MqMessageUtils.doConvertMessageExtByClass(messageExt, messageType, false));
 
                     try {
-                        TimeBasedJobFeedback feedback = new TimeBasedJobFeedback();
-                        feedback.setLogId(finalTimeBasedJob.getLogId());
-                        feedback.setInstanceId(instanceId);
-                        feedback.setTimestamp(System.currentTimeMillis());
-                        feedback.setSuccess(true);
-                        feedback.setMsg(null);
-                        rocketMQTemplate.send(packageFeedbackPushMessage(finalTimeBasedJob, feedback));
+                        TimeBasedJobFeedback successFeedback = new TimeBasedJobFeedback();
+                        successFeedback.setLogId(finalTimeBasedJob.getLogId());
+                        successFeedback.setInstanceId(instanceId);
+                        successFeedback.setTimestamp(System.currentTimeMillis());
+                        successFeedback.setSuccess(true);
+                        successFeedback.setMsg(null);
+                        rocketMQTemplate.send(packageFeedbackPushMessage(finalTimeBasedJob, successFeedback));
 
                         log.info("finish job {}: {}", messageExt.getTags(), str);
                     } catch (Exception e) {
@@ -278,18 +278,19 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
         }
         if (timeBasedJobMessage != null) {
             try {
-                TimeBasedJobFeedback feedback = new TimeBasedJobFeedback();
-                feedback.setLogId(timeBasedJobMessage.getLogId());
-                feedback.setInstanceId(instanceId);
-                feedback.setTimestamp(System.currentTimeMillis());
-                feedback.setSuccess(false);
-                feedback.setMsg(throwable.getClass().getName() + ", cause: " + throwable.getMessage());
-                rocketMQTemplate.send(packageFeedbackPushMessage(timeBasedJobMessage, feedback));
+                TimeBasedJobFeedback failFeedback = new TimeBasedJobFeedback();
+                failFeedback.setLogId(timeBasedJobMessage.getLogId());
+                failFeedback.setInstanceId(instanceId);
+                failFeedback.setTimestamp(System.currentTimeMillis());
+                failFeedback.setSuccess(false);
+                failFeedback.setMsg(throwable.getClass().getName() + ", cause: " + throwable.getMessage());
+                rocketMQTemplate.send(packageFeedbackPushMessage(timeBasedJobMessage, failFeedback));
             } catch (Exception e1) {
                 log.error("send job execute feedback error", e1);
             }
         }
     }
+
 
     private PushMessage packageFeedbackPushMessage(TimeBasedJobMessage message, TimeBasedJobFeedback feedback){
         PushMessage pushMessage = new PushMessage();
