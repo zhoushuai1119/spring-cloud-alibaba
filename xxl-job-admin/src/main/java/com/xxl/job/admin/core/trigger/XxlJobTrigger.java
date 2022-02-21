@@ -1,6 +1,8 @@
 package com.xxl.job.admin.core.trigger;
 
+import com.cloud.common.utils.JsonUtil;
 import com.xxl.job.admin.core.conf.XxlJobAdminConfig;
+import com.xxl.job.admin.core.jobhandler.ExecutorParamsDTO;
 import com.xxl.job.admin.core.model.XxlJobGroup;
 import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.model.XxlJobLog;
@@ -117,7 +119,6 @@ public class XxlJobTrigger {
         jobLog.setJobId(jobInfo.getId());
         jobLog.setTriggerTime(new Date());
         XxlJobAdminConfig.getAdminConfig().getXxlJobLogDao().save(jobLog);
-        log.info("logId:{}", jobLog.getId());
 
         log.debug(">>>>>>>>>>> xxl-job trigger start, jobId:{}", jobLog.getId());
 
@@ -125,7 +126,8 @@ public class XxlJobTrigger {
         TriggerParam triggerParam = new TriggerParam();
         triggerParam.setJobId(jobInfo.getId());
         triggerParam.setExecutorHandler(jobInfo.getExecutorHandler());
-        triggerParam.setExecutorParams(jobInfo.getExecutorParam());
+        //triggerParam.setExecutorParams(jobInfo.getExecutorParam());
+        triggerParam.setExecutorParams(JsonUtil.toString(new ExecutorParamsDTO(jobInfo.getExecutorParam(),jobLog.getId())));
         triggerParam.setExecutorBlockStrategy(jobInfo.getExecutorBlockStrategy());
         triggerParam.setExecutorTimeout(jobInfo.getExecutorTimeout());
         triggerParam.setLogId(jobLog.getId());
