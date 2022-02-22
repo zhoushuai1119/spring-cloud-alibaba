@@ -70,6 +70,7 @@
         <module>user-server</module>
         <module>activiti-server</module>
         <module>xxl-job-admin</module>
+        <module>mqjob-handler</module>
     </modules>
 
     <dependencies>

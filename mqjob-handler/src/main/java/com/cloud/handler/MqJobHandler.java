@@ -1,10 +1,10 @@
-package com.xxl.job.admin.core.jobhandler;
+package com.cloud.handler;
 
 import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.utils.JsonUtil;
 import com.cloud.core.CloudMQTemplate;
+import com.cloud.dto.ExecutorParamsDTO;
 import com.cloud.timedjob.TimeBasedJobMessage;
-import com.xxl.job.admin.core.mqtopic.RocketmqTopic;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
