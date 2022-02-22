@@ -8,4 +8,4 @@ ADD payment-server.jar /zhoushuai/payment-server.jar
 
 EXPOSE 8764
 
-ENTRYPOINT ["java", "-jar", "/zhoushuai/payment-server.jar"]
+CMD java -jar /zhoushuai/payment-server.jar --spring.profiles.active=${environment}

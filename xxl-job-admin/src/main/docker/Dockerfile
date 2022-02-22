@@ -8,4 +8,4 @@ ADD xxl-job-admin.jar /zhoushuai/xxl-job-admin.jar
 
 EXPOSE 19090
 
-ENTRYPOINT ["java", "-jar", "/zhoushuai/xxl-job-admin.jar"]
+CMD java -jar /zhoushuai/xxl-job-admin.jar --spring.profiles.active=${environment}

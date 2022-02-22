@@ -8,4 +8,4 @@ ADD order-server.jar /zhoushuai/order-server.jar
 
 EXPOSE 8763
 
-ENTRYPOINT ["java", "-jar", "/zhoushuai/order-server.jar"]
+CMD java -jar /zhoushuai/order-server.jar --spring.profiles.active=${environment}

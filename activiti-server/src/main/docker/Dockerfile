@@ -8,4 +8,4 @@ ADD activiti-server.jar /zhoushuai/activiti-server.jar
 
 EXPOSE 8761
 
-ENTRYPOINT ["java", "-jar", "/zhoushuai/activiti-server.jar"]
+CMD java -jar /zhoushuai/activiti-server.jar --spring.profiles.active=${environment}

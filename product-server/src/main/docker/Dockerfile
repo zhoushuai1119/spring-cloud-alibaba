@@ -8,4 +8,4 @@ ADD product-server.jar /zhoushuai/product-server.jar
 
 EXPOSE 8765
 
-ENTRYPOINT ["java", "-jar", "/zhoushuai/product-server.jar"]
+CMD java -jar /zhoushuai/product-server.jar --spring.profiles.active=${environment}
