@@ -1,12 +1,12 @@
 package com.xxl.job.admin.core.mqfeedback;
 
 import com.cloud.annotation.ConsumeTopic;
+import com.cloud.common.constants.CommonConstant;
 import com.cloud.common.utils.JsonUtil;
 import com.cloud.core.TopicListener;
 import com.cloud.dto.CloudMessage;
 import com.cloud.timedjob.TimeBasedJobFeedback;
 import com.xxl.job.admin.core.model.XxlJobLog;
-import com.xxl.job.admin.core.mqtopic.RocketmqTopic;
 import com.xxl.job.admin.dao.XxlJobLogDao;
 import com.xxl.job.core.biz.model.ReturnT;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +21,8 @@ import java.util.Objects;
  * @version: v1
  */
 @Slf4j
-@ConsumeTopic(topic = RocketmqTopic.FeedBackTopic.FEEDBACK_TASK_TOPIC,
-        eventCode = RocketmqTopic.FeedBackTopic.FEEDBACK_TASK_EVENTCODE, log = true)
+@ConsumeTopic(topic = CommonConstant.FeedBackTopic.FEEDBACK_TASK_TOPIC,
+        eventCode = CommonConstant.FeedBackTopic.FEEDBACK_TASK_EVENTCODE, log = true)
 public class MqFeedBackListener implements TopicListener<TimeBasedJobFeedback> {
 
     @Autowired

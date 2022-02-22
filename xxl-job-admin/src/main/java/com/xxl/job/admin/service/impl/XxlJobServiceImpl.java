@@ -1,11 +1,11 @@
 package com.xxl.job.admin.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cloud.common.constants.CommonConstant;
 import com.xxl.job.admin.core.cron.CronExpression;
 import com.xxl.job.admin.core.model.XxlJobGroup;
 import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.model.XxlJobLogReport;
-import com.xxl.job.admin.core.mqtopic.RocketmqTopic;
 import com.xxl.job.admin.core.route.ExecutorRouteStrategyEnum;
 import com.xxl.job.admin.core.scheduler.MisfireStrategyEnum;
 import com.xxl.job.admin.core.scheduler.ScheduleTypeEnum;
@@ -148,7 +148,7 @@ public class XxlJobServiceImpl extends ServiceImpl<XxlJobInfoDao, XxlJobInfo> im
 		}
 
 		//设置默认的执行器名称
-		jobInfo.setExecutorHandler(RocketmqTopic.executorHandler.EXECUTOR_HANDLER);
+		jobInfo.setExecutorHandler(CommonConstant.executorHandler.EXECUTOR_HANDLER);
 		// add in db
 		jobInfo.setAddTime(LocalDateTime.now());
 		jobInfo.setUpdateTime(LocalDateTime.now());
@@ -284,7 +284,7 @@ public class XxlJobServiceImpl extends ServiceImpl<XxlJobInfoDao, XxlJobInfo> im
 		exists_jobInfo.setScheduleConf(jobInfo.getScheduleConf());
 		exists_jobInfo.setMisfireStrategy(jobInfo.getMisfireStrategy());
 		exists_jobInfo.setExecutorRouteStrategy(jobInfo.getExecutorRouteStrategy());
-//		exists_jobInfo.setExecutorHandler(jobInfo.getExecutorHandler());
+		//exists_jobInfo.setExecutorHandler(jobInfo.getExecutorHandler());
 		exists_jobInfo.setExecutorParam(jobInfo.getExecutorParam());
 		exists_jobInfo.setSystemCode(jobInfo.getSystemCode());
 		exists_jobInfo.setExecutorBlockStrategy(jobInfo.getExecutorBlockStrategy());

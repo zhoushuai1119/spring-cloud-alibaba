@@ -144,8 +144,18 @@ public class CommonConstant {
     /**
      * 定时任务发送的 TOPIC
      */
-    public interface Topic {
+    public interface TimeTaskTopic {
         String TIME_TASK_TOPIC = "TP_F_SC";
+    }
+
+    /**
+     * 定时任务回调的 TOPIC
+     */
+    public interface FeedBackTopic {
+
+        String FEEDBACK_TASK_TOPIC = "TP_F_FB";
+
+        String FEEDBACK_TASK_EVENTCODE = "EC_RESULT";
     }
 
     /**

@@ -21,6 +21,11 @@
     <dependencies>
         <dependency>
             <groupId>com.cloud.springcloud</groupId>
+            <artifactId>common-server</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cloud.springcloud</groupId>
             <artifactId>rocketmq-server</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
