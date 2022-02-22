@@ -6,6 +6,6 @@ VOLUME /temp
 
 ADD mqjob-handler.jar /zhoushuai/mqjob-handler.jar
 
-EXPOSE 8766
+EXPOSE 8767
 
 CMD java -jar /zhoushuai/mqjob-handler.jar --spring.profiles.active=${environment}
