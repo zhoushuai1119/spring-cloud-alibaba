@@ -3,17 +3,17 @@ package com.cloud.handler;
 import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.utils.JsonUtil;
 import com.cloud.core.CloudMQTemplate;
-import com.cloud.dto.ExecutorParamsDTO;
 import com.cloud.timedjob.TimeBasedJobMessage;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.Objects;
+import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -64,22 +64,26 @@ public class MqJobHandler {
 
             log.info("executorParams:{}",executorParams);
 
-            ExecutorParamsDTO params = JsonUtil.toBean(executorParams,ExecutorParamsDTO.class);
+            Map<String,String> params = JsonUtil.toMap(executorParams);
 
-            if (Objects.isNull(params) || StringUtils.isBlank(params.getEventCode()) || Objects.isNull(params.getLogId())) {
+            if (MapUtils.isEmpty(params) || StringUtils.isEmpty(params.get("executorParams")) || StringUtils.isEmpty(params.get("logId"))) {
                 return;
             }
 
-            TimeBasedJobMessage timeBasedJobMessage = new TimeBasedJobMessage(params.getLogId(),System.currentTimeMillis());
-            BaseResponse<Object> sendResult = cloudMQTemplate.send(RocketmqTopic.Topic.TIME_TASK_TOPIC,params.getEventCode(), timeBasedJobMessage);
+            String eventCode = params.get("executorParams");
+            long lodId = Long.parseLong(params.get("logId"));
+
+
+            TimeBasedJobMessage timeBasedJobMessage = new TimeBasedJobMessage(lodId,System.currentTimeMillis());
+            BaseResponse<Object> sendResult = cloudMQTemplate.send(RocketmqTopic.Topic.TIME_TASK_TOPIC,eventCode, timeBasedJobMessage);
 
             if (!sendResult.isSuccess()) {
                 XxlJobHelper.handleFail();
             }
 
-            XxlJobHelper.log("XXL-JOB发送RockrtMQ,Topic:{},eventCode:{},messageBody:{}", RocketmqTopic.Topic.TIME_TASK_TOPIC, params.getEventCode(), JsonUtil.toString(timeBasedJobMessage));
+            XxlJobHelper.log("XXL-JOB发送RockrtMQ,Topic:{},eventCode:{},messageBody:{}", RocketmqTopic.Topic.TIME_TASK_TOPIC, eventCode, JsonUtil.toString(timeBasedJobMessage));
 
-            log.info("XXL-JOB发送RockrtMQ,Topic:{},eventCode:{},messageBody:{}", RocketmqTopic.Topic.TIME_TASK_TOPIC,params.getEventCode(), JsonUtil.toString(timeBasedJobMessage));
+            log.info("XXL-JOB发送RockrtMQ,Topic:{},eventCode:{},messageBody:{}", RocketmqTopic.Topic.TIME_TASK_TOPIC,eventCode, JsonUtil.toString(timeBasedJobMessage));
             // default success
             XxlJobHelper.handleSuccess();
         });
