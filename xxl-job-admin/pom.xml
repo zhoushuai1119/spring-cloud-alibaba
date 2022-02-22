@@ -19,8 +19,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>com.cloud.springcloud</groupId>
+			<artifactId>common-server</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<!--rocketmq-->
 		<dependency>
@@ -37,12 +38,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
-		</dependency>
-		<!--Mybatis-plus-->
-		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus-boot-starter</artifactId>
-			<version>${mybatis-plus.version}</version>
 		</dependency>
 		<!--Mysql5.8-->
 		<dependency>

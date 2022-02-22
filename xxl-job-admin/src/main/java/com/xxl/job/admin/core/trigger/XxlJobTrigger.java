@@ -1,5 +1,6 @@
 package com.xxl.job.admin.core.trigger;
 
+import com.cloud.common.entity.mqjob.ExecutorParamsDTO;
 import com.cloud.common.utils.JsonUtil;
 import com.xxl.job.admin.core.conf.XxlJobAdminConfig;
 import com.xxl.job.admin.core.model.XxlJobGroup;
@@ -18,8 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * xxl-job trigger
@@ -128,10 +127,7 @@ public class XxlJobTrigger {
         triggerParam.setJobId(jobInfo.getId());
         triggerParam.setExecutorHandler(jobInfo.getExecutorHandler());
         //triggerParam.setExecutorParams(jobInfo.getExecutorParam());
-        Map<String,String> params = new HashMap<>();
-        params.put("executorParams",jobInfo.getExecutorParam());
-        params.put("logId",String.valueOf(jobLog.getId()));
-        triggerParam.setExecutorParams(JsonUtil.toString(params));
+        triggerParam.setExecutorParams(JsonUtil.toString(new ExecutorParamsDTO(jobInfo.getExecutorParam(),jobLog.getId())));
         triggerParam.setExecutorBlockStrategy(jobInfo.getExecutorBlockStrategy());
         triggerParam.setExecutorTimeout(jobInfo.getExecutorTimeout());
         triggerParam.setLogId(jobLog.getId());
