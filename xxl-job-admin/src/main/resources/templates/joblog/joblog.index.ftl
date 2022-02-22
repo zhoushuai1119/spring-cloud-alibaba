@@ -39,6 +39,7 @@
 	                  	</select>
 	              	</div>
 	            </div>
+
 	            <div class="col-xs-2">
 	              	<div class="input-group">
 	                	<span class="input-group-addon">${I18n.jobinfo_job}</span>
@@ -47,6 +48,20 @@
 						</select>
 	              	</div>
 	            </div>
+
+                <div class="col-xs-2">
+                    <div class="input-group">
+                        <span class="input-group-addon">${I18n.jobinfo_system_code}</span>
+                        <input type="text" class="form-control" id="systemCode" autocomplete="on">
+                    </div>
+                </div>
+
+                <div class="col-xs-2">
+                    <div class="input-group">
+                        <span class="input-group-addon">${I18n.jobinfo_field_executorparam}</span>
+                        <input type="text" class="form-control" id="executorParam" autocomplete="on">
+                    </div>
+                </div>
 
                 <div class="col-xs-2">
                     <div class="input-group">
@@ -86,17 +101,25 @@
 			              	<table id="joblog_list" class="table table-bordered table-striped display" width="100%" >
 				                <thead>
 					            	<tr>
+                                        <th name="id" >${I18n.jobinfo_field_log_id}</th>
                                         <th name="jobId" >${I18n.jobinfo_field_id}</th>
                                         <th name="jobGroup" >jobGroup</th>
+                                        <th name="systemCode" >${I18n.jobinfo_system_code}</th>
 										<#--<th name="executorAddress" >执行器地址</th>
-										<th name="glueType" >运行模式</th>
-                                      	<th name="executorParam" >任务参数</th>-->
+										<th name="glueType" >运行模式</th>-->
+                                      	<th name="executorParam" >${I18n.jobinfo_field_executorparam}</th>
                                         <th name="triggerTime" >${I18n.joblog_field_triggerTime}</th>
                                         <th name="triggerCode" >${I18n.joblog_field_triggerCode}</th>
                                         <th name="triggerMsg" >${I18n.joblog_field_triggerMsg}</th>
+
 					                  	<th name="handleTime" >${I18n.joblog_field_handleTime}</th>
 					                  	<th name="handleCode" >${I18n.joblog_field_handleCode}</th>
 					                  	<th name="handleMsg" >${I18n.joblog_field_handleMsg}</th>
+
+                                        <th name="callbackTime" >${I18n.joblog_field_callbackTime}</th>
+                                        <th name="callbackCode" >${I18n.joblog_field_callbackCode}</th>
+                                        <th name="callbackMsg" >${I18n.joblog_field_callbackMsg}</th>
+
 					                  	<th name="handleMsg" >${I18n.system_opt}</th>
 					                </tr>
 				                </thead>

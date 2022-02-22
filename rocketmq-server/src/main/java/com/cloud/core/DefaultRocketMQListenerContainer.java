@@ -25,6 +25,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
 import java.nio.charset.Charset;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -102,9 +103,6 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
 
     @Setter
     private RocketMQTemplate rocketMQTemplate;
-
-    @Setter
-    private String instanceId;
 
     private DefaultMQPushConsumer consumer;
 
@@ -252,8 +250,7 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
                     try {
                         TimeBasedJobFeedback successFeedback = new TimeBasedJobFeedback();
                         successFeedback.setLogId(finalTimeBasedJob.getLogId());
-                        successFeedback.setInstanceId(instanceId);
-                        successFeedback.setTimestamp(System.currentTimeMillis());
+                        successFeedback.setTimestamp(LocalDateTime.now());
                         successFeedback.setSuccess(true);
                         successFeedback.setMsg(null);
                         rocketMQTemplate.send(packageFeedbackPushMessage(finalTimeBasedJob, successFeedback));
@@ -280,8 +277,7 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
             try {
                 TimeBasedJobFeedback failFeedback = new TimeBasedJobFeedback();
                 failFeedback.setLogId(timeBasedJobMessage.getLogId());
-                failFeedback.setInstanceId(instanceId);
-                failFeedback.setTimestamp(System.currentTimeMillis());
+                failFeedback.setTimestamp(LocalDateTime.now());
                 failFeedback.setSuccess(false);
                 failFeedback.setMsg(throwable.getClass().getName() + ", cause: " + throwable.getMessage());
                 rocketMQTemplate.send(packageFeedbackPushMessage(timeBasedJobMessage, failFeedback));

@@ -2,6 +2,8 @@ package com.cloud.timedjob;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * 定时任务反馈
  *
@@ -17,14 +19,9 @@ public class TimeBasedJobFeedback {
     Long logId;
 
     /**
-     * 实例id
-     */
-    String instanceId;
-
-    /**
      * 时间戳
      */
-    long timestamp;
+    LocalDateTime timestamp;
 
     /**
      * 是否成功

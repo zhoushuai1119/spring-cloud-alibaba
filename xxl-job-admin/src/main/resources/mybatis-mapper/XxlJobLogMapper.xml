@@ -11,6 +11,7 @@
 
 		<result column="executor_address" property="executorAddress" />
 		<result column="executor_handler" property="executorHandler" />
+		<result column="system_code" property="systemCode" />
 	    <result column="executor_param" property="executorParam" />
 		<result column="executor_sharding_param" property="executorShardingParam" />
 		<result column="executor_fail_retry_count" property="executorFailRetryCount" />
@@ -23,6 +24,10 @@
 	    <result column="handle_code" property="handleCode" />
 	    <result column="handle_msg" property="handleMsg" />
 
+		<result column="callback_time" property="callbackTime" />
+		<result column="callback_code" property="callbackCode" />
+		<result column="callback_msg" property="callbackMsg" />
+
 		<result column="alarm_status" property="alarmStatus" />
 	</resultMap>
 
@@ -32,6 +37,7 @@
 		t.job_id,
 		t.executor_address,
 		t.executor_handler,
+        t.system_code,
 		t.executor_param,
 		t.executor_sharding_param,
 		t.executor_fail_retry_count,
@@ -41,6 +47,9 @@
 		t.handle_time,
 		t.handle_code,
 		t.handle_msg,
+        t.callback_time,
+		t.callback_code,
+		t.callback_msg,
 		t.alarm_status
 	</sql>
 	
@@ -72,6 +81,12 @@
 			<if test="logStatus == 3" >
 				AND t.trigger_code = 200
 				AND t.handle_code = 0
+			</if>
+			<if test="systemCode != null and systemCode != ''">
+				AND t.system_code like CONCAT(CONCAT('%', #{systemCode}), '%')
+			</if>
+			<if test="executorParam != null and executorParam != ''">
+				AND t.executor_param like CONCAT(CONCAT('%', #{executorParam}), '%')
 			</if>
 		</trim>
 		ORDER BY t.trigger_time DESC
@@ -107,6 +122,12 @@
 				AND t.trigger_code = 200
 				AND t.handle_code = 0
 			</if>
+			<if test="systemCode != null and systemCode != ''">
+				AND t.system_code like CONCAT(CONCAT('%', #{systemCode}), '%')
+			</if>
+			<if test="executorParam != null and executorParam != ''">
+				AND t.executor_param like CONCAT(CONCAT('%', #{executorParam}), '%')
+			</if>
 		</trim>
 	</select>
 	
@@ -123,13 +144,15 @@
 			`job_id`,
 			`trigger_time`,
 			`trigger_code`,
-			`handle_code`
+			`handle_code`,
+		    `callback_code`
 		) VALUES (
 			#{jobGroup},
 			#{jobId},
 			#{triggerTime},
 			#{triggerCode},
-			#{handleCode}
+			#{handleCode},
+		    #{callbackCode}
 		);
 		<!--<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID() 
@@ -144,6 +167,7 @@
 			`trigger_msg`= #{triggerMsg},
 			`executor_address`= #{executorAddress},
 			`executor_handler`=#{executorHandler},
+			`system_code`= #{systemCode},
 			`executor_param`= #{executorParam},
 			`executor_sharding_param`= #{executorShardingParam},
 			`executor_fail_retry_count`= #{executorFailRetryCount}
@@ -157,6 +181,15 @@
 			`handle_code`= #{handleCode},
 			`handle_msg`= #{handleMsg}
 		WHERE `id`= #{id}
+	</update>
+
+	<update id="updateCallbackInfo">
+		UPDATE xxl_job_log
+		SET
+			`callback_time`= #{callbackTime},
+			`callback_code`= #{callbackCode},
+			`callback_msg`= #{callbackMsg}
+		WHERE `id` = #{id}
 	</update>
 	
 	<delete id="deleteJobLog" >

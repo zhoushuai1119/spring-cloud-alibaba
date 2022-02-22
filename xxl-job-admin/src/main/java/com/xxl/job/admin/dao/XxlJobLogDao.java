@@ -20,6 +20,8 @@ public interface XxlJobLogDao extends BaseMapper<XxlJobLog> {
                              @Param("pagesize") int pagesize,
                              @Param("jobGroup") int jobGroup,
                              @Param("jobId") int jobId,
+                             @Param("systemCode") String systemCode,
+                             @Param("executorParam") String executorParam,
                              @Param("triggerTimeStart") Date triggerTimeStart,
                              @Param("triggerTimeEnd") Date triggerTimeEnd,
                              @Param("logStatus") int logStatus);
@@ -28,6 +30,8 @@ public interface XxlJobLogDao extends BaseMapper<XxlJobLog> {
                       @Param("pagesize") int pagesize,
                       @Param("jobGroup") int jobGroup,
                       @Param("jobId") int jobId,
+                      @Param("systemCode") String systemCode,
+                      @Param("executorParam") String executorParam,
                       @Param("triggerTimeStart") Date triggerTimeStart,
                       @Param("triggerTimeEnd") Date triggerTimeEnd,
                       @Param("logStatus") int logStatus);
@@ -39,6 +43,8 @@ public interface XxlJobLogDao extends BaseMapper<XxlJobLog> {
     int updateTriggerInfo(XxlJobLog xxlJobLog);
 
     int updateHandleInfo(XxlJobLog xxlJobLog);
+
+    int updateCallbackInfo(XxlJobLog xxlJobLog);
 
     int deleteJobLog(@Param("jobId") int jobId);
 

@@ -47,6 +47,11 @@ public class XxlJobLog extends Model<XxlJobLog> {
 	@TableField("executor_handler")
 	private String executorHandler;
 	/**
+	 * 系统编码
+	 */
+	@TableField("system_code")
+	private String systemCode;
+	/**
 	 * 执行器任务参数
 	 */
 	@TableField("executor_param")
@@ -95,6 +100,23 @@ public class XxlJobLog extends Model<XxlJobLog> {
 	 */
 	@TableField("handle_msg")
 	private String handleMsg;
+
+	// callback info
+	/**
+	 * 完成-时间
+	 */
+	@TableField("callback_time")
+	private LocalDateTime callbackTime;
+	/**
+	 * 完成-状态
+	 */
+	@TableField("callback_code")
+	private int callbackCode;
+	/**
+	 * 完成-日志
+	 */
+	@TableField("callback_msg")
+	private String callbackMsg;
 
 	// alarm info
 	/**

@@ -187,6 +187,7 @@ public class XxlJobTrigger {
         // 6、save log trigger-info
         jobLog.setExecutorAddress(address);
         jobLog.setExecutorHandler(jobInfo.getExecutorHandler());
+        jobLog.setSystemCode(jobInfo.getSystemCode());
         jobLog.setExecutorParam(jobInfo.getExecutorParam());
         jobLog.setExecutorShardingParam(shardingParam);
         jobLog.setExecutorFailRetryCount(finalFailRetryCount);
