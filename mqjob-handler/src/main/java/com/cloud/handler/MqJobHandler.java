@@ -4,6 +4,7 @@ import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.constants.CommonConstant;
 import com.cloud.common.entity.mqjob.ExecutorParamsDTO;
 import com.cloud.common.utils.JsonUtil;
+import com.cloud.conf.JobHandlerThreadPool;
 import com.cloud.core.CloudMQTemplate;
 import com.cloud.timedjob.TimeBasedJobMessage;
 import com.xxl.job.core.context.XxlJobHelper;
@@ -11,9 +12,11 @@ import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
@@ -28,9 +31,13 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @Slf4j
+@EnableConfigurationProperties(JobHandlerThreadPool.class)
 public class MqJobHandler {
 
     private ThreadPoolExecutor mqJobHandlerPool;
+
+    @Resource
+    private JobHandlerThreadPool jobHandlerThreadPool;
 
     @Autowired
     private CloudMQTemplate cloudMQTemplate;
@@ -38,9 +45,9 @@ public class MqJobHandler {
     @PostConstruct
     public void init() {
         mqJobHandlerPool = new ThreadPoolExecutor(
-                5,
-                10,
-                60L,
+                jobHandlerThreadPool.getCorePoolSize(),
+                jobHandlerThreadPool.getMaximumPoolSize(),
+                jobHandlerThreadPool.getKeepAliveTime(),
                 TimeUnit.SECONDS,
                 new LinkedBlockingQueue<Runnable>(50),
                 new ThreadFactory() {
@@ -56,6 +63,7 @@ public class MqJobHandler {
      */
     @XxlJob(CommonConstant.executorHandler.EXECUTOR_HANDLER)
     public void mqJobHandler() {
+        log.info("mqJobHandlerPool:{}",JsonUtil.toString(jobHandlerThreadPool));
         mqJobHandlerPool.execute(() -> {
 
             String executorParams = XxlJobHelper.getJobParam();

@@ -10,7 +10,6 @@ import com.cloud.exception.DiscardOldJobException;
 import com.cloud.timedjob.TimeBasedJobFeedback;
 import com.cloud.timedjob.TimeBasedJobMessage;
 import com.cloud.util.MqMessageUtils;
-import io.micrometer.core.instrument.MeterRegistry;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -112,9 +111,6 @@ public class DefaultRocketMQListenerContainer implements InitializingBean, Rocke
     @Getter
     private int consumeMessageBatchMaxSize;
 
-    @Setter
-    @Getter
-    private MeterRegistry threadPoolMeterRegistry;
 
     public void setupMessageListener(CloudMQListener rocketMQListener) {
         this.rocketMQListener = rocketMQListener;
