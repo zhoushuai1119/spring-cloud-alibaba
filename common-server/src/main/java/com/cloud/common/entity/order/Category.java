@@ -1,8 +1,6 @@
 package com.cloud.common.entity.order;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.cloud.common.aop.annotation.elasticsearch.EsDocPrivateKey;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +9,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
@@ -18,10 +17,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(indexName = "idx_category")
-public class Category extends Model<Category> {
+public class Category implements Serializable {
+
+    private static final long serialVersionUID = 9072858780333387154L;
 
     @TableId(type = IdType.AUTO)
-    @EsDocPrivateKey
     @Field(type = FieldType.Keyword)
     private Integer id;
 

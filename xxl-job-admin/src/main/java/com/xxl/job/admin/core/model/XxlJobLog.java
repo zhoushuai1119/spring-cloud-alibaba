@@ -4,9 +4,13 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
+import org.springframework.data.elasticsearch.annotations.DateFormat;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -16,22 +20,28 @@ import java.util.Date;
  */
 @Data
 @TableName("xxl_job_log")
-public class XxlJobLog extends Model<XxlJobLog> {
+@Document(indexName = "idx_xxlJobLog")
+public class XxlJobLog implements Serializable {
+
+	private static final long serialVersionUID = 4619412463401915979L;
 
 	/**
 	 * 主键ID
 	 */
 	@TableId(type = IdType.AUTO)
+	@Field(type = FieldType.Keyword)
 	private Long id;
 	/**
 	 * 执行器主键ID
 	 */
 	@TableField("job_group")
+	@Field(type = FieldType.Integer)
 	private int jobGroup;
 	/**
 	 * 任务，主键ID
 	 */
 	@TableField("job_id")
+	@Field(type = FieldType.Integer)
 	private int jobId;
 
 	// execute info
@@ -40,31 +50,37 @@ public class XxlJobLog extends Model<XxlJobLog> {
 	 * 执行器地址，本次执行的地址
 	 */
 	@TableField("executor_address")
+	@Field
 	private String executorAddress;
 	/**
 	 * 执行器任务handler
 	 */
 	@TableField("executor_handler")
+	@Field
 	private String executorHandler;
 	/**
 	 * 系统编码
 	 */
 	@TableField("system_code")
+	@Field(type = FieldType.Keyword)
 	private String systemCode;
 	/**
 	 * 执行器任务参数
 	 */
 	@TableField("executor_param")
+	@Field(analyzer = "ik_smart")
 	private String executorParam;
 	/**
 	 * 执行器任务分片参数，格式如 1/2
 	 */
 	@TableField("executor_sharding_param")
+	@Field
 	private String executorShardingParam;
 	/**
 	 * 失败重试次数
 	 */
 	@TableField("executor_fail_retry_count")
+	@Field(type = FieldType.Integer)
 	private Integer executorFailRetryCount;
 	
 	// trigger info
@@ -72,16 +88,19 @@ public class XxlJobLog extends Model<XxlJobLog> {
 	 * 调度-时间
 	 */
 	@TableField("trigger_time")
+	@Field(type = FieldType.Date, format = DateFormat.date_time)
 	private Date triggerTime;
 	/**
 	 * 调度-结果
 	 */
 	@TableField("trigger_code")
+	@Field(type = FieldType.Integer)
 	private int triggerCode;
 	/**
 	 * 调度-日志
 	 */
 	@TableField("trigger_msg")
+	@Field(type = FieldType.Text)
 	private String triggerMsg;
 	
 	// handle info
@@ -89,16 +108,19 @@ public class XxlJobLog extends Model<XxlJobLog> {
 	 * 执行-时间
 	 */
 	@TableField("handle_time")
+	@Field(type = FieldType.Date, format = DateFormat.date_time)
 	private LocalDateTime handleTime;
 	/**
 	 * 执行-状态
 	 */
 	@TableField("handle_code")
+	@Field(type = FieldType.Integer)
 	private int handleCode;
 	/**
 	 * 执行-日志
 	 */
 	@TableField("handle_msg")
+	@Field(type = FieldType.Text)
 	private String handleMsg;
 
 	// callback info
@@ -106,16 +128,19 @@ public class XxlJobLog extends Model<XxlJobLog> {
 	 * 完成-时间
 	 */
 	@TableField("callback_time")
+	@Field(type = FieldType.Date, format = DateFormat.date_time)
 	private LocalDateTime callbackTime;
 	/**
 	 * 完成-状态
 	 */
 	@TableField("callback_code")
+	@Field(type = FieldType.Integer)
 	private int callbackCode;
 	/**
 	 * 完成-日志
 	 */
 	@TableField("callback_msg")
+	@Field(type = FieldType.Text)
 	private String callbackMsg;
 
 	// alarm info
@@ -123,6 +148,7 @@ public class XxlJobLog extends Model<XxlJobLog> {
 	 * 告警状态：0-默认、1-无需告警、2-告警成功、3-告警失败
 	 */
 	@TableField("alarm_status")
+	@Field(type = FieldType.Integer)
 	private int alarmStatus;
 
 }

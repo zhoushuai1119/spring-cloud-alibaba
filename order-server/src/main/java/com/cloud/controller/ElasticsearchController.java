@@ -26,6 +26,7 @@ public class ElasticsearchController {
     @Autowired
     private CategoryService categoryService;
 
+
     @PostMapping("/saveCategoty")
     public BaseResponse saveCategory(Long categoryId) {
         Category category = categoryService.getById(categoryId);
@@ -35,7 +36,7 @@ public class ElasticsearchController {
 
 
     @GetMapping("/getCategoty")
-    public BaseResponse<Category> getCategoty(String categoryId) {
+    public BaseResponse<Category> getCategoty(Long categoryId) {
         Category category = categoryElasticsearchService.getCategoryById(categoryId);
         return BaseResponse.createSuccessResult(category);
     }

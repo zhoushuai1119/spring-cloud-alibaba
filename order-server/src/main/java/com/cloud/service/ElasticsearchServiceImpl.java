@@ -3,8 +3,9 @@ package com.cloud.service;
 import com.cloud.common.entity.order.Category;
 import com.cloud.dao.elasticsearch.CategoryElasticRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * @description:
@@ -16,18 +17,20 @@ import org.springframework.stereotype.Service;
 public class ElasticsearchServiceImpl {
 
     @Autowired
-    private ElasticsearchRestTemplate esRestTemplate;
-
-    @Autowired
     private CategoryElasticRepository categoryElasticRepository;
+
 
     public void saveCategory(Category category) {
         categoryElasticRepository.save(category);
     }
 
-    public Category getCategoryById(String categoryId) {
-        Category category = esRestTemplate.get(categoryId, Category.class);
-        return category;
+
+    public Category getCategoryById(Long categoryId) {
+        Optional<Category> category = categoryElasticRepository.findById(categoryId);
+        if (category.isPresent()) {
+            return category.get();
+        }
+        return null;
     }
 
 }
