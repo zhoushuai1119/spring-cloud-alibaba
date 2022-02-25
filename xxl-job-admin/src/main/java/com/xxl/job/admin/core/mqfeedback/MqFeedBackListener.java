@@ -8,6 +8,7 @@ import com.cloud.dto.CloudMessage;
 import com.cloud.timedjob.TimeBasedJobFeedback;
 import com.xxl.job.admin.core.model.XxlJobLog;
 import com.xxl.job.admin.dao.XxlJobLogDao;
+import com.xxl.job.admin.service.ElasticsearchService;
 import com.xxl.job.core.biz.model.ReturnT;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class MqFeedBackListener implements TopicListener<TimeBasedJobFeedback> {
 
     @Autowired
     private XxlJobLogDao xxlJobLogDao;
+
+    @Autowired
+    private ElasticsearchService elasticsearchService;
 
     @Override
     public void onMessage(CloudMessage<TimeBasedJobFeedback> feedbackMessage) {
@@ -50,6 +54,12 @@ public class MqFeedBackListener implements TopicListener<TimeBasedJobFeedback> {
                 xxlJobLog.setCallbackMsg(timeBasedJobFeedback.getMsg());
             }
             xxlJobLogDao.updateCallbackInfo(xxlJobLog);
+
+            //创建索引
+            //elasticsearchService.createIndex(XxlJobLog.class);
+            elasticsearchService.saveJobLog(xxlJobLog);
+            log.info("xxlJobLogId:{}存入elasticsearch成功", xxlJobLogId);
+
         }
     }
 

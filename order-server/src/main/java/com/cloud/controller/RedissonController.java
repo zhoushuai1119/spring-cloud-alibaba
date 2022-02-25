@@ -18,13 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class RedissonController {
 
     @Autowired
-    private RedissonClient redisson;
+    private RedissonClient redissonClient;
+
     @Autowired
     private LettuceRedisUtil redisUtil;
 
     @RequestMapping("lock")
     public void lock() {
-        RLock lock = redisson.getLock(System.currentTimeMillis()+"myLock");
+        RLock lock = redissonClient.getLock(System.currentTimeMillis()+"myLock");
         try {
             lock.lock();
             System.out.println(Thread.currentThread().getName()+"获取到锁");

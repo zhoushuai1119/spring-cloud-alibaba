@@ -2,7 +2,6 @@ spring:
   application:
     name: order-server
 
-
   cloud:
     nacos:
       discovery:
@@ -16,9 +15,4 @@ spring:
         username: nacos
         password: nacos
         namespace: 72b2190b-99f3-4df3-81fc-ad8cd82d5dc8
-
-
-  elasticsearch:
-    rest:
-      uris: http://139.196.208.53:9200
 

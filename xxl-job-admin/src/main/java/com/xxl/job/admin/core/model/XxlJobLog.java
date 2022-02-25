@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -17,10 +18,11 @@ import java.util.Date;
 /**
  * xxl-job log, used to track trigger process
  * @author xuxueli  2015-12-19 23:19:09
+ * indexName: 必须全部小写
  */
 @Data
 @TableName("xxl_job_log")
-@Document(indexName = "idx_xxlJobLog")
+@Document(indexName = "idx_joblog")
 public class XxlJobLog implements Serializable {
 
 	private static final long serialVersionUID = 4619412463401915979L;
@@ -29,6 +31,7 @@ public class XxlJobLog implements Serializable {
 	 * 主键ID
 	 */
 	@TableId(type = IdType.AUTO)
+	@Id
 	@Field(type = FieldType.Keyword)
 	private Long id;
 	/**
@@ -101,6 +104,8 @@ public class XxlJobLog implements Serializable {
 	 */
 	@TableField("trigger_msg")
 	@Field(type = FieldType.Text)
+	//Transient 设置某个属性不存储到ES
+	//@Transient
 	private String triggerMsg;
 	
 	// handle info
