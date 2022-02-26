@@ -50,7 +50,7 @@ $(function(){
 				if (data.code == "200") {
                     layer.msg( I18n.login_success );
                     setTimeout(function(){
-                        window.location.href = base_url;
+                        window.location.href = base_url + "/index";
                     }, 500);
 				} else {
                     layer.open({

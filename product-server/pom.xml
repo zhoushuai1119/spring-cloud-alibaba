@@ -55,7 +55,7 @@
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>
-            <version>3.14.0</version>
+            <version>${redisson.version}</version>
         </dependency>
         <!--seata 分布式事务框架-->
         <dependency>

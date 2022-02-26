@@ -7,6 +7,7 @@
 		<result column="id" property="id" />
 		<result column="username" property="username" />
 	    <result column="password" property="password" />
+		<result column="salt" property="salt" />
 	    <result column="role" property="role" />
 	    <result column="permission" property="permission" />
 	</resultMap>
@@ -15,6 +16,7 @@
 		t.id,
 		t.username,
 		t.password,
+        t.salt,
 		t.role,
 		t.permission
 	</sql>
@@ -57,14 +59,16 @@
 		INSERT INTO xxl_job_user (
 			username,
 			password,
+			salt,
 			role,
 			permission
 		) VALUES (
 			#{username},
 			#{password},
+			#{salt},
 			#{role},
 			#{permission}
-		);
+		)
 	</insert>
 
 	<update id="updateUser" parameterType="com.xxl.job.admin.core.model.XxlJobUser" >

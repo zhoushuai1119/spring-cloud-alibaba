@@ -32,6 +32,7 @@
         <rocketmq-version>4.9.1</rocketmq-version>
         <seata-version>1.4.2</seata-version>
         <alibaba-druid.version>1.1.23</alibaba-druid.version>
+        <redisson.version>3.14.0</redisson.version>
         <swagger-version>3.0.0</swagger-version>
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
