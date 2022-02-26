@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -95,7 +94,7 @@ public class JobGroupController {
 		}
 
 		// process
-		xxlJobGroup.setUpdateTime(LocalDateTime.now());
+		xxlJobGroup.setUpdateTime(new Date());
 
 		int ret = xxlJobGroupDao.save(xxlJobGroup);
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
@@ -141,7 +140,7 @@ public class JobGroupController {
 		}
 
 		// process
-		xxlJobGroup.setUpdateTime(LocalDateTime.now());
+		xxlJobGroup.setUpdateTime(new Date());
 
 		int ret = xxlJobGroupDao.updateJobGroup(xxlJobGroup);
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;

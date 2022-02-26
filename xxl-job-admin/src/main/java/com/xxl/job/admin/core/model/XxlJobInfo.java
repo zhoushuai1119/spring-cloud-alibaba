@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -38,12 +37,12 @@ public class XxlJobInfo extends Model<XxlJobInfo> {
 	 * 添加时间
 	 */
 	@TableField("add_time")
-	private LocalDateTime addTime;
+	private Date addTime;
 	/**
 	 * 更新时间
 	 */
 	@TableField("update_time")
-	private LocalDateTime updateTime;
+	private Date updateTime;
 	/**
 	 * 负责人
 	 */

@@ -39,6 +39,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
+		<!--sharding-jdbc-->
+		<dependency>
+			<groupId>org.apache.shardingsphere</groupId>
+			<artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+			<version>${sharding-jdbc.version}</version>
+		</dependency>
+		<!--druid数据库连接池-->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>${alibaba-druid.version}</version>
+		</dependency>
 		<!--Mysql5.8-->
 		<dependency>
 			<groupId>mysql</groupId>

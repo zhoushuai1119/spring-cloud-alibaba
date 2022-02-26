@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.text.MessageFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -150,8 +149,8 @@ public class XxlJobServiceImpl extends ServiceImpl<XxlJobInfoDao, XxlJobInfo> im
 		//设置默认的执行器名称
 		jobInfo.setExecutorHandler(CommonConstant.executorHandler.EXECUTOR_HANDLER);
 		// add in db
-		jobInfo.setAddTime(LocalDateTime.now());
-		jobInfo.setUpdateTime(LocalDateTime.now());
+		jobInfo.setAddTime(new Date());
+		jobInfo.setUpdateTime(new Date());
 		jobInfo.setGlueUpdatetime(new Date());
 		baseMapper.save(jobInfo);
 		if (jobInfo.getId() < 1) {
@@ -293,7 +292,7 @@ public class XxlJobServiceImpl extends ServiceImpl<XxlJobInfoDao, XxlJobInfo> im
 		exists_jobInfo.setChildJobId(jobInfo.getChildJobId());
 		exists_jobInfo.setTriggerNextTime(nextTriggerTime);
 
-		exists_jobInfo.setUpdateTime(LocalDateTime.now());
+		exists_jobInfo.setUpdateTime(new Date());
         baseMapper.updateJobInfo(exists_jobInfo);
 
 		return ReturnT.SUCCESS;
@@ -339,7 +338,7 @@ public class XxlJobServiceImpl extends ServiceImpl<XxlJobInfoDao, XxlJobInfo> im
 		xxlJobInfo.setTriggerLastTime(0);
 		xxlJobInfo.setTriggerNextTime(nextTriggerTime);
 
-		xxlJobInfo.setUpdateTime(LocalDateTime.now());
+		xxlJobInfo.setUpdateTime(new Date());
 		baseMapper.updateJobInfo(xxlJobInfo);
 		return ReturnT.SUCCESS;
 	}
@@ -352,7 +351,7 @@ public class XxlJobServiceImpl extends ServiceImpl<XxlJobInfoDao, XxlJobInfo> im
 		xxlJobInfo.setTriggerLastTime(0);
 		xxlJobInfo.setTriggerNextTime(0);
 
-		xxlJobInfo.setUpdateTime(LocalDateTime.now());
+		xxlJobInfo.setUpdateTime(new Date());
 		baseMapper.updateJobInfo(xxlJobInfo);
 		return ReturnT.SUCCESS;
 	}

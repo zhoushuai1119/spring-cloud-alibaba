@@ -2,7 +2,7 @@ package com.cloud.timedjob;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 定时任务反馈
@@ -21,7 +21,7 @@ public class TimeBasedJobFeedback {
     /**
      * 时间戳
      */
-    LocalDateTime timestamp;
+    Date timestamp;
 
     /**
      * 是否成功

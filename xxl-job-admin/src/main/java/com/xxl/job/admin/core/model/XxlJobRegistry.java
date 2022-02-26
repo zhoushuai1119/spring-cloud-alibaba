@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by xuxueli on 16/9/30.
@@ -40,6 +41,6 @@ public class XxlJobRegistry extends Model<XxlJobRegistry> {
      * 更新时间
      */
     @TableField("update_time")
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
 }

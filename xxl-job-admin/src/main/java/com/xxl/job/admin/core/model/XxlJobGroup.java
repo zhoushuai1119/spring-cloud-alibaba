@@ -9,7 +9,7 @@ import com.google.common.base.Splitter;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,7 +45,7 @@ public class XxlJobGroup extends Model<XxlJobGroup>  {
      * 更新时间
      */
     @TableField("update_time")
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
     /**
      * 执行器地址列表(系统注册)

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -74,7 +73,7 @@ public class JobCodeController {
 		exists_jobInfo.setGlueRemark(glueRemark);
 		exists_jobInfo.setGlueUpdatetime(new Date());
 
-		exists_jobInfo.setUpdateTime(LocalDateTime.now());
+		exists_jobInfo.setUpdateTime(new Date());
 		xxlJobInfoDao.updateJobInfo(exists_jobInfo);
 
 		// log old code
@@ -84,8 +83,8 @@ public class JobCodeController {
 		xxlJobLogGlue.setGlueSource(glueSource);
 		xxlJobLogGlue.setGlueRemark(glueRemark);
 
-		xxlJobLogGlue.setAddTime(LocalDateTime.now());
-		xxlJobLogGlue.setUpdateTime(LocalDateTime.now());
+		xxlJobLogGlue.setAddTime(new Date());
+		xxlJobLogGlue.setUpdateTime(new Date());
 		xxlJobLogGlueDao.save(xxlJobLogGlue);
 
 		// remove code backup more than 30

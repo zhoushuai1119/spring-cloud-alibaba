@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * xxl-job log for glue, used to track job code process
@@ -46,11 +47,11 @@ public class XxlJobLogGlue extends Model<XxlJobLogGlue> {
 	 * 创建时间
 	 */
 	@TableField("add_time")
-	private LocalDateTime addTime;
+	private Date addTime;
 	/**
 	 * 更新时间
 	 */
 	@TableField("update_time")
-	private LocalDateTime updateTime;
+	private Date updateTime;
 
 }

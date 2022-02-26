@@ -1,7 +1,7 @@
 package com.xxl.job.admin.controller;
 
-import com.xxl.job.admin.core.exception.XxlJobException;
 import com.xxl.job.admin.core.complete.XxlJobCompleter;
+import com.xxl.job.admin.core.exception.XxlJobException;
 import com.xxl.job.admin.core.model.XxlJobGroup;
 import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.model.XxlJobLog;
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -186,7 +185,7 @@ public class JobLogController {
         if (ReturnT.SUCCESS_CODE == runResult.getCode()) {
             log.setHandleCode(ReturnT.FAIL_CODE);
             log.setHandleMsg(I18nUtil.getString("joblog_kill_log_byman") + ":" + (runResult.getMsg() != null ? runResult.getMsg() : ""));
-            log.setHandleTime(LocalDateTime.now());
+            log.setHandleTime(new Date());
             XxlJobCompleter.updateHandleInfoAndFinish(log);
             return new ReturnT<String>(runResult.getMsg());
         } else {

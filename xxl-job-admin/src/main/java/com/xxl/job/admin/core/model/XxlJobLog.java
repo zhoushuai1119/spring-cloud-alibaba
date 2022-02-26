@@ -12,7 +12,6 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -114,7 +113,7 @@ public class XxlJobLog implements Serializable {
 	 */
 	@TableField("handle_time")
 	@Field(type = FieldType.Date, format = DateFormat.date_time)
-	private LocalDateTime handleTime;
+	private Date handleTime;
 	/**
 	 * 执行-状态
 	 */
@@ -134,7 +133,7 @@ public class XxlJobLog implements Serializable {
 	 */
 	@TableField("callback_time")
 	@Field(type = FieldType.Date, format = DateFormat.date_time)
-	private LocalDateTime callbackTime;
+	private Date callbackTime;
 	/**
 	 * 完成-状态
 	 */
