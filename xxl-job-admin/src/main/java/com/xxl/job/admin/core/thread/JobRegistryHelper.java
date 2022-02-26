@@ -6,8 +6,7 @@ import com.xxl.job.admin.core.model.XxlJobRegistry;
 import com.xxl.job.core.biz.model.RegistryParam;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.enums.RegistryConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
@@ -17,8 +16,8 @@ import java.util.concurrent.*;
  * job registry instance
  * @author xuxueli 2016-10-02 19:10:24
  */
+@Slf4j
 public class JobRegistryHelper {
-	private static Logger logger = LoggerFactory.getLogger(JobRegistryHelper.class);
 
 	private static JobRegistryHelper instance = new JobRegistryHelper();
 	public static JobRegistryHelper getInstance(){
@@ -48,7 +47,7 @@ public class JobRegistryHelper {
 					@Override
 					public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
 						r.run();
-						logger.warn(">>>>>>>>>>> xxl-job, registry or remove too fast, match threadpool rejected handler(run now).");
+						log.warn(">>>>>>>>>>> xxl-job, registry or remove too fast, match threadpool rejected handler(run now).");
 					}
 				});
 
@@ -109,18 +108,18 @@ public class JobRegistryHelper {
 						}
 					} catch (Exception e) {
 						if (!toStop) {
-							logger.error(">>>>>>>>>>> xxl-job, job registry monitor thread error:{}", e);
+							log.error(">>>>>>>>>>> xxl-job, job registry monitor thread error:{}", e);
 						}
 					}
 					try {
 						TimeUnit.SECONDS.sleep(RegistryConfig.BEAT_TIMEOUT);
 					} catch (InterruptedException e) {
 						if (!toStop) {
-							logger.error(">>>>>>>>>>> xxl-job, job registry monitor thread error:{}", e);
+							log.error(">>>>>>>>>>> xxl-job, job registry monitor thread error:{}", e);
 						}
 					}
 				}
-				logger.info(">>>>>>>>>>> xxl-job, job registry monitor thread stop");
+				log.info(">>>>>>>>>>> xxl-job, job registry monitor thread stop");
 			}
 		});
 		registryMonitorThread.setDaemon(true);
@@ -139,7 +138,7 @@ public class JobRegistryHelper {
 		try {
 			registryMonitorThread.join();
 		} catch (InterruptedException e) {
-			logger.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 	}
 

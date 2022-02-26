@@ -5,8 +5,7 @@ import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.model.XxlJobLog;
 import com.xxl.job.admin.core.trigger.TriggerTypeEnum;
 import com.xxl.job.admin.core.util.I18nUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -16,9 +15,9 @@ import java.util.concurrent.TimeUnit;
  *
  * @author xuxueli 2015-9-1 18:05:56
  */
+@Slf4j
 public class JobFailMonitorHelper {
-	private static Logger logger = LoggerFactory.getLogger(JobFailMonitorHelper.class);
-	
+
 	private static JobFailMonitorHelper instance = new JobFailMonitorHelper();
 	public static JobFailMonitorHelper getInstance(){
 		return instance;
@@ -73,7 +72,7 @@ public class JobFailMonitorHelper {
 
 					} catch (Exception e) {
 						if (!toStop) {
-							logger.error(">>>>>>>>>>> xxl-job, job fail monitor thread error:{}", e);
+							log.error(">>>>>>>>>>> xxl-job, job fail monitor thread error:{}", e);
 						}
 					}
 
@@ -81,13 +80,13 @@ public class JobFailMonitorHelper {
                         TimeUnit.SECONDS.sleep(10);
                     } catch (Exception e) {
                         if (!toStop) {
-                            logger.error(e.getMessage(), e);
+							log.error(e.getMessage(), e);
                         }
                     }
 
                 }
 
-				logger.info(">>>>>>>>>>> xxl-job, job fail monitor thread stop");
+				log.info(">>>>>>>>>>> xxl-job, job fail monitor thread stop");
 
 			}
 		});
@@ -103,7 +102,7 @@ public class JobFailMonitorHelper {
 		try {
 			monitorThread.join();
 		} catch (InterruptedException e) {
-			logger.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 	}
 

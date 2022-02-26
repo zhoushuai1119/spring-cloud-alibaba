@@ -7,8 +7,7 @@ import com.xxl.job.admin.core.util.I18nUtil;
 import com.xxl.job.core.biz.model.HandleCallbackParam;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.util.DateUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 import java.util.List;
@@ -19,9 +18,9 @@ import java.util.concurrent.*;
  *
  * @author xuxueli 2015-9-1 18:05:56
  */
+@Slf4j
 public class JobCompleteHelper {
-	private static Logger logger = LoggerFactory.getLogger(JobCompleteHelper.class);
-	
+
 	private static JobCompleteHelper instance = new JobCompleteHelper();
 	public static JobCompleteHelper getInstance(){
 		return instance;
@@ -51,7 +50,7 @@ public class JobCompleteHelper {
 					@Override
 					public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
 						r.run();
-						logger.warn(">>>>>>>>>>> xxl-job, callback too fast, match threadpool rejected handler(run now).");
+						log.warn(">>>>>>>>>>> xxl-job, callback too fast, match threadpool rejected handler(run now).");
 					}
 				});
 
@@ -67,7 +66,7 @@ public class JobCompleteHelper {
 					TimeUnit.MILLISECONDS.sleep(50);
 				} catch (InterruptedException e) {
 					if (!toStop) {
-						logger.error(e.getMessage(), e);
+						log.error(e.getMessage(), e);
 					}
 				}
 
@@ -94,7 +93,7 @@ public class JobCompleteHelper {
 						}
 					} catch (Exception e) {
 						if (!toStop) {
-							logger.error(">>>>>>>>>>> xxl-job, job fail monitor thread error:{}", e);
+							log.error(">>>>>>>>>>> xxl-job, job fail monitor thread error:{}", e);
 						}
 					}
 
@@ -102,13 +101,13 @@ public class JobCompleteHelper {
                         TimeUnit.SECONDS.sleep(60);
                     } catch (Exception e) {
                         if (!toStop) {
-                            logger.error(e.getMessage(), e);
+							log.error(e.getMessage(), e);
                         }
                     }
 
                 }
 
-				logger.info(">>>>>>>>>>> xxl-job, JobLosedMonitorHelper stop");
+				log.info(">>>>>>>>>>> xxl-job, JobLosedMonitorHelper stop");
 
 			}
 		});
@@ -128,7 +127,7 @@ public class JobCompleteHelper {
 		try {
 			monitorThread.join();
 		} catch (InterruptedException e) {
-			logger.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 	}
 
@@ -142,7 +141,7 @@ public class JobCompleteHelper {
 			public void run() {
 				for (HandleCallbackParam handleCallbackParam: callbackParamList) {
 					ReturnT<String> callbackResult = callback(handleCallbackParam);
-					logger.debug(">>>>>>>>> JobApiController.callback {}, handleCallbackParam={}, callbackResult={}",
+					log.debug(">>>>>>>>> JobApiController.callback {}, handleCallbackParam={}, callbackResult={}",
 							(callbackResult.getCode()== ReturnT.SUCCESS_CODE?"success":"fail"), handleCallbackParam, callbackResult);
 				}
 			}
