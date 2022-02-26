@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 /**
  * 定时任务消息
  *
@@ -23,8 +21,7 @@ public class TimeBasedJobMessage {
     Long logId;
 
     /**
-     * 发送时间
+     * 时间戳
      */
-    LocalDateTime timestamp;
-
+    long timestamp;
 }

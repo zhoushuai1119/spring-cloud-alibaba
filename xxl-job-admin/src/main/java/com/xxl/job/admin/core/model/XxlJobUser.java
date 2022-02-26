@@ -31,11 +31,6 @@ public class XxlJobUser extends Model<XxlJobUser> {
 	@TableField("password")
 	private String password;
 	/**
-	 * 盐
-	 */
-	@TableField("salt")
-	private String salt;
-	/**
 	 * 角色：0-普通用户、1-管理员
 	 */
 	@TableField("role")
@@ -60,11 +55,6 @@ public class XxlJobUser extends Model<XxlJobUser> {
 			}
 			return false;
 		}
-	}
-
-
-	public String getCredentialsSalt() {
-		return username + salt;
 	}
 
 }

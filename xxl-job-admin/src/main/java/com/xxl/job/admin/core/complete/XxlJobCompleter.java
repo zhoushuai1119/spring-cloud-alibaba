@@ -8,16 +8,15 @@ import com.xxl.job.admin.core.trigger.TriggerTypeEnum;
 import com.xxl.job.admin.core.util.I18nUtil;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.context.XxlJobContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.text.MessageFormat;
 
 /**
  * @author xuxueli 2020-10-30 20:43:10
  */
+@Slf4j
 public class XxlJobCompleter {
-    private static Logger logger = LoggerFactory.getLogger(XxlJobCompleter.class);
 
     /**
      * common fresh handle entrance (limit only once)
