@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
@@ -89,7 +90,7 @@ public class MqJobHandler {
         }
 
 
-        TimeBasedJobMessage timeBasedJobMessage = new TimeBasedJobMessage(executorParamsDTO.getLogId(), System.currentTimeMillis());
+        TimeBasedJobMessage timeBasedJobMessage = new TimeBasedJobMessage(executorParamsDTO.getLogId(), LocalDateTime.now());
         BaseResponse<Object> sendResult = cloudMQTemplate.send(CommonConstant.TimeTaskTopic.TIME_TASK_TOPIC, executorParamsDTO.getEventCode(), timeBasedJobMessage);
 
         if (!sendResult.isSuccess()) {

@@ -13,6 +13,7 @@ import com.xxl.job.core.biz.model.ReturnT;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -46,7 +47,7 @@ public class MqFeedBackListener implements TopicListener<TimeBasedJobFeedback> {
                 log.error("XxlJobLog is empty, xxlJobLogId: {}", xxlJobLogId);
                 return;
             }
-            xxlJobLog.setCallbackTime(timeBasedJobFeedback.getTimestamp());
+            xxlJobLog.setCallbackTime(new Date());
             if (timeBasedJobFeedback.getSuccess()) {
                 xxlJobLog.setCallbackCode(ReturnT.SUCCESS_CODE);
             } else {
