@@ -35,7 +35,7 @@ public class IndexController {
 	private LoginService loginService;
 
 
-	@RequestMapping("/index")
+	@RequestMapping("/")
 	public String index(Model model) {
 
 		Map<String, Object> dashboardMap = xxlJobService.dashboardInfo();
