@@ -161,7 +161,7 @@ public class JobLogController {
 
     @RequestMapping("/logKill")
     @ResponseBody
-    public ReturnT<String> logKill(int id) {
+    public ReturnT<String> logKill(long id) {
         // base check
         XxlJobLog log = xxlJobLogDao.load(id);
         XxlJobInfo jobInfo = xxlJobInfoDao.loadById(log.getJobId());

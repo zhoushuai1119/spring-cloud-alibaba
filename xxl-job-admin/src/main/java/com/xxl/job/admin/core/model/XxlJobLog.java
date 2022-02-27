@@ -1,8 +1,6 @@
 package com.xxl.job.admin.core.model;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -29,7 +27,6 @@ public class XxlJobLog implements Serializable {
 	/**
 	 * 主键ID
 	 */
-	@TableId(type = IdType.AUTO)
 	@Id
 	@Field(type = FieldType.Keyword)
 	private Long id;
