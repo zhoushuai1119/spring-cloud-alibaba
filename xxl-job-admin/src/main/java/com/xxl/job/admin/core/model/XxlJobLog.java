@@ -1,7 +1,10 @@
 package com.xxl.job.admin.core.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
@@ -28,7 +31,9 @@ public class XxlJobLog implements Serializable {
 	 * 主键ID
 	 */
 	@Id
+	@TableId
 	@Field(type = FieldType.Keyword)
+	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;
 	/**
 	 * 执行器主键ID
