@@ -25,7 +25,6 @@ public class XxlJobLog implements Serializable {
 	/**
 	 * 主键ID
 	 */
-	@Id
 	@TableId
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;
