@@ -32,7 +32,7 @@ public class XxlJobLog implements Serializable {
 	 */
 	@Id
 	@TableId
-	@Field(type = FieldType.Keyword)
+	@Field(type = FieldType.Long)
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;
 	/**
