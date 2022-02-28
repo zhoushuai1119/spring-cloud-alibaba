@@ -32,7 +32,7 @@ public class XxlJobLog implements Serializable {
 	 */
 	@Id
 	@TableId
-	@Field(type = FieldType.Long)
+	@Field(type = FieldType.Text)
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;
 	/**
@@ -92,7 +92,7 @@ public class XxlJobLog implements Serializable {
 	 * 调度-时间
 	 */
 	@TableField("trigger_time")
-	@Field(type = FieldType.Date, format = DateFormat.date_time)
+	@Field(type = FieldType.Date, format = DateFormat.date_time_no_millis)
 	private Date triggerTime;
 	/**
 	 * 调度-结果
@@ -114,7 +114,7 @@ public class XxlJobLog implements Serializable {
 	 * 执行-时间
 	 */
 	@TableField("handle_time")
-	@Field(type = FieldType.Date, format = DateFormat.date_time)
+	@Field(type = FieldType.Date, format = DateFormat.date_time_no_millis)
 	private Date handleTime;
 	/**
 	 * 执行-状态
@@ -134,7 +134,7 @@ public class XxlJobLog implements Serializable {
 	 * 完成-时间
 	 */
 	@TableField("callback_time")
-	@Field(type = FieldType.Date, format = DateFormat.date_time)
+	@Field(type = FieldType.Date, format = DateFormat.date_time_no_millis)
 	private Date callbackTime;
 	/**
 	 * 完成-状态
