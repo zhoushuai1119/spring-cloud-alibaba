@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -92,7 +93,7 @@ public class XxlJobLog implements Serializable {
 	 * 调度-时间
 	 */
 	@TableField("trigger_time")
-	@Field(type = FieldType.Date)
+	@Field(type = FieldType.Date,format = DateFormat.date_time)
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private Date triggerTime;
 	/**
@@ -115,7 +116,7 @@ public class XxlJobLog implements Serializable {
 	 * 执行-时间
 	 */
 	@TableField("handle_time")
-	@Field(type = FieldType.Date)
+	@Field(type = FieldType.Date,format = DateFormat.date_time)
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private Date handleTime;
 	/**
@@ -136,7 +137,7 @@ public class XxlJobLog implements Serializable {
 	 * 完成-时间
 	 */
 	@TableField("callback_time")
-	@Field(type = FieldType.Date)
+	@Field(type = FieldType.Date,format = DateFormat.date_time)
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private Date callbackTime;
 	/**
