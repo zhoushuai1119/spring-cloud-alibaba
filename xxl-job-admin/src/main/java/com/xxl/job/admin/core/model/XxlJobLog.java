@@ -3,11 +3,11 @@ package com.xxl.job.admin.core.model;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -32,7 +32,7 @@ public class XxlJobLog implements Serializable {
 	 */
 	@Id
 	@TableId
-	@Field(type = FieldType.Text)
+	@Field(type = FieldType.Keyword)
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;
 	/**
@@ -92,7 +92,8 @@ public class XxlJobLog implements Serializable {
 	 * 调度-时间
 	 */
 	@TableField("trigger_time")
-	@Field(type = FieldType.Date, format = DateFormat.date_time_no_millis)
+	@Field(type = FieldType.Date)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private Date triggerTime;
 	/**
 	 * 调度-结果
@@ -114,7 +115,8 @@ public class XxlJobLog implements Serializable {
 	 * 执行-时间
 	 */
 	@TableField("handle_time")
-	@Field(type = FieldType.Date, format = DateFormat.date_time_no_millis)
+	@Field(type = FieldType.Date)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private Date handleTime;
 	/**
 	 * 执行-状态
@@ -134,7 +136,8 @@ public class XxlJobLog implements Serializable {
 	 * 完成-时间
 	 */
 	@TableField("callback_time")
-	@Field(type = FieldType.Date, format = DateFormat.date_time_no_millis)
+	@Field(type = FieldType.Date)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private Date callbackTime;
 	/**
 	 * 完成-状态
