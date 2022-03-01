@@ -21,7 +21,7 @@ public class UserServerTransactionListener implements TopicListener<TokenUser> {
     @Override
     public void onMessage(CloudMessage<TokenUser> message) {
         TokenUser tokenUser = message.getPayload();
-        log.info("监听到{}服务事务消息:{}",CommonConstant.topic.USER_SERVER_TOPIC,
+        log.info("监听到{}服务事务消息:{}", CommonConstant.topic.USER_SERVER_TOPIC,
                 tokenUser);
     }
 

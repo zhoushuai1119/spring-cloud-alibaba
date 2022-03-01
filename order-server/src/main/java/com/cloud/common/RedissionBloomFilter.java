@@ -19,26 +19,41 @@ public class RedissionBloomFilter {
     @Autowired
     private RedissonClient redisson;
 
-    private RBloomFilter<String> bloomFilter;
+    private RBloomFilter<Integer> bloomFilter;
+
+    /**
+     * 预计数据总量
+     */
+    private long size = 20;
+    /**
+     * 容错率
+     */
+    private double fpp = 0.001;
+    /**
+     * redis中的key
+     */
+    private final String key = "phoneList";
 
     /**
      * 执行顺序--》 Constructor >> @Autowired >> @PostConstruct
      */
     @PostConstruct
     private void init(){
-        bloomFilter = redisson.getBloomFilter("phoneList");
+        bloomFilter = redisson.getBloomFilter(key);
         //初始化布隆过滤器：预计元素为100000000L,误差率为3%
-        bloomFilter.tryInit(100000000L,0.03);
+        bloomFilter.tryInit(size,fpp);
         //测试数据
         for (int i = 0; i < 10; i++) {
-            bloomFilter.add(String.valueOf(i));
+            if (!isExist(i)) {
+                bloomFilter.add(i);
+            }
         }
     }
 
     /**
      * 判断id是否可能存在
      */
-    public boolean isExist(String id){
+    public boolean isExist(Integer id){
         return bloomFilter.contains(id);
     }
 

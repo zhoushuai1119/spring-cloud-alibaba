@@ -1,11 +1,18 @@
 package com.cloud.controller;
 
+import com.cloud.common.beans.response.BaseResponse;
+import com.cloud.common.enums.ErrorCodeEnum;
 import com.cloud.utils.LettuceRedisUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @description:
@@ -15,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/redisson")
+@Slf4j
 public class RedissonController {
 
     @Autowired
@@ -23,30 +31,35 @@ public class RedissonController {
     @Autowired
     private LettuceRedisUtil redisUtil;
 
-    @RequestMapping("lock")
-    public void lock() {
-        RLock lock = redissonClient.getLock(System.currentTimeMillis()+"myLock");
+    @PostConstruct
+    public void init() {
+        log.info("执行init,设置redis.....");
+        redisUtil.set("ticket", 20);
+    }
+
+    @PostMapping("lock")
+    public BaseResponse<String> lock(@RequestParam(required = true) String key) {
+        String lockKey = redisUtil.getLockKey(key);
+        RLock lock = redissonClient.getLock(lockKey);
         try {
             lock.lock();
-            System.out.println(Thread.currentThread().getName()+"获取到锁");
-            //Integer ticket = Integer.parseInt(redisTemplate.opsForValue().get("ticket").toString());
-            //redisUtil.set("ticket",30);
+            log.info("线程:{}获取到锁", Thread.currentThread().getName());
             Integer ticket = Integer.parseInt(redisUtil.get("ticket").toString());
             if (ticket > 0) {
-                System.out.println("剩余库存:" + ticket);
+                log.info("剩余库存:{}",ticket);
             } else {
-                System.out.println("库存不足:");
-                return;
+                log.error("库存不足");
+                return BaseResponse.createFailResult(ErrorCodeEnum.INSUFFICIENT_INVENTORY_ERROR);
             }
-            System.out.println("进行库存减1操作");
-            //redisTemplate.opsForValue().set("ticket", String.valueOf(ticket - 1));
-            redisUtil.set("ticket",String.valueOf(ticket - 1));
+            redisUtil.set("ticket", ticket - 1);
         } catch (Exception e) {
             e.printStackTrace();
+            return BaseResponse.createFailResult(ErrorCodeEnum.SYSTEM_ERROR);
         } finally {
             lock.unlock();
-            System.out.println(Thread.currentThread().getName()+"释放锁");
+            log.info("线程:{}释放锁",Thread.currentThread().getName());
         }
+        return BaseResponse.createSuccessResult(null);
     }
 
 }

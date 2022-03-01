@@ -9,11 +9,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(properties = {"spring.profiles.active=dev"})
 @RunWith(SpringRunner.class)
 @Slf4j
-public class PaymentServerApplicationTest {
+public class ProductServerApplicationTest {
 
     @Test
     public void contextLoads() {
-
+        System.out.println("aa");
     }
 
 }

@@ -36,7 +36,17 @@ public enum ErrorCodeEnum implements BaseExceptionCode {
     /**
      * feign 调用失败
      */
-    FEIGN_CLIENT_ERROR("100003", "feign调用失败");
+    FEIGN_CLIENT_ERROR("100003", "feign调用失败"),
+
+    /**
+     * feign 调用失败
+     */
+    NOT_LEGAL_ERROR("100004", "非法请求"),
+
+    /**
+     * feign 调用失败 Insufficient inventory
+     */
+    INSUFFICIENT_INVENTORY_ERROR("100005", "订单库存不足");
 
     private String code;
     private String message;

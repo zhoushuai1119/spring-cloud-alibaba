@@ -33,7 +33,7 @@ public class UserServerListener implements TopicListener<List<TokenUser>> {
     public void onMessage(CloudMessage<List<TokenUser>> message) {
 //        log.info("重试次数:{}",message.getReconsumeTimes());
         List<TokenUser> tokenUserList = message.getPayload();
-        log.info("接收到{}服务:消息:{}",CommonConstant.topic.USER_SERVER_TOPIC,
+        log.info("接收到{}服务:消息:{}", CommonConstant.topic.USER_SERVER_TOPIC,
                 JsonUtil.toString(tokenUserList));
     }
 

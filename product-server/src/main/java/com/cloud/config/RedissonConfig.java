@@ -48,7 +48,7 @@ public class RedissonConfig {
         SingleServerConfig singleServerConfig = config.useSingleServer();
         singleServerConfig.setAddress("redis://" + redissonProperties.getNodes());
         singleServerConfig.setTimeout(redissonProperties.getTimeout());
-        singleServerConfig.setClientName("order");
+        singleServerConfig.setClientName("product");
         if (StringUtils.isNotEmpty(redissonProperties.getPassword())) {
             singleServerConfig.setPassword(redissonProperties.getPassword());
         }

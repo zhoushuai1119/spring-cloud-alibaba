@@ -14,7 +14,7 @@ import java.util.Optional;
  * @version: v1
  */
 @Service
-public class ElasticsearchServiceImpl {
+public class ElasticsearchService {
 
     @Autowired
     private CategoryElasticRepository categoryElasticRepository;

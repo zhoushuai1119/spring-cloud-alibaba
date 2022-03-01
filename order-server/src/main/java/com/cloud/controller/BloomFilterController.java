@@ -1,57 +1,43 @@
 package com.cloud.controller;
 
-import com.cloud.common.RedisBloomFilter;
 import com.cloud.common.RedissionBloomFilter;
+import com.cloud.common.beans.response.BaseResponse;
+import com.cloud.common.enums.ErrorCodeEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
+@Slf4j
 public class BloomFilterController {
 
-    @Value("${server.port}")
-    private String port;
     @Autowired
-    private RedisBloomFilter bloomFilter;
-    @Autowired
-    private RedissionBloomFilter filter;
+    private RedissionBloomFilter redissionBloomFilter;
 
-    @RequestMapping("/hi")
-    public String home(@RequestParam(value = "name", defaultValue = "forezp") String name, HttpServletRequest request) {
+    @GetMapping("/hi")
+    public BaseResponse<String> home(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        System.out.println("在线人员:"+
-                session.getServletContext().getAttribute("onlinePersonNum"));
-        return "hi " + name + " ,i am from port:" + port;
-    }
-
-    /**
-     * 使用布隆过滤器 根据ID查询商品
-     */
-    @GetMapping("/bloomFilter/{id}")
-    public String id(@PathVariable String id){
-        //先查询布隆过滤器，过滤掉不可能存在的数据请求
-        if (!bloomFilter.isExist(id)) {
-            System.err.println("id:"+id+",布隆过滤...");
-            return "非法请求";
-        }
-        //布隆过滤器认为可能存在，再走流程查询
-        return "OK";
+        log.info("在线人员:{}",session.getServletContext().getAttribute("onlinePersonNum"));
+        return BaseResponse.createSuccessResult(null);
     }
 
     /**
      * 使用布隆过滤器 根据ID查询商品
      */
     @GetMapping("/redission/{id}")
-    public String redission(@PathVariable String id){
+    public BaseResponse<String> redission(@PathVariable Integer id){
         //先查询布隆过滤器，过滤掉不可能存在的数据请求
-        if (!filter.isExist(id)) {
-            System.err.println("id:"+id+",Redssion布隆过滤...");
-            return "非法请求";
+        if (!redissionBloomFilter.isExist(id)) {
+            log.error("id:{},Redssion布隆过滤...",id);
+            return BaseResponse.createFailResult(ErrorCodeEnum.NOT_LEGAL_ERROR);
         }
         //布隆过滤器认为可能存在，再走流程查询
-        return "OK";
+        return BaseResponse.createSuccessResult(null);
     }
 
 }

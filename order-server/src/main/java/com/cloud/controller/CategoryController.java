@@ -13,6 +13,7 @@ import com.cloud.common.service.order.SqlService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/category")
 @Api(value = "test接口", tags = "test接口")
+//需要实时刷新配置，需要在controller添加@RefreshScope
+@RefreshScope
 public class CategoryController {
 
     @Autowired
@@ -36,13 +39,13 @@ public class CategoryController {
     @Autowired
     private SqlService sqlService;
 
-    @Value("${server.port}")
-    private String port;
+    @Value("${test.parms}")
+    private String testParms;
 
 
-    @GetMapping("/config/port")
-    public String configPort() {
-        return port;
+    @GetMapping("/config/testParms")
+    public BaseResponse<String> testParms() {
+        return BaseResponse.createSuccessResult(testParms);
     }
 
 

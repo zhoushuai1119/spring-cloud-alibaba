@@ -23,7 +23,7 @@ public class PaymentServerListener implements TopicListener<List<User>> {
     @Override
     public void onMessage(CloudMessage<List<User>> message) {
         List<User> userList = message.getPayload();
-        log.info("接收到{}服务消息:{}",CommonConstant.topic.PAYMENT_SERVER_TOPIC,
+        log.info("接收到{}服务消息:{}", CommonConstant.topic.PAYMENT_SERVER_TOPIC,
                 JsonUtil.toString(userList));
     }
 
