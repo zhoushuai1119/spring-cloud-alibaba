@@ -26,9 +26,7 @@
         <mybatis-plus.version>3.5.0</mybatis-plus.version>
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
         <mysql.version>8.0.28</mysql.version>
-        <activiti.version>7.1.0.M2</activiti.version>
-        <camunda.version>7.14.0</camunda.version>
-        <shiro.version>1.8.0</shiro.version>
+        <camunda.version>7.15.0</camunda.version>
         <sharding-jdbc.version>4.1.1</sharding-jdbc.version>
         <rocketmq-version>4.9.1</rocketmq-version>
         <seata-version>1.4.2</seata-version>
@@ -71,7 +69,6 @@
         <module>gateway-server</module>
         <module>rocketmq-server</module>
         <module>user-server</module>
-        <module>activiti-server</module>
         <module>camunda-server</module>
         <module>xxl-job-admin</module>
         <module>mqjob-handler</module>

@@ -23,13 +23,6 @@ public class CommonConstant {
     }
 
     /**
-     * 当前登录用户
-     */
-    public interface ShiroCurrentUser {
-        String SHIRO_CURRENT_USER = "shiroCurrentUser";
-    }
-
-    /**
      * 符号
      */
     public interface SymbolParam {
@@ -73,19 +66,6 @@ public class CommonConstant {
         String TOP_CATEGORY_ID = "0";
     }
 
-    /**
-     * Shiro错误信息
-     */
-    public interface ShiroError{
-        /**
-         * Shiro登录错误信息
-         */
-        String LOGIN_ERROR = "shiroLoginFailure";
-        /**
-         * Shiro验证码错误信息
-         */
-        String RANDOM_CODE_ERROR = "randomCodeError";
-    }
 
     /**
      * 消息头

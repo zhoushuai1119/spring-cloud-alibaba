@@ -8,7 +8,6 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 @SpringBootApplication
 @EnableDiscoveryClient
 @RefreshScope
-//@EnableProcessApplication
 public class CamundaServerApplication {
 
     public static void main(String[] args) {
