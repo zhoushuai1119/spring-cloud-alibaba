@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_17k3b7v" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="leave_process" isExecutable="true">
+    <bpmn:startEvent id="leave_start">
+      <bpmn:outgoing>Flow_094ufnw</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="leave_end">
+      <bpmn:incoming>Flow_03wxaka</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="department_approval" name="部门领导审核" camunda:assignee="${group_dep}">
+      <bpmn:incoming>Flow_00mrrqb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nhdaq4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="manager_approval" name="总经理审批" camunda:assignee="${group_admin}">
+      <bpmn:incoming>Flow_0r1rzoj</bpmn:incoming>
+      <bpmn:outgoing>Flow_191am1t</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_094ufnw" sourceRef="leave_start" targetRef="leave_apply" />
+    <bpmn:userTask id="leave_apply" name="请假单申请" camunda:assignee="${apply_user_id}">
+      <bpmn:incoming>Flow_094ufnw</bpmn:incoming>
+      <bpmn:outgoing>Flow_00mrrqb</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_00mrrqb" sourceRef="leave_apply" targetRef="department_approval" />
+    <bpmn:sequenceFlow id="Flow_03wxaka" sourceRef="hr_archive" targetRef="leave_end" />
+    <bpmn:userTask id="hr_archive" name="人事归档" camunda:assignee="${hr_person}">
+      <bpmn:incoming>Flow_1v7oqpu</bpmn:incoming>
+      <bpmn:incoming>Flow_191am1t</bpmn:incoming>
+      <bpmn:outgoing>Flow_03wxaka</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0nhdaq4" sourceRef="department_approval" targetRef="Gateway_0vliyul" />
+    <bpmn:sequenceFlow id="Flow_1v7oqpu" sourceRef="Gateway_0vliyul" targetRef="hr_archive">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${leave_days &lt; 3}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_0vliyul">
+      <bpmn:extensionElements>
+        <camunda:properties>
+          <camunda:property />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0nhdaq4</bpmn:incoming>
+      <bpmn:outgoing>Flow_1v7oqpu</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0r1rzoj</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0r1rzoj" sourceRef="Gateway_0vliyul" targetRef="manager_approval">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${leave_days &gt;= 3}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_191am1t" sourceRef="manager_approval" targetRef="hr_archive" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="leave_process">
+      <bpmndi:BPMNEdge id="Flow_191am1t_di" bpmnElement="Flow_191am1t">
+        <di:waypoint x="210" y="500" />
+        <di:waypoint x="210" y="580" />
+        <di:waypoint x="350" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0r1rzoj_di" bpmnElement="Flow_0r1rzoj">
+        <di:waypoint x="375" y="460" />
+        <di:waypoint x="260" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1v7oqpu_di" bpmnElement="Flow_1v7oqpu">
+        <di:waypoint x="400" y="485" />
+        <di:waypoint x="400" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nhdaq4_di" bpmnElement="Flow_0nhdaq4">
+        <di:waypoint x="400" y="390" />
+        <di:waypoint x="400" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03wxaka_di" bpmnElement="Flow_03wxaka">
+        <di:waypoint x="400" y="620" />
+        <di:waypoint x="400" y="692" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00mrrqb_di" bpmnElement="Flow_00mrrqb">
+        <di:waypoint x="400" y="250" />
+        <di:waypoint x="400" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_094ufnw_di" bpmnElement="Flow_094ufnw">
+        <di:waypoint x="400" y="118" />
+        <di:waypoint x="400" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="leave_start">
+        <dc:Bounds x="382" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0qf4td4_di" bpmnElement="leave_end">
+        <dc:Bounds x="382" y="692" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ywuxte_di" bpmnElement="department_approval">
+        <dc:Bounds x="350" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_09c21gg_di" bpmnElement="manager_approval">
+        <dc:Bounds x="160" y="420" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0u8lhhc_di" bpmnElement="leave_apply">
+        <dc:Bounds x="350" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16p1n8v_di" bpmnElement="hr_archive">
+        <dc:Bounds x="350" y="540" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1drjblw_di" bpmnElement="Gateway_0vliyul" isMarkerVisible="true">
+        <dc:Bounds x="375" y="435" width="50" height="50" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
