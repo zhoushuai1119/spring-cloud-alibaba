@@ -79,14 +79,17 @@ public class TaskManageService {
      * @param userId    用户ID
      * @param taskId    任务ID
      * @param variables 流程变量
+     * @param approveMessage 审批备注
      */
-    public BaseResponse<String> completeTask(String userId, String taskId, Map<String, Object> variables) {
+    public BaseResponse<String> completeTask(String userId, String taskId, Map<String, Object> variables,String approveMessage) {
         //完成任务前需要查询一下该用户是否具有操作该任务的权限；
         //因为如果只传一个任务ID，任何人都可以完成该任务
         Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(userId).singleResult();
         if (task != null) {
             taskService.complete(taskId, variables);
             log.info("用户:{}成功完成任务ID:{}", userId, taskId);
+            //添加审核备注
+            taskService.createComment(taskId,task.getProcessInstanceId(),approveMessage);
         } else {
             return BaseResponse.createFailResult(ErrorCodeEnum.NOT_TASK_APPROVAL_PERSON);
         }

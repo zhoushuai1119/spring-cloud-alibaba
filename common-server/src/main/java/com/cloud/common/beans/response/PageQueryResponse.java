@@ -47,7 +47,7 @@ public class PageQueryResponse<T> extends BaseResponse<List<T>> {
         return rt.successPage(page);
     }
 
-    public static <T> PageQueryResponse<T> createSuccessResult(List<T> model, int pageIndex, int totalCount, int pageSize) {
+    public static <T> PageQueryResponse<T> createSuccessResult(List<T> model, long pageIndex, long totalCount, long pageSize) {
         PageQueryResponse<T> rt = new PageQueryResponse();
         return rt.successPage(model, pageIndex, totalCount, pageSize);
     }

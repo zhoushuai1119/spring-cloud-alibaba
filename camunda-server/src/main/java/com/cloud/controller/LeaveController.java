@@ -4,7 +4,6 @@ import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.entity.camunda.Leave;
 import com.cloud.common.service.camunda.LeaveService;
 import com.cloud.common.utils.CommonUtil;
-import com.cloud.common.utils.JsonUtil;
 import com.cloud.service.camunda.ProcessService;
 import com.cloud.service.camunda.TaskManageService;
 import lombok.extern.slf4j.Slf4j;
@@ -87,14 +86,14 @@ public class LeaveController {
             ProcessInstance processInstance = processService.startProcessInstance(processDefinitionKey, leaveId, variables);
             //流程实例ID
             String processInstanceId = processInstance.getId();
-            log.info("请假流程实例ID:{}",processInstanceId);
+            log.info("请假流程实例ID:{}", processInstanceId);
             //查询当前用户的任务
             List<Task> myTaskList = taskManageService.getUserTasks(currentUserId, processDefinitionKey, processInstanceId);
             if (CommonUtil.isNotEmpty(myTaskList)) {
                 for (Task myTask : myTaskList) {
                     if (processInstanceId.equals(myTask.getProcessInstanceId())) {
                         String taskId = myTask.getId();
-                        taskManageService.completeTask(currentUserId, taskId, null);
+                        taskManageService.completeTask(currentUserId, taskId, null, "请假申请");
                     }
                 }
             }
@@ -107,10 +106,11 @@ public class LeaveController {
      *
      * @param taskId 任务ID
      * @Param: nextApproveUserId 下一个审批人ID
+     * @Param: approveMessage 审批备注
      */
     @PostMapping("/leaveAprove")
-    public BaseResponse<String> leaveAprove(String taskId, String approveUserId) {
-        BaseResponse result = taskManageService.completeTask(approveUserId, taskId, null);
+    public BaseResponse<String> leaveAprove(String taskId, String approveUserId, String approveMessage) {
+        BaseResponse result = taskManageService.completeTask(approveUserId, taskId, null, approveMessage);
         return result;
     }
 
