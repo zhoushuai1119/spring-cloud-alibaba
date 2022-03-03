@@ -3,8 +3,6 @@ package com.cloud.controller;
 import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.service.camunda.HistoryManageService;
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.engine.history.HistoricProcessInstance;
-import org.camunda.bpm.engine.history.HistoricTaskInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +18,7 @@ import java.util.Map;
  * @version: v1
  */
 @RestController
-@RequestMapping("/history")
+@RequestMapping("/leave/history")
 @Slf4j
 public class HistoryController {
 
@@ -28,34 +26,24 @@ public class HistoryController {
     private HistoryManageService historyManageService;
 
     /**
-     * 请假流程审批记录
+     * 查询某个流程实例的节点数据
      *
      * @param processInstanceId 流程实例ID
      */
-    @PostMapping("/leave/list")
-    public BaseResponse<List<Map<String, Object>>> leaveHistory(String processInstanceId) {
-        return historyManageService.historicActivityList(processInstanceId,"leave_start","leave_end");
+    @PostMapping("/activity/list")
+    public BaseResponse<List<Map<String, Object>>> historicActivityList(String processInstanceId) {
+        return historyManageService.historicActivityList(processInstanceId);
     }
 
 
     /**
-     * 查询某个流程实例
+     * 请假历史审批记录
      *
      * @param processInstanceId 流程实例ID
      */
-    @PostMapping("/leave/process/list")
-    public BaseResponse<List<HistoricProcessInstance>> historicProcessInstanceQuery(String processInstanceId) {
-        return historyManageService.historicProcessInstanceQuery(processInstanceId);
-    }
-
-    /**
-     * 查询某个流程实例
-     *
-     * @param processInstanceId 流程实例ID
-     */
-    @PostMapping("/leave/task/list")
-    public BaseResponse<List<HistoricTaskInstance>> historyTaskInstance(String processInstanceId) {
-        return historyManageService.historyTaskInstance(processInstanceId);
+    @PostMapping("/records/list")
+    public BaseResponse<List<Map<String, Object>>> historyRecordsList(String processInstanceId) {
+        return historyManageService.historyRecordsList(processInstanceId);
     }
 
 }
