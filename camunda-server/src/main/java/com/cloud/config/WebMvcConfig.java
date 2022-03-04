@@ -1,16 +1,15 @@
 package com.cloud.config;
 
 import com.cloud.common.beans.Factory.StringToEnumConverterFactory;
-import com.cloud.common.interceptor.LoginInterceptor;
 import com.cloud.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.*;
-
-import javax.annotation.Resource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @Author： Zhou Shuai
@@ -21,20 +20,6 @@ import javax.annotation.Resource;
 @Configuration
 @Slf4j
 public class WebMvcConfig implements WebMvcConfigurer {
-
-    @Resource
-    private LoginInterceptor loginInterceptor;
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        log.debug("进入LoginHandlerFilter拦截器");
-        InterceptorRegistration ir = registry.addInterceptor(loginInterceptor);
-        //配置拦截的url
-        ir.addPathPatterns("/**");
-        //配置不拦截的路径
-        ir.excludePathPatterns("/static/**")
-        .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
-    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
