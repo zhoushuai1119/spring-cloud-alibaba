@@ -1,7 +1,7 @@
-package com.cloud.service;
+package com.cloud.common.service.fileUpload.impl;
 
-import com.cloud.common.service.order.IFileService;
-import com.cloud.config.fastdfs.FastDFSClient;
+import com.cloud.common.service.fileUpload.FastDFSClient;
+import com.cloud.common.service.fileUpload.IFileService;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import lombok.extern.slf4j.Slf4j;
@@ -31,9 +31,10 @@ public class FileServiceImpl implements IFileService {
      * @return
      */
     @Override
-    public String uploadFile(MultipartFile file) throws IOException {
-        return client.uploadFile(file);
+    public String uploadMultipartFile(MultipartFile file) throws IOException {
+        return client.uploadMultipartFile(file);
     }
+
 
     /**
      * 上传文件

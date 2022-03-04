@@ -45,6 +45,12 @@
             <artifactId>hibernate-validator</artifactId>
             <version>7.0.2.Final</version>
         </dependency>
+        <!-- fastdfs -->
+        <dependency>
+            <groupId>com.github.tobato</groupId>
+            <artifactId>fastdfs-client</artifactId>
+            <version>${fastdfs-client.version}</version>
+        </dependency>
         <!--elasticsearch-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

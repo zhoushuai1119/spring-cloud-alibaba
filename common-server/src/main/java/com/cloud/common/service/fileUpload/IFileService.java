@@ -1,4 +1,4 @@
-package com.cloud.common.service.order;
+package com.cloud.common.service.fileUpload;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,7 +11,7 @@ public interface IFileService {
      * @param file
      * @return
      */
-    String uploadFile(MultipartFile file) throws IOException;
+    String uploadMultipartFile(MultipartFile file) throws IOException;
 
     /**
      * 上传文件

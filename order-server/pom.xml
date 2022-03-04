@@ -79,12 +79,6 @@
             <artifactId>seata-spring-boot-starter</artifactId>
             <version>${seata-version}</version>
         </dependency>
-        <!-- fastdfs -->
-        <dependency>
-            <groupId>com.github.tobato</groupId>
-            <artifactId>fastdfs-client</artifactId>
-            <version>${fastdfs-client.version}</version>
-        </dependency>
     </dependencies>
     <build>
         <finalName>order-server</finalName>

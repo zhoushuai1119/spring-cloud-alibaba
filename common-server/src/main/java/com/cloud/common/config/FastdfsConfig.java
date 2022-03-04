@@ -1,4 +1,4 @@
-package com.cloud.config.fastdfs;
+package com.cloud.common.config;
 
 import com.github.tobato.fastdfs.FdfsClientConfig;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +12,6 @@ import org.springframework.jmx.support.RegistrationPolicy;
  * 解决jmx重复注册bean的问题
  */
 @EnableMBeanExport(registration = RegistrationPolicy.IGNORE_EXISTING)
-public class ComponetImport {
+public class FastdfsConfig {
 	
 }

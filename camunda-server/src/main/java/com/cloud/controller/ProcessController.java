@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -81,6 +82,16 @@ public class ProcessController {
             }
         }
         return BaseResponse.createSuccessResult(processDefinitionMapList);
+    }
+
+    /**
+     * 获取流程部署文件
+     *
+     * @param processDefinitionKey 流程定义key
+     */
+    @GetMapping("/getProcessResource")
+    public BaseResponse getProcessResource(String processDefinitionKey) throws IOException {
+        return processService.getProcessResource(processDefinitionKey);
     }
 
 }

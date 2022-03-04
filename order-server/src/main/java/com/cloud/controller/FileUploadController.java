@@ -1,7 +1,7 @@
 package com.cloud.controller;
 
 import com.cloud.common.beans.response.BaseResponse;
-import com.cloud.common.service.order.IFileService;
+import com.cloud.common.service.fileUpload.IFileService;
 import com.cloud.common.utils.CommonUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,9 @@ public class FileUploadController {
     @Autowired
     private IFileService fileService;
 
+    @Value("${fdfs.urlPrefix}")
+    private String urlPrefix;
+
     /**
      * 文件上传
      */
@@ -46,9 +50,9 @@ public class FileUploadController {
                                            @RequestPart("file") MultipartFile file) {
         String result;
         try {
-            String path = fileService.uploadFile(file);
+            String path = fileService.uploadMultipartFile(file);
             if (!StringUtils.isEmpty(path)) {
-                result = path;
+                result = urlPrefix + path;
             } else {
                 result = "上传失败";
             }

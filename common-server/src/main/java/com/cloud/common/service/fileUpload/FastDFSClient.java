@@ -1,4 +1,4 @@
-package com.cloud.config.fastdfs;
+package com.cloud.common.service.fileUpload;
 
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.domain.fdfs.ThumbImageConfig;
@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,9 +18,6 @@ import java.io.InputStream;
 @Slf4j
 public class FastDFSClient {
 
-    @Value("${fdfs.urlPrefix}")
-    private String urlPrefix;
-
     @Autowired
     private FastFileStorageClient storageClient;
 
@@ -31,15 +27,14 @@ public class FastDFSClient {
     /**
      * 上传文件
      *
-     * @param file
-     *            文件对象
+     * @param file 文件对象
      * @return 文件访问地址
      * @throws IOException
      */
-    public String uploadFile(MultipartFile file) throws IOException {
+    public String uploadMultipartFile(MultipartFile file) throws IOException {
         StorePath storePath = storageClient.uploadFile(file.getInputStream(), file.getSize(),
                 FilenameUtils.getExtension(file.getOriginalFilename()), null);
-        return urlPrefix + storePath.getFullPath();
+        return storePath.getFullPath();
     }
 
     /**
@@ -49,10 +44,10 @@ public class FastDFSClient {
      * @return 文件访问地址
      * @throws IOException
      */
-    public String uploadFile(InputStream inputStream, long fileSize, String fileName) throws IOException {
+    public String uploadFile(InputStream inputStream, long fileSize, String fileName) {
         StorePath storePath = storageClient.uploadFile(inputStream, fileSize,
                 FilenameUtils.getExtension(fileName), null);
-        return urlPrefix + storePath.getFullPath();
+        return storePath.getFullPath();
     }
 
     /**
@@ -68,7 +63,7 @@ public class FastDFSClient {
         String fullPath = storePath.getFullPath();
         //获取图片缩率图地址
         String thumbPath = thumbImageConfig.getThumbImagePath(fullPath);
-        return urlPrefix + thumbPath;
+        return thumbPath;
     }
 
     /**
@@ -89,16 +84,16 @@ public class FastDFSClient {
 
     /**
      * 下载文件
-     * @param fileUrl
+     * @param fileUrl  不带前缀
      * @return
      * @throws IOException
      */
     public byte[] downloadFile(String fileUrl) {
-        String subFileUrl = fileUrl.replace(urlPrefix, StringUtils.EMPTY);
-        String group = subFileUrl.substring(0, subFileUrl.indexOf("/"));
-        String path = subFileUrl.substring(subFileUrl.indexOf("/") + 1);
+        String group = fileUrl.substring(0, fileUrl.indexOf("/"));
+        String path = fileUrl.substring(fileUrl.indexOf("/") + 1);
         DownloadByteArray downloadByteArray = new DownloadByteArray();
         byte[] bytes = storageClient.downloadFile(group, path, downloadByteArray);
         return bytes;
     }
+
 }

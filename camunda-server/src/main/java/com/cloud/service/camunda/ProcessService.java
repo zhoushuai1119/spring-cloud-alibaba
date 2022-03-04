@@ -1,8 +1,10 @@
 package com.cloud.service.camunda;
 
+import com.cloud.common.beans.response.BaseResponse;
+import com.cloud.common.service.fileUpload.IFileService;
 import com.cloud.common.utils.CommonUtil;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.repository.Deployment;
@@ -12,12 +14,13 @@ import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +42,12 @@ public class ProcessService {
 
     @Autowired
     private RuntimeService runtimeService;
+
+    @Autowired
+    private IFileService fileService;
+
+    @Value("${fdfs.urlPrefix}")
+    private String urlPrefix;
 
     /**
      * 流程部署
@@ -73,12 +82,12 @@ public class ProcessService {
      * act_re_procdef    流程定义信息
      * act_ge_bytearray 流程定义的bpmn文件
      *
-     * @param deploymentId   流程部署ID
+     * @param deploymentId 流程部署ID
      */
     public void delProcess(String deploymentId) {
         // 删除流程部署
         repositoryService.deleteDeployment(deploymentId);
-        log.info("删除流程成功!部署id:{}",deploymentId);
+        log.info("删除流程成功!部署id:{}", deploymentId);
     }
 
     /**
@@ -181,13 +190,12 @@ public class ProcessService {
      * 获取流程部署文件
      *
      * @param processDefinitionKey 流程定义key
-     * @param outPath              文件输出路径  D:\test\
      */
-    public void getProcessResource(String processDefinitionKey, String outPath) throws IOException {
+    public BaseResponse<List<String>> getProcessResource(String processDefinitionKey) throws IOException {
         InputStream png = null;
         InputStream bpmn = null;
-        OutputStream pngOut = null;
-        OutputStream bpmnOut = null;
+        String pngPath = "";
+        String bpmnPath = "";
         try {
             ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
             processDefinitionQuery.processDefinitionKey(processDefinitionKey);
@@ -198,21 +206,20 @@ public class ProcessService {
             png = repositoryService.getResourceAsStream(deploymentId, processDefinition.getDiagramResourceName());
             //processDefinition.getResourceName()指的是bpmn资源
             bpmn = repositoryService.getResourceAsStream(deploymentId, processDefinition.getResourceName());
-            //构建输入流
-            pngOut = new FileOutputStream(outPath + processDefinition.getDiagramResourceName());
-            bpmnOut = new FileOutputStream(outPath + processDefinition.getResourceName());
-            //输入输出流的转换；common-io-xx.jar
-            IOUtils.copy(png, pngOut);
-            IOUtils.copy(bpmn, bpmnOut);
+
+            MultipartFile pngMultipartFile = new MockMultipartFile("leave", "leave.png", null, png);
+            MultipartFile bpmnMultipartFile = new MockMultipartFile("leave", "leave.bpmn", null, bpmn);
+
+            pngPath = urlPrefix + fileService.uploadMultipartFile(pngMultipartFile);
+            bpmnPath = urlPrefix + fileService.uploadMultipartFile(bpmnMultipartFile);
         } catch (IOException e) {
             log.error(processDefinitionKey + "获取资源文件失败:" + e.getMessage());
             throw new IOException();
         } finally {
-            pngOut.close();
-            bpmnOut.close();
             png.close();
             bpmn.close();
         }
+        return BaseResponse.createSuccessResult(Lists.newArrayList(pngPath, bpmnPath));
     }
 
     /**
@@ -230,12 +237,12 @@ public class ProcessService {
         boolean suspended = processDefinition.isSuspended();
         String processDefinitionId = processDefinition.getId();
         //suspended为true说明是暂停状态
-        if (suspended){
-            repositoryService.activateProcessDefinitionById(processDefinitionId,true,null);
-            log.info("流程定义:"+processDefinitionId+"被激活");
-        }else {
-            repositoryService.suspendProcessDefinitionById(processDefinitionId,true,null);
-            log.info("流程定义:"+processDefinitionId+"被挂起");
+        if (suspended) {
+            repositoryService.activateProcessDefinitionById(processDefinitionId, true, null);
+            log.info("流程定义:" + processDefinitionId + "被激活");
+        } else {
+            repositoryService.suspendProcessDefinitionById(processDefinitionId, true, null);
+            log.info("流程定义:" + processDefinitionId + "被挂起");
         }
     }
 
@@ -253,12 +260,12 @@ public class ProcessService {
         //流程实例是否是挂起状态
         boolean suspended = processInstance.isSuspended();
         //suspended为true说明是暂停状态
-        if (suspended){
+        if (suspended) {
             runtimeService.activateProcessInstanceById(ProcessInstanceId);
-            log.info("流程实例:"+ProcessInstanceId+"被激活");
-        }else {
+            log.info("流程实例:" + ProcessInstanceId + "被激活");
+        } else {
             runtimeService.suspendProcessInstanceById(ProcessInstanceId);
-            log.info("流程实例:"+ProcessInstanceId+"被挂起");
+            log.info("流程实例:" + ProcessInstanceId + "被挂起");
         }
     }
 
