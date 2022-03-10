@@ -7,6 +7,7 @@ import com.cloud.dao.UserMapper;
 import io.seata.core.context.RootContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @description:
@@ -18,19 +19,17 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
-    
-    
     @Override
-//    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void saveUser(User user) throws Exception {
         log.info("全局事务ID:{}", RootContext.getXID());
-        user.setPassword("12345678");
         user.setPassword("12345678");
         user.setUsername("zssss");
         user.setSalt("idjdjdjjd");
         save(user);
-        if (true) {
-            throw new Exception("payment出现异常了。。。。");
-        }
+        /*if (true) {
+            throw new RuntimeException("payment出现异常了。。。。");
+        }*/
     }
+
 }

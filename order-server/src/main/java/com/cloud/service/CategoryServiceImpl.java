@@ -47,6 +47,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     }
 
     @Override
+    @Transactional
     public void updateCategory() {
         Category category = baseMapper.selectById("16");
         category.setParentCategoryId("2222");

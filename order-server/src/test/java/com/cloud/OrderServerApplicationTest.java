@@ -59,8 +59,6 @@ public class OrderServerApplicationTest {
         category.setCategoryLevel(0);
         category.setParentCategoryId("11");
         category.setParentCategoryName("2dd3");
-        category.setCreateTime(LocalDateTime.now());
-        category.setUpdateTime(LocalDateTime.now());
         categoryElasticRepository.save(category);
     }
 

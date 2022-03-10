@@ -6,6 +6,7 @@ import com.cloud.proxy.PaymentProxy;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +32,8 @@ public class SeataController {
      * @return
      */
     @GlobalTransactional(rollbackFor = Exception.class)
-    @RequestMapping("/seataTest")
+    //@Transactional
+    @PostMapping("/seataTest")
     public BaseResponse seataTest() {
         orderProxy.updateCategory();
         log.info("*********");
