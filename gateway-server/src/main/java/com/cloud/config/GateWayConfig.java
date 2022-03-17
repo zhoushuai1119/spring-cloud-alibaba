@@ -7,7 +7,6 @@ import com.alibaba.csp.sentinel.adapter.gateway.common.api.ApiPredicateItem;
 import com.alibaba.csp.sentinel.adapter.gateway.common.api.GatewayApiDefinitionManager;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayRuleManager;
-import com.alibaba.csp.sentinel.adapter.gateway.sc.SentinelGatewayFilter;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.GatewayCallbackManager;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.exception.SentinelGatewayBlockExceptionHandler;
 import com.cloud.filters.AuthGatewayFilter;
@@ -59,11 +58,11 @@ public class GateWayConfig {
         return new SentinelGatewayBlockExceptionHandler(viewResolvers, serverCodecConfigurer);
     }
 
-    @Bean
+    /*@Bean
     @Order(-5)
     public GlobalFilter sentinelGatewayFilter() {
         return new SentinelGatewayFilter();
-    }
+    }*/
 
     @PostConstruct
     public void doInit() {
