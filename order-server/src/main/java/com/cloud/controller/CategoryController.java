@@ -1,6 +1,7 @@
 package com.cloud.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cloud.common.aop.annotation.BeanOrderTest;
 import com.cloud.common.aop.annotation.MethodLogger;
 import com.cloud.common.aop.annotation.NewAuthV2;
 import com.cloud.common.beans.request.PageQueryRequest;
@@ -11,6 +12,7 @@ import com.cloud.common.entity.order.dto.ParmsTestDto;
 import com.cloud.common.service.order.CategoryService;
 import com.cloud.common.service.order.SqlService;
 import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -29,6 +31,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/category")
 @Api(value = "test接口", tags = "test接口")
+@Slf4j
 //需要实时刷新配置，需要在controller添加@RefreshScope
 @RefreshScope
 public class CategoryController {
@@ -44,7 +47,9 @@ public class CategoryController {
 
 
     @GetMapping("/config/testParms")
+    @BeanOrderTest
     public BaseResponse<String> testParms() {
+        log.info("执行 testParms 方法");
         return BaseResponse.createSuccessResult(testParms);
     }
 
