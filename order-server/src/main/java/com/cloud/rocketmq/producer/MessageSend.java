@@ -8,11 +8,11 @@ import com.cloud.core.CloudMQTemplate;
 import com.cloud.dao.CategoryMapper;
 import com.cloud.rocketmq.producer.transaction.CategoryTransactionExecutor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @description:
@@ -37,21 +37,19 @@ public class MessageSend {
     /**
      * 发送普通消息
      */
-    public BaseResponse sendMessage(){
+    public BaseResponse sendMessage() {
         List<Category> categoryList = categoryMapper.selectList(new QueryWrapper<>());
-        return cloudMQTemplate.send(CommonConstant.topic.ORDER_SERVER_TOPIC,"EC_ORDER_SERVER",categoryList);
+        return cloudMQTemplate.send(CommonConstant.topic.ORDER_SERVER_TOPIC, "EC_ORDER_SERVER", categoryList);
     }
 
 
     /**
      * 发送事务消息
      */
-    public void sendTransactionMessage(){
-        List<Category> categoryList = categoryMapper.selectList(new QueryWrapper<>());
-        if (CollectionUtils.isNotEmpty(categoryList)) {
-            categoryList.forEach(category -> {
-                categoryTransactionExecutor.send(category,category.getCategoryId());
-            });
+    public void sendTransactionMessage() {
+        Category category = categoryMapper.selectById("1");
+        if (Objects.nonNull(category)) {
+            categoryTransactionExecutor.send(category, category.getCategoryId());
         }
     }
 
