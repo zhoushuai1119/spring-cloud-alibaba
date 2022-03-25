@@ -6,7 +6,6 @@ import com.cloud.enums.ConsumeMode;
 import com.cloud.enums.SelectorType;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
-import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
@@ -182,9 +181,6 @@ public class RocketMQAutoConfiguration {
 
         @Autowired(required = false)
         private TimeBasedJobProperties timeBasedJobProperties;
-
-        @Autowired(required = false)
-        private MeterRegistry meterRegistry;
 
         public ListenerContainerConfiguration() {
 
