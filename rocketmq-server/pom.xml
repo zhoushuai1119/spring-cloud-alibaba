@@ -5,7 +5,7 @@
 
     <groupId>com.cloud.springcloud</groupId>
     <artifactId>rocketmq-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-RELEASES</version>
     <packaging>jar</packaging>
 
     <name>rocketmq-server</name>
@@ -15,7 +15,7 @@
     <parent>
         <groupId>com.cloud</groupId>
         <artifactId>springcloud</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1-RELEASES</version>
     </parent>
 
     <dependencies>

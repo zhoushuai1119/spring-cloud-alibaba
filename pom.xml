@@ -5,7 +5,7 @@
 
     <groupId>com.cloud</groupId>
     <artifactId>springcloud</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-RELEASES</version>
     <packaging>pom</packaging>
 
     <name>Spring Cloud Alibaba</name>
@@ -18,6 +18,20 @@
         <version>2.3.2.RELEASE</version>
         <relativePath/>
     </parent>
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Nexus Release Repository</name>
+            <url>http://139.196.208.53:8081/repository/maven-releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://139.196.208.53:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
