@@ -8,12 +8,10 @@
     <result column="category_level" jdbcType="INTEGER" property="categoryLevel" />
     <result column="parent_category_id" jdbcType="VARCHAR" property="parentCategoryId" />
     <result column="parent_category_name" jdbcType="VARCHAR" property="parentCategoryName" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, category_id, category_name, category_level, parent_category_id, parent_category_name, create_time, update_time
+    id, category_id, category_name, category_level, parent_category_id, parent_category_name
   </sql>
 
 </mapper>

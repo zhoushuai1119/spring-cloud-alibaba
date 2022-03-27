@@ -13,6 +13,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.scheduling.annotation.EnableAsync;
 
+//自动装配的方法在 AutoConfigurationImportSelector.getAutoConfigurationEntry
+//而不是 AutoConfigurationImportSelector.selectImports
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients

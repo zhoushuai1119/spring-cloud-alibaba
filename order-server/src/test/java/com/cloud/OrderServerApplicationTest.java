@@ -4,6 +4,7 @@ import com.cloud.common.entity.order.Category;
 import com.cloud.dao.elasticsearch.CategoryElasticRepository;
 import com.cloud.dao.mongodb.TestMongoRepository;
 import com.cloud.dto.MongoTestDTO;
+import com.cloud.dto.test.*;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.junit.Test;
@@ -32,6 +33,21 @@ public class OrderServerApplicationTest {
 
     @Autowired
     private TestMongoRepository testMongoRepository;
+
+    @Autowired
+    private TestA testA;
+
+    @Autowired
+    private TestB testB;
+
+    @Autowired
+    private TestC testC;
+
+    @Autowired
+    private TestD testD;
+
+    @Autowired
+    private TestE testE;
 
     @Test
     public void testKey() {
@@ -70,6 +86,31 @@ public class OrderServerApplicationTest {
         category.setParentCategoryId("11");
         category.setParentCategoryName("2dd3");
         categoryElasticRepository.save(category);
+    }
+
+    @Test
+    public void testA() {
+        testA.print();
+    }
+
+    @Test
+    public void testB() {
+        testB.print();
+    }
+
+    @Test
+    public void testC() {
+        testC.print();
+    }
+
+    @Test
+    public void testD() {
+        testD.print();
+    }
+
+    @Test
+    public void testE() {
+        testE.print();
     }
 
 }
