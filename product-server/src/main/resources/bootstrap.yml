@@ -1,0 +1,233 @@
+server:
+  port: 8765
+  servlet:
+    context-path: /product-server
+
+spring:
+  application:
+    name: product-server
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 139.196.208.53:8848
+        username: nacos
+        password: nacos
+      config:
+        server-addr: 139.196.208.53:8848
+        username: nacos
+        password: nacos
+        file-extension: yaml
+
+  redis:
+    database: 0
+    host: 139.196.208.53
+    port: 6379
+    password: 123456
+    timeout: 6000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+
+  #shardingsphere分库分表+读写分离
+  shardingsphere:
+    #是否展示sql
+    props:
+      sql:
+        show: true
+    #数据源配置
+    datasource:
+      #数据源名称
+      names: master1,master1-slave1,master1-slave2,master2,master2-slave1,master2-slave2
+      master1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://139.196.208.53:3306/product_master1?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: root
+        password: Zs11195310
+      master1-slave1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://139.196.208.53:3306/product_master1_slave1?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: root
+        password: Zs11195310
+      master1-slave2:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://139.196.208.53:3306/product_master1_slave2?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: root
+        password: Zs11195310
+      master2:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://139.196.208.53:3306/product_master2?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: root
+        password: Zs11195310
+      master2-slave1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://139.196.208.53:3306/product_master2_slave1?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: root
+        password: Zs11195310
+      master2-slave2:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://139.196.208.53:3306/product_master2_slave2?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: root
+        password: Zs11195310
+
+    masterslave:
+      # 读写分离配置;用于配置从库负载均衡算法类型，可选值：ROUND_ROBIN(轮询)，RANDOM（随机）
+      load-balance-algorithm-type: round_robin
+
+    sharding:
+      # 未配置分片规则的表将通过默认数据源定位
+      default-data-source-name: master1
+      # 公共表,操作一个库，其他库也会执行相同的CURD操作
+      broadcast-tables: t_dict
+      tables:
+        #这个地方注意:sharding-jdbc会根据名称去找本节点，所以写sql的时候，要写此节点的名称
+        t_product:
+          ## 这个配置是告诉sharding有多少个表
+          actual-data-nodes: master$->{1..2}.t_product_$->{0..1}
+          ## 主键生成策略
+          key-generator:
+            #对应的数据库表的主键
+            column: id
+            #生成方式， 雪花模式
+            type: SNOWFLAKE
+          # 配置其分片策略和分片算法(分表算法)
+          table-strategy:
+            # 行表达式
+            inline:
+              # 配置sharding的计算列
+              sharding-column: id
+              # 配置sharding的表达式,对应的id必须和sharding-column的值对应，否则报错
+              algorithm-expression: t_product_$->{id % 2}
+          #分库算法
+          database-strategy:
+            # 行表达式
+            inline:
+              # 配置sharding的计算列
+              sharding-column: product_type
+              # 配置sharding的表达式,对应的id必须和sharding-column的值对应，否则报错
+              algorithm-expression: master$->{product_type % 2 + 1}
+
+      #读写分离
+      master-slave-rules:
+        # 随机起一个名称，如果配置主从，那么需要修改分表策略：：：公共表修改
+        # 分表策略改成: spring.shardingsphere.sharding.tables.t_product.actual-data-nodes=master$->{1..2}.t_product_$->{0..1}
+        master1:
+          master-data-source-name: master1
+          slave-data-source-names: master1-slave1,master1-slave2
+        master2:
+          master-data-source-name: master2
+          slave-data-source-names: master2-slave1,master2-slave2
+
+
+#rocketmq配置
+cloud:
+  rocketmq:
+    #不能使用name-server
+    name-server: 139.196.208.53:9876
+    #普通消息配置
+    producer:
+      group: p-${spring.application.name}
+
+    #消费者配置
+    consumer:
+      #消费者组名称
+      c-product-server:
+        subscription:
+          # topic : eventCode  最好都大写
+          TP_PRODUCT_SERVER_TOPIC: EC_PRODUCT_SERVER
+          TP_PRODUCT_SERVER_TOPIC_TRANSACTION: EC_PRODUCT_SERVER_TRANSACTION
+          #定时任务
+          TP_F_SC: EC_TASK_PRODUCT_JOB_TEST
+
+  #定时任务配置
+  time-based-job:
+    enabled: true
+    thread-pool-size: 20
+    discardTaskSeconds: 300
+
+
+#redisson配置
+redisson:
+  nodes: 139.196.208.53:6379
+  password: 123456
+  timeout: 3000
+  scanInterval: 1000
+  connectionPoolSize: 64
+  connectionMinimumIdleSize: 10
+  pingConnectionInterval: 1000
+
+
+#seata分布式事务配置
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  ##此处配置自定义的seata事务分组名称
+  tx-service-group: ${spring.application.name}-tx-group
+  ##开启数据库代理
+  enable-auto-data-source-proxy: true
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 139.196.208.53:8848
+      username: nacos
+      password: nacos
+
+  config:
+    type: nacos
+    nacos:
+      server-addr: 139.196.208.53:8848
+      username: nacos
+      password: nacos
+      group: SEATA_GROUP
+      data-id: seataServer.properties
+
+
+mybatis-plus:
+  mapper-locations: classpath*:mapping/*.xml
+  type-aliases-package: com.cloud.entity
+  type-enums-package: com.cloud.enums
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    auto-mapping-behavior: partial
+  global-config:
+    db-config:
+      id-type: auto
+
+
+logging:
+  level:
+    RocketmqClient: error
+    RocketmqRemoting: warn
+
+#hystrix的超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        #不设置connectTimeout会导致readTimeout设置不生效
+        connectTimeout: 20000
+        readTimeout: 20000
+

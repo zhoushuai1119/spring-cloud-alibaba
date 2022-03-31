@@ -1,7 +1,7 @@
 package com.cloud.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.cloud.common.entity.product.Dict;
+import com.cloud.entity.Dict;
 
 /**
  * @description:

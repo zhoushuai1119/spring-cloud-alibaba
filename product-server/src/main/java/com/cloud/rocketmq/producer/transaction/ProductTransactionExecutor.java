@@ -1,11 +1,11 @@
 package com.cloud.rocketmq.producer.transaction;
 
-import com.cloud.annotation.TansactionTopic;
 import com.cloud.common.constants.CommonConstant;
-import com.cloud.common.entity.product.Product;
-import com.cloud.core.BaseTransactionExecutor;
-import com.cloud.core.RocketMQTransactionTemplate;
-import com.cloud.dto.CloudMessage;
+import com.cloud.entity.Product;
+import com.cloud.mq.base.dto.CloudMessage;
+import com.cloud.platform.rocketmq.annotation.TansactionTopic;
+import com.cloud.platform.rocketmq.core.BaseTransactionExecutor;
+import com.cloud.platform.rocketmq.core.RocketMQTransactionTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.LocalTransactionState;
 

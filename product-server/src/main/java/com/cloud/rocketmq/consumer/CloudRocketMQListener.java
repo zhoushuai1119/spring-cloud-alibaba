@@ -1,14 +1,13 @@
 package com.cloud.rocketmq.consumer;
 
-import com.cloud.annotation.ConsumeTopic;
 import com.cloud.common.constants.CommonConstant;
-import com.cloud.common.entity.order.Category;
-import com.cloud.common.utils.JsonUtil;
-import com.cloud.core.TopicListener;
-import com.cloud.dto.CloudMessage;
+import com.cloud.entity.Product;
+import com.cloud.mq.base.dto.CloudMessage;
+import com.cloud.platform.common.utils.JsonUtil;
+import com.cloud.platform.rocketmq.annotation.ConsumeTopic;
+import com.cloud.platform.rocketmq.core.TopicListener;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
 
 /**
  * @description:
@@ -17,8 +16,8 @@ import java.util.List;
  * @version: v1
  */
 @Slf4j
-@ConsumeTopic(topic = CommonConstant.topic.ORDER_SERVER_TOPIC, eventCode = "EC_ORDER_SERVER", log = true)
-public class OrderServerListener implements TopicListener<List<Category>> {
+@ConsumeTopic(topic = CommonConstant.topic.PRODUCT_SERVER_TOPIC, eventCode = "EC_PRODUCT_SERVER", log = true)
+public class CloudRocketMQListener implements TopicListener<String> {
 
     /**
      * 细心的读者应该能看到,这里的onMessage方法是void类型的,没有返回状态,与我们平时用的不一样,
@@ -30,10 +29,8 @@ public class OrderServerListener implements TopicListener<List<Category>> {
      * @param message
      */
     @Override
-    public void onMessage(CloudMessage<List<Category>> message) {
-        List<Category> categoryList = message.getPayload();
-        log.info("接收到{}服务:消息:{}",CommonConstant.topic.ORDER_SERVER_TOPIC,
-                JsonUtil.toString(categoryList));
+    public void onMessage(CloudMessage<String> message) {
+        log.info("接收到消息:{}", JsonUtil.toString(message.getPayload()));
     }
 
 }

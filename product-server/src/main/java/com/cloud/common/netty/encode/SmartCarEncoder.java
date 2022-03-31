@@ -1,6 +1,6 @@
 package com.cloud.common.netty.encode;
 
-import com.cloud.common.entity.common.SmartCarProtocol;
+import com.cloud.common.beans.protocol.SmartProtocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
@@ -19,10 +19,10 @@ import io.netty.handler.codec.MessageToByteEncoder;
  * @Author: ZhouShuai
  * @Date: 2021-07-14 21:01
  */
-public class SmartCarEncoder extends MessageToByteEncoder<SmartCarProtocol> {
+public class SmartCarEncoder extends MessageToByteEncoder<SmartProtocol> {
 
     @Override
-    protected void encode(ChannelHandlerContext tcx, SmartCarProtocol msg,
+    protected void encode(ChannelHandlerContext tcx, SmartProtocol msg,
                           ByteBuf out) throws Exception {
         // 写入消息SmartCar的具体内容
         // 1.写入消息的开头的信息标志(int类型)

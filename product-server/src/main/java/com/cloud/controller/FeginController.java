@@ -1,9 +1,9 @@
 package com.cloud.controller;
 
-import com.cloud.common.entity.product.Product;
-import com.cloud.common.service.product.DictService;
-import com.cloud.common.service.product.ProductService;
+import com.cloud.entity.Product;
+import com.cloud.service.DictService;
 import com.cloud.service.NettySendServiceImpl;
+import com.cloud.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;

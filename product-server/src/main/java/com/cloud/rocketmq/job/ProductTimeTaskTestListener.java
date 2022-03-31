@@ -1,8 +1,8 @@
 package com.cloud.rocketmq.job;
 
-import com.cloud.annotation.ConsumeTopic;
-import com.cloud.core.TopicListener;
-import com.cloud.dto.CloudMessage;
+import com.cloud.mq.base.dto.CloudMessage;
+import com.cloud.platform.rocketmq.annotation.ConsumeTopic;
+import com.cloud.platform.rocketmq.core.TopicListener;
 import lombok.extern.slf4j.Slf4j;
 
 /**

@@ -1,9 +1,10 @@
-package com.cloud.service;
+package com.cloud.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cloud.common.entity.product.Dict;
-import com.cloud.common.service.product.DictService;
 import com.cloud.dao.DictMapper;
+import com.cloud.entity.Dict;
+import com.cloud.service.DictService;
+import com.cloud.service.NettySendServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

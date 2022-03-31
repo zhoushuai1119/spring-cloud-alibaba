@@ -1,9 +1,9 @@
-package com.cloud.service;
+package com.cloud.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cloud.common.entity.product.Product;
-import com.cloud.common.service.product.ProductService;
 import com.cloud.dao.ProductMapper;
+import com.cloud.entity.Product;
+import com.cloud.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
