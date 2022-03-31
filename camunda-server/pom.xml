@@ -3,32 +3,45 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.cloud.springcloud</groupId>
+    <groupId>com.cloud.platform</groupId>
     <artifactId>camunda-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>camunda-server</name>
-    <description>Demo project for camunda-server</description>
+    <description>project for camunda-server</description>
 
     <!--父工程的依赖-->
     <parent>
-        <groupId>com.cloud</groupId>
+        <groupId>com.cloud.platform</groupId>
         <artifactId>springcloud</artifactId>
-        <version>0.0.1-RELEASES</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
 
     <dependencies>
+        <!--common-server-->
         <dependency>
-            <groupId>com.cloud.springcloud</groupId>
+            <groupId>com.cloud.platform</groupId>
             <artifactId>common-server</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <!--Mysql5.8-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
+            <version>1.1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.cloud.platform</groupId>
+                    <artifactId>cloud-rocketmq-spring-boot-starter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-redis</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.alibaba.cloud</groupId>
+                    <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.seata</groupId>
+                    <artifactId>seata-spring-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--spring-test-->
         <dependency>
@@ -39,17 +52,14 @@
         <dependency>
             <groupId>org.camunda.bpm.springboot</groupId>
             <artifactId>camunda-bpm-spring-boot-starter</artifactId>
-            <version>${camunda.version}</version>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm.springboot</groupId>
             <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
-            <version>${camunda.version}</version>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm.springboot</groupId>
             <artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
-            <version>${camunda.version}</version>
         </dependency>
     </dependencies>
 

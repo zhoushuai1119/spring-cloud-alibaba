@@ -1,6 +1,6 @@
 package com.cloud.service.camunda;
 
-import com.cloud.common.beans.response.BaseResponse;
+import com.cloud.platform.common.response.BaseResponse;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;

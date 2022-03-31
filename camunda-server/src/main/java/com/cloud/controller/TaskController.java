@@ -1,7 +1,7 @@
 package com.cloud.controller;
 
-import com.cloud.common.beans.response.BaseResponse;
-import com.cloud.common.utils.CommonUtil;
+import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.web.utils.CommonUtil;
 import com.cloud.service.camunda.TaskManageService;
 import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;

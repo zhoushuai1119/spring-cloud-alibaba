@@ -1,9 +1,9 @@
 package com.cloud.controller;
 
-import com.cloud.common.beans.response.BaseResponse;
-import com.cloud.common.entity.camunda.Leave;
-import com.cloud.common.service.camunda.LeaveService;
-import com.cloud.common.utils.CommonUtil;
+import com.cloud.entity.Leave;
+import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.web.utils.CommonUtil;
+import com.cloud.service.LeaveService;
 import com.cloud.service.camunda.ProcessService;
 import com.cloud.service.camunda.TaskManageService;
 import lombok.extern.slf4j.Slf4j;

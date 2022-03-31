@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.cloud.springcloud</groupId>
+    <groupId>com.cloud.platform</groupId>
     <artifactId>gateway-server</artifactId>
-    <version>0.0.1-RELEASES</version>
+    <version>1.1.0-RELEASES</version>
     <packaging>jar</packaging>
 
     <name>gateway-server</name>
@@ -13,9 +13,9 @@
 
     <!--父工程的依赖-->
     <parent>
-        <groupId>com.cloud</groupId>
+        <groupId>com.cloud.platform</groupId>
         <artifactId>springcloud</artifactId>
-        <version>0.0.1-RELEASES</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
 
     <dependencies>
@@ -34,6 +34,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 

@@ -1,7 +1,7 @@
 package com.cloud.controller;
 
-import com.cloud.common.beans.response.BaseResponse;
-import com.cloud.common.utils.CommonUtil;
+import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.web.utils.CommonUtil;
 import com.cloud.service.camunda.ProcessService;
 import io.swagger.annotations.ApiOperation;
 import org.camunda.bpm.engine.repository.ProcessDefinition;

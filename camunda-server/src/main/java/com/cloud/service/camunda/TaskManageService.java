@@ -1,8 +1,8 @@
 package com.cloud.service.camunda;
 
-import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.enums.ErrorCodeEnum;
-import com.cloud.common.utils.CommonUtil;
+import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.web.utils.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.task.Task;
@@ -81,7 +81,7 @@ public class TaskManageService {
      * @param variables 流程变量
      * @param approveMessage 审批备注
      */
-    public BaseResponse<String> completeTask(String userId, String taskId, Map<String, Object> variables,String approveMessage) {
+    public BaseResponse<String> completeTask(String userId, String taskId, Map<String, Object> variables, String approveMessage) {
         //完成任务前需要查询一下该用户是否具有操作该任务的权限；
         //因为如果只传一个任务ID，任何人都可以完成该任务
         Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(userId).singleResult();

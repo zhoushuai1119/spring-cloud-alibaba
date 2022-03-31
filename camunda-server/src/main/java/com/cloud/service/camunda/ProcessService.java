@@ -1,8 +1,8 @@
 package com.cloud.service.camunda;
 
-import com.cloud.common.beans.response.BaseResponse;
-import com.cloud.common.service.fileUpload.IFileService;
-import com.cloud.common.utils.CommonUtil;
+import com.cloud.common.fileUpload.IFileService;
+import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.web.utils.CommonUtil;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.RepositoryService;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
