@@ -1,6 +1,6 @@
 package com.cloud.listener;
 
-import com.cloud.common.entity.order.Category;
+import com.cloud.entity.Category;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionalEventListener;

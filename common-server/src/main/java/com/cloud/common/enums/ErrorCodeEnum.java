@@ -1,6 +1,6 @@
 package com.cloud.common.enums;
 
-import com.cloud.common.beans.exception.BaseExceptionCode;
+import com.cloud.platform.common.exception.BaseExceptionCode;
 import lombok.Getter;
 
 /**

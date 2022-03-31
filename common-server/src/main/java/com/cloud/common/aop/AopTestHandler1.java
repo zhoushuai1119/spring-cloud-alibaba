@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
 @Order(1)
 public class AopTestHandler1 {
 
-    @Pointcut("@annotation(com.cloud.common.aop.annotation.BeanOrderTest)")
+    @Pointcut("@annotation(com.cloud.common.aop.annotation.AopOrderTest)")
     public void loggerHandler(){}
 
     @Around("loggerHandler()")

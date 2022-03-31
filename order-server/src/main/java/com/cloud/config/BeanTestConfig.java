@@ -1,7 +1,7 @@
 package com.cloud.config;
 
-import com.cloud.common.entity.order.BeanTest;
-import com.cloud.common.entity.order.CarFactoryBean;
+import com.cloud.entity.BeanTest;
+import com.cloud.entity.CarFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,6 +1,6 @@
 package com.cloud.netty.server;
 
-import com.cloud.common.entity.common.SmartCarProtocol;
+import com.cloud.common.beans.protocol.SmartProtocol;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -90,13 +90,13 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         // 用于获取客户端发来的数据信息
-        SmartCarProtocol body = (SmartCarProtocol) msg;
+        SmartProtocol body = (SmartProtocol) msg;
         log.info("加载客户端报文......");
         log.info("【" + ctx.channel().id() + "】" + " :" + body.toString());
 
         // 会写数据给客户端
         String str = "Hi I am Server ..." + body.getContent();
-        SmartCarProtocol response = new SmartCarProtocol(str.getBytes().length,
+        SmartProtocol response = new SmartProtocol(str.getBytes().length,
                 str.getBytes());
         // 当服务端完成写操作后，关闭与客户端的连接
         ctx.writeAndFlush(response);
@@ -115,7 +115,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
      * @DESCRIPTION: 服务端给客户端发送消息
      * @return: void
      */
-    public void channelWrite(ChannelId channelId, SmartCarProtocol msg) throws Exception {
+    public void channelWrite(ChannelId channelId, SmartProtocol msg) throws Exception {
 
         ChannelHandlerContext ctx = CHANNEL_MAP.get(channelId);
 

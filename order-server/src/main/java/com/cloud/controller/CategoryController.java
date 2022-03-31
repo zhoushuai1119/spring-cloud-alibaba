@@ -1,16 +1,15 @@
 package com.cloud.controller;
 
+
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.cloud.common.aop.annotation.BeanOrderTest;
-import com.cloud.common.aop.annotation.MethodLogger;
-import com.cloud.common.aop.annotation.NewAuthV2;
-import com.cloud.common.beans.request.PageQueryRequest;
-import com.cloud.common.beans.response.BaseResponse;
-import com.cloud.common.beans.response.PageQueryResponse;
-import com.cloud.common.entity.order.Category;
-import com.cloud.common.entity.order.dto.ParmsTestDto;
-import com.cloud.common.service.order.CategoryService;
-import com.cloud.common.service.order.SqlService;
+import com.cloud.common.aop.annotation.AopOrderTest;
+import com.cloud.dto.ParmsTestDto;
+import com.cloud.entity.Category;
+import com.cloud.platform.common.request.PageQueryRequest;
+import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.common.response.PageQueryResponse;
+import com.cloud.service.CategoryService;
+import com.cloud.service.SqlService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,26 +41,13 @@ public class CategoryController {
     @Autowired
     private SqlService sqlService;
 
-    @Value("${test.parms}")
-    private String testParms;
-
-
-    @GetMapping("/config/testParms")
-    @BeanOrderTest
-    public BaseResponse<String> testParms() {
-        log.info("执行 testParms 方法");
-        return BaseResponse.createSuccessResult(testParms);
-    }
-
 
     @PostMapping("/param/check")
-    @MethodLogger
     public BaseResponse<String> paramCheck(@RequestBody @Validated ParmsTestDto parmsTestDto) {
         return BaseResponse.createSuccessResult(null);
     }
 
     @PostMapping("/category/list")
-    @NewAuthV2
     public BaseResponse<List<Category>> categosyList() {
         List<Category> categoryList = categoryService.categoryList();
         return BaseResponse.createSuccessResult(categoryList);
@@ -70,7 +56,8 @@ public class CategoryController {
     @PostMapping("/category/page/list")
     public PageQueryResponse<Category> categosyList(@RequestBody PageQueryRequest pageQueryRequest) {
         Page<Category> pageList = categoryService.categoryPageList(pageQueryRequest);
-        return PageQueryResponse.createSuccessPageResult(pageList);
+        return PageQueryResponse.createSuccessResult(pageList.getRecords(),pageQueryRequest.getPageIndex(),
+                pageList.getSize(),pageQueryRequest.getPageSize());
     }
 
     @PostMapping("/updateCategory")

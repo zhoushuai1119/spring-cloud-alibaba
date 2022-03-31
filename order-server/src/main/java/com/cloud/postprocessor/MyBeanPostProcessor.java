@@ -1,6 +1,6 @@
 package com.cloud.postprocessor;
 
-import com.cloud.common.entity.order.BeanTest;
+import com.cloud.entity.BeanTest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;

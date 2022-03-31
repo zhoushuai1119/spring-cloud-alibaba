@@ -10,7 +10,7 @@ package com.cloud.common.constants;
 public class OrderConstant {
 
     /**
-     * 执行器
+     * 订单key
      */
     public interface CreateOrderKey {
         String CREATE_ORDER_KEY = "order:create";

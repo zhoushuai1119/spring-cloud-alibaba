@@ -1,7 +1,7 @@
 package com.cloud.controller;
 
-import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.enums.ErrorCodeEnum;
+import com.cloud.platform.common.response.BaseResponse;
 import com.cloud.utils.LettuceRedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;

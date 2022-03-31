@@ -1,6 +1,6 @@
 package com.cloud.dao.elasticsearch;
 
-import com.cloud.common.entity.order.Category;
+import com.cloud.entity.Category;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 

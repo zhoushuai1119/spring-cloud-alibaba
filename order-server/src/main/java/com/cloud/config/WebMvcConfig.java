@@ -1,13 +1,10 @@
 package com.cloud.config;
 
-import com.cloud.common.beans.Factory.StringToEnumConverterFactory;
+import com.cloud.common.beans.factory.StringToEnumConverterFactory;
 import com.cloud.interceptor.LoginInterceptor;
-import com.cloud.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
 
 import javax.annotation.Resource;
@@ -67,14 +64,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverterFactory(new StringToEnumConverterFactory());
-    }
-
-
-    @Bean
-    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter(){
-        MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
-        jsonConverter.setObjectMapper(JsonUtil.OBJECT_MAPPER);
-        return jsonConverter;
     }
 
 }

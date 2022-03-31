@@ -1,7 +1,7 @@
 package com.cloud.netty.server;
 
-import com.cloud.common.netty.decode.SmartCarDecoder;
-import com.cloud.common.netty.encode.SmartCarEncoder;
+import com.cloud.common.netty.decode.SmartDecoder;
+import com.cloud.common.netty.encode.SmartEncoder;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 
@@ -15,8 +15,8 @@ public class NettyServerChannelInitializer extends ChannelInitializer<SocketChan
 
     @Override
     protected void initChannel(SocketChannel channel) {
-        channel.pipeline().addLast("encoder",new SmartCarEncoder());
-        channel.pipeline().addLast("decoder",new SmartCarDecoder());
+        channel.pipeline().addLast("encoder",new SmartEncoder());
+        channel.pipeline().addLast("decoder",new SmartDecoder());
         channel.pipeline().addLast(new NettyServerHandler());
     }
 }

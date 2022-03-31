@@ -1,8 +1,8 @@
 package com.cloud;
 
-import com.cloud.common.entity.order.BeanTest;
-import com.cloud.common.entity.order.Car;
-import com.cloud.common.entity.order.CarFactoryBean;
+import com.cloud.entity.BeanTest;
+import com.cloud.entity.Car;
+import com.cloud.entity.CarFactoryBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

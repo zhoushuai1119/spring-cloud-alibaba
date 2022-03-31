@@ -1,11 +1,12 @@
 package com.cloud.service;
 
-import com.cloud.common.entity.order.Category;
 import com.cloud.dao.elasticsearch.CategoryElasticRepository;
+import com.cloud.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
 
 /**
  * @description:

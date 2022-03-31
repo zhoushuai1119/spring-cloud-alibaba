@@ -1,10 +1,10 @@
 package com.cloud;
 
-import com.cloud.common.entity.order.Category;
 import com.cloud.dao.elasticsearch.CategoryElasticRepository;
 import com.cloud.dao.mongodb.TestMongoRepository;
 import com.cloud.dto.MongoTestDTO;
 import com.cloud.dto.test.*;
+import com.cloud.entity.Category;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.junit.Test;
@@ -17,7 +17,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 
-@SpringBootTest(properties = {"spring.profiles.active=dev"})
+//@SpringBootTest(properties = {"spring.profiles.active=dev"})
+@SpringBootTest
 @RunWith(SpringRunner.class)
 @Slf4j
 public class OrderServerApplicationTest {

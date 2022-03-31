@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>order-server</name>
-    <description>Demo project for order-server</description>
+    <description>project for order-server</description>
 
     <!--父工程的依赖-->
     <parent>
@@ -19,76 +19,47 @@
     </parent>
 
     <dependencies>
+        <!--common-server-->
         <dependency>
             <groupId>com.cloud.platform</groupId>
-            <artifactId>cloud-web-spring-boot-starter</artifactId>
+            <artifactId>common-server</artifactId>
+            <version>1.1.0-SNAPSHOT</version>
         </dependency>
+        <!-- cloud-rocketmq -->
         <dependency>
             <groupId>com.cloud.platform</groupId>
             <artifactId>cloud-rocketmq-spring-boot-starter</artifactId>
+            <version>${cloud.mq.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.cloud.springcloud</groupId>
-            <artifactId>common-server</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <!--redis-->
+        <!--elasticsearch-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
         </dependency>
         <!--mongodb-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
-        <!--多数据源配置-->
+        <!--redis-->
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <version>${mybatis-plus.version}</version>
-        </dependency>
-        <!--Mysql5.8-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
-        </dependency>
-        <!--druid数据库连接池-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>${alibaba-druid.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <!--redisson-->
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>
-            <version>${redisson.version}</version>
-        </dependency>
-        <!--seata 分布式事务框架-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.seata</groupId>
-                    <artifactId>seata-spring-boot-starter</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.seata</groupId>
-            <artifactId>seata-spring-boot-starter</artifactId>
-            <version>${seata-version}</version>
         </dependency>
     </dependencies>
+
     <build>
         <finalName>order-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.mybatis.generator</groupId>

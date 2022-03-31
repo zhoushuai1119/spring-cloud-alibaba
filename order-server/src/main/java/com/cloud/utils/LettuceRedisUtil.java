@@ -1,7 +1,6 @@
 package com.cloud.utils;
 
 import com.cloud.common.constants.OrderConstant;
-import com.cloud.config.EnvConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -23,9 +22,6 @@ public class LettuceRedisUtil {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
-
-    @Autowired
-    private EnvConfig envConfig;
 
     /**
      * 指定缓存失效时间
@@ -580,7 +576,7 @@ public class LettuceRedisUtil {
      * @return
      */
     public String getLockKey(String key) {
-        return envConfig.getEnv() + "_" + OrderConstant.CreateOrderKey.CREATE_ORDER_KEY + "_" + key;
+        return OrderConstant.CreateOrderKey.CREATE_ORDER_KEY + "_" + key;
     }
 
 }

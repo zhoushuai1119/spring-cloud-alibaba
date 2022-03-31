@@ -17,6 +17,13 @@
         <version>1.1.2-RELEASES</version>
     </parent>
 
+    <!-- 公共属性 -->
+    <properties>
+        <cloud.mq.version>1.6.0-RELEASES</cloud.mq.version>
+        <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
+        <velocity-engine.version>2.3</velocity-engine.version>
+    </properties>
+
     <!--子模块工厂配置-->
     <modules>
         <module>common-server</module>
@@ -24,9 +31,16 @@
         <module>payment-server</module>
         <module>product-server</module>
         <module>gateway-server</module>
-        <module>rocketmq-server</module>
         <module>user-server</module>
         <module>camunda-server</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 </project>

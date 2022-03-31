@@ -1,8 +1,8 @@
 package com.cloud.controller;
 
-import com.cloud.common.beans.response.BaseResponse;
-import com.cloud.common.service.fileUpload.IFileService;
-import com.cloud.common.utils.CommonUtil;
+import com.cloud.common.fileUpload.IFileService;
+import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.web.utils.CommonUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;

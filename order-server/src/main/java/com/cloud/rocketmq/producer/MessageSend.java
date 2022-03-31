@@ -1,11 +1,11 @@
 package com.cloud.rocketmq.producer;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.constants.CommonConstant;
-import com.cloud.common.entity.order.Category;
-import com.cloud.core.CloudMQTemplate;
 import com.cloud.dao.CategoryMapper;
+import com.cloud.entity.Category;
+import com.cloud.mq.base.core.CloudMQTemplate;
+import com.cloud.platform.common.response.BaseResponse;
 import com.cloud.rocketmq.producer.transaction.CategoryTransactionExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +38,8 @@ public class MessageSend {
      * 发送普通消息
      */
     public BaseResponse sendMessage() {
-        List<Category> categoryList = categoryMapper.selectList(new QueryWrapper<>());
-        return cloudMQTemplate.send(CommonConstant.topic.ORDER_SERVER_TOPIC, "EC_ORDER_SERVER", categoryList);
+        Category category = categoryMapper.selectById("1");
+        return cloudMQTemplate.send(CommonConstant.topic.ORDER_SERVER_TOPIC, "EC_ORDER_SERVER", category);
     }
 
 

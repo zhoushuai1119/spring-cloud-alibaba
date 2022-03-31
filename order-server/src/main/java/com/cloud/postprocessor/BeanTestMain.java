@@ -1,7 +1,7 @@
 package com.cloud.postprocessor;
 
-import com.cloud.common.entity.order.BeanTest;
 import com.cloud.config.BeanTestConfig;
+import com.cloud.entity.BeanTest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

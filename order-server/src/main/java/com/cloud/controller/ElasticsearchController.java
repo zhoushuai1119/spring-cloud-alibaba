@@ -1,8 +1,8 @@
 package com.cloud.controller;
 
-import com.cloud.common.beans.response.BaseResponse;
-import com.cloud.common.entity.order.Category;
-import com.cloud.common.service.order.CategoryService;
+import com.cloud.entity.Category;
+import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.service.CategoryService;
 import com.cloud.service.ElasticsearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

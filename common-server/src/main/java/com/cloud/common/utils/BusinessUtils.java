@@ -1,7 +1,8 @@
 package com.cloud.common.utils;
 
 import com.cloud.common.beans.exception.BusinessException;
-import com.cloud.common.beans.response.BaseResponse;
+import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
@@ -19,7 +20,7 @@ public class BusinessUtils {
         if (Objects.nonNull(baseResponse) && baseResponse.isSuccess()) {
             return baseResponse.getModel();
         }
-        log.error("调用外部系统失败:{},参数:{}",JsonUtil.toString(baseResponse),JsonUtil.toString(params));
+        log.error("调用外部系统失败:{},参数:{}", JsonUtil.toString(baseResponse),JsonUtil.toString(params));
         throw new BusinessException(baseResponse.getErrorCode(),baseResponse.getErrorMessage());
     }
 

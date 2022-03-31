@@ -2,6 +2,8 @@ package com.cloud.common.beans.exception;
 
 
 import com.cloud.common.enums.ErrorCodeEnum;
+import com.cloud.platform.common.exception.BaseException;
+import com.cloud.platform.common.exception.BaseExceptionCode;
 
 /**
  * 业务Exception
