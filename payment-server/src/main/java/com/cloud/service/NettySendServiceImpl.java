@@ -1,7 +1,7 @@
 package com.cloud.service;
 
-import com.cloud.common.entity.common.SmartCarProtocol;
-import com.cloud.common.service.common.NettySendService;
+import com.cloud.common.beans.protocol.SmartProtocol;
+import com.cloud.common.netty.NettySendService;
 import com.cloud.netty.client.NettyClientHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelId;
@@ -22,7 +22,7 @@ public class NettySendServiceImpl implements NettySendService<String> {
     @Override
     public void sendMessage(String content) {
         ConcurrentHashMap<ChannelId, ChannelHandlerContext> map = NettyClientHandler.CLIENT_MAP;
-        SmartCarProtocol response = new SmartCarProtocol(content.getBytes().length, content.getBytes());
+        SmartProtocol response = new SmartProtocol(content.getBytes().length, content.getBytes());
         if (!map.isEmpty()) {
             map.forEach((k, v) -> {
                 if (v == null) {

@@ -2,8 +2,8 @@ package com.cloud.client.hystrix;
 
 import com.cloud.client.OrderClient;
 import com.cloud.common.beans.exception.BusinessException;
-import com.cloud.common.beans.response.BaseResponse;
 import com.cloud.common.utils.FeignUtils;
+import com.cloud.platform.common.response.BaseResponse;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

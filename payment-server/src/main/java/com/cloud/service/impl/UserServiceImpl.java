@@ -1,9 +1,9 @@
-package com.cloud.service;
+package com.cloud.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cloud.common.entity.payment.User;
-import com.cloud.common.service.payment.UserService;
 import com.cloud.dao.UserMapper;
+import com.cloud.entity.User;
+import com.cloud.service.UserService;
 import io.seata.core.context.RootContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

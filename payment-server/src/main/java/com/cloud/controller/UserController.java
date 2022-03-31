@@ -1,8 +1,8 @@
 package com.cloud.controller;
 
-import com.cloud.common.beans.response.BaseResponse;
-import com.cloud.common.entity.payment.User;
-import com.cloud.common.service.payment.UserService;
+import com.cloud.entity.User;
+import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

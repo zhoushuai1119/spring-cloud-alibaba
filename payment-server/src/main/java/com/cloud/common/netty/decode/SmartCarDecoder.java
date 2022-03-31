@@ -1,7 +1,7 @@
 package com.cloud.common.netty.decode;
 
+import com.cloud.common.beans.protocol.SmartProtocol;
 import com.cloud.common.constants.CommonConstant;
-import com.cloud.common.entity.common.SmartCarProtocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -74,7 +74,7 @@ public class SmartCarDecoder extends ByteToMessageDecoder {
             byte[] data = new byte[length];
             buffer.readBytes(data);
 
-            SmartCarProtocol protocol = new SmartCarProtocol(data.length, data);
+            SmartProtocol protocol = new SmartProtocol(data.length, data);
             out.add(protocol);
         }
     }
