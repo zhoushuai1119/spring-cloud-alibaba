@@ -1,14 +1,15 @@
 package com.cloud.rocketmq.producer.async;
 
-import com.cloud.annotation.AsyncSendTopic;
 import com.cloud.common.constants.CommonConstant;
-import com.cloud.common.entity.user.TokenUser;
-import com.cloud.core.AsyncSendExecutor;
-import com.cloud.core.RocketMQTemplate;
+import com.cloud.entity.TokenUser;
+import com.cloud.platform.rocketmq.annotation.AsyncSendTopic;
+import com.cloud.platform.rocketmq.core.AsyncSendExecutor;
+import com.cloud.platform.rocketmq.core.RocketMQTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendResult;
 
 import java.util.List;
+
 
 /**
  * @description:

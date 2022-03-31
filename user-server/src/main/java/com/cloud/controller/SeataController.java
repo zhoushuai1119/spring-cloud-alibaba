@@ -1,6 +1,6 @@
 package com.cloud.controller;
 
-import com.cloud.common.beans.response.BaseResponse;
+import com.cloud.platform.common.response.BaseResponse;
 import com.cloud.proxy.OrderProxy;
 import com.cloud.proxy.PaymentProxy;
 import io.seata.spring.annotation.GlobalTransactional;

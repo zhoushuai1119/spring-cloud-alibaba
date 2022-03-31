@@ -1,10 +1,10 @@
-package com.cloud.service;
+package com.cloud.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cloud.common.entity.user.TokenUser;
-import com.cloud.common.service.user.TokenUserService;
 import com.cloud.dao.TokenUserMapper;
+import com.cloud.entity.TokenUser;
+import com.cloud.service.TokenUserService;
 import com.cloud.utils.JwtUtil;
 import org.springframework.stereotype.Service;
 

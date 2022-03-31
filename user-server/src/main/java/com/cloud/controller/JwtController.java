@@ -1,8 +1,8 @@
 package com.cloud.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cloud.common.entity.user.TokenUser;
-import com.cloud.common.service.user.TokenUserService;
+import com.cloud.entity.TokenUser;
+import com.cloud.service.TokenUserService;
 import com.cloud.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
