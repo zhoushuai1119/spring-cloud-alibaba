@@ -4,8 +4,8 @@ MAINTAINER zhoushuai zs195310@aliyun.com
 
 VOLUME /temp
 
-ADD user-server.jar /zhoushuai/user-server.jar
+ADD user-server.jar /app/user-server.jar
 
 EXPOSE 8766
 
-CMD java -jar /zhoushuai/user-server.jar --spring.profiles.active=${environment}
+CMD java -jar /app/user-server.jar

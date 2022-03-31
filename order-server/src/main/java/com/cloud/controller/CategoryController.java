@@ -2,18 +2,18 @@ package com.cloud.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.cloud.common.aop.annotation.AopOrderTest;
 import com.cloud.dto.ParmsTestDto;
 import com.cloud.entity.Category;
 import com.cloud.platform.common.request.PageQueryRequest;
 import com.cloud.platform.common.response.BaseResponse;
 import com.cloud.platform.common.response.PageQueryResponse;
+import com.cloud.platform.web.aop.annotation.MethodLogger;
+import com.cloud.platform.web.aop.annotation.NewAuth;
 import com.cloud.service.CategoryService;
 import com.cloud.service.SqlService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +43,7 @@ public class CategoryController {
 
 
     @PostMapping("/param/check")
+    @MethodLogger
     public BaseResponse<String> paramCheck(@RequestBody @Validated ParmsTestDto parmsTestDto) {
         return BaseResponse.createSuccessResult(null);
     }

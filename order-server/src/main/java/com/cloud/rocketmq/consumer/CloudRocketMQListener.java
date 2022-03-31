@@ -8,6 +8,8 @@ import com.cloud.platform.rocketmq.annotation.ConsumeTopic;
 import com.cloud.platform.rocketmq.core.TopicListener;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 /**
  * @description:
  * @author: zhou shuai
@@ -19,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CloudRocketMQListener implements TopicListener<Category> {
 
     @Override
-    public void onMessage(CloudMessage<Category> message) throws Exception {
+    public void onMessage(CloudMessage<Category> message) {
         log.info("接收到消息:{}", JsonUtil.toString(message.getPayload()));
     }
 
