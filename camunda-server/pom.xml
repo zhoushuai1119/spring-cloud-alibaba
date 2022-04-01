@@ -41,6 +41,10 @@
                     <groupId>io.seata</groupId>
                     <artifactId>seata-spring-boot-starter</artifactId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>jersey-core</artifactId>
+                    <groupId>com.sun.jersey</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!--spring-test-->

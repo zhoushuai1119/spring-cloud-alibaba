@@ -4,7 +4,7 @@ MAINTAINER zhoushuai zs195310@aliyun.com
 
 VOLUME /temp
 
-ADD order-server.jar /app/camunda-server.jar
+ADD camunda-server.jar /app/camunda-server.jar
 
 EXPOSE 8768
 
