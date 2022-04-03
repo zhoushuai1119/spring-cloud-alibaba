@@ -1,7 +1,7 @@
 package com.cloud.netty.server;
 
-import com.cloud.common.netty.decode.SmartDecoder;
-import com.cloud.common.netty.encode.SmartEncoder;
+import com.cloud.platform.web.netty.decode.SmartDecoder;
+import com.cloud.platform.web.netty.encode.SmartEncoder;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 

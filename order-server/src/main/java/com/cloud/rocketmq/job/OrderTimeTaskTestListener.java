@@ -1,6 +1,7 @@
 package com.cloud.rocketmq.job;
 
 import com.cloud.mq.base.dto.CloudMessage;
+import com.cloud.platform.common.constants.PlatformCommonConstant;
 import com.cloud.platform.common.utils.JsonUtil;
 import com.cloud.platform.rocketmq.annotation.ConsumeTopic;
 import com.cloud.platform.rocketmq.core.TopicListener;
@@ -13,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
  * @version: v1
  */
 @Slf4j
-@ConsumeTopic(topic = "TP_F_SC", eventCode = "EC_TASK_ORDER_JOB_TEST", log = true)
+@ConsumeTopic(topic = PlatformCommonConstant.ScheduledJobTopic.SCHEDULED_JOB_TOPIC, eventCode = "EC_TASK_ORDER_JOB_TEST", log = true)
 public class OrderTimeTaskTestListener implements TopicListener<String> {
 
     @Override

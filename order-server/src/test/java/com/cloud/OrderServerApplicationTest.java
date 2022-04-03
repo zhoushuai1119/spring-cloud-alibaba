@@ -2,9 +2,12 @@ package com.cloud;
 
 import com.cloud.dao.elasticsearch.CategoryElasticRepository;
 import com.cloud.dao.mongodb.TestMongoRepository;
+import com.cloud.dto.MapperTestDTO;
 import com.cloud.dto.MongoTestDTO;
 import com.cloud.dto.test.*;
 import com.cloud.entity.Category;
+import com.cloud.platform.common.utils.JsonUtil;
+import com.github.dozermapper.core.Mapper;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.junit.Test;
@@ -15,6 +18,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.SpringVersion;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 
 //@SpringBootTest(properties = {"spring.profiles.active=dev"})
@@ -34,6 +42,9 @@ public class OrderServerApplicationTest {
 
     @Autowired
     private TestMongoRepository testMongoRepository;
+
+    @Resource
+    private Mapper mapper;
 
     @Autowired
     private TestA testA;
@@ -72,8 +83,13 @@ public class OrderServerApplicationTest {
         mongoTestDTO.setName("test");
         mongoTestDTO.setAge(30);
         mongoTestDTO.setAddress("上海市青浦区");
+        mongoTestDTO.setTime("2021-12-31");
+        mongoTestDTO.setLocalDate(new Date());
+        mongoTestDTO.setLocalDateTime(LocalDateTime.now());
 
-        testMongoRepository.save(mongoTestDTO);
+        MapperTestDTO mapperTest = mapper.map(mongoTestDTO,MapperTestDTO.class);
+        log.info("mapperTest:{}", JsonUtil.toString(mapperTest));
+        //testMongoRepository.save(mongoTestDTO);
     }
 
 

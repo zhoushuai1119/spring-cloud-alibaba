@@ -5,9 +5,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloud.dao.CategoryMapper;
 import com.cloud.entity.Category;
+import com.cloud.enums.OrderEnum;
 import com.cloud.platform.common.request.PageQueryRequest;
+import com.cloud.platform.common.utils.JsonUtil;
 import com.cloud.proxy.PaymentProxy;
 import com.cloud.service.CategoryService;
+import com.cloud.utils.ThreadLocalUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -36,6 +39,10 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Override
     public List<Category> categoryList() {
+        log.info("parmsTestDto:{}", JsonUtil.toString(ThreadLocalUtil.get()));
+        ThreadLocalUtil.remove();
+        log.info("parmsTestDto:{}", JsonUtil.toString(ThreadLocalUtil.get()));
+        log.info("oredrEnum:{}", OrderEnum.getEnumByValue(1));
         return list();
     }
 
@@ -60,6 +67,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     public void asyncSendMq(Integer categoryId) {
         Category category = baseMapper.selectById(categoryId);
         publisher.publishEvent(category);
+    }
+
+
+    @Override
+    public void saveCategory(Category category) {
+        baseMapper.insert(category);
     }
 
 }

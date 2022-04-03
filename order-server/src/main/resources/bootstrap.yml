@@ -77,6 +77,11 @@ spring:
 
 #rocketmq配置
 cloud:
+  web:
+    #开启全局异常捕获
+    globalExceptionHandler:
+      enabled: true
+
   rocketmq:
     #不能使用name-server
     nameServer: 139.196.208.53:9876

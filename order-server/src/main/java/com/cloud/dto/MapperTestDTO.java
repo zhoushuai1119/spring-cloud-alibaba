@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @description:
@@ -16,12 +15,10 @@ import java.util.Date;
  * @version: v1
  */
 @Data
-@Document(collection = "test_mongo")
-public class MongoTestDTO implements Serializable {
+public class MapperTestDTO implements Serializable {
 
-    private static final long serialVersionUID = -5393534928146192660L;
+    private static final long serialVersionUID = -6385245380010107470L;
 
-    @Id
     private long id;
 
     private String name;
@@ -30,9 +27,9 @@ public class MongoTestDTO implements Serializable {
 
     private String address;
 
-    private String time;
+    private LocalDate time;
 
-    private Date localDate;
+    private LocalDateTime localDate;
 
     private LocalDateTime localDateTime;
 

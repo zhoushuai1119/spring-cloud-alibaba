@@ -28,6 +28,8 @@ public class EnumDeserializer implements ObjectDeserializer {
             value = object.getString("value");
         } else if (parseValue instanceof String) {
             value = (String)parseValue;
+        } else if (parseValue instanceof Integer) {
+            value = String.valueOf(parseValue);
         }
 
         if (value != null) {
@@ -41,7 +43,7 @@ public class EnumDeserializer implements ObjectDeserializer {
             Object enumConstant;
             String name;
             try {
-                Method method = clazz.getDeclaredMethod("valuesOf", String.class);
+                Method method = clazz.getDeclaredMethod("getEnumByValue", String.class);
                 t = method.invoke((Object)null, value);
                 if (t == null) {
                     enumConstants = clazz.getEnumConstants();
