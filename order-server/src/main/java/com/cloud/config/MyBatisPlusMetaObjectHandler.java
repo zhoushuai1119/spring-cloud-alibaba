@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 /**
- * @description:
+ * @description: MybatisPlus 自动填充功能
  * @author: zhou shuai
  * @date: 2022/1/10 18:49
  * @version: v1
@@ -21,6 +21,8 @@ public class MyBatisPlusMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill ....");
         this.strictInsertFill(metaObject, "createTime", () -> LocalDateTime.now(), LocalDateTime.class); // 起始版本 3.3.3(推荐)
+        this.strictInsertFill(metaObject, "isDeleted", () -> 0, Integer.class);
+        this.strictInsertFill(metaObject, "version", () -> 0, Integer.class);
     }
 
     @Override

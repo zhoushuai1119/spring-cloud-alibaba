@@ -1,4 +1,4 @@
-package com.cloud.common;
+package com.cloud.filter;
 
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;

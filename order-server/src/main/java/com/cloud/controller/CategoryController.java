@@ -14,7 +14,6 @@ import com.cloud.platform.web.validate.Update;
 import com.cloud.service.CategoryService;
 import com.cloud.service.SqlService;
 import com.cloud.utils.ThreadLocalUtil;
-import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -33,7 +32,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/category")
-@Api(value = "test接口", tags = "test接口")
 @Slf4j
 //需要实时刷新配置，需要在controller添加@RefreshScope
 @RefreshScope
@@ -100,6 +98,12 @@ public class CategoryController {
     @PostMapping("/updateCategory")
     public BaseResponse<String> updateCategory() {
         categoryService.updateCategory();
+        return BaseResponse.createSuccessResult(null);
+    }
+
+    @PostMapping("/delCategory")
+    public BaseResponse<String> delCategory() {
+        categoryService.delCategory();
         return BaseResponse.createSuccessResult(null);
     }
 

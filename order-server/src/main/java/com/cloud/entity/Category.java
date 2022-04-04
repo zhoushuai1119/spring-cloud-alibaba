@@ -1,10 +1,8 @@
 package com.cloud.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.cloud.enums.CategoryTypeEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -51,5 +49,27 @@ public class Category implements Serializable {
     @TableField("category_type")
     @Field(type = FieldType.Integer)
     private CategoryTypeEnum categoryType;
+
+
+    @Version //乐观锁版本号配置
+    @TableField(value = "version", fill = FieldFill.INSERT)
+    @Field(type = FieldType.Integer)
+    private Integer version;
+
+
+    /**
+     * 租户ID--》多租户测试
+     */
+    @TableField("tenant_id")
+    @JsonIgnore //不显示某个字段给前端
+    @Field(type = FieldType.Keyword)
+    private String tenantId;
+
+
+    @TableLogic //标注为逻辑删除字段
+    @TableField(value = "is_deleted", fill = FieldFill.INSERT)
+    @JsonIgnore //不显示某个字段给前端
+    @Field(type = FieldType.Integer)
+    private Integer isDeleted;
 
 }

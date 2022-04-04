@@ -1,5 +1,6 @@
 package com.cloud;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.cloud.dao.elasticsearch.CategoryElasticRepository;
 import com.cloud.dao.mongodb.TestMongoRepository;
 import com.cloud.dto.MapperTestDTO;
@@ -7,6 +8,7 @@ import com.cloud.dto.MongoTestDTO;
 import com.cloud.dto.test.*;
 import com.cloud.entity.Category;
 import com.cloud.platform.common.utils.JsonUtil;
+import com.cloud.service.CategoryService;
 import com.github.dozermapper.core.Mapper;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -20,7 +22,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -42,6 +43,9 @@ public class OrderServerApplicationTest {
 
     @Autowired
     private TestMongoRepository testMongoRepository;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Resource
     private Mapper mapper;
@@ -103,6 +107,12 @@ public class OrderServerApplicationTest {
         category.setParentCategoryId("11");
         category.setParentCategoryName("2dd3");
         categoryElasticRepository.save(category);
+    }
+
+    @Test
+    public void updateTableTest() {
+        //测试全表更新插件
+        categoryService.remove(new UpdateWrapper<>());
     }
 
     @Test

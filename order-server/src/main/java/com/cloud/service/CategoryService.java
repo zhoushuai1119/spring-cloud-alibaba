@@ -22,6 +22,8 @@ public interface CategoryService extends IService<Category> {
 
     void updateCategory();
 
+    void delCategory();
+
     void asyncSendMq(Integer categoryId);
 
     void saveCategory(Category category);

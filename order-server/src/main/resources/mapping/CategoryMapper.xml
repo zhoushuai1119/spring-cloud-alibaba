@@ -9,10 +9,14 @@
     <result column="parent_category_id" jdbcType="VARCHAR" property="parentCategoryId" />
     <result column="parent_category_name" jdbcType="VARCHAR" property="parentCategoryName" />
     <result column="category_type" jdbcType="INTEGER" property="categoryType" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="tenant_id" jdbcType="VARCHAR" property="tenantId" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, category_id, category_name, category_level, parent_category_id, parent_category_name, category_type
+      id, category_id, category_name, category_level, parent_category_id,
+      parent_category_name, category_type, version, tenant_id, is_deleted
   </sql>
 
 </mapper>

@@ -2,7 +2,10 @@ package com.cloud.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import com.baomidou.mybatisplus.extension.plugins.inner.*;
+import com.cloud.common.plugins.MyTableNameHandler;
+import com.cloud.common.plugins.MyTenantLineHandler;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +28,22 @@ public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        TenantLineInnerInterceptor tenantLineInnerInterceptor = new TenantLineInnerInterceptor();
+        TenantLineHandler myTenantLineHandler = new MyTenantLineHandler();
+        tenantLineInnerInterceptor.setTenantLineHandler(myTenantLineHandler);
+        //添加租户插件；如果用了分页插件注意先添加租户插件再添加分页插件
+        interceptor.addInnerInterceptor(tenantLineInnerInterceptor);
+        //分页插件
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        //乐观锁插件
+        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        //动态表名插件
+        DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
+        dynamicTableNameInnerInterceptor.setTableNameHandler(new MyTableNameHandler());
+        //添加动态表名插件
+        interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
+        //防止全表更新与删除插件
+        interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
         return interceptor;
     }
 

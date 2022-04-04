@@ -48,8 +48,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Override
     public Page<Category> categoryPageList(PageQueryRequest pageQueryRequest) {
-        Page page = new Page(pageQueryRequest.getPageIndex(),pageQueryRequest.getPageSize());
-        Page<Category> pageList = baseMapper.selectPage(page,new QueryWrapper<>());
+        Page page = new Page(pageQueryRequest.getPageIndex(), pageQueryRequest.getPageSize());
+        Page<Category> pageList = baseMapper.selectPage(page, new QueryWrapper<>());
         return pageList;
     }
 
@@ -59,6 +59,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         Category category = baseMapper.selectById("16");
         category.setParentCategoryId("2222");
         updateById(category);
+    }
+
+    @Override
+    public void delCategory() {
+        baseMapper.deleteById(57);
     }
 
     @Override
