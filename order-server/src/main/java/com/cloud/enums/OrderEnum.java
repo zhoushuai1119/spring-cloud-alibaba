@@ -15,6 +15,7 @@ import java.util.stream.Stream;
  */
 @AllArgsConstructor
 @Getter
+//枚举校验需要实现EnumValidator
 public enum OrderEnum implements EnumValidator<Integer> {
 
     ORDER_ONE(1, "订单1"),

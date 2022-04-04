@@ -1,6 +1,6 @@
 package com.cloud.netty.client;
 
-import com.cloud.common.beans.protocol.SmartProtocol;
+import com.cloud.platform.web.netty.protocol.SmartProtocol;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelInboundHandlerAdapter;

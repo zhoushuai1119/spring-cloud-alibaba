@@ -1,12 +1,9 @@
 package com.cloud.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.cloud.common.serializer.EnumDeserializer;
-import com.cloud.common.serializer.EnumSerializer;
 import com.cloud.enums.CategoryTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -53,7 +50,6 @@ public class Category implements Serializable {
 
     @TableField("category_type")
     @Field(type = FieldType.Integer)
-    @JSONField(serializeUsing = EnumSerializer.class,deserializeUsing = EnumDeserializer.class)
     private CategoryTypeEnum categoryType;
 
 }

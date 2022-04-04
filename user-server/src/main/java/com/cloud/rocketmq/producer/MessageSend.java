@@ -1,14 +1,13 @@
 package com.cloud.rocketmq.producer;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.cloud.common.constants.CommonConstant;
 import com.cloud.dao.TokenUserMapper;
 import com.cloud.entity.TokenUser;
 import com.cloud.mq.base.core.CloudMQTemplate;
+import com.cloud.platform.common.constants.PlatformCommonConstant;
 import com.cloud.rocketmq.producer.async.TokenUserAsyncSendExecutor;
 import com.cloud.rocketmq.producer.transaction.TokenUserTransactionExecutor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +39,7 @@ public class MessageSend {
 
     public void sendMessage() {
         List<TokenUser> tokenUserList = tokenUserMapper.selectList(new QueryWrapper<>());
-        cloudMQTemplate.send(CommonConstant.topic.USER_SERVER_TOPIC, "EC_USER_SERVER", tokenUserList);
+        cloudMQTemplate.send(PlatformCommonConstant.Topic.USER_SERVER_TOPIC, "EC_USER_SERVER", tokenUserList);
     }
 
     public void asyncSendMessage() {

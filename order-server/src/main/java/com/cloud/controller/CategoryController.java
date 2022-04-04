@@ -71,6 +71,7 @@ public class CategoryController {
     }
 
     @PostMapping("/enum/test")
+    //加@RequestBody会报错
     public BaseResponse enumTest(CategoryTypeEnum categoryType) {
         return BaseResponse.createSuccessResult(categoryType);
     }

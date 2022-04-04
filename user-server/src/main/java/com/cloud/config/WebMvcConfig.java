@@ -1,8 +1,8 @@
 package com.cloud.config;
 
 
-import com.cloud.common.beans.factory.StringToEnumConverterFactory;
 import com.cloud.interceptor.LoginInterceptor;
+import com.cloud.platform.web.factory.StringToEnumConverterFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;

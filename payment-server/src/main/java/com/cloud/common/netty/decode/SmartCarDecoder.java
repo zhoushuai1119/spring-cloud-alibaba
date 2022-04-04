@@ -1,7 +1,7 @@
 package com.cloud.common.netty.decode;
 
-import com.cloud.common.beans.protocol.SmartProtocol;
-import com.cloud.common.constants.CommonConstant;
+import com.cloud.platform.common.constants.PlatformCommonConstant;
+import com.cloud.platform.web.netty.protocol.SmartProtocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -44,7 +44,7 @@ public class SmartCarDecoder extends ByteToMessageDecoder {
                 // 标记包头开始的index
                 buffer.markReaderIndex();
                 // 读到了协议的开始标志，结束while循环
-                if (buffer.readInt() == CommonConstant.netty.HEAD_DATA) {
+                if (buffer.readInt() == PlatformCommonConstant.Netty.HEAD_DATA) {
                     break;
                 }
 

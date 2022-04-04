@@ -1,17 +1,13 @@
 package com.cloud.rocketmq.producer;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.cloud.common.constants.CommonConstant;
 import com.cloud.dao.ProductMapper;
 import com.cloud.entity.Product;
 import com.cloud.mq.base.core.CloudMQTemplate;
+import com.cloud.platform.common.constants.PlatformCommonConstant;
 import com.cloud.rocketmq.producer.transaction.ProductTransactionExecutor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 
 /**
@@ -35,7 +31,7 @@ public class MessageSend {
 
 
     public void sendMessage() {
-        cloudMQTemplate.send(CommonConstant.topic.PRODUCT_SERVER_TOPIC, "EC_PRODUCT_SERVER", "productMessage");
+        cloudMQTemplate.send(PlatformCommonConstant.Topic.PRODUCT_SERVER_TOPIC, "EC_PRODUCT_SERVER", "productMessage");
     }
 
     public void sendTransactionMessage() {

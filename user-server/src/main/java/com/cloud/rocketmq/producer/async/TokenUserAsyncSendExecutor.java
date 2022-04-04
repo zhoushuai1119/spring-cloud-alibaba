@@ -1,7 +1,7 @@
 package com.cloud.rocketmq.producer.async;
 
-import com.cloud.common.constants.CommonConstant;
 import com.cloud.entity.TokenUser;
+import com.cloud.platform.common.constants.PlatformCommonConstant;
 import com.cloud.platform.rocketmq.annotation.AsyncSendTopic;
 import com.cloud.platform.rocketmq.core.AsyncSendExecutor;
 import com.cloud.platform.rocketmq.core.RocketMQTemplate;
@@ -18,7 +18,7 @@ import java.util.List;
  * @version: v1
  */
 @Slf4j
-@AsyncSendTopic(topic = CommonConstant.topic.USER_SERVER_TOPIC, eventCode = "EC_USER_SERVER")
+@AsyncSendTopic(topic = PlatformCommonConstant.Topic.USER_SERVER_TOPIC, eventCode = "EC_USER_SERVER")
 public class TokenUserAsyncSendExecutor extends AsyncSendExecutor<List<TokenUser>> {
 
     public TokenUserAsyncSendExecutor(RocketMQTemplate rocketMQTemplate) {

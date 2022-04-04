@@ -1,8 +1,8 @@
 package com.cloud.rocketmq.producer.transaction;
 
-import com.cloud.common.constants.CommonConstant;
 import com.cloud.entity.Product;
 import com.cloud.mq.base.dto.CloudMessage;
+import com.cloud.platform.common.constants.PlatformCommonConstant;
 import com.cloud.platform.rocketmq.annotation.TansactionTopic;
 import com.cloud.platform.rocketmq.core.BaseTransactionExecutor;
 import com.cloud.platform.rocketmq.core.RocketMQTransactionTemplate;
@@ -16,7 +16,7 @@ import org.apache.rocketmq.client.producer.LocalTransactionState;
  * @version: v1
  */
 @Slf4j
-@TansactionTopic(topic = CommonConstant.topic.PRODUCT_SERVER_TOPIC_TRANSACTION, eventCode = "EC_PRODUCT_SERVER_TRANSACTION")
+@TansactionTopic(topic = PlatformCommonConstant.Topic.PRODUCT_SERVER_TOPIC_TRANSACTION, eventCode = "EC_PRODUCT_SERVER_TRANSACTION")
 public class ProductTransactionExecutor extends BaseTransactionExecutor<Product, Object> {
 
     public ProductTransactionExecutor(RocketMQTransactionTemplate rocketMQTransactionTemplate) {

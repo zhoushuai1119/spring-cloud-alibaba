@@ -1,7 +1,7 @@
 package com.cloud.common.netty.encode;
 
 
-import com.cloud.common.beans.protocol.SmartProtocol;
+import com.cloud.platform.web.netty.protocol.SmartProtocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;

@@ -1,8 +1,8 @@
 package com.cloud.service;
 
-import com.cloud.common.beans.protocol.SmartProtocol;
 import com.cloud.common.netty.NettySendService;
 import com.cloud.netty.client.NettyClientHandler;
+import com.cloud.platform.web.netty.protocol.SmartProtocol;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelId;
 import lombok.extern.slf4j.Slf4j;

@@ -1,8 +1,7 @@
 package com.cloud.rocketmq.consumer;
 
-import com.cloud.common.constants.CommonConstant;
-import com.cloud.entity.Product;
 import com.cloud.mq.base.dto.CloudMessage;
+import com.cloud.platform.common.constants.PlatformCommonConstant;
 import com.cloud.platform.common.utils.JsonUtil;
 import com.cloud.platform.rocketmq.annotation.ConsumeTopic;
 import com.cloud.platform.rocketmq.core.TopicListener;
@@ -16,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  * @version: v1
  */
 @Slf4j
-@ConsumeTopic(topic = CommonConstant.topic.PRODUCT_SERVER_TOPIC, eventCode = "EC_PRODUCT_SERVER", log = true)
+@ConsumeTopic(topic = PlatformCommonConstant.Topic.PRODUCT_SERVER_TOPIC, eventCode = "EC_PRODUCT_SERVER", log = true)
 public class CloudRocketMQListener implements TopicListener<String> {
 
     /**
