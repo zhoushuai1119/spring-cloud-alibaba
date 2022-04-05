@@ -1,5 +1,6 @@
 package com.cloud.dto;
 
+import com.cloud.enums.EnumCheckTest;
 import com.cloud.enums.OrderEnum;
 import com.cloud.platform.web.aop.annotation.EnumCheck;
 import com.cloud.platform.web.pattern.RegRule;
@@ -11,7 +12,9 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @description:
@@ -50,9 +53,18 @@ public class ParmsTestDto implements Serializable {
     /**
      * {@link com.cloud.enums.OrderEnum}
      */
-    @EnumCheck(clazz = OrderEnum.class, groups = {Update.class})
-    private Integer orderEnum;
+    @EnumCheck(clazz = EnumCheckTest.class, groups = {Update.class})
+    private Integer checkEnum;
 
-    private LocalDateTime time;
+    private LocalDateTime localDateTime;
+
+    private LocalDate localDate;
+
+    private Date date;
+
+
+    //@JsonSerialize(using = SerializerTest.class)
+    //@JsonDeserialize(using = DeserializeTest.class)
+    private OrderEnum order;
 
 }

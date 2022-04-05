@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloud.dao.CategoryMapper;
 import com.cloud.entity.Category;
-import com.cloud.enums.OrderEnum;
 import com.cloud.platform.common.request.PageQueryRequest;
 import com.cloud.platform.common.utils.JsonUtil;
 import com.cloud.proxy.PaymentProxy;
@@ -42,7 +41,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         log.info("parmsTestDto:{}", JsonUtil.toString(ThreadLocalUtil.get()));
         ThreadLocalUtil.remove();
         log.info("parmsTestDto:{}", JsonUtil.toString(ThreadLocalUtil.get()));
-        log.info("oredrEnum:{}", OrderEnum.getEnumByValue(1));
         return list();
     }
 

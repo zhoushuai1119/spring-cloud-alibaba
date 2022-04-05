@@ -1,6 +1,7 @@
 package com.cloud.enums;
 
-import com.cloud.platform.web.validate.constraint.EnumValidator;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,8 +16,10 @@ import java.util.stream.Stream;
  */
 @AllArgsConstructor
 @Getter
+//用于返回枚举对象
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 //枚举校验需要实现EnumValidator
-public enum OrderEnum implements EnumValidator<Integer> {
+public enum OrderEnum /*implements ConverterBaseEnum*/ {
 
     ORDER_ONE(1, "订单1"),
     ORDER_TWO(2, "订单2");
@@ -25,6 +28,7 @@ public enum OrderEnum implements EnumValidator<Integer> {
     private String name;
 
 
+    @JsonCreator
     public static OrderEnum getEnumByValue(Integer value) {
         return Stream.of(values())
                 .filter(order -> Objects.equals(order.getValue(), value))

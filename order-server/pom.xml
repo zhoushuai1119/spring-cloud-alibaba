@@ -50,53 +50,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
             </plugin>
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.4.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>${mysql.version}</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <configurationFile>src/main/resources/generator/generatorConfig.xml</configurationFile>
-                    <verbose>true</verbose>
-                    <overwrite>true</overwrite>
-                </configuration>
-            </plugin>
-            <!-- Docker maven plugin -->
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>1.2.2</version>
-                <configuration>
-                    <!-- docker私服的地址 -->
-                    <dockerHost>${docker.host.url}</dockerHost>
-                    <!--镜像名称以及版本号-->
-                    <imageName>${docker.repostory.url}/${docker.repostory.name}/${project.artifactId}:${project.version}</imageName>
-                    <imageTags>
-                        <imageTag>${project.version}</imageTag>
-                    </imageTags>
-                    <!--Dockerfile的位置 -->
-                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-                    <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                    <!-- 以下两行是为了docker push到DockerHub使用的。 -->
-                    <serverId>docker-harbor</serverId>
-                    <registryUrl>${docker.repostory.url}</registryUrl>
-                    <forceTags>true</forceTags>
-                    <pushImage>false</pushImage>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 </project>

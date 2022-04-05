@@ -45,16 +45,7 @@ public class CategoryController {
 
 
     /**
-     {
-     "str":"11",
-     "email":"126151551@qq.com",
-     "mobile":"17756228264",
-     "length":6666,
-     "max":6,
-     "groupTest":11,
-     "orderEnum":1
-     }
-     *
+     * 参数校验测试
      * @param parmsTestDto
      * @return
      */
@@ -63,7 +54,8 @@ public class CategoryController {
     public BaseResponse<ParmsTestDto> paramCheck(@RequestBody @Validated({Save.class, Update.class}) ParmsTestDto parmsTestDto) {
         parmsTestDto.setStr(Thread.currentThread().getName());
         ThreadLocalUtil.set(parmsTestDto);
-        parmsTestDto.setTime(LocalDateTime.now());
+        parmsTestDto.setLocalDateTime(LocalDateTime.now());
+        //parmsTestDto.setDeserializeTest("jjdhd");
         categoryService.categoryList();
         return BaseResponse.createSuccessResult(parmsTestDto);
     }
@@ -79,7 +71,7 @@ public class CategoryController {
     @MethodLogger
     public BaseResponse enumCheck(@RequestBody Category category) {
         categoryService.saveCategory(category);
-        return BaseResponse.createSuccessResult(null);
+        return BaseResponse.createSuccessResult(category);
     }
 
     @PostMapping("/category/list")
