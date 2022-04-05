@@ -1,4 +1,4 @@
-package com.cloud.common.screw;
+package com.cloud.common.generator;
 
 import cn.smallbun.screw.core.Configuration;
 import cn.smallbun.screw.core.engine.EngineConfig;
@@ -35,7 +35,7 @@ public class CreateDataDoc {
         //生成配置
         EngineConfig engineConfig = EngineConfig.builder()
                 //生成文件路径
-                .fileOutputDir("D://test")
+                .fileOutputDir("F://database_doc")
                 //打开目录
                 .openOutputDir(true)
                 //文件类型

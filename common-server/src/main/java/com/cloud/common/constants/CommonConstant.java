@@ -15,12 +15,6 @@ public class CommonConstant {
         String JWT_SECRET = "79e7c69681b8270162386e6daa53d1dc";
     }
 
-    /**
-     * 日期格式
-     */
-    public interface dateFormat {
-        String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    }
 
     /**
      * 门类参数

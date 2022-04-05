@@ -62,9 +62,6 @@ public class ParmsTestDto implements Serializable {
 
     private Date date;
 
-
-    //@JsonSerialize(using = SerializerTest.class)
-    //@JsonDeserialize(using = DeserializeTest.class)
     private OrderEnum order;
 
 }
