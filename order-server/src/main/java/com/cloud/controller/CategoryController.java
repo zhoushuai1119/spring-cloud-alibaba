@@ -2,6 +2,7 @@ package com.cloud.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cloud.config.WebRequestConfig;
 import com.cloud.dto.ParmsTestDto;
 import com.cloud.entity.Category;
 import com.cloud.enums.CategoryTypeEnum;
@@ -43,6 +44,9 @@ public class CategoryController {
     @Autowired
     private SqlService sqlService;
 
+    @Autowired
+    private WebRequestConfig webRequestConfig;
+
 
     /**
      * 参数校验测试
@@ -55,8 +59,9 @@ public class CategoryController {
         parmsTestDto.setStr(Thread.currentThread().getName());
         ThreadLocalUtil.set(parmsTestDto);
         parmsTestDto.setLocalDateTime(LocalDateTime.now());
+        parmsTestDto.setCurrentUserName(webRequestConfig.getUserName());
         //parmsTestDto.setDeserializeTest("jjdhd");
-        categoryService.categoryList();
+        //categoryService.categoryList();
         return BaseResponse.createSuccessResult(parmsTestDto);
     }
 

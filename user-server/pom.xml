@@ -25,12 +25,6 @@
             <artifactId>common-server</artifactId>
             <version>1.1.0-SNAPSHOT</version>
         </dependency>
-        <!--jwt-token-->
-        <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-            <version>3.12.1</version>
-        </dependency>
         <!--多数据源配置-->
         <dependency>
             <groupId>com.baomidou</groupId>

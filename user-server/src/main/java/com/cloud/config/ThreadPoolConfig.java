@@ -1,12 +1,9 @@
 package com.cloud.config;
 
-import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.binder.jvm.ExecutorServiceMetrics;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -18,9 +15,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @Configuration
 public class ThreadPoolConfig {
-
-    @Resource
-    MeterRegistry meterRegistry;
 
     @PostConstruct
     public void init() {
@@ -41,7 +35,6 @@ public class ThreadPoolConfig {
                 TimeUnit.MINUTES,
                 new LinkedBlockingQueue<>(500),
                 r -> new Thread(r, "battery-operation-" + prometheusThreadCounter.getAndIncrement()));
-        ExecutorServiceMetrics.monitor(meterRegistry, promExecutor, "battery-operation-executor");
         return promExecutor;
     }
 

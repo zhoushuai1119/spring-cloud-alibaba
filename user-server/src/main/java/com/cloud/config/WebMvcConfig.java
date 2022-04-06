@@ -30,7 +30,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         //配置拦截的url
         ir.addPathPatterns("/**");
         //配置不拦截的路径
-        ir.excludePathPatterns("/static/**")
+        ir.excludePathPatterns("/**/login")
+        .excludePathPatterns("/static/**")
         .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
     }
 

@@ -1,12 +1,18 @@
 package com.cloud.interceptor;
 
+import com.cloud.config.WebRequestConfig;
+import com.cloud.platform.common.utils.JsonUtil;
+import com.cloud.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * @description: 拦截器
@@ -18,6 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 
+    @Resource
+    private WebRequestConfig webRequestConfig;
+
     /**
      * controller 执行之前调用
      **/
@@ -25,7 +34,13 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest res, HttpServletResponse rep, Object object) throws Exception {
         log.info("进入LoginInterceptor拦截器");
-        return true;
+        String token = webRequestConfig.getToken();
+        if (StringUtils.isNotBlank(token)) {
+            Map<String, Object> currentUser = JwtUtil.verify(token);
+            log.info("currentUser:{}", JsonUtil.toString(currentUser));
+            return true;
+        }
+        return false;
     }
 
     /**
