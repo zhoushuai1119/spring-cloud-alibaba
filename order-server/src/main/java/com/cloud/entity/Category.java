@@ -11,6 +11,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @TableName("category")
@@ -71,5 +72,8 @@ public class Category implements Serializable {
     @JsonIgnore //不显示某个字段给前端
     @Field(type = FieldType.Integer)
     private Integer isDeleted;
+
+    @TableField(exist = false)
+    private LocalDateTime time;
 
 }

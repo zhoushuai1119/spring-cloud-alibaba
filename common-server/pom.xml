@@ -96,11 +96,6 @@
             <artifactId>seata-spring-boot-starter</artifactId>
             <version>${seata-version}</version>
         </dependency>
-        <!--redisson-->
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson</artifactId>
-        </dependency>
         <!-- fastdfs -->
         <dependency>
             <groupId>com.github.tobato</groupId>

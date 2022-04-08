@@ -7,6 +7,7 @@ import com.cloud.dto.MapperTestDTO;
 import com.cloud.dto.MongoTestDTO;
 import com.cloud.dto.test.*;
 import com.cloud.entity.Category;
+import com.cloud.enums.CategoryTypeEnum;
 import com.cloud.platform.common.utils.JsonUtil;
 import com.cloud.service.CategoryService;
 import com.github.dozermapper.core.Mapper;
@@ -106,6 +107,8 @@ public class OrderServerApplicationTest {
         category.setCategoryLevel(0);
         category.setParentCategoryId("11");
         category.setParentCategoryName("2dd3");
+        category.setCategoryType(CategoryTypeEnum.ORDINARY_ARCHIVE);
+        category.setTime(LocalDateTime.now());
         categoryElasticRepository.save(category);
     }
 

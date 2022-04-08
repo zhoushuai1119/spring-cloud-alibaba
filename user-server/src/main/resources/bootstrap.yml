@@ -60,6 +60,22 @@ spring:
 
 #rocketmq配置
 cloud:
+  web:
+    #开启全局异常捕获
+    globalExceptionHandler:
+      enabled: true
+
+    #redisson配置
+    redisson:
+      enabled: true
+      nodes: 139.196.208.53:6379
+      password: 123456
+      timeout: 3000
+      scanInterval: 1000
+      connectionPoolSize: 64
+      connectionMinimumIdleSize: 10
+      pingConnectionInterval: 1000
+
   rocketmq:
     #不能使用name-server
     name-server: 139.196.208.53:9876
@@ -96,17 +112,6 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
-
-
-#redisson配置
-redisson:
-  nodes: 139.196.208.53:6379
-  password: 123456
-  timeout: 3000
-  scanInterval: 1000
-  connectionPoolSize: 64
-  connectionMinimumIdleSize: 10
-  pingConnectionInterval: 1000
 
 
 #seata分布式事务配置

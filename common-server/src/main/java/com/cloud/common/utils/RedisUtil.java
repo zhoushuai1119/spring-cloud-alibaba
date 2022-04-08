@@ -1,6 +1,5 @@
-package com.cloud.utils;
+package com.cloud.common.utils;
 
-import com.cloud.common.constants.OrderConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -18,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @version: V1.0
  */
 @Component
-public class LettuceRedisUtil {
+public class RedisUtil {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -568,15 +567,6 @@ public class LettuceRedisUtil {
             e.printStackTrace();
             return 0;
         }
-    }
-
-    /**
-     * 获取redssion分布式锁的key
-     *
-     * @return
-     */
-    public String getLockKey(String key) {
-        return OrderConstant.CreateOrderKey.CREATE_ORDER_KEY + "_" + key;
     }
 
 }

@@ -24,7 +24,9 @@ public enum OrderEnum /*implements ConverterBaseEnum*/ {
     ORDER_ONE(1, "订单1"),
     ORDER_TWO(2, "订单2");
 
+    //@JsonValue
     private Integer value;
+
     private String name;
 
 

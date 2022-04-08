@@ -4,6 +4,7 @@ package com.cloud.listener;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @description: 监听器
@@ -17,19 +18,20 @@ public class MyHttpSessionListener implements HttpSessionListener {
     /**
      * 在线人数
      */
-    private Integer onlinePersonNum = 0;
+    private AtomicInteger onlinePersonNum = new AtomicInteger(0);
 
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-        onlinePersonNum ++;
+        onlinePersonNum.incrementAndGet();
         System.out.println("创建session，新用户上线");
         httpSessionEvent.getSession().getServletContext().setAttribute("onlinePersonNum",onlinePersonNum);
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-        onlinePersonNum --;
+        onlinePersonNum.decrementAndGet();
         System.out.println("销毁5session,用户下线");
         httpSessionEvent.getSession().getServletContext().setAttribute("onlinePersonNum",onlinePersonNum);
     }
+
 }

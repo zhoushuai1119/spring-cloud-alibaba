@@ -2,7 +2,7 @@ package com.cloud.controller;
 
 import com.cloud.common.enums.ErrorCodeEnum;
 import com.cloud.platform.common.response.BaseResponse;
-import com.cloud.utils.LettuceRedisUtil;
+import com.cloud.common.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -29,7 +29,7 @@ public class RedissonController {
     private RedissonClient redissonClient;
 
     @Autowired
-    private LettuceRedisUtil redisUtil;
+    private RedisUtil redisUtil;
 
     @PostConstruct
     public void init() {
@@ -39,8 +39,7 @@ public class RedissonController {
 
     @PostMapping("lock")
     public BaseResponse<String> lock(@RequestParam(required = true) String key) {
-        String lockKey = redisUtil.getLockKey(key);
-        RLock lock = redissonClient.getLock(lockKey);
+        RLock lock = redissonClient.getLock(key);
         try {
             lock.lock();
             log.info("线程:{}获取到锁", Thread.currentThread().getName());

@@ -56,6 +56,9 @@ public class ParmsTestDto implements Serializable {
     @EnumCheck(clazz = EnumCheckTest.class, groups = {Update.class})
     private Integer checkEnum;
 
+    /**
+     * 解决存入redis序列化问题
+     */
     private LocalDateTime localDateTime;
 
     private LocalDate localDate;
