@@ -3,21 +3,19 @@ package com.cloud.common.serializer;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 
 import java.nio.charset.Charset;
 
 /**
- * @description:
+ * @description: RedisTemplate集成FastJson实现序列化
  * @author: zhou shuai
  * @date: 2022/4/8 14:01
  * @version: v1
  */
 public class FastJson2JsonRedisSerializer<T> implements RedisSerializer<T> {
-    public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+    private static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
     private Class<T> clazz;
 
     /**
@@ -48,11 +46,6 @@ public class FastJson2JsonRedisSerializer<T> implements RedisSerializer<T> {
         }
         String str = new String(bytes, DEFAULT_CHARSET);
         return JSON.parseObject(str, clazz);
-    }
-
-
-    protected JavaType getJavaType() {
-        return TypeFactory.defaultInstance().constructType(clazz);
     }
 
 }

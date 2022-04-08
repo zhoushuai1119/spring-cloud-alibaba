@@ -10,7 +10,6 @@ import com.cloud.enums.CategoryTypeEnum;
 import com.cloud.platform.common.request.PageQueryRequest;
 import com.cloud.platform.common.response.BaseResponse;
 import com.cloud.platform.common.response.PageQueryResponse;
-import com.cloud.platform.common.utils.JsonUtil;
 import com.cloud.platform.web.aop.annotation.MethodLogger;
 import com.cloud.platform.web.validate.Save;
 import com.cloud.platform.web.validate.Update;
@@ -18,6 +17,7 @@ import com.cloud.service.CategoryService;
 import com.cloud.service.SqlService;
 import com.cloud.utils.ThreadLocalUtil;
 import com.github.dozermapper.core.Mapper;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -65,40 +65,22 @@ public class CategoryController {
      */
     @PostMapping("/param/check")
     @MethodLogger
-    public BaseResponse<ParmsTestDto> paramCheck(@RequestBody @Validated({Save.class, Update.class}) ParmsTestDto parmsTestDto) {
+    public BaseResponse<List<ParmsTestDto>> paramCheck(@RequestBody @Validated({Save.class, Update.class}) ParmsTestDto parmsTestDto) {
         parmsTestDto.setStr(Thread.currentThread().getName());
         ThreadLocalUtil.set(parmsTestDto);
         parmsTestDto.setLocalDateTime(LocalDateTime.now());
         parmsTestDto.setCurrentUserName(webRequestConfig.getUserName());
         //categoryService.categoryList();
-        redisUtil.set("parmsTestDto", parmsTestDto, 60 * 10);
+        redisUtil.set("parmsTestDto", Lists.newArrayList(parmsTestDto), 60 * 10);
         //log.info("redisParms:{}", redisParms);
-        ParmsTestDto parmsTestDto1 = (ParmsTestDto) redisUtil.get("parmsTestDto");
-        return BaseResponse.createSuccessResult(parmsTestDto1);
+        List<ParmsTestDto> parmsTestDtoList = (List<ParmsTestDto>) redisUtil.get("parmsTestDto");
+        return BaseResponse.createSuccessResult(parmsTestDtoList);
     }
 
     @PostMapping("/enum/test")
     //加@RequestBody会报错
     public BaseResponse enumTest(CategoryTypeEnum categoryType) {
         return BaseResponse.createSuccessResult(categoryType);
-    }
-
-    @PostMapping("/redis/test")
-    public BaseResponse redisTest() {
-        Category category = new Category();
-        category.setId(10);
-        category.setCategoryId("2dd");
-        category.setCategoryName("2ss");
-        category.setCategoryLevel(0);
-        category.setParentCategoryId("11");
-        category.setParentCategoryName("2dd3");
-        category.setCategoryType(CategoryTypeEnum.ORDINARY_ARCHIVE);
-        category.setTime(LocalDateTime.now());
-        //categoryElasticRepository.save(category);
-        redisUtil.set("category",category);
-        Category category1 = (Category) redisUtil.get("category");
-        log.info("category1:{}", JsonUtil.toString(category1));
-        return BaseResponse.createSuccessResult(category1);
     }
 
 

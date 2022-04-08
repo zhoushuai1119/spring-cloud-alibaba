@@ -25,14 +25,13 @@ public class RedisConfig {
 
         FastJson2JsonRedisSerializer fastJson2JsonRedisSerializer = new FastJson2JsonRedisSerializer(Object.class);
 
-        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
         // key采用String的序列化方式
-        template.setKeySerializer(stringRedisSerializer);
+        template.setKeySerializer(new StringRedisSerializer());
         // hash的key也采用String的序列化方式
-        template.setHashKeySerializer(stringRedisSerializer);
-        // value序列化方式采用jackson
+        template.setHashKeySerializer(new StringRedisSerializer());
+        // value序列化方式采用fastJson
         template.setValueSerializer(fastJson2JsonRedisSerializer);
-        // hash的value序列化方式采用jackson
+        // hash的value序列化方式采用fastJson
         template.setHashValueSerializer(fastJson2JsonRedisSerializer);
         // 开启事务
         template.setEnableTransactionSupport(true);

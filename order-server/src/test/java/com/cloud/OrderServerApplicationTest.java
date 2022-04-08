@@ -66,6 +66,9 @@ public class OrderServerApplicationTest {
     @Autowired
     private TestE testE;
 
+    @Autowired
+    private TestG testG;
+
     @Test
     public void testKey() {
         stringRedisTemplate.opsForValue().set("name","周帅");
@@ -141,6 +144,11 @@ public class OrderServerApplicationTest {
     @Test
     public void testE() {
         testE.print();
+    }
+
+    @Test
+    public void testG() {
+        testG.print();
     }
 
 }
