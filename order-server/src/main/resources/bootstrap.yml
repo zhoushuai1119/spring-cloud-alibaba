@@ -81,6 +81,7 @@ cloud:
     #开启全局异常捕获
     globalExceptionHandler:
       enabled: true
+    enableLogWithUUID: true
 
     #redisson配置
     redisson:
