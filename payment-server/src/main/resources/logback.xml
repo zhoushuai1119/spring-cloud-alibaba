@@ -21,13 +21,13 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
     <property name="log.max.size" value="100MB"/>
     <!-- 日志输出格式 -->
     <property name="log.pattern"
-              value="%blue(%d{yyyy-MM-dd HH:mm:ss}) [%boldGreen(%X{TRACK_ID})] | [%boldYellow(%thread)] | %highlight(%-5level) | %boldGreen(%logger{50}.%method:%L) - %highlight(%msg%n)"/>
+              value="%d{yyyy-MM-dd HH:mm:ss} 【%X{TRACK_ID}】 | [%thread] | %-5level | %logger{50}.%method:%L - %msg %n"/>
 
     <!--控制台输出 -->
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>${log.pattern}</Pattern>
-            <charset>utf-8</charset>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
 
@@ -48,7 +48,7 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
         <!-- 日志输出的文件的格式 -->
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>${log.pattern}</Pattern>
-            <charset>utf-8</charset>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
 
@@ -75,7 +75,7 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
         <!-- 日志输出的文件的格式 -->
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>${log.pattern}</Pattern>
-            <charset>utf-8</charset>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
 
