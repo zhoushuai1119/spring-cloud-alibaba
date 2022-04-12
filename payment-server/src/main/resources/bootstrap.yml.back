@@ -1,16 +1,14 @@
 server:
-  port: 8766
+  port: 8764
   servlet:
-    context-path: /user-server
+    context-path: /payment-server
 
 spring:
   application:
-    name: user-server
+    name: payment-server
 
-  #如果使用Spring Boot 2.1及更高版本时候，
-  #需要增加配置spring.main.allow-bean-definition-overriding=true
-  main:
-    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
 
   cloud:
     nacos:
@@ -18,11 +16,11 @@ spring:
         server-addr: 139.196.208.53:8848
         username: nacos
         password: nacos
-      config:
-        server-addr: 139.196.208.53:8848
-        username: nacos
-        password: nacos
-        file-extension: yaml
+
+  #如果使用Spring Boot 2.1及更高版本时候，
+  #需要增加配置spring.main.allow-bean-definition-overriding=true
+  main:
+    allow-bean-definition-overriding: true
 
   redis:
     database: 0
@@ -37,7 +35,6 @@ spring:
         max-idle: 8
         min-idle: 0
 
-
   datasource:
     dynamic:
       #设置默认的数据源或者数据源组,默认值即为master
@@ -47,13 +44,13 @@ spring:
       datasource:
         master:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://139.196.208.53:3306/test_zs?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
+          url: jdbc:mysql://139.196.208.53:3306/shiro?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
           username: root
           password: Zs11195310
 
         slave:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://139.196.208.53:3306/shiro?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
+          url: jdbc:mysql://139.196.208.53:3306/test_zs?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
           username: root
           password: Zs11195310
 
@@ -86,14 +83,13 @@ cloud:
     #消费者配置
     consumer:
       #消费者组名称
-      c-user-server:
+      c-payment-server:
         subscription:
           # topic : eventCode  最好都大写
-          TP_USER_SERVER_TOPIC: EC_USER_SERVER
-          TP_USER_SERVER_TOPIC_TRANSACTION: EC_USER_SERVER_TRANSACTION
+          TP_PAYMENT_SERVER_TOPIC: EC_PAYMENT_SERVER
+          TP_PAYMENT_SERVER_TOPIC_TRANSACTION: EC_PAYMENT_SERVER_TRANSACTION
           #定时任务
-          TP_F_SC: EC_TASK_USER_JOB_TEST
-
+          TP_F_SC: EC_TASK_PAYMENT_JOB_TEST
   #定时任务配置
   time-based-job:
     enabled: true
@@ -137,13 +133,14 @@ seata:
       username: nacos
       password: nacos
       group: SEATA_GROUP
-      data-id: seataServer.properties
+      data-id: seataClient.properties
 
 
 logging:
   level:
     RocketmqClient: error
     RocketmqRemoting: warn
+
 
 #hystrix的超时时间
 hystrix:

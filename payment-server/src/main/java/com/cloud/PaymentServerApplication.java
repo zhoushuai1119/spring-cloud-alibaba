@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableAsync
-@RefreshScope
 @EnableFeignClients
 public class PaymentServerApplication {
 

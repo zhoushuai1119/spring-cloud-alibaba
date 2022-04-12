@@ -2,6 +2,7 @@ package com.cloud.common.config;
 
 import com.cloud.common.serializer.FastJson2JsonRedisSerializer;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -15,6 +16,11 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @version: V1.0
  */
 @Configuration
+@ConditionalOnProperty(
+        prefix = "cloud.web.redis",
+        name = {"enabled"},
+        matchIfMissing = true
+)
 @Slf4j
 public class RedisConfig {
 

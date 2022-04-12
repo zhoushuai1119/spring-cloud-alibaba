@@ -7,6 +7,9 @@ spring:
   application:
     name: camunda-server
 
+  profiles:
+    active: dev
+
   #如果使用Spring Boot 2.1及更高版本时候，
   #需要增加配置spring.main.allow-bean-definition-overriding=true
   main:
@@ -18,11 +21,6 @@ spring:
         server-addr: 139.196.208.53:8848
         username: nacos
         password: nacos
-      config:
-        server-addr: 139.196.208.53:8848
-        username: nacos
-        password: nacos
-        file-extension: yaml
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

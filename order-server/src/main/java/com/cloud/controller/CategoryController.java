@@ -20,7 +20,6 @@ import com.github.dozermapper.core.Mapper;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +36,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/category")
 @Slf4j
-//需要实时刷新配置，需要在controller添加@RefreshScope
-@RefreshScope
 public class CategoryController {
 
     @Autowired
