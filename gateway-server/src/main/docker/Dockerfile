@@ -8,4 +8,4 @@ ADD gateway-server.jar /app/gateway-server.jar
 
 EXPOSE 8762
 
-ENTRYPOINT ["java", "-jar", "/app/gateway-server.jar"]
+CMD java -jar /app/gateway-server.jar --spring.profiles.active=${environment}

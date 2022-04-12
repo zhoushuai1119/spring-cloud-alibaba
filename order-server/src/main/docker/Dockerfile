@@ -8,4 +8,4 @@ ADD order-server.jar /app/order-server.jar
 
 EXPOSE 8763
 
-CMD java -jar /app/order-server.jar
+CMD java -jar /app/order-server.jar --spring.profiles.active=${environment}

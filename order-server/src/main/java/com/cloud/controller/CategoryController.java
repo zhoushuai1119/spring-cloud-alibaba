@@ -17,9 +17,9 @@ import com.cloud.service.CategoryService;
 import com.cloud.service.SqlService;
 import com.cloud.utils.ThreadLocalUtil;
 import com.github.dozermapper.core.Mapper;
-import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,6 +53,8 @@ public class CategoryController {
     @Autowired
     private WebRequestConfig webRequestConfig;
 
+    @Value("${test.parma:apollo_test}")
+    private String testParam;
 
     /**
      * 参数校验测试
@@ -62,16 +64,17 @@ public class CategoryController {
      */
     @PostMapping("/param/check")
     @MethodLogger
-    public BaseResponse<List<ParmsTestDto>> paramCheck(@RequestBody @Validated({Save.class, Update.class}) ParmsTestDto parmsTestDto) {
+    public BaseResponse<ParmsTestDto> paramCheck(@RequestBody @Validated({Save.class, Update.class}) ParmsTestDto parmsTestDto) {
         parmsTestDto.setStr(Thread.currentThread().getName());
         ThreadLocalUtil.set(parmsTestDto);
         parmsTestDto.setLocalDateTime(LocalDateTime.now());
         parmsTestDto.setCurrentUserName(webRequestConfig.getUserName());
+        parmsTestDto.setTestParam(testParam);
         //categoryService.categoryList();
-        redisUtil.set("parmsTestDto", Lists.newArrayList(parmsTestDto), 60 * 10);
+        redisUtil.set("parmsTestDto", parmsTestDto, 60 * 10);
         //log.info("redisParms:{}", redisParms);
-        List<ParmsTestDto> parmsTestDtoList = (List<ParmsTestDto>) redisUtil.get("parmsTestDto");
-        return BaseResponse.createSuccessResult(parmsTestDtoList);
+        ParmsTestDto parmsRedis = (ParmsTestDto) redisUtil.get("parmsTestDto");
+        return BaseResponse.createSuccessResult(parmsRedis);
     }
 
     @PostMapping("/enum/test")

@@ -67,6 +67,8 @@ public class ParmsTestDto implements Serializable {
 
     private OrderEnum order;
 
+    private String testParam;
+
     /**
      * 当前登录人姓名
      */

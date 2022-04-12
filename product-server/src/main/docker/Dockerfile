@@ -8,4 +8,4 @@ ADD product-server.jar /app/product-server.jar
 
 EXPOSE 8765
 
-CMD java -jar /app/product-server.jar
+CMD java -jar /app/product-server.jar --spring.profiles.active=${environment}
