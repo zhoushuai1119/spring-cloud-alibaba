@@ -7,17 +7,15 @@ spring:
   application:
     name: order-server
 
+  profiles:
+    active: dev
+
   cloud:
     nacos:
       discovery:
         server-addr: 139.196.208.53:8848
         username: nacos
         password: nacos
-      config:
-        server-addr: 139.196.208.53:8848
-        username: nacos
-        password: nacos
-        file-extension: yaml
 
   servlet:
     multipart:
@@ -157,7 +155,7 @@ seata:
       username: nacos
       password: nacos
       group: SEATA_GROUP
-      data-id: seataServer.properties
+      data-id: seataClient.properties
 
 #fastdfs 配置
 fdfs:
