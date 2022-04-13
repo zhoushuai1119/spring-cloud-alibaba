@@ -3,7 +3,7 @@ package com.cloud.enums;
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.cloud.platform.web.enums.ConverterBaseEnum;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 @Getter
 //用于返回枚举对象
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
+//@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 // 实现 ConverterBaseEnum 主要用于用枚举接收前端参数；StringToEnumConverterFactory
 // 用枚举接收前端参数需要注意:
 // 1: 枚举类中value以0开始，依次增加； 枚举类中以value的值作为顺序，依次排列
@@ -30,8 +30,8 @@ public enum CategoryTypeEnum implements ConverterBaseEnum {
     ORDINARY_ARCHIVE(0, "普通档案"),
     SECRET_ARCHIVE(1, "机密档案");
 
-    @EnumValue   //设置存入数据库的值
-    //@JsonValue //标记json返回的值
+    @EnumValue //设置存入数据库的值
+    @JsonValue //标记json返回的值
     private Integer value;
 
     private String name;
