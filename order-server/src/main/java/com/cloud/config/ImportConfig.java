@@ -3,6 +3,7 @@ package com.cloud.config;
 import com.cloud.dto.test.TestA;
 import com.cloud.dto.test.TestB;
 import com.cloud.dto.test.TestFConfig;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Import;
 @Import({TestA.class, TestB.class, MyImportSelector.class,
         MyImportBeanDefinitionRegistrar.class, TestFConfig.class})
 @Configuration
+@EnableConfigurationProperties(ApolloProperties.class)
 public class ImportConfig {
 
 }

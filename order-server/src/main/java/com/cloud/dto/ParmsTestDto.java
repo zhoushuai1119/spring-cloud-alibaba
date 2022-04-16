@@ -1,5 +1,6 @@
 package com.cloud.dto;
 
+import com.cloud.config.ApolloProperties;
 import com.cloud.enums.EnumCheckTest;
 import com.cloud.enums.OrderEnum;
 import com.cloud.platform.web.aop.annotation.EnumCheck;
@@ -68,6 +69,10 @@ public class ParmsTestDto implements Serializable {
     private OrderEnum order;
 
     private String testParam;
+
+    private String testNamespace;
+
+    private ApolloProperties apolloProperties;
 
     /**
      * 当前登录人姓名

@@ -3,6 +3,7 @@ package com.cloud.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cloud.common.utils.RedisUtil;
+import com.cloud.config.ApolloProperties;
 import com.cloud.config.WebRequestConfig;
 import com.cloud.dto.ParmsTestDto;
 import com.cloud.entity.Category;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -56,6 +58,15 @@ public class CategoryController {
     @Value("${test.parma:apollo_test}")
     private String testParam;
 
+    @Value("${test.namespace}")
+    private String testNamespace;
+
+    /**
+     * bean使用@ConfigurationProperties注解目前还不支持自动刷新，得编写一定的代码实现刷新
+     */
+    @Resource
+    private ApolloProperties apolloProperties;
+
     /**
      * 参数校验测试
      *
@@ -70,6 +81,8 @@ public class CategoryController {
         parmsTestDto.setLocalDateTime(LocalDateTime.now());
         parmsTestDto.setCurrentUserName(webRequestConfig.getUserName());
         parmsTestDto.setTestParam(testParam);
+        parmsTestDto.setTestNamespace(testNamespace);
+        parmsTestDto.setApolloProperties(apolloProperties);
         //categoryService.categoryList();
         redisUtil.set("parmsTestDto", parmsTestDto, 60 * 10);
         //log.info("redisParms:{}", redisParms);
