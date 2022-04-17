@@ -1,5 +1,7 @@
 package com.cloud.config;
 
+import com.cloud.config.properties.ApolloProperties;
+import com.cloud.config.properties.TestNameSpaceProperties;
 import com.cloud.dto.test.TestA;
 import com.cloud.dto.test.TestB;
 import com.cloud.dto.test.TestFConfig;
@@ -16,7 +18,7 @@ import org.springframework.context.annotation.Import;
 @Import({TestA.class, TestB.class, MyImportSelector.class,
         MyImportBeanDefinitionRegistrar.class, TestFConfig.class})
 @Configuration
-@EnableConfigurationProperties(ApolloProperties.class)
+@EnableConfigurationProperties({ApolloProperties.class, TestNameSpaceProperties.class})
 public class ImportConfig {
 
 }

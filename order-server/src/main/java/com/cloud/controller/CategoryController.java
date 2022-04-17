@@ -3,8 +3,9 @@ package com.cloud.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cloud.common.utils.RedisUtil;
-import com.cloud.config.ApolloProperties;
+import com.cloud.config.properties.ApolloProperties;
 import com.cloud.config.WebRequestConfig;
+import com.cloud.config.properties.TestNameSpaceProperties;
 import com.cloud.dto.ParmsTestDto;
 import com.cloud.entity.Category;
 import com.cloud.enums.CategoryTypeEnum;
@@ -67,6 +68,9 @@ public class CategoryController {
     @Resource
     private ApolloProperties apolloProperties;
 
+    @Resource
+    private TestNameSpaceProperties testNameSpaceProperties;
+
     /**
      * 参数校验测试
      *
@@ -83,6 +87,7 @@ public class CategoryController {
         parmsTestDto.setTestParam(testParam);
         parmsTestDto.setTestNamespace(testNamespace);
         parmsTestDto.setApolloProperties(apolloProperties);
+        parmsTestDto.setTestNameSpaceProperties(testNameSpaceProperties);
         //categoryService.categoryList();
         redisUtil.set("parmsTestDto", parmsTestDto, 60 * 10);
         //log.info("redisParms:{}", redisParms);
