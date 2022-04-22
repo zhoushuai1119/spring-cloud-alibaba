@@ -22,8 +22,8 @@ public class OrderProxy {
     /**
      * 更新categiry
      */
-    public void updateCategory() {
-        BusinessUtils.checkBaseRespose(orderClient.updateCategory());
+    public void updateCategory(String categoryId) {
+        BusinessUtils.checkBaseRespose(orderClient.updateCategory(categoryId));
     }
 
 }

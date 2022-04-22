@@ -4,6 +4,7 @@ import com.cloud.client.hystrix.OrderFallbackFactory;
 import com.cloud.platform.common.response.BaseResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -19,7 +20,7 @@ public interface OrderClient {
 
     String SERVER_NAME = "order-server";
 
-    @PostMapping(value = "/category/updateCategory",consumes = MediaType.APPLICATION_JSON_VALUE)
-    BaseResponse updateCategory();
+    @PostMapping(value = "/category/updateCategory/{categoryId}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    BaseResponse updateCategory(@PathVariable("categoryId") String categoryId);
 
 }

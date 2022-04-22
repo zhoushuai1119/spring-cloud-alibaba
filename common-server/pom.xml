@@ -38,6 +38,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+        <!--Feign中使用HttpClient替换JDK自带的HttpURLConnnection网络请求-->
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-httpclient</artifactId>
+            <version>RELEASE</version>
+        </dependency>
         <!--hystrix熔断-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

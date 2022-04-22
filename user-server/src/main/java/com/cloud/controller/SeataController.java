@@ -35,7 +35,7 @@ public class SeataController {
     //@Transactional
     @PostMapping("/seataTest")
     public BaseResponse seataTest() {
-        orderProxy.updateCategory();
+        orderProxy.updateCategory("16");
         log.info("*********");
         paymentProxy.saveUser();
         return BaseResponse.createSuccessResult(null);

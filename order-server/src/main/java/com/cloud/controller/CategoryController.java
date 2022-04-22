@@ -122,9 +122,9 @@ public class CategoryController {
                 pageList.getSize(), pageQueryRequest.getPageSize());
     }
 
-    @PostMapping("/updateCategory")
-    public BaseResponse<String> updateCategory() {
-        categoryService.updateCategory();
+    @PostMapping("/updateCategory/{categoryId}")
+    public BaseResponse<String> updateCategory(@PathVariable("categoryId") String categoryId) {
+        categoryService.updateCategory(categoryId);
         return BaseResponse.createSuccessResult(null);
     }
 

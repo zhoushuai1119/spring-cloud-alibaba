@@ -1,9 +1,11 @@
 package com.cloud.config;
 
+import feign.Logger;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import io.seata.core.context.RootContext;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -29,6 +31,16 @@ public class FeignSupportConfig implements RequestInterceptor {
         log.info("feign调用时seata全局事务ID:{}",xid);
         //可以设置请求头数据
         requestTemplate.header(RootContext.KEY_XID, xid);
+    }
+
+
+    /**
+     * 打印feign请求日志
+     * @return
+     */
+    @Bean
+    public Logger.Level feignLoggerLevel() {
+        return Logger.Level.FULL;
     }
 
 }

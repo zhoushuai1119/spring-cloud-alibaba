@@ -24,7 +24,7 @@ public class OrderFallbackFactory implements FallbackFactory<OrderClient> {
         return new OrderClient() {
 
             @Override
-            public BaseResponse updateCategory() {
+            public BaseResponse updateCategory(String categoryId) {
                 BusinessException businessException = FeignUtils.decodeFeignException("updateCategory",throwable);
                 BaseResponse response = new BaseResponse();
                 response.setSuccess(false);
