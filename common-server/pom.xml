@@ -111,6 +111,11 @@
             <groupId>cn.smallbun.screw</groupId>
             <artifactId>screw-core</artifactId>
         </dependency>
+        <!--集成工具包-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
