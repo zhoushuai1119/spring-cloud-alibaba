@@ -35,6 +35,9 @@ public class MybatisPlusCodeGenerator {
      * 执行 run
      */
     public static void main(String[] args) throws SQLException {
+        //获取当前项目的 文件夹地址
+        String projectPath = System.getProperty("user.dir");
+
         FastAutoGenerator.create(DATA_SOURCE_CONFIG)
                 // 全局配置
                 .globalConfig((scanner, builder) -> builder.author("zhoushuai")
