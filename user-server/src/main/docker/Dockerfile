@@ -8,4 +8,4 @@ ADD user-server.jar /app/user-server.jar
 
 EXPOSE 8766
 
-CMD java -jar /app/user-server.jar --spring.profiles.active=${environment}
+CMD java ${JAVA_OPTS} -jar /app/user-server.jar

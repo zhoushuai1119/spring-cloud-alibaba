@@ -8,4 +8,4 @@ ADD payment-server.jar /app/payment-server.jar
 
 EXPOSE 8764
 
-CMD java -jar /app/payment-server.jar --spring.profiles.active=${environment}
+CMD java ${JAVA_OPTS} -jar /app/payment-server.jar
