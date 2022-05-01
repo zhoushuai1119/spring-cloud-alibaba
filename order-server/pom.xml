@@ -49,6 +49,19 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
+                <configuration>
+                    <!-- 具体参数详解：
+                    -Xdebug 通知JVM工作在DEBUG模式下；
+                    -Xrunjdwp 通知JVM使用(Java debug wire protocol)运行调试环境。该参数同时包含了一系列的调试选项；
+                    **transport **指定了调试数据的传送方式，dt_socket是指用SOCKET模式，另有dt_shmem指用共享内存方式，其中，dt_shmem只适用于Windows平台；
+                    address 调试服务器的端口号，客户端用来连接服务器的端口号；
+                    server=y/n VM 是否需要作为调试服务器执行；
+                    suspend=y/n 是否在调试客户端建立连接之后启动 VM -->
+                    <jvmArguments>-Xdebug -Xrunjdwp:transport=dt_socket,address=5005,server=y,suspend=n</jvmArguments>
+
+                    <!--启动jar包命令:
+                    java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -jar remote-debug-v1.0.jar-->
+                </configuration>
             </plugin>
         </plugins>
     </build>
