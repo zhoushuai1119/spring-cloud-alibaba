@@ -46,7 +46,6 @@ spring:
 
       #全局默认熔断配置
       default-filters:
-        - Session
         - name: Hystrix
           args:
             name: fetchIngredients

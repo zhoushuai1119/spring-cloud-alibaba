@@ -18,7 +18,6 @@ public class AuthGatewayFilter implements GatewayFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        System.out.println("---进行局部AuthGatewayFilter过滤器---");
         return chain.filter(exchange);
     }
 

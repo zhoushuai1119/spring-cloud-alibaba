@@ -15,8 +15,6 @@ import com.cloud.filters.GatewayHandler;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.cloud.gateway.route.RouteLocator;
-import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -93,16 +91,16 @@ public class GateWayConfig {
         };
     }
 
-    @Bean
+    /*@Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder routeLocatorBuilder) {
         RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
-        //http://localhost:8762/api/order-server/category/getCategory?categoryId=1
+        //http://localhost:8762/order-server/order-server/category/getCategory?categoryId=1
         routes.route("order-server",
                 r -> r.path("/api/order-server/**")
                         .filters(f -> f.stripPrefix(1).filter(authGatewayFilter))
                         .uri("lb://order-server")
         ).build();
-        //http://localhost:8762/api/user-server/user/getAuthCodeImg
+        //http://localhost:8762/user-server/user-server/user/getAuthCodeImg
         routes.route("user-server",
                 r -> r.path("/api/user-server/**")
                         .filters(f -> f.stripPrefix(1).filter(authGatewayFilter))
@@ -114,7 +112,7 @@ public class GateWayConfig {
                         .uri("lb://camunda-server")
         ).build();
         return routes.build();
-    }
+    }*/
 
     /**
      * ApiDefinition：用户自定义的API定义分组，可以看做是一些URL匹配的组合。
@@ -125,13 +123,13 @@ public class GateWayConfig {
         Set<ApiDefinition> definitions = new HashSet<>();
         ApiDefinition apiOrder = new ApiDefinition("api-order-server")
                 .setPredicateItems(new HashSet<ApiPredicateItem>() {{
-                    add(new ApiPathPredicateItem().setPattern("/api/order-server/**")
+                    add(new ApiPathPredicateItem().setPattern("/order-server/**")
                             .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
                 }});
 
         ApiDefinition apiUser = new ApiDefinition("api-user-server")
                 .setPredicateItems(new HashSet<ApiPredicateItem>() {{
-                    add(new ApiPathPredicateItem().setPattern("/api/user-server/**")
+                    add(new ApiPathPredicateItem().setPattern("/user-server/**")
                             .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
                 }});
         definitions.add(apiOrder);

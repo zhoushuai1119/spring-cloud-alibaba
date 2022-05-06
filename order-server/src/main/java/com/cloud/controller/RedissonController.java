@@ -2,8 +2,8 @@ package com.cloud.controller;
 
 import com.cloud.common.enums.ErrorCodeEnum;
 import com.cloud.common.utils.RedisUtil;
+import com.cloud.platform.common.enums.BaseErrorCodeEnum;
 import com.cloud.platform.common.response.BaseResponse;
-import com.cloud.platform.web.enums.BaseErrorCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
