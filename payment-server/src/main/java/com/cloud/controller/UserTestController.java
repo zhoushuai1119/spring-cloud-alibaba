@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @RequestMapping("/user")
-public class UserController {
+public class UserTestController {
 
     @Autowired
     private UserService userService;

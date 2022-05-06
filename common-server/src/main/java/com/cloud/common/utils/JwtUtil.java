@@ -1,10 +1,11 @@
-package com.cloud.utils;
+package com.cloud.common.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.cloud.common.constants.CommonConstant;
+import com.cloud.platform.common.response.BaseResponse;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -19,9 +20,9 @@ import java.util.Map;
 public class JwtUtil {
 
     /**
-     * token 默认过期时间，这里设为5分钟
+     * token 默认过期时间，这里设为12小时
      */
-    private static final long EXPIRE_TIME = 5 * 60 * 1000;
+    private static final long EXPIRE_TIME = 12 * 60 * 60 * 1000;
 
     /**
      * 生成token签名
@@ -80,13 +81,9 @@ public class JwtUtil {
      *
      * @return token中包含的用户信息
      */
-    public static Map<String, Object> getUserInfo(String token) {
-        try {
-            DecodedJWT jwt = JWT.decode(token);
-            return jwt.getClaim("userInfo").asMap();
-        } catch (Exception e) {
-            return null;
-        }
+    public static BaseResponse getUserInfo(String token) {
+        DecodedJWT jwt = JWT.decode(token);
+        return BaseResponse.createSuccessResult(jwt.getClaim("userInfo").asMap());
     }
 
 }

@@ -65,16 +65,16 @@ spring:
           ## 请求路由全部转小写字母，如 Aa/Bb 会被转为 aa/bb
           lower-case-service-id: true
 
-      routes:
-        - id: product-server
-          ## 转发到的节点，lb:// 为 http，lb:ws:// 为 websocket
-          uri: lb://product-server
-          predicates:
-            ## 断言规则，这里设置匹配的路由规则
-            - Path=/test/product-server/**
-          filters:
-            #去掉url的第一个前缀，用后面的内容拼接到uri
-            - StripPrefix=1
+#      routes:
+#        - id: product-server
+#          ## 转发到的节点，lb:// 为 http，lb:ws:// 为 websocket
+#          uri: lb://product-server
+#          predicates:
+#            ## 断言规则，这里设置匹配的路由规则
+#            - Path=/test/product-server/**
+#          filters:
+#            #去掉url的第一个前缀，用后面的内容拼接到uri
+#            - StripPrefix=1
 
 #默认熔断超时时间30s
 hystrix:

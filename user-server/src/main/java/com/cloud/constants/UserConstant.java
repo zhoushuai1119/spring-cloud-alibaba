@@ -21,4 +21,11 @@ public class UserConstant {
 
     }
 
+    /**
+     * 验证码key
+     */
+    public interface AuthCode {
+        String IMAGE_AUTH_CODE = "authCodeImg";
+    }
+
 }

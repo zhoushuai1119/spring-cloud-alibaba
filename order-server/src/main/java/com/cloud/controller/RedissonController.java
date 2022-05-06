@@ -1,8 +1,9 @@
 package com.cloud.controller;
 
 import com.cloud.common.enums.ErrorCodeEnum;
-import com.cloud.platform.common.response.BaseResponse;
 import com.cloud.common.utils.RedisUtil;
+import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.web.enums.BaseErrorCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -53,7 +54,7 @@ public class RedissonController {
             redisUtil.set("ticket", ticket - 1);
         } catch (Exception e) {
             e.printStackTrace();
-            return BaseResponse.createFailResult(ErrorCodeEnum.SYSTEM_ERROR);
+            return BaseResponse.createFailResult(BaseErrorCodeEnum.SYSTEM_ERROR);
         } finally {
             lock.unlock();
             log.info("线程:{}释放锁",Thread.currentThread().getName());

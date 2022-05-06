@@ -19,10 +19,19 @@
     </parent>
 
     <dependencies>
+        <dependency>
+            <groupId>com.cloud.platform</groupId>
+            <artifactId>platform-common</artifactId>
+        </dependency>
         <!-- apollo配置中心 -->
         <dependency>
             <groupId>com.ctrip.framework.apollo</groupId>
             <artifactId>apollo-client</artifactId>
+        </dependency>
+        <!-- nacos注册中心 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

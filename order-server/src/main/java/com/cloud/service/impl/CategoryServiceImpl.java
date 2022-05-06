@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloud.dao.CategoryMapper;
+import com.cloud.dto.BatchDelDTO;
 import com.cloud.entity.Category;
 import com.cloud.platform.common.request.PageQueryRequest;
 import com.cloud.platform.common.utils.JsonUtil;
@@ -60,8 +61,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     }
 
     @Override
-    public void delCategory() {
-        baseMapper.deleteById(57);
+    public void batchDelCategory(BatchDelDTO categoryIdList) {
+        baseMapper.deleteBatchIds(categoryIdList.getCategoryIdList());
+    }
+
+    @Override
+    public Category getCategory(String categoryId) {
+        return baseMapper.selectById(categoryId);
     }
 
     @Override
@@ -75,7 +81,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Override
     public void saveCategory(Category category) {
-        baseMapper.insert(category);
+        saveOrUpdate(category);
     }
 
 }

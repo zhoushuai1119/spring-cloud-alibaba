@@ -51,7 +51,6 @@ public class Category implements Serializable {
     @Field(type = FieldType.Integer)
     private CategoryTypeEnum categoryType;
 
-
     @Version //乐观锁版本号配置
     @TableField(value = "version", fill = FieldFill.INSERT)
     @Field(type = FieldType.Integer)

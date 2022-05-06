@@ -3,6 +3,7 @@ package com.cloud.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cloud.dto.BatchDelDTO;
 import com.cloud.entity.Category;
 import com.cloud.platform.common.request.PageQueryRequest;
 
@@ -22,7 +23,9 @@ public interface CategoryService extends IService<Category> {
 
     void updateCategory(String categoryId);
 
-    void delCategory();
+    void batchDelCategory(BatchDelDTO categoryIdList);
+
+    Category getCategory(String categoryId);
 
     void asyncSendMq(Integer categoryId);
 

@@ -7,6 +7,7 @@ import com.alibaba.csp.sentinel.adapter.gateway.common.api.ApiPredicateItem;
 import com.alibaba.csp.sentinel.adapter.gateway.common.api.GatewayApiDefinitionManager;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayRuleManager;
+import com.alibaba.csp.sentinel.adapter.gateway.sc.SentinelGatewayFilter;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.GatewayCallbackManager;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.exception.SentinelGatewayBlockExceptionHandler;
 import com.cloud.filters.AuthGatewayFilter;
@@ -58,11 +59,11 @@ public class GateWayConfig {
         return new SentinelGatewayBlockExceptionHandler(viewResolvers, serverCodecConfigurer);
     }
 
-    /*@Bean
-    @Order(-5)
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     public GlobalFilter sentinelGatewayFilter() {
         return new SentinelGatewayFilter();
-    }*/
+    }
 
     @PostConstruct
     public void doInit() {
@@ -95,17 +96,22 @@ public class GateWayConfig {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder routeLocatorBuilder) {
         RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
+        //http://localhost:8762/api/order-server/category/getCategory?categoryId=1
         routes.route("order-server",
-                r -> r.path("/order-server/**")
-                        //.filters(f -> f.stripPrefix(1).filters(authGatewayFilter)
-                        //.filters(f -> f.stripPrefix(1))
+                r -> r.path("/api/order-server/**")
+                        .filters(f -> f.stripPrefix(1).filter(authGatewayFilter))
                         .uri("lb://order-server")
         ).build();
+        //http://localhost:8762/api/user-server/user/getAuthCodeImg
         routes.route("user-server",
-                r -> r.path("/test/user-server/**")
-                        //.filters(f -> f.stripPrefix(1).filters(authGatewayFilter)
-                        .filters(f -> f.stripPrefix(1))
+                r -> r.path("/api/user-server/**")
+                        .filters(f -> f.stripPrefix(1).filter(authGatewayFilter))
                         .uri("lb://user-server")
+        ).build();
+        routes.route("camunda-server",
+                r -> r.path("/api/camunda-server/**")
+                        .filters(f -> f.stripPrefix(1).filter(authGatewayFilter))
+                        .uri("lb://camunda-server")
         ).build();
         return routes.build();
     }
@@ -117,19 +123,19 @@ public class GateWayConfig {
      */
     private void initCustomizedApis() {
         Set<ApiDefinition> definitions = new HashSet<>();
-        ApiDefinition api1 = new ApiDefinition("account_api")
+        ApiDefinition apiOrder = new ApiDefinition("api-order-server")
                 .setPredicateItems(new HashSet<ApiPredicateItem>() {{
-                    add(new ApiPathPredicateItem().setPattern("/test/order-server/**")
+                    add(new ApiPathPredicateItem().setPattern("/api/order-server/**")
                             .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
                 }});
 
-        ApiDefinition api2 = new ApiDefinition("account_api_limit_accountId")
+        ApiDefinition apiUser = new ApiDefinition("api-user-server")
                 .setPredicateItems(new HashSet<ApiPredicateItem>() {{
-                    add(new ApiPathPredicateItem().setPattern("/api/v1/account/**")
+                    add(new ApiPathPredicateItem().setPattern("/api/user-server/**")
                             .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
                 }});
-        definitions.add(api1);
-        definitions.add(api2);
+        definitions.add(apiOrder);
+        definitions.add(apiUser);
         GatewayApiDefinitionManager.loadApiDefinitions(definitions);
     }
 
@@ -142,13 +148,13 @@ public class GateWayConfig {
     private void initGatewayRules() {
         Set<GatewayFlowRule> rules = new HashSet<>();
         //resource：资源名称，可以是网关中的路线名称或用户自定义的API分组名称。
-        rules.add(new GatewayFlowRule("account_api")
+        rules.add(new GatewayFlowRule("api-order-server")
                 //count：限流阈值
-                .setCount(2)
+                .setCount(3)
                 //grade：限流指标维度，同限流规则的grade细分。
                 //.setGrade(2)
                 //intervalSec：统计时间窗口，单位是秒，至少是1秒。
-                .setIntervalSec(1)
+                .setIntervalSec(2)
                 //burst：应对突发请求时额外允许的请求数量。
                 //.setBurst(1)
                 //maxQueueingTimeoutMs：匀速排队模式下的最大排队时间，单位是几分钟，仅在匀速排队模式下生效。
@@ -156,7 +162,7 @@ public class GateWayConfig {
         );
         //resourceMode：规则是针对API网关的路由（RESOURCE_MODE_ROUTE_ID）
         // 还是用户在Sentinel中定义的API分组（RESOURCE_MODE_CUSTOM_API_NAME），而是路由。
-        rules.add(new GatewayFlowRule("account_api_limit_accountId")
+        rules.add(new GatewayFlowRule("api-user-server")
                 //.setResourceMode(SentinelGatewayConstants.RESOURCE_MODE_CUSTOM_API_NAME)
                 .setCount(3)
                 .setIntervalSec(1)

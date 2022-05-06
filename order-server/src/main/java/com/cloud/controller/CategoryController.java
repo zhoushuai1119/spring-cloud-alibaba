@@ -3,9 +3,10 @@ package com.cloud.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cloud.common.utils.RedisUtil;
-import com.cloud.config.properties.ApolloProperties;
 import com.cloud.config.WebRequestConfig;
+import com.cloud.config.properties.ApolloProperties;
 import com.cloud.config.properties.TestNameSpaceProperties;
+import com.cloud.dto.BatchDelDTO;
 import com.cloud.dto.ParmsTestDto;
 import com.cloud.entity.Category;
 import com.cloud.enums.CategoryTypeEnum;
@@ -26,9 +27,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description:
@@ -89,7 +92,7 @@ public class CategoryController {
         parmsTestDto.setApolloProperties(apolloProperties);
         parmsTestDto.setTestNameSpaceProperties(testNameSpaceProperties);
         //categoryService.categoryList();
-        redisUtil.set("parmsTestDto", parmsTestDto, 60 * 10);
+        redisUtil.set("parmsTestDto", parmsTestDto, 60 * 10, TimeUnit.SECONDS);
         //log.info("redisParms:{}", redisParms);
         ParmsTestDto parmsRedis = (ParmsTestDto) redisUtil.get("parmsTestDto");
         return BaseResponse.createSuccessResult(parmsRedis);
@@ -102,11 +105,11 @@ public class CategoryController {
     }
 
 
-    @PostMapping("/save/category")
+    @PostMapping("/saveOrUpdate/category")
     @MethodLogger
     public BaseResponse enumCheck(@RequestBody Category category) {
         categoryService.saveCategory(category);
-        return BaseResponse.createSuccessResult(category);
+        return BaseResponse.createSuccessResult(null);
     }
 
     @PostMapping("/category/list")
@@ -119,7 +122,7 @@ public class CategoryController {
     public PageQueryResponse<Category> categosyList(@RequestBody PageQueryRequest pageQueryRequest) {
         Page<Category> pageList = categoryService.categoryPageList(pageQueryRequest);
         return PageQueryResponse.createSuccessResult(pageList.getRecords(), pageQueryRequest.getPageIndex(),
-                pageList.getSize(), pageQueryRequest.getPageSize());
+                pageList.getTotal(), pageQueryRequest.getPageSize());
     }
 
     @PostMapping("/updateCategory/{categoryId}")
@@ -128,10 +131,16 @@ public class CategoryController {
         return BaseResponse.createSuccessResult(null);
     }
 
-    @PostMapping("/delCategory")
-    public BaseResponse<String> delCategory() {
-        categoryService.delCategory();
+    @DeleteMapping("/batchDelCategory")
+    public BaseResponse<String> delCategory(@RequestBody @Valid BatchDelDTO categoryIdList) {
+        categoryService.batchDelCategory(categoryIdList);
         return BaseResponse.createSuccessResult(null);
+    }
+
+    @GetMapping("/getCategory")
+    public BaseResponse<Category> getCategory(@RequestParam(value = "categoryId") String categoryId) {
+        Category category = categoryService.getCategory(categoryId);
+        return BaseResponse.createSuccessResult(category);
     }
 
     @PostMapping("/asyncSendMq/{categoryId}")

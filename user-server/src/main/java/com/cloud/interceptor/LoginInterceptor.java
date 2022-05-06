@@ -1,8 +1,8 @@
 package com.cloud.interceptor;
 
+import com.cloud.common.utils.JwtUtil;
 import com.cloud.config.WebRequestConfig;
 import com.cloud.platform.common.utils.JsonUtil;
-import com.cloud.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
