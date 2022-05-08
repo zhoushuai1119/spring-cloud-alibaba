@@ -1,7 +1,6 @@
 package com.cloud.order.config;
 
 import com.cloud.order.domain.entity.BeanTest;
-import com.cloud.order.domain.entity.CarFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,19 +22,6 @@ public class BeanTestConfig {
         BeanTest beanTest = new BeanTest();
         beanTest.setName("zhoushuai");
         return beanTest;
-    }
-
-
-    /**
-     * 当配置文件中<bean>的class属性配置的实现类是FactoryBean时，
-     * 通过getBean()方法返回的不是FactoryBean本身，
-     * 而是FactoryBean#getObject()方法所返回的对象，
-     * 相当于FactoryBean#getObject()代理了getBean()方法。
-     * @return
-     */
-    @Bean
-    public CarFactoryBean carFactoryBean(){
-        return new CarFactoryBean();
     }
 
 }

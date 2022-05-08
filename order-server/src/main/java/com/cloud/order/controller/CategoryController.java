@@ -4,29 +4,24 @@ package com.cloud.order.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cloud.common.utils.RedisUtil;
 import com.cloud.order.config.WebRequestConfig;
-import com.cloud.order.config.properties.ApolloProperties;
-import com.cloud.order.config.properties.TestNameSpaceProperties;
 import com.cloud.order.domain.dto.BatchDelDTO;
-import com.cloud.order.domain.dto.ParmsTestDto;
+import com.cloud.order.domain.dto.ParmsTestDTO;
 import com.cloud.order.domain.entity.Category;
 import com.cloud.order.enums.CategoryTypeEnum;
+import com.cloud.order.service.CategoryService;
+import com.cloud.order.service.SqlService;
+import com.cloud.order.utils.ThreadLocalUtil;
 import com.cloud.platform.common.domain.request.PageQueryRequest;
 import com.cloud.platform.common.domain.response.BaseResponse;
 import com.cloud.platform.common.domain.response.PageQueryResponse;
 import com.cloud.platform.web.aop.annotation.MethodLogger;
 import com.cloud.platform.web.validate.Save;
 import com.cloud.platform.web.validate.Update;
-import com.cloud.order.service.CategoryService;
-import com.cloud.order.service.SqlService;
-import com.cloud.order.utils.ThreadLocalUtil;
-import com.github.dozermapper.core.Mapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -54,25 +49,8 @@ public class CategoryController {
     private RedisUtil redisUtil;
 
     @Autowired
-    private Mapper mapper;
-
-    @Autowired
     private WebRequestConfig webRequestConfig;
 
-    @Value("${test.parma:apollo_test}")
-    private String testParam;
-
-    @Value("${test.namespace}")
-    private String testNamespace;
-
-    /**
-     * bean使用@ConfigurationProperties注解目前还不支持自动刷新，得编写一定的代码实现刷新
-     */
-    @Resource
-    private ApolloProperties apolloProperties;
-
-    @Resource
-    private TestNameSpaceProperties testNameSpaceProperties;
 
     /**
      * 参数校验测试
@@ -82,47 +60,42 @@ public class CategoryController {
      */
     @PostMapping("/param/check")
     @MethodLogger
-    public BaseResponse<ParmsTestDto> paramCheck(@RequestBody @Validated({Save.class, Update.class}) ParmsTestDto parmsTestDto) {
+    public BaseResponse<ParmsTestDTO> paramCheck(@RequestBody @Validated({Save.class, Update.class}) ParmsTestDTO parmsTestDto) {
         parmsTestDto.setStr(Thread.currentThread().getName());
         ThreadLocalUtil.set(parmsTestDto);
         parmsTestDto.setLocalDateTime(LocalDateTime.now());
         parmsTestDto.setCurrentUserName(webRequestConfig.getUserName());
-        parmsTestDto.setTestParam(testParam);
-        parmsTestDto.setTestNamespace(testNamespace);
-        parmsTestDto.setApolloProperties(apolloProperties);
-        parmsTestDto.setTestNameSpaceProperties(testNameSpaceProperties);
         //categoryService.categoryList();
         redisUtil.set("parmsTestDto", parmsTestDto, 60 * 10, TimeUnit.SECONDS);
         //log.info("redisParms:{}", redisParms);
-        ParmsTestDto parmsRedis = (ParmsTestDto) redisUtil.get("parmsTestDto");
+        ParmsTestDTO parmsRedis = (ParmsTestDTO) redisUtil.get("parmsTestDto");
         return BaseResponse.createSuccessResult(parmsRedis);
     }
 
     @PostMapping("/enum/test")
-    //加@RequestBody会报错
     public BaseResponse enumTest(CategoryTypeEnum categoryType) {
         return BaseResponse.createSuccessResult(categoryType);
     }
 
 
-    @PostMapping("/saveOrUpdate/category")
+    @PostMapping("/saveOrUpdate")
     @MethodLogger
     public BaseResponse enumCheck(@RequestBody Category category) {
         categoryService.saveCategory(category);
         return BaseResponse.createSuccessResult(null);
     }
 
-    @PostMapping("/category/list")
+    @PostMapping("/list")
     public BaseResponse<List<Category>> categosyList() {
         List<Category> categoryList = categoryService.categoryList();
         return BaseResponse.createSuccessResult(categoryList);
     }
 
-    @PostMapping("/category/page/list")
+    @PostMapping("/page/list")
     public PageQueryResponse<Category> categosyList(@RequestBody PageQueryRequest pageQueryRequest) {
         Page<Category> pageList = categoryService.categoryPageList(pageQueryRequest);
-        return PageQueryResponse.createSuccessResult(pageList.getRecords(), pageQueryRequest.getPageSize(),pageQueryRequest.getPageIndex(),
-                pageList.getTotal());
+        return PageQueryResponse.createSuccessResult(pageList.getRecords(),pageQueryRequest.getPageIndex(),
+                pageQueryRequest.getPageSize(), pageList.getTotal());
     }
 
     @PostMapping("/updateCategory/{categoryId}")

@@ -1,9 +1,8 @@
 package com.cloud.order.domain.dto;
 
-import com.cloud.order.config.properties.ApolloProperties;
-import com.cloud.order.config.properties.TestNameSpaceProperties;
 import com.cloud.order.enums.EnumCheckTest;
 import com.cloud.order.enums.OrderEnum;
+import com.cloud.platform.common.domain.dto.BaseDTO;
 import com.cloud.platform.web.aop.annotation.EnumCheck;
 import com.cloud.platform.web.pattern.RegRule;
 import com.cloud.platform.web.validate.Save;
@@ -13,7 +12,6 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -25,7 +23,7 @@ import java.util.Date;
  * @version: V1.0
  */
 @Data
-public class ParmsTestDto implements Serializable {
+public class ParmsTestDTO extends BaseDTO {
 
     private static final long serialVersionUID = 467804102089578526L;
 
@@ -50,7 +48,7 @@ public class ParmsTestDto implements Serializable {
 
     @Valid
     //@NotNull(groups = {TestGroup.class})
-    private ParmsTestDto parmsTestDto;
+    private ParmsTestDTO parmsTestDto;
 
     /**
      * {@link OrderEnum}
@@ -68,14 +66,6 @@ public class ParmsTestDto implements Serializable {
     private Date date;
 
     private OrderEnum order;
-
-    private String testParam;
-
-    private String testNamespace;
-
-    private ApolloProperties apolloProperties;
-
-    private TestNameSpaceProperties testNameSpaceProperties;
 
     /**
      * 当前登录人姓名

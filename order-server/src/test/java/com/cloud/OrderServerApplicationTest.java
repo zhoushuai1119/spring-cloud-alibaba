@@ -3,13 +3,11 @@ package com.cloud;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.cloud.order.dao.elasticsearch.CategoryElasticRepository;
 import com.cloud.order.dao.mongodb.TestMongoRepository;
-import com.cloud.order.domain.dto.MapperTestDTO;
 import com.cloud.order.domain.dto.MongoTestDTO;
-import com.cloud.order.domain.dto.test.*;
 import com.cloud.order.domain.entity.Category;
 import com.cloud.order.enums.CategoryTypeEnum;
-import com.cloud.platform.common.utils.JsonUtil;
 import com.cloud.order.service.CategoryService;
+import com.cloud.platform.common.utils.JsonUtil;
 import com.github.dozermapper.core.Mapper;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -51,23 +49,6 @@ public class OrderServerApplicationTest {
     @Resource
     private Mapper mapper;
 
-    @Autowired
-    private TestA testA;
-
-    @Autowired
-    private TestB testB;
-
-    @Autowired
-    private TestC testC;
-
-    @Autowired
-    private TestD testD;
-
-    @Autowired
-    private TestE testE;
-
-    @Autowired
-    private TestG testG;
 
     @Test
     public void testKey() {
@@ -94,9 +75,6 @@ public class OrderServerApplicationTest {
         mongoTestDTO.setTime("2021-12-31");
         mongoTestDTO.setLocalDate(new Date());
         mongoTestDTO.setLocalDateTime(LocalDateTime.now());
-
-        MapperTestDTO mapperTest = mapper.map(mongoTestDTO,MapperTestDTO.class);
-        log.info("mapperTest:{}", JsonUtil.toString(mapperTest));
         //testMongoRepository.save(mongoTestDTO);
     }
 
@@ -118,36 +96,6 @@ public class OrderServerApplicationTest {
     public void updateTableTest() {
         //测试全表更新插件
         categoryService.remove(new UpdateWrapper<>());
-    }
-
-    @Test
-    public void testA() {
-        testA.print();
-    }
-
-    @Test
-    public void testB() {
-        testB.print();
-    }
-
-    @Test
-    public void testC() {
-        testC.print();
-    }
-
-    @Test
-    public void testD() {
-        testD.print();
-    }
-
-    @Test
-    public void testE() {
-        testE.print();
-    }
-
-    @Test
-    public void testG() {
-        testG.print();
     }
 
 }

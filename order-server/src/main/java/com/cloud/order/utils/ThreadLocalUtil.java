@@ -1,6 +1,6 @@
 package com.cloud.order.utils;
 
-import com.cloud.order.domain.dto.ParmsTestDto;
+import com.cloud.order.domain.dto.ParmsTestDTO;
 
 /**
  * @description:
@@ -10,13 +10,13 @@ import com.cloud.order.domain.dto.ParmsTestDto;
  */
 public class ThreadLocalUtil {
 
-    private static ThreadLocal<ParmsTestDto> parmsTest = new ThreadLocal<>();
+    private static ThreadLocal<ParmsTestDTO> parmsTest = new ThreadLocal<>();
 
-    public static void set(ParmsTestDto parmsTestDto) {
+    public static void set(ParmsTestDTO parmsTestDto) {
         parmsTest.set(parmsTestDto);
     }
 
-    public static ParmsTestDto get() {
+    public static ParmsTestDTO get() {
         return parmsTest.get();
     }
 
