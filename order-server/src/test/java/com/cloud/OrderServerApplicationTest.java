@@ -1,15 +1,15 @@
 package com.cloud;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.cloud.dao.elasticsearch.CategoryElasticRepository;
-import com.cloud.dao.mongodb.TestMongoRepository;
-import com.cloud.dto.MapperTestDTO;
-import com.cloud.dto.MongoTestDTO;
-import com.cloud.dto.test.*;
-import com.cloud.entity.Category;
-import com.cloud.enums.CategoryTypeEnum;
+import com.cloud.order.dao.elasticsearch.CategoryElasticRepository;
+import com.cloud.order.dao.mongodb.TestMongoRepository;
+import com.cloud.order.domain.dto.MapperTestDTO;
+import com.cloud.order.domain.dto.MongoTestDTO;
+import com.cloud.order.domain.dto.test.*;
+import com.cloud.order.domain.entity.Category;
+import com.cloud.order.enums.CategoryTypeEnum;
 import com.cloud.platform.common.utils.JsonUtil;
-import com.cloud.service.CategoryService;
+import com.cloud.order.service.CategoryService;
 import com.github.dozermapper.core.Mapper;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -104,7 +104,6 @@ public class OrderServerApplicationTest {
     @Test
     public void saveCategoryEs() {
         Category category = new Category();
-        category.setId(10);
         category.setCategoryId("2dd");
         category.setCategoryName("2ss");
         category.setCategoryLevel(0);

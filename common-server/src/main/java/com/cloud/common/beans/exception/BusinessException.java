@@ -16,19 +16,16 @@ public class BusinessException extends BaseException {
      * @param errorDetailMessage  错误详细信息
      */
     public BusinessException(ErrorCodeEnum errorCode, String errorDetailMessage) {
-        super(errorCode.getCode(), errorDetailMessage, errorCode.getMessage());
+        super(errorCode, errorDetailMessage);
     }
 
-    public BusinessException(ErrorCodeEnum errorCode) {
-        super(errorCode.getCode(), errorCode.getMessage(), errorCode.getMessage());
-    }
 
     public BusinessException(BaseExceptionCode errorCode) {
-        super(errorCode.getErrorCode(), errorCode.getErrorMessage(), errorCode.getErrorTips());
+        super(errorCode.getErrorCode(), errorCode.getErrorMessage(), null);
     }
 
     public BusinessException(String errorCode, String errorMessage) {
-        super(errorCode, errorMessage, errorMessage);
+        super(errorCode, errorMessage, null);
     }
 
 }

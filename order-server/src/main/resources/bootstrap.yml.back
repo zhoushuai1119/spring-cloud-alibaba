@@ -63,15 +63,15 @@ spring:
       datasource:
         master:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://139.196.208.53:3306/test_zs?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
+          url: jdbc:mysql://139.196.208.53:3306/cloud?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
           username: root
           password: Zs11195310
 
-        slave:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://139.196.208.53:3306/shiro?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
-          username: root
-          password: Zs11195310
+#        slave:
+#          driver-class-name: com.mysql.cj.jdbc.Driver
+#          url: jdbc:mysql://139.196.208.53:3306/shiro?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
+#          username: root
+#          password: Zs11195310
 
 #rocketmq配置
 cloud:
@@ -80,6 +80,8 @@ cloud:
     globalExceptionHandler:
       enabled: true
     enableLogWithUUID: true
+    swagger:
+      basePackage: com.cloud.order.controller
 
     #redisson配置
     redisson:
@@ -115,8 +117,8 @@ cloud:
 
 mybatis-plus:
   mapper-locations: classpath*:mapping/*.xml
-  type-aliases-package: com.cloud.entity
-  type-enums-package: com.cloud.enums
+  type-aliases-package: com.cloud.order.domain.entity
+  type-enums-package: com.cloud.order.enums
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
@@ -203,5 +205,14 @@ feign:
         #不设置connectTimeout会导致readTimeout设置不生效
         connectTimeout: 20000
         readTimeout: 20000
+
+#配置测试数据
+apollo:
+  test:
+    param1: jghgjghjg11111
+    param2: 呜呜kkk
+
+test:
+  parma: 打豆豆
 
 

@@ -63,6 +63,8 @@ cloud:
     #开启全局异常捕获
     globalExceptionHandler:
       enabled: true
+    swagger:
+      basePackage: com.cloud.user.controller
 
     #redisson配置
     redisson:

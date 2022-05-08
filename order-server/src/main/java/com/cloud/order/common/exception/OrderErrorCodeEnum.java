@@ -1,4 +1,4 @@
-package com.cloud.common.enums;
+package com.cloud.order.common.exception;
 
 import com.cloud.platform.common.exception.BaseExceptionCode;
 import lombok.Getter;
@@ -11,29 +11,18 @@ import lombok.Getter;
  * @Time 13:46:19
  */
 @Getter
-public enum ErrorCodeEnum implements BaseExceptionCode {
+public enum OrderErrorCodeEnum implements BaseExceptionCode {
 
     /**
-     * feign 调用失败
+     * 订单库存不足
      */
-    FEIGN_CLIENT_ERROR("200001", "feign调用失败"),
-
-    /**
-     * 非法请求
-     */
-    NOT_LEGAL_ERROR("200002", "非法请求"),
-
-    /**
-     * 您不是该任务的审批人
-     */
-    NOT_TASK_APPROVAL_PERSON("200004", "您不是该任务的审批人");
-
+    INSUFFICIENT_INVENTORY_ERROR("400001", "订单库存不足");
 
 
     private String code;
     private String message;
 
-    ErrorCodeEnum(String code, String message) {
+    OrderErrorCodeEnum(String code, String message) {
         this.code = code;
         this.message = message;
     }
