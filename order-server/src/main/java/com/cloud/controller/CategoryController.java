@@ -10,9 +10,9 @@ import com.cloud.dto.BatchDelDTO;
 import com.cloud.dto.ParmsTestDto;
 import com.cloud.entity.Category;
 import com.cloud.enums.CategoryTypeEnum;
-import com.cloud.platform.common.request.PageQueryRequest;
-import com.cloud.platform.common.response.BaseResponse;
-import com.cloud.platform.common.response.PageQueryResponse;
+import com.cloud.platform.common.domain.request.PageQueryRequest;
+import com.cloud.platform.common.domain.response.BaseResponse;
+import com.cloud.platform.common.domain.response.PageQueryResponse;
 import com.cloud.platform.web.aop.annotation.MethodLogger;
 import com.cloud.platform.web.validate.Save;
 import com.cloud.platform.web.validate.Update;
@@ -121,8 +121,8 @@ public class CategoryController {
     @PostMapping("/category/page/list")
     public PageQueryResponse<Category> categosyList(@RequestBody PageQueryRequest pageQueryRequest) {
         Page<Category> pageList = categoryService.categoryPageList(pageQueryRequest);
-        return PageQueryResponse.createSuccessResult(pageList.getRecords(), pageQueryRequest.getPageIndex(),
-                pageList.getTotal(), pageQueryRequest.getPageSize());
+        return PageQueryResponse.createSuccessResult(pageList.getRecords(), pageQueryRequest.getPageSize(),pageQueryRequest.getPageIndex(),
+                pageList.getTotal());
     }
 
     @PostMapping("/updateCategory/{categoryId}")

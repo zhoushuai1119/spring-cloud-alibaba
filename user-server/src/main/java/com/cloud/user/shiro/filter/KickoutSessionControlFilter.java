@@ -58,7 +58,7 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
     }
 
     @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         return false;
     }
 
@@ -94,8 +94,8 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
                 kickoutSessionId = deque.removeFirst();
             } else { // 否则踢出前者
                 kickoutSessionId = deque.removeLast();
-                System.out.println("###########人数超限,开始踢人###################");
-                log.debug("踢出前登录的,被踢出的sessionId为: " + kickoutSessionId);
+                log.info("###########人数超限,开始踢人###################");
+                log.info("踢出前登录的,被踢出的sessionId为: " + kickoutSessionId);
             }
             try {
                 Session kickoutSession = sessionManager.getSession(new DefaultSessionKey(kickoutSessionId));

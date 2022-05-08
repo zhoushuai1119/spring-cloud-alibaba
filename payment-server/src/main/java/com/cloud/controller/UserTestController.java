@@ -1,7 +1,7 @@
 package com.cloud.controller;
 
-import com.cloud.entity.User;
-import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.entity.UserTest;
+import com.cloud.platform.common.domain.response.BaseResponse;
 import com.cloud.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class UserTestController {
 
     @PostMapping("/saveUser")
     public BaseResponse<String> saveUser() throws Exception {
-        userService.saveUser(new User());
+        userService.saveUser(new UserTest());
         return BaseResponse.createSuccessResult(null);
     }
 

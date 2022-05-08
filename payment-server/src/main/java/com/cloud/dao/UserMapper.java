@@ -2,8 +2,8 @@ package com.cloud.dao;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.cloud.entity.User;
+import com.cloud.entity.UserTest;
 
-public interface UserMapper extends BaseMapper<User> {
+public interface UserMapper extends BaseMapper<UserTest> {
 
 }

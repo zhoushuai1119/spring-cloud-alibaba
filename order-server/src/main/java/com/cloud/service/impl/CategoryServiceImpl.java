@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloud.dao.CategoryMapper;
 import com.cloud.dto.BatchDelDTO;
 import com.cloud.entity.Category;
-import com.cloud.platform.common.request.PageQueryRequest;
+import com.cloud.platform.common.domain.request.PageQueryRequest;
 import com.cloud.platform.common.utils.JsonUtil;
 import com.cloud.proxy.PaymentProxy;
 import com.cloud.service.CategoryService;

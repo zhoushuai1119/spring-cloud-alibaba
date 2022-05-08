@@ -5,7 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.cloud.common.constants.CommonConstant;
-import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.common.domain.response.BaseResponse;
 
 import java.util.Date;
 import java.util.HashMap;

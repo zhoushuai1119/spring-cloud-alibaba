@@ -1,7 +1,7 @@
 package com.cloud.controller;
 
 import com.cloud.entity.Leave;
-import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.common.domain.response.BaseResponse;
 import com.cloud.platform.web.utils.CommonUtil;
 import com.cloud.service.LeaveService;
 import com.cloud.service.camunda.ProcessService;

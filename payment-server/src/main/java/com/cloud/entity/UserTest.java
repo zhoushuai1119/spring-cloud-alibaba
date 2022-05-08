@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Data
 @TableName("t_user")
-public class User implements Serializable {
+public class UserTest implements Serializable {
 
     @TableId
     private Integer id;

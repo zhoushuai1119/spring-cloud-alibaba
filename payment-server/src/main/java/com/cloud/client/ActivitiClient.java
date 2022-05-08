@@ -1,7 +1,7 @@
 package com.cloud.client;
 
 import com.cloud.client.hystrix.ActivitiFallbackFactory;
-import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.common.domain.response.BaseResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,7 +1,7 @@
 package com.cloud.common.aop;
 
 import com.cloud.common.aop.annotation.NewAuth;
-import com.cloud.platform.common.request.PageQueryRequest;
+import com.cloud.platform.common.domain.request.PageQueryRequest;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;

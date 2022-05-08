@@ -2,7 +2,7 @@ package com.cloud.controller;
 
 import com.cloud.filter.RedissionBloomFilter;
 import com.cloud.common.enums.ErrorCodeEnum;
-import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.common.domain.response.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

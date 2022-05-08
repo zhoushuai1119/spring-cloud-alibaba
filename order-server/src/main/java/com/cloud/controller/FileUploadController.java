@@ -1,7 +1,7 @@
 package com.cloud.controller;
 
 import com.cloud.common.fileUpload.IFileService;
-import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.common.domain.response.BaseResponse;
 import com.cloud.platform.web.utils.CommonUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

@@ -1,7 +1,7 @@
 package com.cloud.service.camunda;
 
 import com.cloud.common.fileUpload.IFileService;
-import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.common.domain.response.BaseResponse;
 import com.cloud.platform.web.utils.CommonUtil;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;

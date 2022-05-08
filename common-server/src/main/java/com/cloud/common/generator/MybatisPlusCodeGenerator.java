@@ -27,7 +27,7 @@ public class MybatisPlusCodeGenerator {
      * 数据源配置
      */
     private static final DataSourceConfig.Builder DATA_SOURCE_CONFIG = new DataSourceConfig
-            .Builder("jdbc:mysql://139.196.208.53:3306/shiro?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false", "root", "Zs11195310")
+            .Builder("jdbc:mysql://139.196.208.53:3306/cloud?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false", "root", "Zs11195310")
             .dbQuery(new MySqlQuery())
             .schema("");
 
@@ -75,8 +75,8 @@ public class MybatisPlusCodeGenerator {
                         .idType(IdType.AUTO)
                         //数据库表映射到实体的命名策略(默认下划线转驼峰命名)
                         .naming(NamingStrategy.underline_to_camel)
-                        .addTableFills(new Column("create_time", FieldFill.INSERT))
-                        .addTableFills(new Property("updateTime", FieldFill.INSERT_UPDATE))
+                        .addTableFills(new Column("gmt_create", FieldFill.INSERT))
+                        .addTableFills(new Property("gmt_modify", FieldFill.INSERT_UPDATE))
 
                         //Mapper 策略配置
                         .mapperBuilder()

@@ -2,7 +2,7 @@ package com.cloud.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloud.dao.UserMapper;
-import com.cloud.entity.User;
+import com.cloud.entity.UserTest;
 import com.cloud.service.UserService;
 import io.seata.core.context.RootContext;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Slf4j
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, UserTest> implements UserService {
 
     @Override
     @Transactional
-    public void saveUser(User user) throws Exception {
+    public void saveUser(UserTest user) throws Exception {
         log.info("全局事务ID:{}", RootContext.getXID());
         user.setPassword("12345678");
         user.setUsername("zssss");

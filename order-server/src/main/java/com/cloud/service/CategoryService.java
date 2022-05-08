@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cloud.dto.BatchDelDTO;
 import com.cloud.entity.Category;
-import com.cloud.platform.common.request.PageQueryRequest;
+import com.cloud.platform.common.domain.request.PageQueryRequest;
 
 import java.util.List;
 

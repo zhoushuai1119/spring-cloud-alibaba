@@ -1,7 +1,7 @@
 package com.cloud.common.utils;
 
 import com.cloud.common.beans.exception.BusinessException;
-import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.common.domain.response.BaseResponse;
 import com.cloud.platform.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 

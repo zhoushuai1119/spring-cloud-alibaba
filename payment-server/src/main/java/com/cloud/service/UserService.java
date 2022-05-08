@@ -2,7 +2,7 @@ package com.cloud.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cloud.entity.User;
+import com.cloud.entity.UserTest;
 
 /**
  * @description:
@@ -10,8 +10,8 @@ import com.cloud.entity.User;
  * @date: 2021/1/27 13:55
  * @version: V1.0
  */
-public interface UserService extends IService<User> {
+public interface UserService extends IService<UserTest> {
 
-    void saveUser(User user) throws Exception;
+    void saveUser(UserTest user) throws Exception;
 
 }

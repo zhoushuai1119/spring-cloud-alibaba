@@ -6,7 +6,7 @@ import com.cloud.dao.CategoryMapper;
 import com.cloud.entity.Category;
 import com.cloud.mq.base.core.CloudMQTemplate;
 import com.cloud.platform.common.constants.PlatformCommonConstant;
-import com.cloud.platform.common.response.BaseResponse;
+import com.cloud.platform.common.domain.response.BaseResponse;
 import com.cloud.rocketmq.producer.transaction.CategoryTransactionExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

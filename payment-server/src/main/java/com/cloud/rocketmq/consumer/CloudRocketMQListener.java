@@ -1,6 +1,6 @@
 package com.cloud.rocketmq.consumer;
 
-import com.cloud.entity.User;
+import com.cloud.entity.UserTest;
 import com.cloud.mq.base.dto.CloudMessage;
 import com.cloud.platform.common.constants.PlatformCommonConstant;
 import com.cloud.platform.common.utils.JsonUtil;
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @ConsumeTopic(topic = PlatformCommonConstant.Topic.PAYMENT_SERVER_TOPIC, eventCode = "EC_PAYMENT_SERVER", log = true)
-public class CloudRocketMQListener implements TopicListener<User> {
+public class CloudRocketMQListener implements TopicListener<UserTest> {
 
     /**
      * 细心的读者应该能看到,这里的onMessage方法是void类型的,没有返回状态,与我们平时用的不一样,
@@ -29,7 +29,7 @@ public class CloudRocketMQListener implements TopicListener<User> {
      * @param message
      */
     @Override
-    public void onMessage(CloudMessage<User> message) {
+    public void onMessage(CloudMessage<UserTest> message) {
         log.info("接收到消息:{}", JsonUtil.toString(message.getPayload()));
     }
 
