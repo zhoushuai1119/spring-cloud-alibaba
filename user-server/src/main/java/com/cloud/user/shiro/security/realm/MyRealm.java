@@ -2,6 +2,7 @@ package com.cloud.user.shiro.security.realm;
 
 import com.cloud.user.domain.entity.User;
 import com.cloud.user.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @Description:
  * @Date:2018-05-18 14:13
  */
+@Slf4j
 public class MyRealm extends AuthorizingRealm {
 
     @Autowired
@@ -32,6 +34,7 @@ public class MyRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setRoles(userService.getUserRoleList(username));
         authorizationInfo.setStringPermissions(userService.getUserPermissionList(username));
+        log.info("用户:{}角色权限为:{},操作权限为:{}",username,authorizationInfo.getRoles(),authorizationInfo.getStringPermissions());
         return authorizationInfo;
     }
 
@@ -40,6 +43,7 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        log.info("=======执行MyRealm的doGetAuthenticationInfo方法开始验证===============");
         //获取用户名
         String username = (String) token.getPrincipal();
         User user = userService.findUserByName(username);

@@ -54,6 +54,13 @@ public class UserController {
 
     /**
      * 用户登录接口
+     * 哪些情况下会请求到当前接口
+     *   1.还没有登陆成功的情况下:get请求我们在配置文件中设置的loginUrl，authc会放行请求到这里
+     *   2.还没有登陆成功的情况下:post请求我们在配置文件中设置的loginUrl，authc在认证失败后会让浏览器重定向到这里
+     * 	 3.还没有登陆成功的情况下:请求(不管post还是get)的页面不是loginUrl且需要authc过滤,那么authc也会让浏览器重定向到这里
+     * 	 4.登陆成功后，浏览器再次访问loginUrl(不管post或get)，authc也会放行到这里。如果我们在自定义的过滤器中
+     * 	 5.设置成如果是POST请求的loginUrl，我们返回false。那么post请求的loginUrl就会执行在过滤器中执行onAcessDenied()方法,
+     * 	 如果post的loginUrl验证失败了会到这里，如果验证成功则到secessUrl这里。
      *
      * @param
      * @return
@@ -61,6 +68,7 @@ public class UserController {
      */
     @PostMapping("/login")
     public BaseResponse userLogin(HttpServletRequest request) {
+        log.info("============执行userLogin登录接口=============");
         String exceptionClassName = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
         UserErrorCodeEnum errorCodeEnum;
         if(exceptionClassName != null){

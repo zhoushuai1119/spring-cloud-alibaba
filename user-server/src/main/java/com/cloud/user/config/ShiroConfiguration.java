@@ -2,13 +2,11 @@ package com.cloud.user.config;
 
 import com.cloud.user.shiro.filter.KickoutSessionControlFilter;
 import com.cloud.user.shiro.filter.MyFormAuthenticationFilter;
-import com.cloud.user.shiro.filter.SysUserFilter;
 import com.cloud.user.shiro.security.credentials.RetryLimitHashedCredentialsMatcher;
 import com.cloud.user.shiro.security.realm.MyRealm;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
-import org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -19,7 +17,6 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -54,26 +51,27 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setUnauthorizedUrl("/user/unauthorized");
         //自定义拦截器.
         Map<String, Filter> filtersMap = new LinkedHashMap<>();
-        filtersMap.put("loginFilter",myFormAuthenticationFilter());
-        filtersMap.put("kickout",kickoutSession());
-        filtersMap.put("sysUser",currentUser());
+        filtersMap.put("loginFilter", myFormAuthenticationFilter());
+        filtersMap.put("kickout", kickoutSession());
         shiroFilterFactoryBean.setFilters(filtersMap);
         //Shiro连接约束配置，即过滤链的定义
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不会被拦截的链接 顺序判断
         //设置登录时使用myFormAuthenticationFilter我们自己的拦截器
-        filterChainDefinitionMap.put("/user/login","loginFilter");
+        filterChainDefinitionMap.put("/user/login", "loginFilter");
         filterChainDefinitionMap.put("/user/register", "anon");
         filterChainDefinitionMap.put("/user/getAuthCodeImg", "anon");
+        filterChainDefinitionMap.put("/rocketmq/**", "anon");
+        filterChainDefinitionMap.put("/seata/**", "anon");
         //配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/user/logout", "logout");
-        //权限测试接口
-        filterChainDefinitionMap.put("/auth/login","authc");
+        //权限测试接口,一般使用注解方式比较方便
         filterChainDefinitionMap.put("/auth/rememberMe","user");
+       /* filterChainDefinitionMap.put("/auth/login","authc");
         filterChainDefinitionMap.put("/auth/role","authc,roles[\"admin\"]");
-        filterChainDefinitionMap.put("/auth/permiss","authc,perms[\"user:query\"]");
+        filterChainDefinitionMap.put("/auth/permiss","authc,perms[\"user:query\"]");*/
         //filter的执行顺序是从上往下，故/**配置在最后
-        filterChainDefinitionMap.put("/**", "kickout, user, sysUser, authc");
+        filterChainDefinitionMap.put("/**", "authc,kickout");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
@@ -118,7 +116,7 @@ public class ShiroConfiguration {
     public SimpleCookie sessionIdCookie() {
         SimpleCookie sessionIdCookie = new SimpleCookie("sid");
         sessionIdCookie.setHttpOnly(true);
-        sessionIdCookie.setMaxAge(-1);
+        sessionIdCookie.setMaxAge(1800);
         return sessionIdCookie;
     }
 
@@ -129,7 +127,8 @@ public class ShiroConfiguration {
     public SimpleCookie rememberMeCookie() {
         SimpleCookie rememberMeCookie = new SimpleCookie("rememberMe");
         rememberMeCookie.setHttpOnly(true);
-        rememberMeCookie.setMaxAge(2592000);
+        //单位:秒，设置超时时间为15天
+        rememberMeCookie.setMaxAge(1296000);
         return rememberMeCookie;
     }
 
@@ -140,19 +139,13 @@ public class ShiroConfiguration {
     public CookieRememberMeManager cookieRememberMeManager() {
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         cookieRememberMeManager.setCookie(rememberMeCookie());
+        //手动设置对称加密秘钥，防止重启系统后系统生成新的随机秘钥，防止导致客户端cookie无效
+        //报错信息: org.apache.shiro.crypto.CryptoException:
+        // Unable to execute 'doFinal' with cipher instance [javax.crypto.Cipher@5a0177f4].
         cookieRememberMeManager.setCipherKey(Base64.decode("4AvVhmFLUs0KTA3Kprsdag=="));
         return cookieRememberMeManager;
     }
 
-    /**
-     * 配置session的定时验证检测程序类，以让无效的session释放
-     */
-    @Bean
-    public ExecutorServiceSessionValidationScheduler sessionValidationScheduler() {
-        ExecutorServiceSessionValidationScheduler scheduler = new ExecutorServiceSessionValidationScheduler();
-        scheduler.setInterval(180000);
-        return scheduler;
-    }
 
     /**
      * 会话管理器 ,时间单位是毫秒
@@ -166,10 +159,6 @@ public class ShiroConfiguration {
         sessionManager.setGlobalSessionTimeout(1800000);
         //删除所有无效的Session对象，此时的session被保存在了内存里面
         sessionManager.setDeleteInvalidSessions(true);
-        //需要让此session可以使用该定时调度器进行检测
-        sessionManager.setSessionValidationSchedulerEnabled(true);
-        //定义要使用的无效的Session定时调度器
-        sessionManager.setSessionValidationScheduler(sessionValidationScheduler());
         sessionManager.setSessionDAO(sessionDAO());
         sessionManager.setSessionIdCookieEnabled(true);
         sessionManager.setSessionIdCookie(sessionIdCookie());
@@ -217,15 +206,6 @@ public class ShiroConfiguration {
         return en;
     }
 
-    /**
-     * 获取当前系统用户
-     */
-    @Bean
-    public SysUserFilter currentUser() {
-        log.warn("************currentUserFilter*******************");
-        SysUserFilter currentUser = new SysUserFilter();
-        return currentUser;
-    }
 
     /**
      * 踢出登录拦截器
@@ -263,7 +243,7 @@ public class ShiroConfiguration {
     /**
      * Shiro生命周期处理器
      */
-    @Bean
+    @Bean("lifecycleBeanPostProcessor")
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
@@ -289,17 +269,6 @@ public class ShiroConfiguration {
         AuthorizationAttributeSourceAdvisor aasa = new AuthorizationAttributeSourceAdvisor();
         aasa.setSecurityManager(securityManager());
         return aasa;
-    }
-
-    /**
-     * 相当于调用SecurityUtils.setSecurityManager(securityManager)
-     */
-    @Bean
-    public MethodInvokingFactoryBean getMethodInvokingFactoryBean(){
-        MethodInvokingFactoryBean factoryBean = new MethodInvokingFactoryBean();
-        factoryBean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
-        factoryBean.setArguments(securityManager());
-        return factoryBean;
     }
 
 }

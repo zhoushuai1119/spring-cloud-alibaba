@@ -73,8 +73,4 @@ public enum UserErrorCodeEnum implements BaseExceptionCode {
         return message;
     }
 
-    @Override
-    public String getErrorTips() {
-        return message;
-    }
 }

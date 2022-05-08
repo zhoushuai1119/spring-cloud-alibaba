@@ -35,6 +35,25 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
         return false;
     }
 
+    /**
+     * 先执行isAccessAllowed()，通过subject.isAuthenticated()判断当前session中的subject是否已经登陆过
+     * isAccessAllowed()返回true，authc放行
+     * 如果isAccessAllowed()是false即拒绝访问后执行onAccessDenied()方法:
+     * @param request
+     * @param response
+     * @param mappedValue
+     * @return
+     */
+    @Override
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        log.info("======执行自定义过滤=============");
+        //如果请求的是loginUrl 并且是POST请求，那么肯定是要验证密码的，这里直接返回false 就会执行onAcessDenied()方法
+        if (isLoginRequest(request, response) && isLoginSubmission(request, response)) {
+            return false;
+        }
+        return super.isAccessAllowed(request, response, mappedValue);
+    }
+
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
@@ -48,7 +67,7 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
             //拒绝访问，不再校验账号和密码
             return true;
         }
-        if (StringUtils.isNotBlank(randomCode) && ObjectUtils.notEqual(randomCode,String.valueOf(validateCode))) {
+        if (StringUtils.isNotBlank(randomCode) && ObjectUtils.notEqual(randomCode, String.valueOf(validateCode))) {
             //验证码校验失败
             httpServletRequest.setAttribute(DEFAULT_ERROR_KEY_ATTRIBUTE_NAME, UserConstant.RandomCode.RANDOM_CODE_CHECK_EXCEPTION);
             //拒绝访问，不再校验账号和密码
@@ -56,4 +75,5 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
         }
         return super.onAccessDenied(request, response, mappedValue);
     }
+
 }
