@@ -1,8 +1,9 @@
-package com.cloud.filters;
+package com.cloud.gateway.filters;
 
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.BlockRequestHandler;
 import com.cloud.platform.common.enums.BaseErrorCodeEnum;
 import com.cloud.platform.common.domain.response.BaseResponse;
+import com.cloud.platform.common.exception.BaseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -28,7 +29,10 @@ public class GatewayHandler implements BlockRequestHandler {
 
 
     private BaseResponse buildErrorResult() {
-        return BaseResponse.createFailResult(BaseErrorCodeEnum.REQUEST_FAIL_BLOCKED_BY_SENTINEL);
+        return BaseResponse.createFailResult(
+                new BaseException(BaseErrorCodeEnum.REQUEST_FAIL_BLOCKED_BY_SENTINEL.getCode(),
+                        BaseErrorCodeEnum.REQUEST_FAIL_BLOCKED_BY_SENTINEL.getMessage(), null
+                ));
     }
 
 }
