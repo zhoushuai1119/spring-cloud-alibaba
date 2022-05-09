@@ -67,9 +67,4 @@ public class ParmsTestDTO extends BaseDTO {
 
     private OrderEnum order;
 
-    /**
-     * 当前登录人姓名
-     */
-    private String currentUserName;
-
 }

@@ -1,6 +1,6 @@
 package com.cloud.order.postprocessor;
 
-import com.cloud.order.domain.entity.BeanTest;
+import com.cloud.order.domain.dto.BeanTestDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -34,7 +34,7 @@ public class MyBeanPostProcessor implements BeanPostProcessor, PriorityOrdered, 
         if (Objects.equals(beanName,"beanTest")) {
             log.info("========开始执行BeanPostProcessor, 准备开始BeanTest初始化==================");
             log.info("步骤【5】: 调用BeanPostProcessor 接口方法 postProcessBeforeInitialization 对属性进行更改！");
-            BeanTest beanTest = (BeanTest) applicationContext.getBean(beanName);
+            BeanTestDTO beanTest = (BeanTestDTO) applicationContext.getBean(beanName);
             beanTest.setName("zhangsan");
             beanTest.setAge(30);
         }

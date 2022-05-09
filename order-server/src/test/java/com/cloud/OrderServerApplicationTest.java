@@ -7,7 +7,6 @@ import com.cloud.order.domain.dto.MongoTestDTO;
 import com.cloud.order.domain.entity.Category;
 import com.cloud.order.enums.CategoryTypeEnum;
 import com.cloud.order.service.CategoryService;
-import com.cloud.platform.common.utils.JsonUtil;
 import com.github.dozermapper.core.Mapper;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -88,7 +87,6 @@ public class OrderServerApplicationTest {
         category.setParentCategoryId("11");
         category.setParentCategoryName("2dd3");
         category.setCategoryType(CategoryTypeEnum.ORDINARY_ARCHIVE);
-        category.setTime(LocalDateTime.now());
         categoryElasticRepository.save(category);
     }
 

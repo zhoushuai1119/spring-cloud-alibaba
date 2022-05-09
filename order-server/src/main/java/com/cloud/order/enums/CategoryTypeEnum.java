@@ -40,6 +40,7 @@ public enum CategoryTypeEnum implements ConverterBaseEnum {
      * 添加 @JsonCreator 可以解决上面前端传参绑定ordinal的问题；实现绑定value来获取枚举
      * 由于已经覆盖了原来的序列化/反序列化方式，所以 ordinal 的支持已经失效。
      * 参考博客: https://blog.csdn.net/alinyua/article/details/86383254
+     *
      * @param value
      * @return
      */

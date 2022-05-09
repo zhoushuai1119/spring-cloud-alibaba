@@ -1,6 +1,7 @@
 package com.cloud.order.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.cloud.order.enums.CategoryTypeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -10,15 +11,12 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 @Data
 @TableName("category")
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(indexName = "idx_category")
-public class Category implements Serializable {
+public class Category extends Model<Category> {
 
     private static final long serialVersionUID = 9072858780333387154L;
 
@@ -52,10 +50,9 @@ public class Category implements Serializable {
     private CategoryTypeEnum categoryType;
 
     @Version //乐观锁版本号配置
-    @TableField(value = "version", fill = FieldFill.INSERT)
+    @TableField(value = "version")
     @Field(type = FieldType.Integer)
     private Integer version;
-
 
     /**
      * 租户ID--》多租户测试
@@ -70,8 +67,5 @@ public class Category implements Serializable {
     @JsonIgnore //不显示某个字段给前端
     @Field(type = FieldType.Integer)
     private Boolean isDeleted;
-
-    @TableField(exist = false)
-    private LocalDateTime time;
 
 }

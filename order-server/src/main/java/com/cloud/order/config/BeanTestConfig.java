@@ -1,6 +1,6 @@
 package com.cloud.order.config;
 
-import com.cloud.order.domain.entity.BeanTest;
+import com.cloud.order.domain.dto.BeanTestDTO;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,8 +18,8 @@ public class BeanTestConfig {
      * @return
      */
     @Bean(initMethod = "init",destroyMethod = "destory")
-    public BeanTest beanTest(){
-        BeanTest beanTest = new BeanTest();
+    public BeanTestDTO beanTest(){
+        BeanTestDTO beanTest = new BeanTestDTO();
         beanTest.setName("zhoushuai");
         return beanTest;
     }

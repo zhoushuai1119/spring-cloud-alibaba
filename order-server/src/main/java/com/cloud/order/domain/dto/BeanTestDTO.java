@@ -1,5 +1,6 @@
-package com.cloud.order.domain.entity;
+package com.cloud.order.domain.dto;
 
+import com.cloud.platform.common.domain.dto.BaseDTO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
@@ -18,7 +19,9 @@ import javax.annotation.PreDestroy;
  */
 @Data
 @Slf4j
-public class BeanTest implements InitializingBean, DisposableBean, ApplicationContextAware, BeanNameAware, BeanFactoryAware {
+public class BeanTestDTO extends BaseDTO implements InitializingBean, DisposableBean, ApplicationContextAware, BeanNameAware, BeanFactoryAware {
+
+    private static final long serialVersionUID = 3542560952259283693L;
 
     private Integer id;
 
@@ -32,11 +35,11 @@ public class BeanTest implements InitializingBean, DisposableBean, ApplicationCo
 
     private ApplicationContext applicationContext;
 
-    public BeanTest() {
+    public BeanTestDTO() {
         log.info("步骤【1】: 执行beanTest constructor。。。。。");
     }
 
-    public BeanTest(Integer id, String name) {
+    public BeanTestDTO(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -56,7 +59,7 @@ public class BeanTest implements InitializingBean, DisposableBean, ApplicationCo
 
     public void init() {
         log.info("步骤【8】: 执行BeanTest init method.......");
-        BeanTest beanTest = (BeanTest) applicationContext.getBean("beanTest");
+        BeanTestDTO beanTest = (BeanTestDTO) applicationContext.getBean("beanTest");
         log.info("init method 获取到的beanTest的name:{}",beanTest.getName());
     }
 

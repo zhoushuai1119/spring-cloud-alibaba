@@ -1,9 +1,10 @@
 package com.cloud.order.controller;
 
-import com.cloud.platform.common.domain.response.BaseResponse;
 import com.cloud.order.rocketmq.producer.MessageSend;
+import com.cloud.platform.common.domain.response.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @version: v1
  */
 @RestController
+@RequestMapping("rocketmq")
 public class RocketMQController {
 
     @Autowired
