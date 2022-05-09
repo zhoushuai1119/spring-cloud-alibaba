@@ -1,7 +1,7 @@
-package com.cloud.controller;
+package com.cloud.camunda.controller;
 
 import com.cloud.platform.common.domain.response.BaseResponse;
-import com.cloud.service.camunda.HistoryManageService;
+import com.cloud.camunda.service.camunda.HistoryManageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

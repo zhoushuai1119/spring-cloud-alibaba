@@ -1,7 +1,7 @@
-package com.cloud.dao;
+package com.cloud.camunda.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.cloud.entity.Leave;
+import com.cloud.camunda.domain.entity.Leave;
 
 public interface LeaveMapper extends BaseMapper<Leave> {
 

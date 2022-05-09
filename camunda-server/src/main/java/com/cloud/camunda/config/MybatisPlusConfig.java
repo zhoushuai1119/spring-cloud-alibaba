@@ -1,4 +1,4 @@
-package com.cloud.config;
+package com.cloud.camunda.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @version: V1.0
  */
 @Configuration
-@MapperScan("com.cloud.dao")
+@MapperScan("com.cloud.camunda.mapper")
 public class MybatisPlusConfig {
 
     /**

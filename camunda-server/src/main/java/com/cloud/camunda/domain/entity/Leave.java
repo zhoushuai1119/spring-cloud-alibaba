@@ -1,4 +1,4 @@
-package com.cloud.entity;
+package com.cloud.camunda.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

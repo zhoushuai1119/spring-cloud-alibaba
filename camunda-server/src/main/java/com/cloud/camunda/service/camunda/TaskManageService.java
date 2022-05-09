@@ -1,4 +1,4 @@
-package com.cloud.service.camunda;
+package com.cloud.camunda.service.camunda;
 
 import com.cloud.common.enums.ErrorCodeEnum;
 import com.cloud.platform.common.domain.response.BaseResponse;

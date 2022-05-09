@@ -1,4 +1,4 @@
-package com.cloud.config;
+package com.cloud.camunda.config;
 
 import com.cloud.platform.web.factory.StringToEnumConverterFactory;
 import lombok.extern.slf4j.Slf4j;

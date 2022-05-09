@@ -1,9 +1,9 @@
-package com.cloud.service.impl;
+package com.cloud.camunda.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cloud.dao.LeaveMapper;
-import com.cloud.entity.Leave;
-import com.cloud.service.LeaveService;
+import com.cloud.camunda.mapper.LeaveMapper;
+import com.cloud.camunda.domain.entity.Leave;
+import com.cloud.camunda.service.LeaveService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
