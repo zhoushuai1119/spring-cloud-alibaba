@@ -1,6 +1,6 @@
 package com.cloud.order.rocketmq.producer;
 
-import com.cloud.order.dao.CategoryMapper;
+import com.cloud.order.mapper.CategoryMapper;
 import com.cloud.order.domain.entity.Category;
 import com.cloud.mq.base.core.CloudMQTemplate;
 import com.cloud.platform.common.constants.PlatformCommonConstant;

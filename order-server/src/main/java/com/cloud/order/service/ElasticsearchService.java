@@ -1,6 +1,6 @@
 package com.cloud.order.service;
 
-import com.cloud.order.dao.elasticsearch.CategoryElasticRepository;
+import com.cloud.order.mapper.elasticsearch.CategoryElasticRepository;
 import com.cloud.order.domain.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

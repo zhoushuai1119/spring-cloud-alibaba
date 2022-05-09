@@ -3,7 +3,7 @@ package com.cloud.order.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cloud.order.dao.CategoryMapper;
+import com.cloud.order.mapper.CategoryMapper;
 import com.cloud.order.domain.dto.BatchDelDTO;
 import com.cloud.order.domain.entity.Category;
 import com.cloud.platform.common.domain.request.PageQueryRequest;

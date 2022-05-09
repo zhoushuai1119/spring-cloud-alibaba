@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * @version: V1.0
  */
 @Configuration
-@MapperScan("com.cloud.order.dao")
+@MapperScan("com.cloud.order.mapper")
 public class MybatisPlusConfig {
 
     /**

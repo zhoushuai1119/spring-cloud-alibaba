@@ -1,8 +1,8 @@
 package com.cloud;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.cloud.order.dao.elasticsearch.CategoryElasticRepository;
-import com.cloud.order.dao.mongodb.TestMongoRepository;
+import com.cloud.order.mapper.elasticsearch.CategoryElasticRepository;
+import com.cloud.order.mapper.mongodb.TestMongoRepository;
 import com.cloud.order.domain.dto.MongoTestDTO;
 import com.cloud.order.domain.entity.Category;
 import com.cloud.order.enums.CategoryTypeEnum;

@@ -1,6 +1,6 @@
 package com.cloud.order.service;
 
-import com.cloud.order.dao.mongodb.TestMongoRepository;
+import com.cloud.order.mapper.mongodb.TestMongoRepository;
 import com.cloud.order.domain.dto.MongoTestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
