@@ -44,15 +44,15 @@ spring:
       datasource:
         master:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://139.196.208.53:3306/shiro?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
+          url: jdbc:mysql://139.196.208.53:3306/cloud?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
           username: root
           password: Zs11195310
 
-        slave:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://139.196.208.53:3306/test_zs?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
-          username: root
-          password: Zs11195310
+#        slave:
+#          driver-class-name: com.mysql.cj.jdbc.Driver
+#          url: jdbc:mysql://139.196.208.53:3306/shiro?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&testWhileIdle=false
+#          username: root
+#          password: Zs11195310
 
 
 #rocketmq配置
@@ -61,6 +61,8 @@ cloud:
     #开启全局异常捕获
     globalExceptionHandler:
       enabled: true
+    swagger:
+      basePackage: com.cloud.payment.controller
 
     #redisson配置
     redisson:
@@ -99,8 +101,8 @@ cloud:
 
 mybatis-plus:
   mapper-locations: classpath*:mapping/*.xml
-  type-aliases-package: com.cloud.entity
-  type-enums-package: com.cloud.enums
+  type-aliases-package: com.cloud.payment.domain.entity
+  type-enums-package: com.cloud.payment.enums
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
