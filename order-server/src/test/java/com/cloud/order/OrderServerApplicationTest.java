@@ -1,4 +1,4 @@
-package com.cloud;
+package com.cloud.order;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.cloud.order.mapper.elasticsearch.CategoryElasticRepository;
@@ -24,7 +24,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 
-//@SpringBootTest(properties = {"spring.profiles.active=dev"})
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Slf4j
