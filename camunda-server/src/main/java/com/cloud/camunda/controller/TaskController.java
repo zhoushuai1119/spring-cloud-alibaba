@@ -84,9 +84,8 @@ public class TaskController {
      * @param taskId 任务ID
      */
     @PostMapping("/claimTask")
-    public BaseResponse<String> claimTask(String taskId,String currentUserId) {
-        BaseResponse result = taskManageService.claimTask(currentUserId, taskId);
-        return result;
+    public BaseResponse claimTask(String taskId,String currentUserId) {
+        return taskManageService.claimTask(currentUserId, taskId);
     }
 
 }

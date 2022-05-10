@@ -109,7 +109,7 @@ public class LeaveController {
      * @Param: approveMessage 审批备注
      */
     @PostMapping("/leaveAprove")
-    public BaseResponse<String> leaveAprove(String taskId, String approveUserId, String approveMessage) {
+    public BaseResponse leaveAprove(String taskId, String approveUserId, String approveMessage) {
         BaseResponse result = taskManageService.completeTask(approveUserId, taskId, null, approveMessage);
         return result;
     }
