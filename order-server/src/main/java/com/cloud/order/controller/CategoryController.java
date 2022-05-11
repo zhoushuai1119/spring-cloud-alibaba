@@ -37,7 +37,7 @@ public class CategoryController {
      */
     @PostMapping("/saveOrUpdate")
     @MethodLogger
-    public BaseResponse enumCheck(@RequestBody @Valid Category category) {
+    public BaseResponse<String> enumCheck(@RequestBody @Valid Category category) {
         categoryService.saveCategory(category);
         return BaseResponse.createSuccessResult(null);
     }
@@ -103,7 +103,7 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/asyncPublisher/{categoryId}")
-    public BaseResponse asyncPublisher(@PathVariable("categoryId") Integer categoryId) {
+    public BaseResponse<String> asyncPublisher(@PathVariable("categoryId") Integer categoryId) {
         categoryService.asyncSendMq(categoryId);
         return BaseResponse.createSuccessResult(null);
     }
