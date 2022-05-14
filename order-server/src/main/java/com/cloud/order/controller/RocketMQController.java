@@ -25,7 +25,7 @@ public class RocketMQController {
      * @return
      */
     @PostMapping("/send")
-    public BaseResponse sendMessage(){
+    public BaseResponse<String> sendMessage(){
         messageSend.sendMessage();
         return BaseResponse.createSuccessResult(null);
     }
@@ -35,7 +35,7 @@ public class RocketMQController {
      * @return
      */
     @PostMapping("/send/transaction")
-    public BaseResponse sendTransactionMessage(){
+    public BaseResponse<String> sendTransactionMessage(){
         messageSend.sendTransactionMessage();
         return BaseResponse.createSuccessResult(null);
     }

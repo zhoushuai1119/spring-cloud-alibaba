@@ -60,7 +60,7 @@ public class TestController {
      * @return
      */
     @PostMapping("/category/enum")
-    public BaseResponse enumTest(CategoryTypeEnum categoryType) {
+    public BaseResponse<CategoryTypeEnum> enumTest(CategoryTypeEnum categoryType) {
         return BaseResponse.createSuccessResult(categoryType);
     }
 
@@ -82,7 +82,7 @@ public class TestController {
      * @throws SQLException
      */
     @PostMapping("/sql/reNameTable")
-    public BaseResponse reNameTable() throws SQLException {
+    public BaseResponse<String> reNameTable() throws SQLException {
         sqlService.reNameTable(null, null);
         return BaseResponse.createSuccessResult(null);
     }
@@ -93,7 +93,7 @@ public class TestController {
      * @throws SQLException
      */
     @PostMapping("/sql/copyNameTable")
-    public BaseResponse copyNameTable() throws SQLException {
+    public BaseResponse<String> copyNameTable() throws SQLException {
         sqlService.copyNameTable(null, null);
         return BaseResponse.createSuccessResult(null);
     }

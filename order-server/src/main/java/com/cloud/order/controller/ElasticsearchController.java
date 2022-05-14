@@ -30,7 +30,7 @@ public class ElasticsearchController {
 
 
     @PostMapping("/saveCategoty")
-    public BaseResponse saveCategory(Long categoryId) {
+    public BaseResponse<String> saveCategory(Long categoryId) {
         Category category = categoryService.getById(categoryId);
         categoryElasticsearchService.saveCategory(category);
         return BaseResponse.createSuccessResult(null);

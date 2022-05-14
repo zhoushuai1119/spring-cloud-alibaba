@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 这个时候将权限的注解加到Service层是不好用的， 这个时候需要加到Controller层中，
  * 也就是不能让Service层是代理的代理，这个时候在注入的时候会产生类型转换异常
  * 原文链接：https://blog.csdn.net/changudeng1992/article/details/81914572
+ *
  * @author: zhou shuai
  * @date: 2022/5/7 23:58
  * @version: v1

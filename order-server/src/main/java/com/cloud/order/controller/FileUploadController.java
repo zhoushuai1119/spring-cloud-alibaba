@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -67,10 +66,10 @@ public class FileUploadController {
      * 文件删除
      */
     @RequestMapping(value = "/deleteByPath", method = RequestMethod.GET)
-    public ResponseEntity<String> deleteByPath() {
+    public BaseResponse<String> deleteByPath() {
         String filePathName = "group1/M00/00/00/wKhIgl0n4AKABxQEABhlMYw_3Lo825.png";
         fileService.deleteFile(filePathName);
-        return ResponseEntity.ok("SUCCESS");
+        return BaseResponse.createSuccessResult(null);
     }
 
     @ApiOperation(value = "上传文件", notes = "上传文件")
