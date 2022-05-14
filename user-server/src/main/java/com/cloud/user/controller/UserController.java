@@ -48,7 +48,7 @@ public class UserController {
      * @return
      */
     @GetMapping("index")
-    public BaseResponse index(){
+    public BaseResponse<String> index(){
         return BaseResponse.createSuccessResult("登录成功,跳转到此接口");
     }
 
@@ -67,7 +67,7 @@ public class UserController {
      * @throws Exception
      */
     @PostMapping("/login")
-    public BaseResponse userLogin(HttpServletRequest request) {
+    public BaseResponse<String> userLogin(HttpServletRequest request) {
         log.info("============执行userLogin登录接口=============");
         String exceptionClassName = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
         UserErrorCodeEnum errorCodeEnum;
@@ -97,7 +97,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/getAuthCodeImg")
-    public BaseResponse getAuthCodeImg() {
+    public BaseResponse<String> getAuthCodeImg() {
         LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(137, 40, 4, 80);
         lineCaptcha.createCode();
         String authCode = lineCaptcha.getCode();
@@ -118,7 +118,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/register")
-    public BaseResponse userRegister(@RequestBody @Valid UserRegisterDTO userRegister) {
+    public BaseResponse<String> userRegister(@RequestBody @Valid UserRegisterDTO userRegister) {
         log.info("currentUSer：{}",SecurityUtils.getSubject().getPrincipal());
         userService.userRegister(userRegister);
         return BaseResponse.createSuccessResult(null);
@@ -130,7 +130,7 @@ public class UserController {
      * @return
      */
     @GetMapping("unLogin")
-    public BaseResponse unLogin(){
+    public BaseResponse<String> unLogin(){
         log.info("=====未登录请求接口地址=================");
         return BaseResponse.createFailResult(UserErrorCodeEnum.UN_LOGIN_ERROR);
     }
@@ -140,7 +140,7 @@ public class UserController {
      * @return
      */
     @GetMapping("unauthorized")
-    public BaseResponse permissionDenied(){
+    public BaseResponse<String> permissionDenied(){
         return BaseResponse.createFailResult(UserErrorCodeEnum.PERMISSION_DENIED_ERROR);
     }
 

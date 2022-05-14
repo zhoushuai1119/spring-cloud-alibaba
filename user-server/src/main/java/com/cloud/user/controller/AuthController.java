@@ -36,7 +36,7 @@ public class AuthController {
      */
     @PostMapping("role")
     @RequiresRoles(value = {"admin", "manager"}, logical = Logical.AND)
-    public BaseResponse authRoleTest() {
+    public BaseResponse<String> authRoleTest() {
         log.info("当前登录用户:{}", JsonUtil.toString(webRequestConfig.getUserInfo()));
         return BaseResponse.createSuccessResult("有角色权限访问");
     }
@@ -48,7 +48,7 @@ public class AuthController {
      */
     @PostMapping("permiss")
     @RequiresPermissions(value = {"query", "del"}, logical = Logical.AND)
-    public BaseResponse authPermissTest() {
+    public BaseResponse<String> authPermissTest() {
         log.info("当前登录用户:{}", JsonUtil.toString(webRequestConfig.getUserInfo()));
         return BaseResponse.createSuccessResult("有操作权限访问");
     }
@@ -60,7 +60,7 @@ public class AuthController {
      */
     @PostMapping("login")
     @RequiresAuthentication
-    public BaseResponse authLoginTest() {
+    public BaseResponse<String> authLoginTest() {
         log.info("当前登录用户:{}", JsonUtil.toString(webRequestConfig.getUserInfo()));
         return BaseResponse.createSuccessResult("有登录权限访问");
     }
@@ -74,7 +74,7 @@ public class AuthController {
      */
     @PostMapping("rememberMe")
     @RequiresUser
-    public BaseResponse authRememberMeTest() {
+    public BaseResponse<String> authRememberMeTest() {
         log.info("当前登录用户:{}", JsonUtil.toString(webRequestConfig.getUserInfo()));
         return BaseResponse.createSuccessResult("有记住我权限访问");
     }
@@ -87,13 +87,13 @@ public class AuthController {
      */
     @PostMapping("guest")
     @RequiresGuest
-    public BaseResponse authGuestTest() {
+    public BaseResponse<String> authGuestTest() {
         log.info("当前登录用户:{}", JsonUtil.toString(webRequestConfig.getUserInfo()));
         return BaseResponse.createSuccessResult("游客权限访问");
     }
 
     @GetMapping("kickout")
-    public BaseResponse kickoutTest() {
+    public BaseResponse<String> kickoutTest() {
         return BaseResponse.createSuccessResult("异地登录");
     }
 

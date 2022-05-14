@@ -34,7 +34,7 @@ public class SeataController {
     @GlobalTransactional(rollbackFor = Exception.class)
     //@Transactional
     @PostMapping("/seataTest")
-    public BaseResponse seataTest() {
+    public BaseResponse<String> seataTest() {
         orderProxy.updateCategory("16");
         log.info("*********");
         paymentProxy.saveUser();
