@@ -61,6 +61,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void batchDelCategory(BatchDelDTO categoryIdList) {
         baseMapper.deleteBatchIds(categoryIdList.getCategoryIdList());
     }

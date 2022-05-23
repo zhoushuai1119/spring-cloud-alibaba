@@ -1,6 +1,7 @@
 package com.cloud.order.domain.dto;
 
 import com.cloud.platform.common.domain.dto.BaseDTO;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -13,6 +14,7 @@ import java.util.List;
  * @version: v1
  */
 @Data
+@AllArgsConstructor
 public class BatchDelDTO extends BaseDTO {
 
     private static final long serialVersionUID = -206352555527430626L;
