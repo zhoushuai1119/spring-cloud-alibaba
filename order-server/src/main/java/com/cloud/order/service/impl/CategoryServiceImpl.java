@@ -3,16 +3,14 @@ package com.cloud.order.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cloud.order.mapper.CategoryMapper;
 import com.cloud.order.domain.dto.BatchDelDTO;
 import com.cloud.order.domain.entity.Category;
-import com.cloud.platform.common.domain.request.PageQueryRequest;
-import com.cloud.platform.common.utils.JsonUtil;
-import com.cloud.order.proxy.PaymentProxy;
+import com.cloud.order.mapper.CategoryMapper;
 import com.cloud.order.service.CategoryService;
 import com.cloud.order.utils.ThreadLocalUtil;
+import com.cloud.platform.common.domain.request.PageQueryRequest;
+import com.cloud.platform.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -33,9 +31,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Resource
     private ApplicationEventPublisher publisher;
-
-    @Autowired
-    private PaymentProxy paymentProxy;
 
     @Override
     public List<Category> categoryList() {

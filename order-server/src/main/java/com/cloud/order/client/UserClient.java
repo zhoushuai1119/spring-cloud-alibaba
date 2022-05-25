@@ -1,10 +1,11 @@
 package com.cloud.order.client;
 
 import com.cloud.order.client.hystrix.UserFallbackFactory;
+import com.cloud.order.domain.dto.UserRegisterDTO;
 import com.cloud.platform.common.domain.response.BaseResponse;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * @description:
@@ -19,7 +20,7 @@ public interface UserClient {
 
     String SERVER_NAME = "user-server";
 
-    @PostMapping(value = "saveUser",consumes = MediaType.APPLICATION_JSON_VALUE)
-    BaseResponse saveUser();
+    @PostMapping(value = "/user/register")
+    BaseResponse userRegister(@RequestBody UserRegisterDTO userRegisterDTO);
 
 }

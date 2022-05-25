@@ -201,10 +201,9 @@ feign:
     enabled: true
   client:
     config:
-      default:
-        #不设置connectTimeout会导致readTimeout设置不生效
-        connectTimeout: 20000
-        readTimeout: 20000
+      default: #设置全局超时时间
+        connectTimeout: 2000  #请求连接的超时时间
+        readTimeout: 5000     #请求处理的超时时间
 
 #配置测试数据
 apollo:

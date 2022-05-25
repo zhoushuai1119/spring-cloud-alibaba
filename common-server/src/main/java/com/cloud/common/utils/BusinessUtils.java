@@ -20,8 +20,8 @@ public class BusinessUtils {
         if (Objects.nonNull(baseResponse) && baseResponse.isSuccess()) {
             return baseResponse.getModel();
         }
-        log.error("调用外部系统失败:{},参数:{}", JsonUtil.toString(baseResponse),JsonUtil.toString(params));
-        throw new BusinessException(baseResponse.getErrorCode(),baseResponse.getErrorMessage());
+        log.error("调用外部系统失败:{},参数:{}", JsonUtil.toString(baseResponse), JsonUtil.toString(params));
+        throw new BusinessException(baseResponse.getErrorCode(), baseResponse.getErrorMessage(), baseResponse.getErrorTips());
     }
 
 }

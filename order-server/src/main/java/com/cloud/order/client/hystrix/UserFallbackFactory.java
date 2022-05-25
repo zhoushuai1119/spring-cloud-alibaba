@@ -3,6 +3,7 @@ package com.cloud.order.client.hystrix;
 import com.cloud.order.client.UserClient;
 import com.cloud.common.beans.exception.BusinessException;
 import com.cloud.common.utils.FeignUtils;
+import com.cloud.order.domain.dto.UserRegisterDTO;
 import com.cloud.platform.common.domain.response.BaseResponse;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +25,13 @@ public class UserFallbackFactory implements FallbackFactory<UserClient> {
         return new UserClient() {
 
             @Override
-            public BaseResponse saveUser() {
-                BusinessException businessException = FeignUtils.decodeFeignException("saveUser",throwable);
+            public BaseResponse userRegister(UserRegisterDTO userRegisterDTO) {
+                BusinessException businessException = FeignUtils.decodeFeignException("userRegister",throwable);
                 BaseResponse response = new BaseResponse();
                 response.setSuccess(false);
-                response.setErrorMessage(businessException.getMessage());
                 response.setErrorCode(businessException.getErrorCode());
+                response.setErrorTips(businessException.getErrorTips());
+                response.setErrorMessage(businessException.getMessage());
                 return response;
             }
         };
