@@ -1,7 +1,7 @@
-package com.cloud.payment.proxy;
+package com.cloud.user.proxy;
 
-import com.cloud.payment.client.OrderClient;
 import com.cloud.common.utils.BusinessUtils;
+import com.cloud.user.client.ProductClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,16 +14,16 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class OrderProxy {
+public class ProductProxy {
 
     @Autowired
-    private OrderClient orderClient;
+    private ProductClient productClient;
 
     /**
      * 保存用户
      */
-    public void saveUser() {
-        BusinessUtils.checkBaseRespose(orderClient.saveUser());
+    public void saveProduct() {
+        BusinessUtils.checkBaseRespose(productClient.saveProduct());
     }
 
 }

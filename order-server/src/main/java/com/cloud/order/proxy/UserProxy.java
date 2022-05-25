@@ -1,8 +1,8 @@
 package com.cloud.order.proxy;
 
-import com.cloud.common.utils.BusinessUtils;
 import com.cloud.order.client.UserClient;
 import com.cloud.order.domain.dto.UserRegisterDTO;
+import com.cloud.platform.common.domain.response.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,11 +23,11 @@ public class UserProxy {
     /**
      * 保存用户
      */
-    public void userRegister() {
+    public BaseResponse userRegister() {
         UserRegisterDTO userRegisterDTO = new UserRegisterDTO();
         userRegisterDTO.setUsername("lisi");
         userRegisterDTO.setPassword("123456");
-        BusinessUtils.checkBaseRespose(userClient.userRegister(userRegisterDTO));
+        return userClient.userRegister(userRegisterDTO);
     }
 
 }

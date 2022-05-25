@@ -102,10 +102,13 @@ public class TestController {
         return BaseResponse.createSuccessResult(null);
     }
 
+    /**
+     * 测试feign远程调用
+     * @return
+     */
     @PostMapping("/user/register")
     public BaseResponse<String> userRegister() {
-        userProxy.userRegister();
-        return BaseResponse.createSuccessResult(null);
+        return userProxy.userRegister();
     }
 
 }

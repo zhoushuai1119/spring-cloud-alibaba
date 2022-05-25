@@ -24,12 +24,13 @@ public class ProductFallbackFactory implements FallbackFactory<ProductClient> {
         return new ProductClient() {
 
             @Override
-            public BaseResponse saveUser() {
-                BusinessException businessException = FeignUtils.decodeFeignException("saveUser",throwable);
+            public BaseResponse saveProduct() {
+                BusinessException businessException = FeignUtils.decodeFeignException("saveProduct",throwable);
                 BaseResponse response = new BaseResponse();
                 response.setSuccess(false);
-                response.setErrorMessage(businessException.getMessage());
                 response.setErrorCode(businessException.getErrorCode());
+                response.setErrorTips(businessException.getErrorTips());
+                response.setErrorMessage(businessException.getMessage());
                 return response;
             }
         };

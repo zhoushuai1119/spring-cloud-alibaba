@@ -1,9 +1,8 @@
 package com.cloud.user.client;
 
-import com.cloud.user.client.hystrix.ProductFallbackFactory;
 import com.cloud.platform.common.domain.response.BaseResponse;
+import com.cloud.user.client.hystrix.ProductFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -19,7 +18,11 @@ public interface ProductClient {
 
     String SERVER_NAME = "product-server";
 
-    @PostMapping(value = "saveUser",consumes = MediaType.APPLICATION_JSON_VALUE)
-    BaseResponse saveUser();
+    /**
+     * 保存产品信息
+     * @return
+     */
+    @PostMapping(value = "/product/save")
+    BaseResponse saveProduct();
 
 }

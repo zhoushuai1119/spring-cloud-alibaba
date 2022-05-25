@@ -28,8 +28,9 @@ public class OrderFallbackFactory implements FallbackFactory<OrderClient> {
                 BusinessException businessException = FeignUtils.decodeFeignException("updateCategory",throwable);
                 BaseResponse response = new BaseResponse();
                 response.setSuccess(false);
-                response.setErrorMessage(businessException.getMessage());
                 response.setErrorCode(businessException.getErrorCode());
+                response.setErrorTips(businessException.getErrorTips());
+                response.setErrorMessage(businessException.getMessage());
                 return response;
             }
         };

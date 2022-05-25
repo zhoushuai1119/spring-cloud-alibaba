@@ -2,7 +2,7 @@ package com.cloud.user.controller;
 
 import com.cloud.platform.common.domain.response.BaseResponse;
 import com.cloud.user.proxy.OrderProxy;
-import com.cloud.user.proxy.PaymentProxy;
+import com.cloud.user.proxy.ProductProxy;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class SeataController {
     private OrderProxy orderProxy;
 
     @Autowired
-    private PaymentProxy paymentProxy;
+    private ProductProxy productProxy;
 
     /**
      * seata分布式事务测试
@@ -37,7 +37,7 @@ public class SeataController {
     public BaseResponse<String> seataTest() {
         orderProxy.updateCategory("16");
         log.info("*********");
-        paymentProxy.saveUser();
+        productProxy.saveProduct();
         return BaseResponse.createSuccessResult(null);
     }
 
