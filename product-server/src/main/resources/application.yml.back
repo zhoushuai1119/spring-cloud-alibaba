@@ -53,9 +53,9 @@ spring:
         username: root
         password: Zs11195310
 
-    masterslave:
-      # 读写分离配置;用于配置从库负载均衡算法类型，可选值：ROUND_ROBIN(轮询)，RANDOM（随机）
-      load-balance-algorithm-type: round_robin
+#    masterslave:
+#      # 读写分离配置;用于配置从库负载均衡算法类型，可选值：ROUND_ROBIN(轮询)，RANDOM（随机）
+#      load-balance-algorithm-type: round_robin
 
     sharding:
       # 未配置分片规则的表将通过默认数据源定位
