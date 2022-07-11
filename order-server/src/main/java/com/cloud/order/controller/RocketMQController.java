@@ -1,5 +1,6 @@
 package com.cloud.order.controller;
 
+import com.cloud.order.config.WebRequestConfig;
 import com.cloud.order.rocketmq.producer.MessageSend;
 import com.cloud.platform.common.domain.response.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,16 @@ public class RocketMQController {
     @Autowired
     private MessageSend messageSend;
 
+    @Autowired
+    private WebRequestConfig webRequestConfig;
+
     /**
      * 发送普通消息
      * @return
      */
     @PostMapping("/send")
     public BaseResponse<String> sendMessage(){
+        String token = webRequestConfig.getLoginToken();
         messageSend.sendMessage();
         return BaseResponse.createSuccessResult(null);
     }
