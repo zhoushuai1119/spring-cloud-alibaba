@@ -9,6 +9,7 @@ import com.cloud.user.constants.UserConstant;
 import com.cloud.user.domain.dto.UserRegisterDTO;
 import com.cloud.user.exception.UserErrorCodeEnum;
 import com.cloud.user.service.UserService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -117,10 +118,12 @@ public class UserController {
      * @param userRegister
      * @return
      */
-    @PostMapping("/register")
+    @GetMapping("/register")
+    @SneakyThrows
     public BaseResponse<String> userRegister(@RequestBody @Valid UserRegisterDTO userRegister) {
         log.info("currentUSer：{}",SecurityUtils.getSubject().getPrincipal());
-        userService.userRegister(userRegister);
+        Thread.sleep(10000);
+        //userService.userRegister(userRegister);
         return BaseResponse.createSuccessResult(null);
     }
 
