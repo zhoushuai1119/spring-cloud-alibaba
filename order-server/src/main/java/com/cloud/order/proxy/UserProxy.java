@@ -3,6 +3,7 @@ package com.cloud.order.proxy;
 import com.cloud.order.client.UserClient;
 import com.cloud.order.domain.dto.UserRegisterDTO;
 import com.cloud.platform.common.domain.response.BaseResponse;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,7 @@ public class UserProxy {
     /**
      * 保存用户
      */
+    @GlobalTransactional(rollbackFor = Exception.class)
     public BaseResponse userRegister() {
         UserRegisterDTO userRegisterDTO = new UserRegisterDTO();
         userRegisterDTO.setUsername("lisi");

@@ -118,12 +118,12 @@ public class UserController {
      * @param userRegister
      * @return
      */
-    @GetMapping("/register")
+    @PostMapping("/register")
     @SneakyThrows
     public BaseResponse<String> userRegister(@RequestBody @Valid UserRegisterDTO userRegister) {
         log.info("currentUSer：{}",SecurityUtils.getSubject().getPrincipal());
         Thread.sleep(10000);
-        //userService.userRegister(userRegister);
+        userService.userRegister(userRegister);
         return BaseResponse.createSuccessResult(null);
     }
 
