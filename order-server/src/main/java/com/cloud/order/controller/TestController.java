@@ -60,6 +60,7 @@ public class TestController {
 
     /**
      * 测试 StringToEnumConverterFactory
+     *
      * @param categoryType
      * @return
      */
@@ -70,18 +71,20 @@ public class TestController {
 
     /**
      * 测试session 监听器
+     *
      * @param request
      * @return
      */
     @GetMapping("/listener")
     public BaseResponse<String> testSessionListener(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        log.info("在线人员:{}",session.getServletContext().getAttribute("onlinePersonNum"));
+        log.info("在线人员:{}", session.getServletContext().getAttribute("onlinePersonNum"));
         return BaseResponse.createSuccessResult(null);
     }
 
     /**
      * 表名重命名
+     *
      * @return
      * @throws SQLException
      */
@@ -93,6 +96,7 @@ public class TestController {
 
     /**
      * 拷贝表
+     *
      * @return
      * @throws SQLException
      */
@@ -104,11 +108,13 @@ public class TestController {
 
     /**
      * 测试feign远程调用
+     *
      * @return
      */
     @PostMapping("/user/register")
     public BaseResponse<String> userRegister() {
-        return userProxy.userRegister();
+        userProxy.userRegister();
+        return BaseResponse.createSuccessResult(null);
     }
 
 }
