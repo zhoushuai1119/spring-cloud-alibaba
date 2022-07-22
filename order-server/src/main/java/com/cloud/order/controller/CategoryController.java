@@ -105,6 +105,7 @@ public class CategoryController {
     @PostMapping("/asyncPublisher/{categoryId}")
     public BaseResponse<String> asyncPublisher(@PathVariable("categoryId") Integer categoryId) {
         categoryService.asyncSendMq(categoryId);
+        log.info("*********************************hshshshhsh***************");
         return BaseResponse.createSuccessResult(null);
     }
 
