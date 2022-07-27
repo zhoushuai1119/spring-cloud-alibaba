@@ -68,7 +68,7 @@ cloud:
     redisson:
       enabled: true
       nodes: 139.196.208.53:6379
-      password: 123456
+      password: Zs11195310
       timeout: 3000
       scanInterval: 1000
       connectionPoolSize: 64
