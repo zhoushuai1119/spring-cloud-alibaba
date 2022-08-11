@@ -5,10 +5,10 @@ import com.cloud.platform.common.domain.response.BaseResponse;
 import com.cloud.product.domain.entity.Product;
 import com.cloud.product.service.DictService;
 import com.cloud.product.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022-05-09
  */
 @RestController
+@Slf4j
 @RequestMapping("/product")
 public class ProductController {
 
@@ -55,6 +56,18 @@ public class ProductController {
      */
     @PostMapping("/dict/save")
     public BaseResponse saveDict(){
+        dictService.saveDict();
+        return BaseResponse.createSuccessResult(null);
+    }
+
+    /**
+     *
+     * seata测试
+     * @return
+     */
+    @PostMapping("/seata/test")
+    public BaseResponse seataTest(){
+        log.info("seata test .....");
         dictService.saveDict();
         return BaseResponse.createSuccessResult(null);
     }

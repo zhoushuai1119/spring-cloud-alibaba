@@ -154,7 +154,7 @@ seata:
   ##此处配置自定义的seata事务分组名称
   tx-service-group: ${spring.application.name}-tx-group
   ##开启数据库代理
-  enable-auto-data-source-proxy: true
+  enable-auto-data-source-proxy: false
   registry:
     type: nacos
     nacos:

@@ -26,4 +26,11 @@ public class ProductProxy {
         BusinessUtils.checkBaseRespose(productClient.saveProduct());
     }
 
+    /**
+     * seata 测试
+     */
+    public void seataTest() {
+        BusinessUtils.checkBaseRespose(productClient.seataTest());
+    }
+
 }

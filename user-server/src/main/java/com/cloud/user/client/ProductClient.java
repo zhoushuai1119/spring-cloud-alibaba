@@ -25,4 +25,11 @@ public interface ProductClient {
     @PostMapping(value = "/product/save")
     BaseResponse saveProduct();
 
+    /**
+     * seata 测试
+     * @return
+     */
+    @PostMapping(value = "/product/seata/test")
+    BaseResponse seataTest();
+
 }

@@ -37,6 +37,7 @@ public class SeataController {
     public BaseResponse<String> seataTest() {
         orderProxy.updateCategory("16");
         log.info("*********");
+        //productProxy.seataTest();
         productProxy.saveProduct();
         return BaseResponse.createSuccessResult(null);
     }
