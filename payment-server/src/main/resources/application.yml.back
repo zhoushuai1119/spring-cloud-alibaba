@@ -37,6 +37,10 @@ spring:
 
   datasource:
     dynamic:
+      # 开启seata代理，开启后默认每个数据源都代理，如果某个不需要代理可单独关闭
+      seata: true
+      # 默认AT模式，支持  AT 、XA
+      seata-mode: at
       #设置默认的数据源或者数据源组,默认值即为master
       primary: master
       #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
@@ -114,11 +118,12 @@ mybatis-plus:
 
 #seata分布式事务配置
 seata:
+  ##spring.datasource.dynami.seata需要同时开启
   enabled: true
   application-id: ${spring.application.name}
   ##此处配置自定义的seata事务分组名称
   tx-service-group: ${spring.application.name}-tx-group
-  ##开启数据库代理
+  ##关闭自动代理
   enable-auto-data-source-proxy: false
   registry:
     type: nacos
