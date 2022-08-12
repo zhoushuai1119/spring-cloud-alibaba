@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.querys.MySqlQuery;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.cloud.platform.web.utils.CommonUtil;
 
 /**
  * @description:
@@ -22,15 +23,21 @@ public class MybatisPlusCodeGenerator {
      * 数据源配置
      */
     private static final DataSourceConfig.Builder DATA_SOURCE_CONFIG = new DataSourceConfig
-            .Builder("jdbc:mysql://139.196.208.53:3306/cloud?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false", "root", "Zs11195310")
+            .Builder("jdbc:mysql://139.196.208.53:3306/order?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false", "root", "Zs11195310")
             .dbQuery(new MySqlQuery())
             .schema("");
 
-    // 多个用,  拼接
-    public static final String TABLE_NAMES = "category";
-    //包名路径
+    /**
+     * 表名：多个用,  拼接
+     */
+    public static final String TABLE_NAMES = "order,order_product_detail";
+    /**
+     * 包名路径
+     */
     public static final String PACKAGE_PATH = "com.cloud.order";
-    //服务名
+    /**
+     * 服务名
+     */
     public static final String APPLICATION_NAME = "order-server";
 
     /**
@@ -74,7 +81,7 @@ public class MybatisPlusCodeGenerator {
                 // 策略配置
                 .strategyConfig((scanner, builder) -> builder.enableCapitalMode()
                         //设置生成的表名
-                        .addInclude(TABLE_NAMES)
+                        .addInclude(CommonUtil.strToListStr(TABLE_NAMES))
                         //Entity 策略配置
                         .entityBuilder()
                         .superClass(Model.class)

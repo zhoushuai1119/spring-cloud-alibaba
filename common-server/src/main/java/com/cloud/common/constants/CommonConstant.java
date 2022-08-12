@@ -26,4 +26,11 @@ public class CommonConstant {
         String TOP_CATEGORY_ID = "0";
     }
 
+    public interface EventCode {
+        /**
+         * 下单扣减库存 EventCode
+         */
+        String ORDER_PRODUCT_CODE = "order_product_reduce";
+    }
+
 }

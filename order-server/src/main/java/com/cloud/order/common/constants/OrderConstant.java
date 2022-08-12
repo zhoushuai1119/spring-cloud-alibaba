@@ -10,6 +10,13 @@ package com.cloud.order.common.constants;
 public class OrderConstant {
 
     /**
+     * 系统三字码
+     */
+    public interface System {
+        String SYSTEM_CODE = "ORDER";
+    }
+
+    /**
      * 订单key
      */
     public interface CreateOrderKey {

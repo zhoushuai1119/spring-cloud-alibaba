@@ -1,10 +1,13 @@
 package com.cloud.product.controller;
 
 
+import com.cloud.common.beans.exception.BusinessException;
+import com.cloud.common.enums.ErrorCodeEnum;
 import com.cloud.platform.common.domain.response.BaseResponse;
 import com.cloud.product.domain.entity.Product;
 import com.cloud.product.service.DictService;
 import com.cloud.product.service.ProductService;
+import io.seata.core.context.RootContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,7 +71,12 @@ public class ProductController {
     @PostMapping("/seata/test")
     public BaseResponse seataTest(){
         log.info("seata test .....");
+        String xid = RootContext.getXID();
+        log.info("seataTest全局事务ID:{}",xid);
         dictService.saveDict();
+        if (true) {
+            throw new BusinessException(ErrorCodeEnum.NOT_TASK_APPROVAL_PERSON);
+        }
         return BaseResponse.createSuccessResult(null);
     }
 
