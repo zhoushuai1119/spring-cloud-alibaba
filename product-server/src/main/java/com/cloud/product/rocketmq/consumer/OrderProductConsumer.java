@@ -1,5 +1,6 @@
 package com.cloud.product.rocketmq.consumer;
 
+import cn.hutool.json.JSONUtil;
 import com.cloud.common.constants.CommonConstant;
 import com.cloud.mq.base.dto.CloudMessage;
 import com.cloud.platform.common.constants.PlatformCommonConstant;
@@ -30,7 +31,7 @@ public class OrderProductConsumer implements TopicListener<String> {
             log.warn("orderProductMsg is empty");
             return;
         }
-        List<OrderProductDTO> orderProductList = JsonUtil.toList(orderProductMsg);
+        List<OrderProductDTO> orderProductList = JSONUtil.toList(orderProductMsg, OrderProductDTO.class);
         log.info("orderProductList:{}", JsonUtil.toString(orderProductList));
     }
 

@@ -24,6 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest res, HttpServletResponse rep, Object object) throws Exception {
+        log.info("currentThreadId:{}", Thread.currentThread().getId());
         return true;
     }
 
@@ -38,7 +39,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     /**
      * 页面渲染之后调用，一般用于资源清理操作
-     * */
+     */
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {

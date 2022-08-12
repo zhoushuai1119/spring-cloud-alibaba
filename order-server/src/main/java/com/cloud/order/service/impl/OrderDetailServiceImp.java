@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -54,7 +55,7 @@ public class OrderDetailServiceImp extends ServiceImpl<OrderDetailMapper, OrderD
      * @return
      */
     @Override
-    //@Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public BaseResponse createOrder(OrderParamDTO createOrderParamDTO) {
         String lockKey = RedisLockKeyUtil.getLockKey(createOrderParamDTO.getOrderWay(), env, OrderConstant.CreateOrderKey.CREATE_ORDER_KEY);
         RLock lock = redissonClient.getLock(lockKey);
@@ -65,7 +66,7 @@ public class OrderDetailServiceImp extends ServiceImpl<OrderDetailMapper, OrderD
             channelOrder.createOrder(createOrderParamDTO);
 
             //发送mq 扣减库存
-            publisher.publishEvent(createOrderParamDTO.getOrderDetailList());
+            publisher.publishEvent(createOrderParamDTO);
         } finally {
             lock.unlock();
         }

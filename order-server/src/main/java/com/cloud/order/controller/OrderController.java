@@ -6,6 +6,7 @@ import com.cloud.order.service.OrderDetailService;
 import com.cloud.platform.common.domain.response.BaseResponse;
 import com.cloud.platform.web.aop.annotation.MethodLogger;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/order")
+@Slf4j
 public class OrderController {
 
     @Autowired
@@ -37,6 +39,7 @@ public class OrderController {
     @PostMapping("create")
     @MethodLogger
     public BaseResponse createOrder(@RequestBody @Validated OrderParamDTO createOrderParamDTO) {
+        log.info("createOrder currentThreadId:{}", Thread.currentThread().getId());
         return orderDetailService.createOrder(createOrderParamDTO);
     }
 
