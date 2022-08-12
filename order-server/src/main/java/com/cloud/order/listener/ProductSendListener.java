@@ -7,8 +7,8 @@ import com.cloud.platform.common.constants.PlatformCommonConstant;
 import com.cloud.platform.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class ProductSendListener {
      * 下单扣减库存发送mq
      * @param orderDetailList
      */
-    @TransactionalEventListener
+    @EventListener
     public void productSendMq(List<OrderDetailDTO> orderDetailList) {
         log.info("ProductSendListener, orderDetailList:{}", JsonUtil.toString(orderDetailList));
         cloudMQTemplate.send(PlatformCommonConstant.Topic.PRODUCT_SERVER_TOPIC, CommonConstant.EventCode.ORDER_PRODUCT_CODE, JsonUtil.toString(orderDetailList));

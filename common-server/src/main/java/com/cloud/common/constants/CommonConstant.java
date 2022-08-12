@@ -30,7 +30,7 @@ public class CommonConstant {
         /**
          * 下单扣减库存 EventCode
          */
-        String ORDER_PRODUCT_CODE = "order_product_reduce";
+        String ORDER_PRODUCT_CODE = "ORDER_PRODUCT_REDUCE";
     }
 
 }
