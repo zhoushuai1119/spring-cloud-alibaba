@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class Product extends Model {
 
     @ApiModelProperty("ID")
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId
     private Long id;
 
     @ApiModelProperty("产品名称")
@@ -38,7 +38,11 @@ public class Product extends Model {
     @TableField("product_type")
     private Integer productType;
 
-    @TableLogic //标注为逻辑删除字段
+    @ApiModelProperty("库存数量")
+    @TableField("inventory")
+    private Integer inventory;
+
+    @TableLogic
     @ApiModelProperty("是否删除（0：正常，1：删除）")
     @TableField("is_deleted")
     private Boolean isDeleted;

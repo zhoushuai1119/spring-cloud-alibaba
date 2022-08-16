@@ -24,7 +24,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest res, HttpServletResponse rep, Object object) throws Exception {
-        log.info("currentThreadId:{}", Thread.currentThread().getId());
         return true;
     }
 

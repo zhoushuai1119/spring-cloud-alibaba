@@ -39,7 +39,6 @@ public class OrderController {
     @PostMapping("create")
     @MethodLogger
     public BaseResponse createOrder(@RequestBody @Validated OrderParamDTO createOrderParamDTO) {
-        log.info("createOrder currentThreadId:{}", Thread.currentThread().getId());
         return orderDetailService.createOrder(createOrderParamDTO);
     }
 

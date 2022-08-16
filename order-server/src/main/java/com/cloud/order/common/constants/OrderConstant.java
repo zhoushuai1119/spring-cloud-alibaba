@@ -10,21 +10,6 @@ package com.cloud.order.common.constants;
 public class OrderConstant {
 
     /**
-     * 系统三字码
-     */
-    public interface System {
-        String SYSTEM_CODE = "ORDER";
-    }
-
-    /**
-     * 订单key
-     */
-    public interface CreateOrderKey {
-        String CREATE_ORDER_KEY = "order:create";
-    }
-
-
-    /**
      * 登录人姓名
      */
     public interface CurrentLogin {
@@ -33,7 +18,9 @@ public class OrderConstant {
          * 系统默认用户名
          */
         String DEFAULT_USER_NAME = "system";
-
+        /**
+         *当前登录用户名
+         */
         String USER_NAME = "userName";
     }
 

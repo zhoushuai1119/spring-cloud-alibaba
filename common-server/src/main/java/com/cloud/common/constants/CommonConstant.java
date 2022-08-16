@@ -26,11 +26,47 @@ public class CommonConstant {
         String TOP_CATEGORY_ID = "0";
     }
 
+    /**
+     * rocketmq的 EventCode
+     */
     public interface EventCode {
+
+    }
+
+    /**
+     * redis 分布式锁key
+     */
+    public interface RedisLockKey {
         /**
-         * 下单扣减库存 EventCode
+         * 创建订单
          */
-        String ORDER_PRODUCT_CODE = "ORDER_PRODUCT_REDUCE";
+        String CREATE_ORDER_KEY = "order:create";
+        /**
+         * 购买商品扣减库存
+         */
+        String PURCHASE_PRODUCT_KEY = "product:purchase";
+    }
+
+    /**
+     * 服务系统编码
+     */
+    public interface  SystemCode {
+        /**
+         * 订单服务
+         */
+        String ORDER_SERVER = "order-server";
+        /**
+         * 支付服务
+         */
+        String PAYMENT_SERVER = "payment-server";
+        /**
+         * 商品服务
+         */
+        String PRODUCT_SERVER = "product-server";
+        /**
+         * 用户服务
+         */
+        String USER_SERVER = "user-server";
     }
 
 }
