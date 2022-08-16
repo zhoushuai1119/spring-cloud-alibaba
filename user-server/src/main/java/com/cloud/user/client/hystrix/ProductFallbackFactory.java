@@ -33,17 +33,6 @@ public class ProductFallbackFactory implements FallbackFactory<ProductClient> {
                 response.setErrorMessage(businessException.getMessage());
                 return response;
             }
-
-            @Override
-            public BaseResponse seataTest() {
-                BusinessException businessException = FeignUtils.decodeFeignException("seataTest",throwable);
-                BaseResponse response = new BaseResponse();
-                response.setSuccess(false);
-                response.setErrorCode(businessException.getErrorCode());
-                response.setErrorTips(businessException.getErrorTips());
-                response.setErrorMessage(businessException.getMessage());
-                return response;
-            }
         };
     }
 
