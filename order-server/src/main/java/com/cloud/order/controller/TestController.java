@@ -3,7 +3,6 @@ package com.cloud.order.controller;
 import com.cloud.common.utils.RedisUtil;
 import com.cloud.order.domain.dto.ParmsTestDTO;
 import com.cloud.order.enums.CategoryTypeEnum;
-import com.cloud.order.proxy.UserProxy;
 import com.cloud.order.service.SqlService;
 import com.cloud.order.utils.ThreadLocalUtil;
 import com.cloud.platform.common.domain.response.BaseResponse;
@@ -36,9 +35,6 @@ public class TestController {
 
     @Autowired
     private RedisUtil redisUtil;
-
-    @Autowired
-    private UserProxy userProxy;
 
     /**
      * 参数校验测试
@@ -103,17 +99,6 @@ public class TestController {
     @PostMapping("/sql/copyNameTable")
     public BaseResponse<String> copyNameTable() throws SQLException {
         sqlService.copyNameTable(null, null);
-        return BaseResponse.createSuccessResult(null);
-    }
-
-    /**
-     * 测试feign远程调用
-     *
-     * @return
-     */
-    @PostMapping("/user/register")
-    public BaseResponse<String> userRegister() {
-        userProxy.userRegister();
         return BaseResponse.createSuccessResult(null);
     }
 
