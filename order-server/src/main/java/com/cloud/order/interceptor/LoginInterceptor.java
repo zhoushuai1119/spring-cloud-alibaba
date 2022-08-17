@@ -24,6 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest res, HttpServletResponse rep, Object object) throws Exception {
+        log.info("Interceptor preHandle method");
         return true;
     }
 
@@ -33,7 +34,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        log.info("postHandle....");
+        log.info("Interceptor postHandle method");
     }
 
     /**
@@ -42,6 +43,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-        log.info("afterCompletion....");
+        log.info("Interceptor afterCompletion method");
     }
 }

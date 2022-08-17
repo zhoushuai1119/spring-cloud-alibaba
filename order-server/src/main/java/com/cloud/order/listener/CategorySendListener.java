@@ -18,7 +18,7 @@ public class CategorySendListener {
     @TransactionalEventListener
 //    @EventListener
     public void sendMq(Category category) {
-        log.info("TransactionalEventListener******{}");
+        log.info("TransactionalEventListener******");
         log.info(JsonUtil.toString(category));
     }
 

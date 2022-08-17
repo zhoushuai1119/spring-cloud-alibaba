@@ -31,6 +31,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         ir.addPathPatterns("/**");
         //配置不拦截的路径
         ir.excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui/**");
+        //使用order()方法对多个拦截器进行排序
+        ir.order(1);
     }
 
 

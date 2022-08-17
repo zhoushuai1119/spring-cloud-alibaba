@@ -73,10 +73,4 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         publisher.publishEvent(category);
     }
 
-
-    @Override
-    public void saveCategory(Category category) {
-        saveOrUpdate(category);
-    }
-
 }
