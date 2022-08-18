@@ -27,6 +27,8 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 
 @SpringBootTest
@@ -120,6 +122,26 @@ public class OrderServerApplicationTest {
     public void updateTableTest() {
         //测试全表更新插件
         categoryService.remove(new UpdateWrapper<>());
+    }
+
+
+    @Test
+    public void supplyAsyncTest() throws ExecutionException, InterruptedException {
+        CompletableFuture<Integer> completableFuture = CompletableFuture.supplyAsync(() -> {
+            System.out.println(Thread.currentThread().getName() + "supplyAsync=>Integer");
+            int i=10/0;
+            return 200;
+        });
+
+        Integer x = completableFuture.whenComplete((t, u) -> {
+            System.out.println("t-> " + t);//正常的返回结果
+            System.out.println("u-> " + u);//错误信息
+        }).exceptionally((e) -> {
+            System.out.println(e.getMessage());
+            return 404;
+        }).get();
+
+        System.out.println(x);
     }
 
 }
