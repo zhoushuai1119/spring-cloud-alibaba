@@ -57,7 +57,7 @@ public class OrderServerApplicationTest {
 
     @Test
     public void testKey() {
-        stringRedisTemplate.opsForValue().set("name","周帅");
+        stringRedisTemplate.opsForValue().set("name", "周帅");
     }
 
 
@@ -97,8 +97,8 @@ public class OrderServerApplicationTest {
         mongoTestDTO.setLocalDateTime(LocalDateTime.now());
         list.add(mongoTestDTO);
 
-        List<MongoTestV2DTO> list2 = BeanUtil.copyToList(list,MongoTestV2DTO.class);
-        List<MongoTestV2DTO> list3 = Convert.toList(MongoTestV2DTO.class,list);
+        List<MongoTestV2DTO> list2 = BeanUtil.copyToList(list, MongoTestV2DTO.class);
+        List<MongoTestV2DTO> list3 = Convert.toList(MongoTestV2DTO.class, list);
         System.out.println(list2);
         System.out.println(list3);
         System.out.println(list2 == list3);
@@ -129,19 +129,19 @@ public class OrderServerApplicationTest {
     public void supplyAsyncTest() throws ExecutionException, InterruptedException {
         CompletableFuture<Integer> completableFuture = CompletableFuture.supplyAsync(() -> {
             System.out.println(Thread.currentThread().getName() + "supplyAsync=>Integer");
-            int i=10/0;
+            //int i = 10 / 0;
             return 200;
         });
 
-        Integer x = completableFuture.whenComplete((t, u) -> {
-            System.out.println("t-> " + t);//正常的返回结果
-            System.out.println("u-> " + u);//错误信息
-        }).exceptionally((e) -> {
-            System.out.println(e.getMessage());
+        Integer x = completableFuture.whenComplete((r, e) -> {
+            log.info("r-> " + r);//正常的返回结果
+            log.info("e-> " + e);//错误信息
+        }).exceptionally((error) -> {
+            log.info("error msg : {}", error.getMessage());
             return 404;
         }).get();
 
-        System.out.println(x);
+        log.info("result : {}", x);
     }
 
 }
