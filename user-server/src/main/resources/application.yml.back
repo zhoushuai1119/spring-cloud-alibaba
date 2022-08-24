@@ -87,11 +87,15 @@ cloud:
     #普通消息配置
     producer:
       group: p-${spring.application.name}
+      #生产者是否开启消息轨迹
+      enableMsgTrace: true
 
     #消费者配置
     consumer:
       #消费者组名称
       c-user-server:
+        #消费者是否开启消息轨迹
+        enableMsgTrace: true
         subscription:
           # topic : eventCode  最好都大写
           TP_USER_SERVER_TOPIC: EC_USER_SERVER
