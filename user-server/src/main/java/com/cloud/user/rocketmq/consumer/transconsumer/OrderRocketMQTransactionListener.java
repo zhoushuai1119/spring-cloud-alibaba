@@ -1,6 +1,5 @@
-package com.cloud.order.rocketmq.consumer.transconsumer;
+package com.cloud.user.rocketmq.consumer.transconsumer;
 
-import com.cloud.order.domain.entity.Category;
 import com.cloud.mq.base.dto.CloudMessage;
 import com.cloud.platform.common.constants.PlatformCommonConstant;
 import com.cloud.platform.common.utils.JsonUtil;
@@ -16,12 +15,12 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @ConsumeTopic(topic = PlatformCommonConstant.Topic.ORDER_SERVER_TOPIC_TRANSACTION, eventCode = "EC_ORDER_SERVER_TRANSACTION",log = true)
-public class RocketMQTransactionListener implements TopicListener<Category> {
+public class OrderRocketMQTransactionListener implements TopicListener<String> {
 
 
     @Override
-    public void onMessage(CloudMessage<Category> message) {
-        log.info("监听到事务消息:{}", JsonUtil.toString(message.getPayload()));
+    public void onMessage(CloudMessage<String> message) {
+        log.info("接收到order server事务消息:{}", JsonUtil.toString(message));
     }
 
 }

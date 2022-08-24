@@ -1,5 +1,6 @@
 package com.cloud.payment.rocketmq.consumer;
 
+
 import com.cloud.mq.base.dto.CloudMessage;
 import com.cloud.platform.common.constants.PlatformCommonConstant;
 import com.cloud.platform.common.utils.JsonUtil;
@@ -11,12 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @description:
  * @author: zhou shuai
- * @date: 2022/1/12 16:26
+ * @date: 2022/3/31 15:20
  * @version: v1
  */
 @Slf4j
-@ConsumeTopic(topic = PlatformCommonConstant.Topic.PAYMENT_SERVER_TOPIC, eventCode = "EC_PAYMENT_SERVER", log = true)
-public class CloudRocketMQListener implements TopicListener<String> {
+@ConsumeTopic(topic = PlatformCommonConstant.Topic.ORDER_SERVER_TOPIC, eventCode = "EC_ORDER_SERVER", log = true)
+public class OrderRocketMQListener implements TopicListener<String> {
 
     /**
      * 细心的读者应该能看到,这里的onMessage方法是void类型的,没有返回状态,与我们平时用的不一样,
@@ -29,7 +30,7 @@ public class CloudRocketMQListener implements TopicListener<String> {
      */
     @Override
     public void onMessage(CloudMessage<String> message) {
-        log.info("接收到消息:{}", JsonUtil.toString(message.getPayload()));
+        log.info("接收到order server普通消息:{}", JsonUtil.toString(message));
     }
 
 }

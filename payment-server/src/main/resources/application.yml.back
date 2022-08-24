@@ -96,8 +96,8 @@ cloud:
         enableMsgTrace: true
         subscription:
           # topic : eventCode  最好都大写
-          TP_PAYMENT_SERVER_TOPIC: EC_PAYMENT_SERVER
-          TP_PAYMENT_SERVER_TOPIC_TRANSACTION: EC_PAYMENT_SERVER_TRANSACTION
+          TP_ORDER_SERVER_TOPIC_TRANSACTION: EC_ORDER_SERVER_TRANSACTION
+          TP_ORDER_SERVER_TOPIC: EC_ORDER_SERVER
           #定时任务
           TP_F_SC: EC_TASK_PAYMENT_JOB_TEST
   #定时任务配置

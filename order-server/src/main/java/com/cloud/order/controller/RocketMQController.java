@@ -30,8 +30,7 @@ public class RocketMQController {
      */
     @PostMapping("/send")
     public BaseResponse<String> sendMessage(){
-        String token = webRequestConfig.getLoginToken();
-        messageSend.sendMessage();
+        messageSend.sendMessage("order test msg");
         return BaseResponse.createSuccessResult(null);
     }
 
@@ -41,7 +40,7 @@ public class RocketMQController {
      */
     @PostMapping("/send/transaction")
     public BaseResponse<String> sendTransactionMessage(){
-        messageSend.sendTransactionMessage();
+        messageSend.sendTransactionMessage("order test transaction msg");
         return BaseResponse.createSuccessResult(null);
     }
 
