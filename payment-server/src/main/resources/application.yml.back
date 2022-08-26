@@ -80,26 +80,18 @@ cloud:
       pingConnectionInterval: 1000
 
   rocketmq:
-    #不能使用name-server
     name-server: 139.196.208.53:9876
-    #普通消息配置
     producer:
-      group: p-${spring.application.name}
+      #生产者组名称
+      group-name: p-${spring.application.name}
       #生产者是否开启消息轨迹
       enableMsgTrace: true
-
-    #消费者配置
     consumer:
       #消费者组名称
-      c-payment-server:
-        #消费者是否开启消息轨迹
-        enableMsgTrace: true
-        subscription:
-          # topic : eventCode  最好都大写
-          TP_ORDER_SERVER_TOPIC_TRANSACTION: EC_ORDER_SERVER_TRANSACTION
-          TP_ORDER_SERVER_TOPIC: EC_ORDER_SERVER
-          #定时任务
-          TP_F_SC: EC_TASK_PAYMENT_JOB_TEST
+      group-name: c-${spring.application.name}
+      #消费者是否开启消息轨迹
+      enableMsgTrace: true
+
   #定时任务配置
   time-based-job:
     enabled: true
