@@ -7,11 +7,11 @@
     <version>1.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Spring Cloud Alibaba</name>
+    <name>${project.artifactId}</name>
     <description>project for Spring Cloud Alibaba</description>
 
     <parent>
-        <groupId>com.cloud.platform</groupId>
+        <groupId>io.github.zhoushuai1119</groupId>
         <artifactId>platform-parent</artifactId>
         <version>1.1.2-RELEASES</version>
     </parent>
@@ -19,7 +19,7 @@
     <!-- 公共属性 -->
     <properties>
         <parent.platform.version>1.1.2-RELEASES</parent.platform.version>
-        <cloud.mq.version>3.6.0</cloud.mq.version>
+        <cloud.mq.version>3.7.0</cloud.mq.version>
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
         <velocity-engine.version>2.3</velocity-engine.version>
         <shiro.version>1.8.0</shiro.version>
