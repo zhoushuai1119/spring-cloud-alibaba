@@ -18,7 +18,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class NettyClient {
 
-    static final String HOST = System.getProperty("host", "139.196.208.53");
+    //static final String HOST = System.getProperty("host", "139.196.208.53");
+    static final String HOST = System.getProperty("host", "localhost");
     static final int PORT = Integer.parseInt(System.getProperty("port", "7777"));
 
 

@@ -21,7 +21,7 @@ public class NettyClientStart implements CommandLineRunner {
     @Override
     public void run(String... args) {
         log.info("netty客户端启动****");
-//        nettyClient.nettyClientStart();
+        nettyClient.nettyClientStart();
     }
 
 }
