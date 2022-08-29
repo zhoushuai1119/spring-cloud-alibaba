@@ -4,10 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>product-server</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>product-server</name>
+    <name>${project.artifactId}</name>
     <description>Demo project for product-server</description>
 
     <!--父工程的依赖-->
@@ -22,7 +21,7 @@
         <dependency>
             <groupId>com.cloud.platform</groupId>
             <artifactId>common-server</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <!--sharding-jdbc-->
         <dependency>

@@ -18,7 +18,7 @@
 
     <!-- 公共属性 -->
     <properties>
-        <cloud.mq.version>1.6.0-RELEASES</cloud.mq.version>
+        <cloud.mq.version>3.6.0</cloud.mq.version>
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
         <velocity-engine.version>2.3</velocity-engine.version>
         <shiro.version>1.8.0</shiro.version>
