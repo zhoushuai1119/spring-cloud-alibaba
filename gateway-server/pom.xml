@@ -20,6 +20,7 @@
         <dependency>
             <groupId>com.cloud.platform</groupId>
             <artifactId>platform-common</artifactId>
+            <version>${parent.platform.version}</version>
         </dependency>
         <!-- apollo配置中心 -->
         <dependency>

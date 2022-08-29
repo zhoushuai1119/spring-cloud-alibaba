@@ -18,6 +18,7 @@
 
     <!-- 公共属性 -->
     <properties>
+        <parent.platform.version>1.1.2-RELEASES</parent.platform.version>
         <cloud.mq.version>3.6.0</cloud.mq.version>
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
         <velocity-engine.version>2.3</velocity-engine.version>
