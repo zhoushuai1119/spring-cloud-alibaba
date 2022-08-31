@@ -7,6 +7,7 @@ import com.cloud.platform.common.utils.JsonUtil;
 import com.cloud.platform.rocketmq.annotation.ConsumeTopic;
 import com.cloud.platform.rocketmq.core.TopicListener;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -29,6 +30,7 @@ public class OrderRocketMQListener implements TopicListener<String> {
      * @param message
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void onMessage(CloudMessage<String> message) {
         log.info("接收到order server普通消息:{}", JsonUtil.toString(message));
     }
