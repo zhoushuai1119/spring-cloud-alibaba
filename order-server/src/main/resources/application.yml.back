@@ -208,13 +208,4 @@ feign:
         connectTimeout: 2000  #请求连接的超时时间
         readTimeout: 5000     #请求处理的超时时间
 
-#配置测试数据
-apollo:
-  test:
-    param1: jghgjghjg11111
-    param2: 呜呜kkk
-
-test:
-  parma: 打豆豆
-
 
