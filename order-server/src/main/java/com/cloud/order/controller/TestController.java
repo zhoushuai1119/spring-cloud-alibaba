@@ -1,6 +1,7 @@
 package com.cloud.order.controller;
 
 import com.cloud.common.utils.RedisUtil;
+import com.cloud.order.config.ApolloPropertiesTest;
 import com.cloud.order.domain.dto.ParmsTestDTO;
 import com.cloud.order.enums.CategoryTypeEnum;
 import com.cloud.order.service.SqlService;
@@ -36,6 +37,9 @@ public class TestController {
     @Autowired
     private RedisUtil redisUtil;
 
+    @Autowired
+    private ApolloPropertiesTest apolloPropertiesTest;
+
     /**
      * 参数校验测试
      *
@@ -52,6 +56,16 @@ public class TestController {
         redisUtil.set("parmsTestDto", parmsTestDto, 60 * 10, TimeUnit.SECONDS);
         ParmsTestDTO parmsRedis = (ParmsTestDTO) redisUtil.get("parmsTestDto");
         return BaseResponse.createSuccessResult(parmsRedis);
+    }
+
+    /**
+     * apolloPropertiesTest
+     *
+     * @return
+     */
+    @GetMapping("/apollo/properties/test")
+    public BaseResponse<ApolloPropertiesTest> apolloPropertiesTest() {
+        return BaseResponse.createSuccessResult(apolloPropertiesTest);
     }
 
     /**
