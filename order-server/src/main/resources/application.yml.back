@@ -162,19 +162,12 @@ seata:
       group: SEATA_GROUP
       data-id: seataClient.properties
 
-#fastdfs 配置
-fdfs:
-  so-timeout: 15010
-  connect-timeout: 6010
-  tracker-list: 139.196.208.53:22122
-  urlPrefix: http://139.196.208.53:8888/
-  ##生成缩略图参数
-  thumb-image:
-    width: 150
-    height: 150
-  pool:
-    max-wait-millis: 10200
-    max-total: 153
+#minio配置
+min:
+  io:
+    endpoint: http://139.196.208.53:9001
+    accessKey: admin
+    secretKey: zs19921119
 
 management:
   endpoints:

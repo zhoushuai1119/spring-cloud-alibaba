@@ -73,21 +73,6 @@ camunda:
     auto-deployment-enabled: false
 
 
-#fastdfs 配置
-fdfs:
-  so-timeout: 15010
-  connect-timeout: 6010
-  tracker-list: 139.196.208.53:22122
-  urlPrefix: http://139.196.208.53:8888/
-  ##生成缩略图参数
-  thumb-image:
-    width: 150
-    height: 150
-  pool:
-    max-wait-millis: 10200
-    max-total: 153
-
-
 management:
   endpoints:
     web:
