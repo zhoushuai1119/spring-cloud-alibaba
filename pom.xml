@@ -22,8 +22,8 @@
         <cloud.mq.version>3.8.0</cloud.mq.version>
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
         <velocity-engine.version>2.3</velocity-engine.version>
+        <hibernate-validator.version>7.0.5.Final</hibernate-validator.version>
         <shiro.version>1.8.0</shiro.version>
-        <fastdfs-client.version>1.27.2</fastdfs-client.version>
     </properties>
 
     <!--子模块工厂配置-->

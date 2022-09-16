@@ -1,6 +1,5 @@
 package com.cloud.camunda.service.camunda;
 
-import com.cloud.common.fileUpload.IFileService;
 import com.cloud.platform.common.domain.response.BaseResponse;
 import com.cloud.platform.web.utils.CommonUtil;
 import com.google.common.collect.Lists;
@@ -41,9 +40,6 @@ public class ProcessService {
 
     @Autowired
     private RuntimeService runtimeService;
-
-    @Autowired
-    private IFileService fileService;
 
     @Value("${fdfs.urlPrefix}")
     private String urlPrefix;
@@ -209,8 +205,8 @@ public class ProcessService {
             MultipartFile pngMultipartFile = new MockMultipartFile("leave", "leave.png", null, png);
             MultipartFile bpmnMultipartFile = new MockMultipartFile("leave", "leave.bpmn", null, bpmn);
 
-            pngPath = urlPrefix + fileService.uploadMultipartFile(pngMultipartFile);
-            bpmnPath = urlPrefix + fileService.uploadMultipartFile(bpmnMultipartFile);
+            //pngPath = urlPrefix + fileService.uploadMultipartFile(pngMultipartFile);
+            //bpmnPath = urlPrefix + fileService.uploadMultipartFile(bpmnMultipartFile);
         } catch (IOException e) {
             log.error(processDefinitionKey + "获取资源文件失败:" + e.getMessage());
             throw new IOException();
