@@ -22,7 +22,6 @@
         <cloud.mq.version>3.8.0</cloud.mq.version>
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
         <velocity-engine.version>2.3</velocity-engine.version>
-        <arthas-spring-boot.version>3.6.5</arthas-spring-boot.version>
         <shiro.version>1.8.0</shiro.version>
     </properties>
 

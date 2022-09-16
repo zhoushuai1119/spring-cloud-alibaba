@@ -42,8 +42,6 @@
         <dependency>
             <groupId>com.taobao.arthas</groupId>
             <artifactId>arthas-spring-boot-starter</artifactId>
-            <version>${arthas-spring-boot.version}</version>
-            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
