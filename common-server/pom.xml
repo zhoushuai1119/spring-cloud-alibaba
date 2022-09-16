@@ -105,6 +105,7 @@
         <dependency>
             <groupId>com.github.tobato</groupId>
             <artifactId>fastdfs-client</artifactId>
+            <version>${fastdfs-client.version}</version>
         </dependency>
         <!--数据库文档生成工具-->
         <dependency>
