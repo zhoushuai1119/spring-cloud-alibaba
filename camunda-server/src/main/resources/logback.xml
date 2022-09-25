@@ -85,12 +85,23 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
         </encoder>
     </appender>
 
+    <!-- skywalking grpc 日志收集 8.4.0版本开始支持 -->
+    <appender name="grpc-log" class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.log.GRPCLogClientAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <Pattern>${log.pattern}</Pattern>
+            </layout>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
     <!-- 根节点，表名基本的日志级别，里面可以由多个appender规则 -->
     <!-- level="INFO"代表基础日志级别为INFO -->
     <root level="INFO">
         <appender-ref ref="stdout" />
         <appender-ref ref="file.all" />
         <appender-ref ref="file.error" />
+        <appender-ref ref="grpc-log" />
     </root>
 
 </configuration>
