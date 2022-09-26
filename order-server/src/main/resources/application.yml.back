@@ -28,17 +28,6 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-
-  #elasticsearch配置
-  elasticsearch:
-    rest:
-      uris: http://139.196.208.53:9200
-
-  #mongodb配置
-  data:
-    mongodb:
-      uri: mongodb://139.196.208.53:27017/mongoTest
-
   #redis配置
   redis:
     database: 0
