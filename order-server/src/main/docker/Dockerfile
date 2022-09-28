@@ -4,10 +4,8 @@ MAINTAINER zhoushuai zs11195310@163.com
 
 ENV SW_AGENT_NAME order-server
 
-ENV AGENT_JAR_DIR /skywalking/agent/skywalking-agent.jar
-
 ADD order-server.jar /app/order-server.jar
 
 EXPOSE 8763
 
-CMD java -javaagent:$AGENT_JAR_DIR $JAVA_OPTS -jar /app/order-server.jar
+CMD java $JAVA_TOOL_OPTIONS $JAVA_OPTS -jar /app/order-server.jar
