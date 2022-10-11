@@ -33,20 +33,11 @@
             <artifactId>cloud-rocketmq-spring-boot-starter</artifactId>
             <version>${cloud.mq.version}</version>
         </dependency>
-        <!--feign调用-->
+        <!-- feign-log -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <!--Feign中使用HttpClient替换JDK自带的HttpURLConnnection网络请求-->
-        <dependency>
-            <groupId>io.github.openfeign</groupId>
-            <artifactId>feign-httpclient</artifactId>
-        </dependency>
-        <!--hystrix熔断-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <groupId>io.github.zhoushuai1119</groupId>
+            <artifactId>cloud-openfeign-log-spring-boot-starter</artifactId>
+            <version>${openfeign-log.version}</version>
         </dependency>
         <!-- nacos注册中心 -->
         <dependency>

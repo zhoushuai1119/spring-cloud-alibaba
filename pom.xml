@@ -20,6 +20,7 @@
     <properties>
         <springcloud.version>1.2.0</springcloud.version>
         <cloud.mq.version>3.8.0</cloud.mq.version>
+        <openfeign-log.version>1.6.0</openfeign-log.version>
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
         <velocity-engine.version>2.3</velocity-engine.version>
         <hibernate-validator.version>7.0.5.Final</hibernate-validator.version>

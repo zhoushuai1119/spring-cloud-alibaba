@@ -1,6 +1,6 @@
 package com.cloud.order;
 
-import lombok.extern.slf4j.Slf4j;
+import com.cloud.openfeign.log.config.FeignLogAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -13,11 +13,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 //而不是 AutoConfigurationImportSelector.selectImports
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(defaultConfiguration = {FeignLogAutoConfiguration.class})
 //启用@WebServlet、@WebFilter和@WebListener注释的类的自动注册
 @ServletComponentScan
 @EnableAsync
-@Slf4j
 @ComponentScan("com.cloud")
 public class OrderServerApplication {
 
