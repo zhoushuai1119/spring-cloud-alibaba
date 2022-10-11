@@ -2,6 +2,7 @@ package com.cloud.product.controller;
 
 
 import com.cloud.platform.common.domain.response.BaseResponse;
+import com.cloud.product.config.WebRequestConfig;
 import com.cloud.product.domain.dto.PurchaseProductDTO;
 import com.cloud.product.domain.entity.Product;
 import com.cloud.product.service.DictService;
@@ -29,6 +30,9 @@ public class ProductController {
 
     @Autowired
     private DictService dictService;
+
+    @Autowired
+    private WebRequestConfig webRequestConfig;
 
     /**
      * 新增产品信息
@@ -59,6 +63,8 @@ public class ProductController {
      */
     @PostMapping("purchase")
     public BaseResponse<Product> purchaseProduct(@RequestBody @Validated PurchaseProductDTO purchaseProductDTO) {
+        String seataXID = webRequestConfig.getSeataXID();
+        log.info("******* seataXID:{}", seataXID);
         productService.purchaseProduct(purchaseProductDTO);
         return BaseResponse.createSuccessResult(null);
     }
