@@ -164,6 +164,13 @@ management:
       exposure:
         include: "*"
 
+arthas:
+  appName: ${spring.application.name}
+  # 配置为-1则不listen端口; 配置为0则随机端口
+  httpPort: -1
+  telnetPort: -1
+  tunnel-server: ws://139.196.208.53:7777/ws
+
 #Rocketmq日志级别
 logging:
   level:

@@ -98,6 +98,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+        <!--arthas-spring-boot-starter-->
+        <dependency>
+            <groupId>com.taobao.arthas</groupId>
+            <artifactId>arthas-spring-boot-starter</artifactId>
+        </dependency>
         <!--数据库文档生成工具-->
         <dependency>
             <groupId>cn.smallbun.screw</groupId>

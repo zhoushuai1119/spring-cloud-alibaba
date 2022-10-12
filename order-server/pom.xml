@@ -28,11 +28,6 @@
             <groupId>com.baomidou</groupId>
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
         </dependency>
-        <!--arthas-spring-boot-starter-->
-        <dependency>
-            <groupId>com.taobao.arthas</groupId>
-            <artifactId>arthas-spring-boot-starter</artifactId>
-        </dependency>
         <!--minio文件存储系统-->
         <dependency>
             <groupId>io.minio</groupId>
