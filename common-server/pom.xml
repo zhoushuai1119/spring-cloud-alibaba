@@ -23,10 +23,6 @@
             <artifactId>cloud-web-spring-boot-starter</artifactId>
             <version>${platform-parent.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
         <!-- cloud-rocketmq -->
         <dependency>
             <groupId>io.github.zhoushuai1119</groupId>
@@ -98,15 +94,14 @@
             <artifactId>seata-spring-boot-starter</artifactId>
             <version>${seata-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
         <!--数据库文档生成工具-->
         <dependency>
             <groupId>cn.smallbun.screw</groupId>
             <artifactId>screw-core</artifactId>
-        </dependency>
-        <!--集成工具包-->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
         </dependency>
     </dependencies>
 
