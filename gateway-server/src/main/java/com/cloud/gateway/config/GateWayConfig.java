@@ -92,28 +92,6 @@ public class GateWayConfig {
         };
     }
 
-    /*@Bean
-    public RouteLocator customRouteLocator(RouteLocatorBuilder routeLocatorBuilder) {
-        RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
-        //http://localhost:8762/order-server/order-server/category/getCategory?categoryId=1
-        routes.route("order-server",
-                r -> r.path("/api/order-server/**")
-                        .filters(f -> f.stripPrefix(1).filter(authGatewayFilter))
-                        .uri("lb://order-server")
-        ).build();
-        //http://localhost:8762/user-server/user-server/user/getAuthCodeImg
-        routes.route("user-server",
-                r -> r.path("/api/user-server/**")
-                        .filters(f -> f.stripPrefix(1).filter(authGatewayFilter))
-                        .uri("lb://user-server")
-        ).build();
-        routes.route("camunda-server",
-                r -> r.path("/api/camunda-server/**")
-                        .filters(f -> f.stripPrefix(1).filter(authGatewayFilter))
-                        .uri("lb://camunda-server")
-        ).build();
-        return routes.build();
-    }*/
 
     /**
      * ApiDefinition：用户自定义的API定义分组，可以看做是一些URL匹配的组合。
@@ -178,5 +156,29 @@ public class GateWayConfig {
         );
         GatewayRuleManager.loadRules(rules);
     }
+
+
+     /*@Bean
+    public RouteLocator customRouteLocator(RouteLocatorBuilder routeLocatorBuilder) {
+        RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
+        //http://localhost:8762/order-server/order-server/category/getCategory?categoryId=1
+        routes.route("order-server",
+                r -> r.path("/api/order-server/**")
+                        .filters(f -> f.stripPrefix(1).filter(authGatewayFilter))
+                        .uri("lb://order-server")
+        ).build();
+        //http://localhost:8762/user-server/user-server/user/getAuthCodeImg
+        routes.route("user-server",
+                r -> r.path("/api/user-server/**")
+                        .filters(f -> f.stripPrefix(1).filter(authGatewayFilter))
+                        .uri("lb://user-server")
+        ).build();
+        routes.route("camunda-server",
+                r -> r.path("/api/camunda-server/**")
+                        .filters(f -> f.stripPrefix(1).filter(authGatewayFilter))
+                        .uri("lb://camunda-server")
+        ).build();
+        return routes.build();
+    }*/
 
 }
