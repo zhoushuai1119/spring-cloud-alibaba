@@ -89,3 +89,10 @@ hystrix:
   shareSecurityContext: true
 
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
