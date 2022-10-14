@@ -16,8 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.cloud.gateway.route.RouteLocator;
-import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -94,7 +92,7 @@ public class GateWayConfig {
         };
     }
 
-    @Bean
+    /*@Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder routeLocatorBuilder) {
         RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
         //http://localhost:8762/order-server/order-server/category/getCategory?categoryId=1
@@ -115,7 +113,7 @@ public class GateWayConfig {
                         .uri("lb://camunda-server")
         ).build();
         return routes.build();
-    }
+    }*/
 
     /**
      * ApiDefinition：用户自定义的API定义分组，可以看做是一些URL匹配的组合。
@@ -128,12 +126,12 @@ public class GateWayConfig {
         ApiDefinition apiOrder = new ApiDefinition("api-order-server")
                 .setPredicateItems(new HashSet<ApiPredicateItem>() {
                     {
-                        add(new ApiPathPredicateItem().setPattern("/api/order-server/**")
+                        add(new ApiPathPredicateItem().setPattern("/order-server/**")
                                 .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
                     }
 
                     {
-                        add(new ApiPathPredicateItem().setPattern("/api/user-server/**")
+                        add(new ApiPathPredicateItem().setPattern("/user-server/**")
                                 .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
                     }
                 });
@@ -141,7 +139,7 @@ public class GateWayConfig {
         ApiDefinition apiUser = new ApiDefinition("api-camunda-server")
                 .setPredicateItems(new HashSet<ApiPredicateItem>() {
                     {
-                        add(new ApiPathPredicateItem().setPattern("/api/camunda-server/**")
+                        add(new ApiPathPredicateItem().setPattern("/camunda-server/**")
                                 .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
                     }
                 });
