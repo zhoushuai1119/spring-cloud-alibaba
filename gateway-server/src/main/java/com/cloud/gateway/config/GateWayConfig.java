@@ -124,6 +124,7 @@ public class GateWayConfig {
      */
     private void initCustomizedApis() {
         Set<ApiDefinition> definitions = new HashSet<>();
+        //设置分组名称,new GatewayFlowRule()中分组名称一致
         ApiDefinition apiOrder = new ApiDefinition("api-order-server")
                 .setPredicateItems(new HashSet<ApiPredicateItem>() {
                     {
