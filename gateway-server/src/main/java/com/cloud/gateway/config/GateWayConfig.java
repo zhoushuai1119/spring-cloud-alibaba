@@ -12,6 +12,7 @@ import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.GatewayCallbackManag
 import com.alibaba.csp.sentinel.adapter.gateway.sc.exception.SentinelGatewayBlockExceptionHandler;
 import com.cloud.gateway.filters.AuthGatewayFilter;
 import com.cloud.gateway.filters.GatewayHandler;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -38,6 +39,7 @@ import java.util.Set;
  * @version: V1.0
  */
 @Configuration
+@Slf4j
 public class GateWayConfig {
 
     @Autowired
@@ -87,8 +89,7 @@ public class GateWayConfig {
             return chain.filter(exchange).then().then(Mono.fromRunnable(() -> {
                 //调用请求之后统计时间
                 Long endTime = System.currentTimeMillis();
-                System.out.println(
-                        exchange.getRequest().getURI().getRawPath() + ", cost time : " + (endTime - startTime) + "ms");
+                log.info("{} , cost time : {}", exchange.getRequest().getURI().getRawPath(), (endTime - startTime) + "ms");
             }));
         };
     }
@@ -129,6 +130,7 @@ public class GateWayConfig {
                         add(new ApiPathPredicateItem().setPattern("/api/order-server/**")
                                 .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
                     }
+
                     {
                         add(new ApiPathPredicateItem().setPattern("/api/user-server/**")
                                 .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
