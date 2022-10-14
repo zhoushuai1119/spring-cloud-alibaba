@@ -48,7 +48,7 @@ spring:
       default-filters:
         - name: Hystrix
           args:
-            name: fetchIngredients
+            name: fallbackcmd
             fallbackUri: forward:/fallback
         - name: Retry
           args:
@@ -75,17 +75,17 @@ spring:
 #            #去掉url的第一个前缀，用后面的内容拼接到uri
 #            - StripPrefix=1
 
-#默认熔断超时时间30s
+#熔断器配置
 hystrix:
   command:
-    fetchIngredients:
+    default:
       execution:
+        timeout:
+          enabled: true #是否应该有超时
         isolation:
           strategy: SEMAPHORE
           thread:
             timeoutInMilliseconds: 3000
   shareSecurityContext: true
-
-
 
 
