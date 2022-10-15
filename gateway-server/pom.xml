@@ -21,12 +21,6 @@
             <groupId>io.github.zhoushuai1119</groupId>
             <artifactId>platform-common</artifactId>
             <version>${platform-parent.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.validation</groupId>
-                    <artifactId>validation-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!--添加Endpoint支持; 暴露的endpoint路径为 /actuator/sentinel-->
         <dependency>
@@ -46,13 +40,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
-            <exclusions>
-                <exclusion>
-                    <!--hibernate-validator-->
-                    <groupId>org.hibernate.validator</groupId>
-                    <artifactId>hibernate-validator</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

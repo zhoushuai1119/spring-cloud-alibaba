@@ -23,6 +23,11 @@
             <artifactId>common-server</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <!--sentinel限流-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
         <!--多数据源配置-->
         <dependency>
             <groupId>com.baomidou</groupId>
