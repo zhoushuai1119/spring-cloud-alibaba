@@ -1,12 +1,5 @@
 package com.cloud.gateway.config;
 
-import com.alibaba.csp.sentinel.adapter.gateway.common.SentinelGatewayConstants;
-import com.alibaba.csp.sentinel.adapter.gateway.common.api.ApiDefinition;
-import com.alibaba.csp.sentinel.adapter.gateway.common.api.ApiPathPredicateItem;
-import com.alibaba.csp.sentinel.adapter.gateway.common.api.ApiPredicateItem;
-import com.alibaba.csp.sentinel.adapter.gateway.common.api.GatewayApiDefinitionManager;
-import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule;
-import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayRuleManager;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.SentinelGatewayFilter;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.GatewayCallbackManager;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.exception.SentinelGatewayBlockExceptionHandler;
@@ -26,9 +19,7 @@ import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @description:
@@ -67,8 +58,8 @@ public class GateWayConfig {
 
     @PostConstruct
     public void doInit() {
-        initCustomizedApis();
-        initGatewayRules();
+        //initCustomizedApis();
+        //initGatewayRules();
         //自定义处理被限流的请求
         GatewayCallbackManager.setBlockHandler(new GatewayHandler());
     }
@@ -98,7 +89,7 @@ public class GateWayConfig {
      * 就像我们可以定义一个API一样my_api，请求路径模式为/foo/**和/baz/**的都归到my_api这个API分组。
      * 限流的时候可以针对这个自定义的API分组维度进行限流。
      */
-    private void initCustomizedApis() {
+    /*private void initCustomizedApis() {
         Set<ApiDefinition> definitions = new HashSet<>();
         //设置分组名称,new GatewayFlowRule()中分组名称一致
         ApiDefinition apiOrder = new ApiDefinition("api-order-server")
@@ -124,7 +115,7 @@ public class GateWayConfig {
         definitions.add(apiOrder);
         definitions.add(apiUser);
         GatewayApiDefinitionManager.loadApiDefinitions(definitions);
-    }
+    }*/
 
     /**
      * GatewayFlowRule：网关限流规则，针对API Gateway的场景定制的限流规则，
@@ -132,7 +123,7 @@ public class GateWayConfig {
      * 用户可以通过GatewayRuleManager.loadRules(rules)手动加载网关规则，
      * 或通过GatewayRuleManager.register2Property(property)注册动态规则源动态推送（推荐方式）
      */
-    private void initGatewayRules() {
+    /*private void initGatewayRules() {
         Set<GatewayFlowRule> rules = new HashSet<>();
         //resource：资源名称，可以是网关中的路线名称或用户自定义的API分组名称。
         rules.add(new GatewayFlowRule("api-order-server")
@@ -155,7 +146,7 @@ public class GateWayConfig {
                 .setIntervalSec(1)
         );
         GatewayRuleManager.loadRules(rules);
-    }
+    }*/
 
 
      /*@Bean
