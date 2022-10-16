@@ -146,6 +146,12 @@ logging:
     RocketmqClient: error
     RocketmqRemoting: warn
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 arthas:
   appName: ${spring.application.name}
   # 配置为-1则不listen端口; 配置为0则随机端口

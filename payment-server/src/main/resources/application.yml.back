@@ -144,6 +144,12 @@ logging:
     RocketmqClient: error
     RocketmqRemoting: warn
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 
 arthas:
   appName: ${spring.application.name}
