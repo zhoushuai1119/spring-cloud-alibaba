@@ -11,6 +11,8 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 public class GatewayServerApplication {
 
     public static void main(String[] args) {
+        //或者启动命令中加上 -Dcsp.sentinel.app.type=1
+        System.setProperty("csp.sentinel.app.type", "1");
         SpringApplication.run(GatewayServerApplication.class, args);
     }
 

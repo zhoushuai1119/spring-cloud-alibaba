@@ -18,16 +18,6 @@ spring:
         username: nacos
         password: nacos
 
-    #sentinel限流
-    sentinel:
-      #取消Sentinel控制台懒加载
-      eager: true
-      filter:
-        enabled: false
-      transport:
-        dashboard: 139.196.208.53:9999
-        port: 8890
-
 
     gateway:
       globalcors:
