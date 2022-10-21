@@ -45,6 +45,7 @@ spring:
             retries: 3
             statuses: BAD_GATEWAY,BAD_REQUEST
             methods: GET,POST
+        - AddRequestHeader=origin,gateway #添加名为origin的请求头，值为gateway
 
 
       discovery:
