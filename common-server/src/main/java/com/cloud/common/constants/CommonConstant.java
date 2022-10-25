@@ -69,4 +69,27 @@ public class CommonConstant {
         String USER_SERVER = "user-server";
     }
 
+    /**
+     * seninel TokenServer
+     */
+    public interface TokenServer {
+
+        /**
+         * token server namespace
+         */
+        String TOKEN_SERVER_NAMESPACE = "development.token-server";
+
+        /**
+         * token server rule key
+         */
+        String TOKEN_SERVER_RULE_KEY = "token-server-cluster-map";
+
+        /**
+         * default rules
+         */
+        String DEFAULT_RULES = "[]";
+
+    }
+
+
 }
