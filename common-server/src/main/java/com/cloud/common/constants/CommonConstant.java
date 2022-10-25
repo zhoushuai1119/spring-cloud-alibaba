@@ -85,6 +85,11 @@ public class CommonConstant {
         String TOKEN_SERVER_RULE_KEY = "token-server-cluster-map";
 
         /**
+         * 客户端请求超时配置
+         */
+        String CLUSTER_CLIENT_CONFIG = "cluster-client-config";
+
+        /**
          * default rules
          */
         String DEFAULT_RULES = "[]";
