@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author zhoushuai
+ *
+ * 本地多应用启动需要添加启动参数: -Dcsp.sentinel.log.use.pid=true
  */
 @Slf4j
 public class ClusterClientInitFunc implements InitFunc {
