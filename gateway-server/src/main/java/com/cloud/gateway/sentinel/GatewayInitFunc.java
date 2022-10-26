@@ -7,12 +7,17 @@ import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayRuleManager;
 import com.alibaba.csp.sentinel.datasource.ReadableDataSource;
 import com.alibaba.csp.sentinel.datasource.apollo.ApolloDataSource;
 import com.alibaba.csp.sentinel.init.InitFunc;
+import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
+import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRuleManager;
+import com.alibaba.csp.sentinel.slots.system.SystemRule;
+import com.alibaba.csp.sentinel.slots.system.SystemRuleManager;
 import com.alibaba.csp.sentinel.util.AppNameUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.cloud.gateway.config.ApolloConfigUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,6 +42,10 @@ public class GatewayInitFunc implements InitFunc {
         registerGatewayFlowRuleProperty(appName);
         //网关API管理规则配置
         registerGatewayApiProperty(appName);
+        //降级规则配置
+        registerDegradeRuleProperty(appName);
+        //系统规则配置
+        registerSystemRuleProperty(appName);
     }
 
 
@@ -65,6 +74,32 @@ public class GatewayInitFunc implements InitFunc {
                 new TypeReference<Set<ApiDefinition>>() {
                 }));
         GatewayApiDefinitionManager.register2Property(apiDefinitionDataSource.getProperty());
+    }
+
+    /**
+     * 降级规则配置
+     *
+     * @param appName 应用名称
+     */
+    private void registerDegradeRuleProperty(String appName) {
+        ReadableDataSource<String, List<DegradeRule>> degradeRuleDataSource = new ApolloDataSource<>(sentinelGatewayRulesNameSpace,
+                ApolloConfigUtil.getDegradeDataId(appName), defaultRules, source -> JSON.parseObject(source,
+                new TypeReference<List<DegradeRule>>() {
+                }));
+        DegradeRuleManager.register2Property(degradeRuleDataSource.getProperty());
+    }
+
+    /**
+     * 系统规则配置
+     *
+     * @param appName 应用名称
+     */
+    private void registerSystemRuleProperty(String appName) {
+        ReadableDataSource<String, List<SystemRule>> systemRuleDataSource = new ApolloDataSource<>(sentinelGatewayRulesNameSpace,
+                ApolloConfigUtil.getSystemDataId(appName), defaultRules, source -> JSON.parseObject(source,
+                new TypeReference<List<SystemRule>>() {
+                }));
+        SystemRuleManager.register2Property(systemRuleDataSource.getProperty());
     }
 
 }
