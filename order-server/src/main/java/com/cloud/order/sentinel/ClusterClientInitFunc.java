@@ -17,6 +17,7 @@ import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRule;
 import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRuleManager;
 import com.alibaba.csp.sentinel.slots.system.SystemRule;
 import com.alibaba.csp.sentinel.slots.system.SystemRuleManager;
+import com.alibaba.csp.sentinel.transport.config.TransportConfig;
 import com.alibaba.csp.sentinel.util.AppNameUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -75,6 +76,14 @@ public class ClusterClientInitFunc implements InitFunc {
      * 初始化集群限流规则
      */
     private void initClusterConfig() {
+        //等待transport端口分配完毕
+        while (TransportConfig.getRuntimePort() == -1) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         //为每个client设置目标token server
         initClientServerAssignProperty(tokenServerNameSpace);
         //初始化token client通用超时配置
