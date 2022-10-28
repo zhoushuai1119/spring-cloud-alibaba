@@ -20,6 +20,9 @@ import java.util.Set;
  */
 public class GatewayApiParser implements Converter<String, Set<ApiDefinition>> {
 
+    /*List<ApiDefinition> apiDefinitionList = JsonUtil.toList(source);
+      Set<ApiDefinition> apiDefinitionSet = CollUtil.newHashSet(apiDefinitionList);*/
+
     @Override
     public Set<ApiDefinition> convert(String source) {
         Set<ApiDefinition> apiDefinitionSet = new HashSet<>();
