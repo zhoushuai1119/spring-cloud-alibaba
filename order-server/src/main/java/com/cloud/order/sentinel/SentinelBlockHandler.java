@@ -1,4 +1,4 @@
-package com.cloud.order.config;
+package com.cloud.order.sentinel;
 
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  * @version: V1.0
  */
 @Component
-public class GatewayHandler implements BlockExceptionHandler {
+public class SentinelBlockHandler implements BlockExceptionHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, BlockException ex) throws Exception {

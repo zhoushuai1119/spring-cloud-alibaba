@@ -1,4 +1,4 @@
-package com.cloud.order.config;
+package com.cloud.product.sentinel;
 
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.RequestOriginParser;
 import org.apache.commons.lang3.StringUtils;
