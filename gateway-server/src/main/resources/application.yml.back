@@ -18,6 +18,12 @@ spring:
         username: nacos
         password: nacos
 
+    sentinel:
+      eager: true
+      filter:
+        enabled: false
+      transport:
+        dashboard: localhost:9999
 
     gateway:
       globalcors:

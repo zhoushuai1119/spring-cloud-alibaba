@@ -70,9 +70,7 @@ public class GatewayInitFunc implements InitFunc {
      */
     private void registerGatewayApiProperty(String appName) {
         ReadableDataSource<String, Set<ApiDefinition>> apiDefinitionDataSource = new ApolloDataSource<>(sentinelGatewayRulesNameSpace,
-                ApolloConfigUtil.getGatewayApiGroupDataId(appName), defaultRules, source -> JSON.parseObject(source,
-                new TypeReference<Set<ApiDefinition>>() {
-                }));
+                ApolloConfigUtil.getGatewayApiGroupDataId(appName), defaultRules, new GatewayApiParser());
         GatewayApiDefinitionManager.register2Property(apiDefinitionDataSource.getProperty());
     }
 
