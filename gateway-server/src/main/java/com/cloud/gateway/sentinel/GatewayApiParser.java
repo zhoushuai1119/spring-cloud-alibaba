@@ -30,7 +30,7 @@ public class GatewayApiParser implements Converter<String, Set<ApiDefinition>> {
                 apiDefinition.setApiName(o.getString("apiName"));
                 JSONArray predicateItems = o.getJSONArray("predicateItems");
                 Set<ApiPredicateItem> apiPredicateItems = new HashSet<>();
-                if (CollectionUtil.isNotEmpty(apiPredicateItems)) {
+                if (CollectionUtil.isNotEmpty(predicateItems)) {
                     for (Object item : predicateItems) {
                         JSONObject object = (JSONObject) item;
                         ApiPathPredicateItem apiPathPredicateItem = new ApiPathPredicateItem();
