@@ -23,5 +23,12 @@ public class OrderServerApplication {
         SpringApplication.run(OrderServerApplication.class, args);
     }
 
+    /**
+     * 去除 discard long time none received connection 错误日志打印
+     */
+    static {
+        System.setProperty("druid.mysql.usePingMethod","false");
+    }
+
 }
 
