@@ -151,6 +151,9 @@ management:
     web:
       exposure:
         include: "*"
+  endpoint:
+    health:
+      show-details: always
 
 arthas:
   appName: ${spring.application.name}
