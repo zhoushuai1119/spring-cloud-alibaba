@@ -38,6 +38,11 @@
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-datasource-apollo</artifactId>
         </dependency>
+        <!--redisson-->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+        </dependency>
         <!--多数据源配置-->
         <dependency>
             <groupId>com.baomidou</groupId>

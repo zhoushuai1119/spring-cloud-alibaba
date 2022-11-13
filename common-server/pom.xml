@@ -35,6 +35,11 @@
             <artifactId>cloud-openfeign-log-spring-boot-starter</artifactId>
             <version>${openfeign-log.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.zhoushuai1119</groupId>
+            <artifactId>cloud-monitor-spring-boot-starter</artifactId>
+            <version>${cloud.monitor.version}</version>
+        </dependency>
         <!-- nacos注册中心 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
