@@ -1,7 +1,6 @@
 package com.cloud.order.rocketmq.consumer;
 
 import com.cloud.mq.base.dto.CloudMessage;
-import com.cloud.order.domain.dto.OrderDetailDTO;
 import com.cloud.platform.common.constants.PlatformCommonConstant;
 import com.cloud.platform.common.utils.JsonUtil;
 import com.cloud.platform.rocketmq.annotation.ConsumeTopic;
@@ -17,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @ConsumeTopic(topic = PlatformCommonConstant.Topic.ORDER_SERVER_TOPIC, eventCode = "EC_ORDER_SERVER", log = true)
-public class CloudRocketMQListener implements TopicListener<OrderDetailDTO> {
+public class CloudRocketMQListener implements TopicListener<String> {
 
     /**
      * 细心的读者应该能看到,这里的onMessage方法是void类型的,没有返回状态,与我们平时用的不一样,
@@ -29,7 +28,7 @@ public class CloudRocketMQListener implements TopicListener<OrderDetailDTO> {
      * @param message
      */
     @Override
-    public void onMessage(CloudMessage<OrderDetailDTO> message) {
+    public void onMessage(CloudMessage<String> message) {
         log.info("接收到消息:{}", JsonUtil.toString(message.getPayload()));
     }
 
