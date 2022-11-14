@@ -1,6 +1,8 @@
 package com.cloud.order.controller;
 
 import com.cloud.common.utils.RedisUtil;
+import com.cloud.dingtalk.dinger.DingerSender;
+import com.cloud.dingtalk.dinger.core.entity.DingerRequest;
 import com.cloud.order.config.ApolloPropertiesTest;
 import com.cloud.order.domain.dto.ParmsTestDTO;
 import com.cloud.order.enums.CategoryTypeEnum;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -38,6 +41,9 @@ public class TestController {
     private RedisUtil redisUtil;
 
     @Autowired
+    private DingerSender dingerSender;
+
+    @Autowired
     private ApolloPropertiesTest apolloPropertiesTest;
 
     /**
@@ -56,6 +62,21 @@ public class TestController {
         redisUtil.set("parmsTestDto", parmsTestDto, 60 * 10, TimeUnit.SECONDS);
         ParmsTestDTO parmsRedis = (ParmsTestDTO) redisUtil.get("parmsTestDto");
         return BaseResponse.createSuccessResult(parmsRedis);
+    }
+
+    /**
+     * 发送企业微信测试
+     *
+     * @return
+     */
+    @PostMapping("/send/qywx")
+    public BaseResponse sendWechat() {
+        List<String> phones = List.of("17756228281");
+        // 发送text类型消息
+        dingerSender.send(
+                DingerRequest.request("Hello World, Hello Dinger", phones)
+        );
+        return BaseResponse.createSuccessResult(null);
     }
 
     /**

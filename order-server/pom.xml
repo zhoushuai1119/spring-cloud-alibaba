@@ -34,6 +34,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--dingtalk-->
+        <dependency>
+            <groupId>io.github.zhoushuai1119</groupId>
+            <artifactId>cloud-dingtalk-spring-boot-starter</artifactId>
+            <version>${cloud.dingtalk.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-datasource-apollo</artifactId>
