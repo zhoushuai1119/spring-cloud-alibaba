@@ -15,6 +15,12 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
     <property name="error.log.file" value="${log.path}/${log.module.name}/error/${log.module.name}_error.log"/>
     <!-- 定义错误历史日志文件路径 -->
     <property name="history.error.log.file" value="${log.path}/${log.module.name}/%d{yyyy-MM-dd}/error/${log.module.name}_error-%i.log.zip"/>
+
+    <!-- 定义rocketmq日志文件路径 -->
+    <property name="rocketmq.log.file" value="${log.path}/${log.module.name}/rocketmq/rocketmq_client.log"/>
+    <!-- 定义rocketmq历史日志文件路径 -->
+    <property name="rocketmq.history.log.file" value="${log.path}/${log.module.name}/rocketmq/%d{yyyy-MM-dd}/rocketmqClient-%i.log.zip"/>
+
     <!-- 日志最大的历史 30天 -->
     <property name="log.max.history" value="30"/>
     <!-- 日志文件大小,超过这个大小将被压缩 -->
@@ -25,6 +31,29 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
 
     <!--控制台输出 -->
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <Pattern>${log.pattern}</Pattern>
+            </layout>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--rocketmq日志文件 -->
+    <appender name="RocketmqClientAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 设置日志不超过${log.max.size}时的保存路径 -->
+        <File>${rocketmq.log.file}</File>
+        <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件。 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${rocketmq.history.log.file}</FileNamePattern>
+            <!-- 文件输出日志 (文件大小策略进行文件输出，超过指定大小对文件备份) -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${log.max.size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!--只保留最近30天的日志-->
+            <maxHistory>${log.max.history}</maxHistory>
+        </rollingPolicy>
+        <!-- 日志输出的文件的格式 -->
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
             <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
                 <Pattern>${log.pattern}</Pattern>
@@ -94,6 +123,11 @@ debug:当此属性设置为true时，将打印出logback内部日志信息，实
             <charset>UTF-8</charset>
         </encoder>
     </appender>
+
+    <logger name="RocketmqClient" additivity="false">
+        <level value="warn" />
+        <appender-ref ref="RocketmqClientAppender"/>
+    </logger>
 
     <!-- 根节点，表名基本的日志级别，里面可以由多个appender规则 -->
     <!-- level="INFO"代表基础日志级别为INFO -->
