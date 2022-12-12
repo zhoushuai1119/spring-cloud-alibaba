@@ -28,6 +28,7 @@ public class NettyClient {
         try {
             Bootstrap b = new Bootstrap();
             b.group(group)
+                    //异步非阻塞的客户端 TCP Socket 连接
                     .channel(NioSocketChannel.class)
                     .option(ChannelOption.TCP_NODELAY, true)
                     .handler(new NettyClientChannelInitializer());
