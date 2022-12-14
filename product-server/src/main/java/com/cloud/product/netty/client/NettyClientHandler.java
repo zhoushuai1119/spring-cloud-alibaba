@@ -1,6 +1,6 @@
 package com.cloud.product.netty.client;
 
-import com.cloud.platform.web.netty.protocol.SmartProtocol;
+import com.cloud.platform.web.netty.protocol.MessageProtocol;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -53,7 +53,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         try {
             // 用于获取客户端发来的数据信息
-            SmartProtocol body = (SmartProtocol) msg;
+            MessageProtocol body = (MessageProtocol) msg;
             log.info("服务器返回客户端数据:" + body.getContent());
         } finally {
             ReferenceCountUtil.release(msg);
@@ -74,7 +74,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
      * @DESCRIPTION: 客户端给服务端发送消息
      * @return: void
      */
-    public void channelWrite(ChannelId channelId, SmartProtocol msg) {
+    public void channelWrite(ChannelId channelId, MessageProtocol msg) {
 
         ChannelHandlerContext ctx = CLIENT_MAP.get(channelId);
 

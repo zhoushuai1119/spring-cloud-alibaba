@@ -1,7 +1,6 @@
 package com.cloud.order.netty.server;
 
-import com.cloud.platform.web.netty.decode.SmartDecoder;
-import com.cloud.platform.web.netty.encode.SmartEncoder;
+import com.cloud.platform.web.netty.codec.MessageCodec;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 
@@ -15,8 +14,7 @@ public class NettyServerChannelInitializer extends ChannelInitializer<SocketChan
 
     @Override
     protected void initChannel(SocketChannel channel) {
-        channel.pipeline().addLast("encoder",new SmartEncoder());
-        channel.pipeline().addLast("decoder",new SmartDecoder());
+        channel.pipeline().addLast("messageCodec",new MessageCodec());
         channel.pipeline().addLast(new NettyServerHandler());
     }
 }
